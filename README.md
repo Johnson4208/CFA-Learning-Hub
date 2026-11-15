@@ -1,6 +1,6 @@
 # CFA Notes
 
-A personal CFA study space with a Vietnamese reading interface, English terminology, source-linked summaries, visual explanations, practice quizzes, flashcards and private notes.
+A personal CFA study space with complete Vietnamese and English interfaces, source-linked summaries, visual explanations, practice quizzes, flashcards and private notes.
 
 ## Content policy
 **Add a learning module only when the user supplies its source document.** Do not seed unrelated lessons, recommended topics or speculative curriculum. Source changes must preserve this rule.
@@ -25,4 +25,9 @@ Migration preserves user-authored/edited notes from `cfa-notes-v1`; old data is 
 Open index.html or serve the repository root with `python -m http.server 8000`.
 
 ## Design
-Ivory workspace, compact navigation, editorial typography, terracotta accents. One module in the library, a persistent section outline while reading, section-level notes and bookmarks. Responsive mobile layout, labeled form controls, keyboard-accessible dialogs and SVG diagrams with accessible text.
+Navy navigation, a cool white workspace, blue accents, clearer cards and responsive reading layouts. One module in the library, a persistent section outline while reading, section-level notes and bookmarks. Responsive mobile layout, labeled form controls, keyboard-accessible dialogs and SVG diagrams with accessible text.
+
+## Languages
+Use VI / EN in the top bar. The choice is saved in `cfa-language`. Lessons, diagrams, quiz questions, explanations, flashcards, forms and system messages are available in both languages. Personal notes remain exactly as written. Switching languages preserves the current route, quiz answers, flashcard position and unsaved inline note.
+
+`app.js` is the canonical Vietnamese UI. Update `translations.json` and run `python translate.py` after UI edits to regenerate `app-en.js`. Content translations live in `data-en.js`; keep section/question IDs, option ordering and answer indexes identical to `data.js`. Run `node tests/logic.test.cjs` before publishing.
