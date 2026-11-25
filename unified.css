@@ -148,6 +148,9 @@ progress::-moz-progress-bar { background: var(--site-green); border-radius: 999p
 
 /* Notes archive uses the same cards, controls, colors and quiet typography. */
 .sidebar .brand,.sidebar .brand>div,.sidebar .brand>div>span,.sidebar .side-course>div { color: #fff !important; }
+.sidebar .brand-icon { background: var(--site-gold) !important; color: var(--site-green-deep) !important; border-color: rgba(255,255,255,.3) !important; }
+.sidebar .brand-icon span { color: var(--site-green-deep) !important; }
+.sidebar .nav-count { background: var(--site-gold-soft) !important; color: var(--site-green) !important; }
 .sidebar nav a.active { background: rgba(255,255,255,.11) !important; box-shadow: inset 3px 0 var(--site-gold) !important; }
 .sidebar nav a:hover { background: rgba(255,255,255,.08) !important; }
 .sidebar .side-course { border-color: rgba(255,255,255,.2) !important; }
