@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script>if (/^#(learn\/|quiz$|flashcards$|notes$|saved$|settings$)/.test(location.hash)) location.replace("notebook.html"+location.hash)</script><title>CFAnotes — Executive Private Study Suite</title>
+  <script>if (/^#(learn\/|settings$)/.test(location.hash)) location.replace("notebook.html"+location.hash)</script><title>CFAnotes — Executive Private Study Suite</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts: Playfair Display (Editorial Luxury), Plus Jakarta Sans & JetBrains Mono -->
@@ -188,7 +188,7 @@
                 <i data-lucide="check-square" class="w-4 h-4 text-[#8E897F] shrink-0"></i>
                 <span class="sidebar-label" data-i18n="navQuiz">Luyện tập</span>
               </div>
-              <span class="sidebar-label font-mono text-[11px] text-[#78736A]">18 Qs</span>
+              <span class="sidebar-label font-mono text-[11px] text-[#78736A]" id="case-count"></span>
             </button>
 
             <button onclick="switchTab('flashcards')" id="nav-flashcards" class="nav-item relative w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-[#9E988E] hover:text-[#F3EFE6] hover:bg-obsidian-800/50 border border-transparent transition">
@@ -197,7 +197,7 @@
                 <i data-lucide="layers" class="w-4 h-4 text-[#8E897F] shrink-0"></i>
                 <span class="sidebar-label" data-i18n="navFlashcards">Thẻ ghi nhớ</span>
               </div>
-              <span class="sidebar-label font-mono text-[11px] text-[#78736A]">3D</span>
+              <span class="sidebar-label font-mono text-[11px] text-[#78736A]"></span>
             </button>
 
             <button onclick="switchTab('notes')" id="nav-notes" class="nav-item relative w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-[#9E988E] hover:text-[#F3EFE6] hover:bg-obsidian-800/50 border border-transparent transition">
@@ -452,7 +452,7 @@
               </div>
               <textarea id="notes-editor" rows="9" class="w-full p-4 rounded-xl bg-ivory-100 dark:bg-obsidian-850 border border-ivory-300 dark:border-obsidian-700 text-sm text-obsidian-900 dark:text-[#F3EFE6] leading-relaxed focus:outline-none focus:border-champagne-500" placeholder="Ghi chép nhận định, tóm tắt công thức và bẫy đề thi CFA tại đây..."></textarea>
             </div>
-          </section>
+          <a class="archive" href="notebook.html#notes" data-i18n="archivedNotes">Ghi chú từ sổ tay cũ →</a></section>
 
           <!-- ==================== TAB 5: FORMULA VAULT (SỔ TAY CÔNG THỨC) ==================== -->
           <section id="view-formulas" class="hidden space-y-4">
@@ -679,6 +679,7 @@
         localSub: "Ghi chú & tiến độ học của bạn",
         breadcrumbRoot: "Không gian học",
         heroEyebrow: "SỔ TAY CFA CỦA BẠN",
+        archivedNotes:"Ghi chú từ sổ tay cũ →",
         heroTitle: "Khóa học CFA Level I–III",
         heroSubtitle: "38 bài học · 9 chặng · 3 bài tổng kết",
         btnSource: "Tài liệu nguồn",
@@ -711,6 +712,7 @@
         localSub: "Your notes & study progress",
         breadcrumbRoot: "Workspace",
         heroEyebrow: "YOUR CFA DOSSIER",
+        archivedNotes:"Notes from your earlier notebook →",
         heroTitle: "CFA Level I–III Course",
         heroSubtitle: "38 lessons · 9 stages · 3 capstone cases",
         btnSource: "Source Material",
@@ -1050,6 +1052,7 @@
 
     // Navigation Tabs
     function switchTab(tab) {
+      const crumb = document.getElementById('breadcrumb-current');
       const tabs = ['library', 'quiz', 'flashcards', 'notes', 'formulas', 'bookmarked'];
       tabs.forEach(t => {
         document.getElementById(`view-${t}`).classList.add('hidden');
@@ -1079,7 +1082,8 @@
         formulas: 'navFormulas',
         bookmarked: 'navBookmarked'
       };
-      document.getElementById('breadcrumb-current').textContent = i18n[appState.lang][keyMap[tab]];
+      crumb.dataset.i18n=keyMap[tab];
+      crumb.textContent=i18n[appState.lang][keyMap[tab]];
 
       if (tab === 'quiz' || tab === 'flashcards') renderCasePractice(tab);
       
@@ -1118,6 +1122,7 @@
       studyLevel=lvl.split(' ')[1];
       appState.courseLevel=studyLevel;saveState();
       switchTab('library');renderAcademy();
+      document.getElementById('case-count').textContent=curriculum.filter(row=>row[0]===studyLevel).length;
       document.getElementById('topbar-level').textContent = lvl;
       document.querySelectorAll('.lvl-btn').forEach(btn => {
         btn.classList.remove('bg-champagne-500', 'text-obsidian-950', 'shadow-xs');
@@ -1176,8 +1181,15 @@
       setLevel("LEVEL "+studyLevel);
       document.getElementById('notes-editor').value = appState.notes;
       setLanguage(appState.lang);
+      function openLinkedTab(){
+        const route=location.hash.slice(1);
+        const tabs={quiz:'quiz',flashcards:'flashcards',notes:'notes',saved:'bookmarked',formulas:'formulas',home:'library'};
+        if(Object.hasOwn(tabs,route))switchTab(tabs[route]);
+      }
+      openLinkedTab();
+      window.addEventListener('hashchange',openLinkedTab);
       window.lucide?.createIcons();
     });
   </script>
-<script src="academy-data.js"></script><script src="academy.js"></script></body>
+<script src="academy-data.js?v=38.1"></script><script src="academy.js?v=38.1"></script></body>
 </html>
