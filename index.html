@@ -1,1 +1,1431 @@
-<!doctype html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0e1e3b"><meta name="description" content="CFA Notes — không gian học từ tài liệu của bạn. Đọc, hiểu qua sơ đồ và ôn tập."><title>CFA Notes — Không gian học của bạn</title><link rel="stylesheet" href="style.css?v=3"><link rel="stylesheet" href="redesign.css?v=3"></head><body><a class="skip" href="#content">Đến nội dung</a><aside class="sidebar"><a class="brand" href="#home"><span class="brand-icon">c<span>n</span></span><div>CFA<span>notes</span><small>KHÔNG GIAN HỌC CÁ NHÂN</small></div></a><div class="space-label">KHÔNG GIAN CỦA BẠN</div><nav id="nav"></nav><div class="side-course"><span class="orange-dot"></span> ĐANG HỌC<div>Corporate Issuers</div><small>Level I · Tài liệu 2027</small></div><div class="side-bottom"><a href="#settings"><span class="storage-dot"></span>Lưu trên thiết bị này <span>↗</span></a><small>Ghi chú & tiến độ học của bạn</small></div></aside><div class="shell"><header><div class="breadcrumb">Không gian học <span>/</span><b id="crumb">Thư viện</b></div><div class="top-meta"><span class="outline-tag">LEVEL I</span><a class="header-settings" href="#settings" aria-label="Tiến độ & dữ liệu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16M4 17h16M8 4v6M16 14v6"/></svg></a><span class="avatar">T</span></div></header><main id="content" tabindex="-1"></main><footer><span>CFA notes <span class="footer-dot">·</span> Hiểu sâu. Nhớ lâu.</span><span>Tài liệu của bạn, nhịp học của bạn.</span></footer></div><dialog id="note-dialog"><form id="note-form"><div class="modal-top"><div><div class="eyebrow">SỔ TAY CÁ NHÂN</div><h2 id="note-heading">Thêm ghi chú</h2></div><button type="button" data-close aria-label="Đóng" class="icon-button">×</button></div><input type="hidden" name="id"><label>Tiêu đề<input name="title" required maxlength="160" placeholder="Điều mình muốn ghi nhớ…"></label><label>Gắn với mục<select name="section" id="note-section"></select></label><label>Nội dung<textarea name="body" rows="7" required placeholder="Viết lại theo cách hiểu của bạn…"></textarea></label><label>Ảnh ghi chú · PNG, JPEG, WebP · tối đa 2 MB<input name="image" type="file" accept="image/png,image/jpeg,image/webp"></label><label class="check-label"><input name="removeImage" type="checkbox"> Bỏ ảnh đang lưu</label><p class="error" id="note-error" role="alert"></p><button class="button dark" type="submit">Lưu ghi chú <span>↗</span></button></form></dialog><dialog id="source-dialog"><div class="modal-top"><div><div class="eyebrow">TÀI LIỆU NGUỒN · 01</div><h2>Học từ file bạn gửi</h2></div><button data-close class="icon-button" aria-label="Đóng">×</button></div><div id="source-info"></div></dialog><input id="import-file" type="file" accept="application/json" hidden><div id="toast" role="status"></div><script src="boot.js?v=3"></script></body></html>
+<!DOCTYPE html>
+<html lang="vi" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>if (/^#(learn\/|quiz$|flashcards$|notes$|saved$|settings$)/.test(location.hash)) location.replace("notebook.html"+location.hash)</script><title>CFAnotes — Executive Private Study Suite</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Playfair Display (Editorial Luxury), Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            ivory: {
+              50: '#FDFCFA',
+              100: '#F9F8F4',
+              200: '#F2EFE9',
+              300: '#E8E3D9',
+            },
+            obsidian: {
+              950: '#0C0C0E',
+              900: '#141413',
+              850: '#18181B',
+              800: '#21201E',
+              700: '#2E2C29',
+            },
+            champagne: {
+              300: '#E5C97B',
+              400: '#D4AF37',
+              500: '#B48A3E',
+              600: '#96702D',
+            },
+            emeraldLux: {
+              700: '#264E3E',
+              800: '#1E3F32',
+              900: '#152D24',
+            }
+          },
+          boxShadow: {
+            'editorial': '0 4px 24px -4px rgba(20, 20, 19, 0.04), 0 1px 4px -1px rgba(20, 20, 19, 0.03)',
+            'gold-glow': '0 0 0 3px rgba(180, 138, 62, 0.16), 0 0 22px rgba(212, 175, 55, 0.18)',
+            'card-hover': '0 14px 32px -8px rgba(20, 20, 19, 0.08), 0 0 0 1px rgba(180, 138, 62, 0.45)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Champagne Gold Search Focus Glow */
+    .search-luxury:focus-within {
+      border-color: #B48A3E;
+      box-shadow: 0 0 0 3px rgba(180, 138, 62, 0.16), 0 0 20px rgba(212, 175, 55, 0.2);
+    }
+    .dark .search-luxury:focus-within {
+      border-color: #D4AF37;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.18), 0 0 24px rgba(212, 175, 55, 0.22);
+    }
+
+    /* Editorial Card Transition */
+    .luxury-card {
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .luxury-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px -8px rgba(20, 20, 19, 0.08), 0 0 0 1px rgba(180, 138, 62, 0.45);
+    }
+    .dark .luxury-card:hover {
+      box-shadow: 0 14px 32px -8px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(212, 175, 55, 0.4);
+    }
+
+    /* 3D Flashcard Flip */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .transform-style-3d {
+      transform-style: preserve-3d;
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+
+    /* Progress Ring Smooth Animation */
+    .progress-ring-circle {
+      transition: stroke-dashoffset 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(180, 138, 62, 0.3);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(180, 138, 62, 0.55);
+    }
+  </style>
+<style>
+#academy,.academy-unit{background:#fdfcfa;color:#272720}.dark #academy,.dark .academy-unit{background:#21201e;color:#f3efe6}#academy{border:1px solid #ded7c6;border-radius:18px;overflow:hidden}.academy-head{padding:24px;background:#1e3f32;color:#fff}.academy-head small{letter-spacing:.13em;color:#e5c97b}.academy-head h2{font:600 30px Georgia,serif;margin:6px 0}.academy-head p,.academy-unit p{font-size:14px;line-height:1.75}.academy-unit{padding:16px 22px;border-bottom:1px solid #c8bfaa66}.academy-unit summary{cursor:pointer;font-weight:600}.academy-unit p,.academy-unit h4,.academy-answer{margin-top:12px}.academy-equation{overflow-x:auto;background:#f2efe9;color:#152d24;padding:20px;border-radius:10px;margin-top:14px;font-size:1.4rem}.academy-answer summary,.archive{color:#96702d}.archive{display:block;padding:18px 22px;text-decoration:underline}
+</style><style>.academy-unit textarea{display:block;width:100%;margin:14px 0;border:1px solid #ad9d76;padding:10px;border-radius:8px;color:#25231e}.academy-unit button,.case-result button{background:#264e3e;color:white;border-radius:8px;padding:9px 16px;margin:14px 8px 0 0}.case-result{display:flex;align-items:center;justify-content:space-between;padding:24px;gap:14px}.case-ring{width:120px;aspect-ratio:1;border-radius:50%;background:conic-gradient(#96702d var(--arc),#e8e3d9 0);display:grid;place-items:center}.case-ring b{width:78%;aspect-ratio:1;border-radius:50%;background:#fdfcfa;color:#264e3e;display:grid;place-items:center}</style></head>
+<body class="bg-ivory-100 text-obsidian-900 dark:bg-obsidian-950 dark:text-[#F3EFE6] font-sans transition-colors duration-300 overflow-x-hidden">
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Mobile Sidebar Backdrop -->
+  <div id="mobile-backdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-30 hidden lg:hidden"></div>
+
+  <div class="min-h-screen flex">
+
+    <!-- ==================== 1. LEFT SIDEBAR (OBSIDIAN CHARCOAL #141413) ==================== -->
+    <aside id="sidebar" class="fixed lg:sticky top-0 left-0 z-40 h-screen w-72 bg-obsidian-900 text-[#D6D1C7] border-r border-obsidian-700/80 flex flex-col justify-between transition-all duration-300 -translate-x-full lg:translate-x-0 shrink-0">
+      
+      <div class="p-4 flex flex-col gap-5 overflow-y-auto">
+        <!-- Brand Monogram Header -->
+        <div class="flex items-center justify-between px-1 pt-1">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#262420] to-[#141413] border border-champagne-500/60 flex items-center justify-center shadow-inner shrink-0">
+              <span class="font-serif italic font-bold text-champagne-400 text-xl tracking-tighter">cn</span>
+            </div>
+            <div class="sidebar-label overflow-hidden">
+              <div class="flex items-center gap-2">
+                <span class="font-serif font-semibold text-[#F3EFE6] text-lg tracking-tight">CFAnotes</span>
+                <span class="text-[9px] font-mono uppercase tracking-widest px-1.5 py-0.5 rounded bg-champagne-500/15 text-champagne-300 border border-champagne-500/30">PRIVATE</span>
+              </div>
+              <p class="text-[10px] uppercase tracking-[0.16em] text-[#8E897F] font-medium truncate" data-i18n="brandSub">Không gian học cá nhân</p>
+            </div>
+          </div>
+          <!-- Collapse Button -->
+          <button onclick="toggleSidebarCollapse()" title="Thu gọn / Mở rộng" class="hidden lg:flex w-7 h-7 rounded-lg items-center justify-center text-[#8E897F] hover:text-champagne-300 hover:bg-obsidian-800 transition">
+            <i data-lucide="panel-left-close" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Level Selector Pill -->
+        <div class="sidebar-label bg-obsidian-950/80 p-1 rounded-xl border border-obsidian-700/80 grid grid-cols-3 gap-1">
+          <button onclick="setLevel('LEVEL I')" class="lvl-btn py-1.5 text-[11px] font-mono font-semibold rounded-lg bg-champagne-500 text-obsidian-950 shadow-xs transition">LVL I</button>
+          <button onclick="setLevel('LEVEL II')" class="lvl-btn py-1.5 text-[11px] font-mono font-semibold rounded-lg text-[#8E897F] hover:text-[#F3EFE6] transition">LVL II</button>
+          <button onclick="setLevel('LEVEL III')" class="lvl-btn py-1.5 text-[11px] font-mono font-semibold rounded-lg text-[#8E897F] hover:text-[#F3EFE6] transition">LVL III</button>
+        </div>
+
+        <!-- Main Navigation -->
+        <div>
+          <p class="sidebar-label px-3 mb-2 text-[10px] font-mono uppercase tracking-[0.18em] text-[#78736A]" data-i18n="navGroup">Không gian của bạn</p>
+          <nav class="space-y-1">
+            <button onclick="switchTab('library')" id="nav-library" class="nav-item relative w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium bg-obsidian-800/90 text-[#F3EFE6] border border-champagne-500/30 transition">
+              <span class="nav-indicator absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-champagne-400"></span>
+              <div class="flex items-center gap-3">
+                <i data-lucide="layout-grid" class="w-4 h-4 text-champagne-400 shrink-0"></i>
+                <span class="sidebar-label" data-i18n="navLibrary">Thư viện</span>
+              </div>
+              <span class="sidebar-label font-mono text-xs px-2 py-0.5 rounded bg-champagne-500/20 text-champagne-300 border border-champagne-500/30">01</span>
+            </button>
+
+            <button onclick="switchTab('quiz')" id="nav-quiz" class="nav-item relative w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-[#9E988E] hover:text-[#F3EFE6] hover:bg-obsidian-800/50 border border-transparent transition">
+              <span class="nav-indicator hidden absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-champagne-400"></span>
+              <div class="flex items-center gap-3">
+                <i data-lucide="check-square" class="w-4 h-4 text-[#8E897F] shrink-0"></i>
+                <span class="sidebar-label" data-i18n="navQuiz">Luyện tập</span>
+              </div>
+              <span class="sidebar-label font-mono text-[11px] text-[#78736A]">18 Qs</span>
+            </button>
+
+            <button onclick="switchTab('flashcards')" id="nav-flashcards" class="nav-item relative w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-[#9E988E] hover:text-[#F3EFE6] hover:bg-obsidian-800/50 border border-transparent transition">
+              <span class="nav-indicator hidden absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-champagne-400"></span>
+              <div class="flex items-center gap-3">
+                <i data-lucide="layers" class="w-4 h-4 text-[#8E897F] shrink-0"></i>
+                <span class="sidebar-label" data-i18n="navFlashcards">Thẻ ghi nhớ</span>
+              </div>
+              <span class="sidebar-label font-mono text-[11px] text-[#78736A]">3D</span>
+            </button>
+
+            <button onclick="switchTab('notes')" id="nav-notes" class="nav-item relative w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-[#9E988E] hover:text-[#F3EFE6] hover:bg-obsidian-800/50 border border-transparent transition">
+              <span class="nav-indicator hidden absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-champagne-400"></span>
+              <div class="flex items-center gap-3">
+                <i data-lucide="file-text" class="w-4 h-4 text-[#8E897F] shrink-0"></i>
+                <span class="sidebar-label" data-i18n="navNotes">Ghi chú của tôi</span>
+              </div>
+            </button>
+
+            <button onclick="switchTab('formulas')" id="nav-formulas" class="nav-item relative w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-[#9E988E] hover:text-[#F3EFE6] hover:bg-obsidian-800/50 border border-transparent transition">
+              <span class="nav-indicator hidden absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-champagne-400"></span>
+              <div class="flex items-center gap-3">
+                <i data-lucide="sigma" class="w-4 h-4 text-[#8E897F] shrink-0"></i>
+                <span class="sidebar-label" data-i18n="navFormulas">Sổ tay công thức</span>
+              </div>
+            </button>
+
+            <button onclick="switchTab('bookmarked')" id="nav-bookmarked" class="nav-item relative w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-[#9E988E] hover:text-[#F3EFE6] hover:bg-obsidian-800/50 border border-transparent transition">
+              <span class="nav-indicator hidden absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-champagne-400"></span>
+              <div class="flex items-center gap-3">
+                <i data-lucide="bookmark" class="w-4 h-4 text-[#8E897F] shrink-0"></i>
+                <span class="sidebar-label" data-i18n="navBookmarked">Đã đánh dấu</span>
+              </div>
+            </button>
+          </nav>
+        </div>
+
+        <!-- Currently Studying Card (Corporate Issuers - Level I 2027) -->
+        <div class="sidebar-label mt-2 p-3.5 rounded-xl bg-obsidian-800/70 border border-obsidian-700/90">
+          <div class="flex items-center justify-between mb-1.5">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-champagne-400"></span>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-champagne-300" data-i18n="currentlyStudying">Đang học</span>
+            </div>
+            <span id="sidebar-pct-text" class="font-mono text-[11px] text-champagne-300">0%</span>
+          </div>
+          <p class="font-serif font-semibold text-sm text-[#F3EFE6]">Corporate Issuers</p>
+          <p class="text-[11px] text-[#8E897F] mt-0.5">Level I · Tài liệu 2027</p>
+          <div class="w-full h-1 bg-obsidian-950 rounded-full mt-3 overflow-hidden">
+            <div id="sidebar-progress-bar" class="h-full bg-gradient-to-r from-champagne-600 to-champagne-300 rounded-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Local Storage Indicator -->
+      <div class="p-4 border-t border-obsidian-700/80 bg-obsidian-950/50">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <div class="sidebar-label">
+              <p class="text-xs font-medium text-[#E5E0D5]" data-i18n="localTitle">Lưu trên thiết bị này</p>
+              <p class="text-[11px] text-[#78736A]" data-i18n="localSub">Ghi chú & tiến độ học của bạn</p>
+            </div>
+          </div>
+          <button onclick="showToast('Tất cả tiến độ đã được đồng bộ an toàn vào LocalStorage.')" title="Kiểm tra lưu trữ" class="sidebar-label p-1.5 rounded-lg text-[#8E897F] hover:text-champagne-300 transition">
+            <i data-lucide="shield-check" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ==================== 2. MAIN WORKSPACE ==================== -->
+    <div class="flex-1 flex flex-col min-w-0">
+
+      <!-- Top Header -->
+      <header class="sticky top-0 z-20 h-16 px-4 sm:px-8 bg-ivory-100/90 dark:bg-obsidian-950/90 backdrop-blur-md border-b border-ivory-300 dark:border-obsidian-700/80 flex items-center justify-between gap-4">
+        
+        <!-- Left: Mobile Toggle + Breadcrumb -->
+        <div class="flex items-center gap-3 min-w-0">
+          <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 rounded-xl border border-ivory-300 dark:border-obsidian-700 bg-white dark:bg-obsidian-900 text-obsidian-900 dark:text-[#F3EFE6]">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+
+          <nav class="flex items-center gap-2 text-xs sm:text-sm truncate">
+            <span class="text-[#78736A] hidden sm:inline" data-i18n="breadcrumbRoot">Không gian học</span>
+            <span class="text-[#C4BDB0] dark:text-obsidian-700 hidden sm:inline">/</span>
+            <span id="breadcrumb-current" class="font-medium text-obsidian-900 dark:text-[#F3EFE6] truncate" data-i18n="navLibrary">Thư viện</span>
+          </nav>
+        </div>
+
+        <!-- Right: Ctrl+K Search + VI/EN + Level + Theme + Avatar -->
+        <div class="flex items-center gap-2.5 sm:gap-3">
+          
+          <!-- Ctrl+K Search Input -->
+          <div class="search-luxury hidden md:flex items-center w-60 lg:w-72 bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 rounded-xl px-3 py-1.5 transition-all duration-200">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-[#8E897F] mr-2 shrink-0"></i>
+            <input 
+              id="global-search" 
+              type="text" 
+              oninput="handleSearch(this.value)"
+              placeholder="Tìm trong tài liệu..." 
+              class="w-full bg-transparent text-xs sm:text-sm text-obsidian-900 dark:text-[#F3EFE6] placeholder-[#9E988E] focus:outline-none"
+            />
+            <kbd class="ml-2 px-1.5 py-0.5 text-[10px] font-mono text-[#8E897F] bg-ivory-100 dark:bg-obsidian-800 border border-ivory-300 dark:border-obsidian-700 rounded">Ctrl K</kbd>
+          </div>
+
+          <!-- Language Switcher VI / EN -->
+          <div class="flex items-center p-0.5 rounded-xl bg-ivory-200 dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700">
+            <button onclick="setLanguage('vi')" id="lang-vi" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-white dark:bg-champagne-500 text-obsidian-900 dark:text-obsidian-950 shadow-2xs transition">VI</button>
+            <button onclick="setLanguage('en')" id="lang-en" class="px-2.5 py-1 text-xs font-semibold rounded-lg text-[#78736A] hover:text-obsidian-900 dark:hover:text-[#F3EFE6] transition">EN</button>
+          </div>
+
+          <!-- Level Badge -->
+          <span id="topbar-level" class="hidden sm:inline-flex items-center px-3 py-1.5 rounded-xl font-mono text-xs font-medium bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 text-obsidian-900 dark:text-champagne-300">
+            LEVEL I
+          </span>
+
+          <!-- Theme Toggle (Ivory / Obsidian) -->
+          <button onclick="toggleTheme()" title="Chuyển chế độ Ivory / Obsidian" class="p-2 rounded-xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 text-obsidian-900 dark:text-champagne-400 hover:border-champagne-500 transition">
+            <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
+            <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+          </button>
+
+          <!-- Personal Avatar with Thin Gold Ring -->
+          <button onclick="showToast('Hồ sơ học viên CFA Charterholder Candidate · 2027')" class="w-9 h-9 rounded-full bg-obsidian-900 dark:bg-obsidian-800 text-champagne-400 font-serif font-bold text-sm flex items-center justify-center ring-1 ring-champagne-500 shadow-xs">
+            T
+          </button>
+        </div>
+      </header>
+
+      <!-- 3-Column Content Body -->
+      <main class="flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-8 py-6 lg:py-8 grid grid-cols-1 xl:grid-cols-12 gap-7 items-start">
+        
+        <!-- ==================== CENTER COLUMN (8 cols) ==================== -->
+        <div class="xl:col-span-8 space-y-6 min-w-0">
+
+          <!-- Editorial Hero Header -->
+          <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-1">
+            <div>
+              <p class="text-[11px] font-mono uppercase tracking-[0.2em] text-champagne-600 dark:text-champagne-400 font-semibold mb-2" data-i18n="heroEyebrow">
+                SỔ TAY CFA CỦA BẠN
+              </p>
+              <h1 class="font-serif font-semibold text-2xl sm:text-3xl lg:text-[36px] text-obsidian-900 dark:text-[#F3EFE6] tracking-tight leading-[1.18]" data-i18n="heroTitle">
+                Kiến thức của bạn.<br />Theo cách tinh gọn &amp; sâu sắc hơn.
+              </h1>
+              <p class="text-sm text-[#646058] dark:text-[#A39E93] mt-2.5" data-i18n="heroSubtitle">
+                Đọc để hiểu. Nhìn để nhớ. Luyện tập để nắm chắc.
+              </p>
+            </div>
+
+            <!-- Source Material Button -->
+            <button onclick="openSourceModal()" class="self-start sm:self-end inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 hover:border-champagne-500 text-obsidian-900 dark:text-[#F3EFE6] text-xs sm:text-sm font-medium shadow-editorial transition shrink-0">
+              <i data-lucide="book-open" class="w-4 h-4 text-champagne-500"></i>
+              <span data-i18n="btnSource">Tài liệu nguồn</span>
+            </button>
+          </div>
+
+          <!-- ==================== TAB 1: LIBRARY (THƯ VIỆN) ==================== -->
+          <section id="view-library" class="space-y-5"><article id="academy"></article><div id="lm-original">
+            
+            <!-- Filter Bar -->
+            <div class="bg-white dark:bg-obsidian-900 rounded-2xl px-4 py-3 border border-ivory-300 dark:border-obsidian-700/90 shadow-editorial flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-2">
+                <button onclick="filterLibrary('all')" id="filter-all" class="lib-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-obsidian-900 text-[#F3EFE6] dark:bg-champagne-500 dark:text-obsidian-950 transition flex items-center gap-1.5">
+                  <span data-i18n="filterAll">Tất cả</span>
+                  <span class="font-mono text-[11px] opacity-80">1</span>
+                </button>
+                <button onclick="filterLibrary('studying')" id="filter-studying" class="lib-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-medium text-[#646058] dark:text-[#A39E93] hover:bg-ivory-200 dark:hover:bg-obsidian-800 transition flex items-center gap-1.5">
+                  <span data-i18n="filterStudying">Đang học</span>
+                  <span id="count-studying" class="font-mono text-[11px] px-1.5 rounded bg-ivory-200 dark:bg-obsidian-800">1</span>
+                </button>
+                <button onclick="filterLibrary('completed')" id="filter-completed" class="lib-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-medium text-[#646058] dark:text-[#A39E93] hover:bg-ivory-200 dark:hover:bg-obsidian-800 transition flex items-center gap-1.5">
+                  <span data-i18n="filterCompleted">Hoàn thành</span>
+                  <span id="count-completed" class="font-mono text-[11px] px-1.5 rounded bg-ivory-200 dark:bg-obsidian-800">0</span>
+                </button>
+              </div>
+
+              <!-- Mobile Search -->
+              <div class="md:hidden w-full">
+                <input type="text" oninput="handleSearch(this.value)" placeholder="Tìm trong tài liệu..." class="w-full px-3 py-2 text-xs rounded-xl bg-ivory-100 dark:bg-obsidian-850 border border-ivory-300 dark:border-obsidian-700 focus:outline-none focus:border-champagne-500">
+              </div>
+            </div>
+
+            <!-- Editorial Course Module Card -->
+            <article id="module-card-0" class="luxury-card rounded-2xl bg-white dark:bg-obsidian-900 p-6 sm:p-7 border border-ivory-300 dark:border-obsidian-700/90 shadow-editorial">
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                
+                <!-- Left Details -->
+                <div class="space-y-3.5 flex-1 min-w-0">
+                  <!-- Refined Badges -->
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="px-2.5 py-1 rounded-md text-[10px] font-mono font-semibold uppercase tracking-widest bg-champagne-500/10 text-champagne-600 dark:text-champagne-300 border border-champagne-500/35">
+                      CORPORATE ISSUERS
+                    </span>
+                    <span class="px-2.5 py-1 rounded-md text-[10px] font-mono font-medium uppercase tracking-wider bg-ivory-100 dark:bg-obsidian-850 text-[#646058] dark:text-[#A39E93] border border-ivory-300 dark:border-obsidian-700">
+                      2027 • LEVEL I
+                    </span>
+                    <span id="module-status-pill" class="px-2.5 py-1 rounded-md text-[10px] font-mono font-medium bg-emeraldLux-800/10 dark:bg-emeraldLux-800/40 text-emeraldLux-800 dark:text-emerald-300 border border-emeraldLux-800/20">
+                      LM 01 ACTIVE
+                    </span>
+                  </div>
+
+                  <!-- Serif Editorial Title -->
+                  <div>
+                    <h2 onclick="openStudyReader()" class="font-serif font-semibold text-xl sm:text-2xl text-obsidian-900 dark:text-[#F3EFE6] hover:text-champagne-600 dark:hover:text-champagne-300 transition cursor-pointer leading-snug" data-i18n="moduleTitle">
+                      Loại hình doanh nghiệp, đặc điểm tổ chức phát hành và quyền sở hữu
+                    </h2>
+                    <p class="text-xs sm:text-sm text-[#646058] dark:text-[#A39E93] mt-2 leading-relaxed" data-i18n="moduleDesc">
+                      Hiểu các loại hình doanh nghiệp, cách tổ chức phát hành vận hành và sự khác biệt giữa sở hữu public &amp; private.
+                    </p>
+                  </div>
+
+                  <!-- Metadata Strip -->
+                  <div class="flex flex-wrap items-center gap-3.5 text-xs font-mono text-[#78736A] pt-1">
+                    <span class="font-semibold text-obsidian-900 dark:text-[#E5E0D5]">LM 01</span>
+                    <span>•</span>
+                    <span><span id="card-mastered-count">0</span>/8 <span data-i18n="knowledgeItemsLabel">mục kiến thức</span></span>
+                    <span>•</span>
+                    <span data-i18n="sourcePagesLabel">12 trang nguồn</span>
+                  </div>
+                </div>
+
+                <!-- Minimalist Corporate Architecture Vector (Champagne Gold & Deep Emerald) -->
+                <div class="hidden sm:flex w-32 h-32 rounded-2xl bg-ivory-100 dark:bg-obsidian-850 border border-ivory-300 dark:border-obsidian-700/80 items-center justify-center shrink-0 relative">
+                  <svg class="w-24 h-24" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Subtle Isometric Grid Lines -->
+                    <circle cx="60" cy="60" r="46" stroke="#B48A3E" stroke-opacity="0.18" stroke-dasharray="3 3"/>
+                    <!-- Secondary Emerald Tower -->
+                    <path d="M66 42L84 50V86L66 78V42Z" fill="#1E3F32"/>
+                    <path d="M48 50L66 42V78L48 86V50Z" fill="#264E3E"/>
+                    <!-- Primary Champagne Gold Facade -->
+                    <path d="M42 36L60 28L78 36V84L60 92L42 84V36Z" fill="#141413" stroke="#B48A3E" stroke-width="1.5"/>
+                    <path d="M60 28L78 36V84L60 92V28Z" fill="#B48A3E" fill-opacity="0.22"/>
+                    <!-- Architectural Windows -->
+                    <line x1="48" y1="45" x2="55" y2="42" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="48" y1="54" x2="55" y2="51" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="48" y1="63" x2="55" y2="60" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="48" y1="72" x2="55" y2="69" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
+                    <!-- Stakeholder Nodes -->
+                    <circle cx="28" cy="40" r="4" fill="#F9F8F4" stroke="#B48A3E" stroke-width="1.5"/>
+                    <circle cx="92" cy="44" r="4" fill="#F9F8F4" stroke="#1E3F32" stroke-width="1.5"/>
+                    <circle cx="90" cy="78" r="4" fill="#F9F8F4" stroke="#B48A3E" stroke-width="1.5"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Footer Action Bar -->
+              <div class="mt-6 pt-4 border-t border-ivory-200 dark:border-obsidian-700/70 flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p class="text-xs font-semibold text-obsidian-900 dark:text-[#E5E0D5]">01 / Tài liệu đầu tiên của bạn</p>
+                  <p class="text-[11px] text-[#78736A]">IFT Study Notes · Đã đưa vào thư viện</p>
+                </div>
+
+                <div class="flex items-center gap-2.5 ml-auto">
+                  <button onclick="openStudyReader()" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-obsidian-900 hover:bg-obsidian-800 dark:bg-champagne-500 dark:hover:bg-champagne-400 text-[#F3EFE6] dark:text-obsidian-950 text-xs sm:text-sm font-semibold border border-champagne-500/40 shadow-xs transition cursor-pointer">
+                    <span data-i18n="btnStartLearning">Bắt đầu học</span>
+                    <i data-lucide="arrow-up-right" class="w-4 h-4 text-champagne-400 dark:text-obsidian-950"></i>
+                  </button>
+                  <button onclick="toggleBookmark()" id="bookmark-btn" title="Đánh dấu học phần" class="p-2.5 rounded-xl bg-ivory-100 dark:bg-obsidian-850 border border-ivory-300 dark:border-obsidian-700 hover:border-champagne-500 text-[#78736A] transition">
+                    <i data-lucide="star" id="bookmark-icon" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Inline Executive Study Reader (Expands smoothly when clicking "Bắt đầu học") -->
+            <div id="study-reader-panel" class="hidden rounded-2xl bg-white dark:bg-obsidian-900 border border-champagne-500/40 shadow-editorial overflow-hidden transition-all">
+              <div class="px-6 py-4 bg-obsidian-900 text-[#F3EFE6] border-b border-obsidian-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-champagne-500/20 text-champagne-300 border border-champagne-500/30">EXECUTIVE READER</span>
+                  <h3 class="font-serif font-semibold text-base sm:text-lg">8 Mục Kiến Thức Trọng Tâm — LM 01</h3>
+                </div>
+                <button onclick="closeStudyReader()" class="p-1.5 rounded-lg text-[#9E988E] hover:text-white hover:bg-obsidian-800 transition">
+                  <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+              </div>
+
+              <div id="knowledge-items-list" class="p-5 sm:p-6 divide-y divide-ivory-200 dark:divide-obsidian-700/70">
+                <!-- 8 detailed knowledge items rendered by JS -->
+              </div>
+            </div>
+
+          </div></section>
+
+          <!-- ==================== TAB 2: PRACTICE QUIZ (LUYỆN TẬP) ==================== -->
+          <section id="view-quiz" class="hidden space-y-5">
+            <div class="bg-white dark:bg-obsidian-900 rounded-2xl p-6 sm:p-7 border border-ivory-300 dark:border-obsidian-700 shadow-editorial">
+              <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-ivory-200 dark:border-obsidian-700">
+                <div>
+                  <span class="font-mono text-[11px] uppercase tracking-widest text-champagne-600 dark:text-champagne-400 font-semibold">PRACTICE ASSESSMENT • CORPORATE ISSUERS</span>
+                  <h2 class="font-serif font-semibold text-xl text-obsidian-900 dark:text-[#F3EFE6] mt-0.5">Trắc nghiệm chuẩn mực CFA Level I</h2>
+                </div>
+                <span id="quiz-counter" class="font-mono text-xs px-3 py-1.5 rounded-lg bg-ivory-100 dark:bg-obsidian-850 border border-ivory-300 dark:border-obsidian-700 font-semibold">Câu 1 / 5</span>
+              </div>
+
+              <div class="py-6 space-y-5">
+                <p id="quiz-question-text" class="font-serif text-lg sm:text-xl text-obsidian-900 dark:text-[#F3EFE6] leading-relaxed"></p>
+
+                <div id="quiz-options-container" class="space-y-3"></div>
+
+                <!-- Rationale Box -->
+                <div id="quiz-rationale" class="hidden p-4 rounded-xl bg-ivory-100 dark:bg-obsidian-850 border-l-4 border-champagne-500 text-sm space-y-1.5">
+                  <p class="font-mono text-xs uppercase tracking-wider font-semibold text-champagne-600 dark:text-champagne-400">Giải thích học thuật (Rationale)</p>
+                  <p id="quiz-rationale-text" class="text-[#4A463F] dark:text-[#D6D1C7] leading-relaxed"></p>
+                </div>
+              </div>
+
+              <div class="pt-4 border-t border-ivory-200 dark:border-obsidian-700 flex items-center justify-between">
+                <button onclick="resetQuiz()" class="text-xs font-medium text-[#78736A] hover:text-obsidian-900 dark:hover:text-[#F3EFE6] transition">Làm lại bộ đề</button>
+                <div class="flex items-center gap-2.5">
+                  <button id="quiz-check-btn" onclick="checkQuizAnswer()" class="px-4 py-2 rounded-xl bg-emeraldLux-800 hover:bg-emeraldLux-700 text-white text-xs sm:text-sm font-semibold transition disabled:opacity-40" disabled>Kiểm tra đáp án</button>
+                  <button id="quiz-next-btn" onclick="nextQuiz()" class="px-4 py-2 rounded-xl bg-obsidian-900 dark:bg-champagne-500 text-[#F3EFE6] dark:text-obsidian-950 text-xs sm:text-sm font-semibold transition disabled:opacity-40" disabled>Câu tiếp theo →</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ==================== TAB 3: FLASHCARDS 3D (THẺ GHI NHỚ) ==================== -->
+          <section id="view-flashcards" class="hidden space-y-5">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="font-serif font-semibold text-xl text-obsidian-900 dark:text-[#F3EFE6]">Thẻ ghi nhớ Active Recall</h2>
+                <p class="text-xs text-[#78736A]">Thiết kế danh thiếp tài chính · Chạm để lật mặt định nghĩa</p>
+              </div>
+              <span id="fc-index-badge" class="font-mono text-xs px-3 py-1.5 rounded-xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 font-semibold">1 / 5</span>
+            </div>
+
+            <!-- 3D Executive Card -->
+            <div onclick="flipFlashcard()" class="perspective-1000 w-full h-72 sm:h-80 cursor-pointer select-none">
+              <div id="fc-inner" class="transform-style-3d relative w-full h-full">
+                
+                <!-- Front Face -->
+                <div class="backface-hidden absolute inset-0 rounded-2xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-champagne-500/30 shadow-editorial p-7 flex flex-col justify-between">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-mono uppercase tracking-[0.18em] text-champagne-600 dark:text-champagne-400 font-semibold">CORPORATE ISSUERS • TERM</span>
+                    <span class="text-xs text-[#8E897F] flex items-center gap-1"><i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i> Lật thẻ</span>
+                  </div>
+                  <div class="text-center my-auto px-4">
+                    <h3 id="fc-front" class="font-serif font-semibold text-xl sm:text-2xl text-obsidian-900 dark:text-[#F3EFE6] leading-snug"></h3>
+                  </div>
+                  <div class="flex items-center justify-between text-[11px] font-mono text-[#8E897F]">
+                    <span>CFA LEVEL I • 2027</span>
+                    <span id="fc-mastered-tag" class="text-emeraldLux-800 dark:text-emerald-400 font-semibold"></span>
+                  </div>
+                </div>
+
+                <!-- Back Face (Obsidian & Champagne Gold) -->
+                <div class="backface-hidden rotate-y-180 absolute inset-0 rounded-2xl bg-obsidian-900 text-[#F3EFE6] border border-champagne-500/50 shadow-xl p-7 flex flex-col justify-between">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-mono uppercase tracking-[0.18em] text-champagne-400 font-semibold">EXECUTIVE DEFINITION</span>
+                    <span class="text-xs text-[#8E897F]">Mặt sau</span>
+                  </div>
+                  <div class="text-center my-auto px-3 sm:px-6">
+                    <p id="fc-back" class="text-sm sm:text-base text-[#E5E0D5] leading-relaxed"></p>
+                  </div>
+                  <div class="text-center text-[11px] font-mono text-champagne-300/80">
+                    IFT Study Notes • Essential Concept
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-2">
+                <button onclick="prevFlashcard()" class="px-4 py-2.5 rounded-xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 text-xs font-semibold hover:border-champagne-500 transition">← Thẻ trước</button>
+                <button onclick="flipFlashcard()" class="px-4 py-2.5 rounded-xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 text-xs font-semibold hover:border-champagne-500 transition">Lật thẻ</button>
+                <button onclick="nextFlashcard()" class="px-4 py-2.5 rounded-xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 text-xs font-semibold hover:border-champagne-500 transition">Thẻ sau →</button>
+              </div>
+
+              <button onclick="markFlashcardMastered()" class="px-5 py-2.5 rounded-xl bg-emeraldLux-800 hover:bg-emeraldLux-700 text-white text-xs sm:text-sm font-semibold shadow-xs transition flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-champagne-300"></i>
+                <span>Đã thuộc thẻ này</span>
+              </button>
+            </div>
+          </section>
+
+          <!-- ==================== TAB 4: PERSONAL NOTES (GHI CHÚ CỦA TÔI) ==================== -->
+          <section id="view-notes" class="hidden space-y-4">
+            <div class="bg-white dark:bg-obsidian-900 rounded-2xl p-6 border border-ivory-300 dark:border-obsidian-700 shadow-editorial space-y-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="font-mono text-[10px] uppercase tracking-widest text-champagne-600 dark:text-champagne-400">PERSONAL DOSSIER</span>
+                  <h2 class="font-serif font-semibold text-xl text-obsidian-900 dark:text-[#F3EFE6]">Ghi chú nghiên cứu cá nhân</h2>
+                </div>
+                <button onclick="saveNotes()" class="px-4 py-2 rounded-xl bg-obsidian-900 dark:bg-champagne-500 text-[#F3EFE6] dark:text-obsidian-950 text-xs font-semibold transition">
+                  Lưu ghi chú
+                </button>
+              </div>
+              <textarea id="notes-editor" rows="9" class="w-full p-4 rounded-xl bg-ivory-100 dark:bg-obsidian-850 border border-ivory-300 dark:border-obsidian-700 text-sm text-obsidian-900 dark:text-[#F3EFE6] leading-relaxed focus:outline-none focus:border-champagne-500" placeholder="Ghi chép nhận định, tóm tắt công thức và bẫy đề thi CFA tại đây..."></textarea>
+            </div>
+          </section>
+
+          <!-- ==================== TAB 5: FORMULA VAULT (SỔ TAY CÔNG THỨC) ==================== -->
+          <section id="view-formulas" class="hidden space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="p-5 rounded-2xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 shadow-editorial space-y-2">
+                <span class="font-mono text-[10px] uppercase tracking-widest text-champagne-600 dark:text-champagne-400 font-semibold">CORPORATE ISSUERS</span>
+                <h3 class="font-serif font-semibold text-base text-obsidian-900 dark:text-[#F3EFE6]">Weighted Average Cost of Capital (WACC)</h3>
+                <div class="p-3 rounded-xl bg-ivory-100 dark:bg-obsidian-850 font-mono text-xs sm:text-sm text-obsidian-900 dark:text-champagne-300 border border-ivory-300/70 dark:border-obsidian-700">
+                  WACC = w_d·r_d(1 − t) + w_p·r_p + w_e·r_e
+                </div>
+                <p class="text-xs text-[#78736A]">Chi phí nợ sau thuế phản ánh lá chắn thuế từ lãi vay.</p>
+              </div>
+
+              <div class="p-5 rounded-2xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 shadow-editorial space-y-2">
+                <span class="font-mono text-[10px] uppercase tracking-widest text-emeraldLux-800 dark:text-emerald-400 font-semibold">FINANCIAL STATEMENT ANALYSIS</span>
+                <h3 class="font-serif font-semibold text-base text-obsidian-900 dark:text-[#F3EFE6]">DuPont Decomposition (3-Step ROE)</h3>
+                <div class="p-3 rounded-xl bg-ivory-100 dark:bg-obsidian-850 font-mono text-xs sm:text-sm text-obsidian-900 dark:text-emerald-300 border border-ivory-300/70 dark:border-obsidian-700">
+                  ROE = Net Profit Margin × Asset Turnover × Leverage
+                </div>
+                <p class="text-xs text-[#78736A]">Phân tách hiệu quả sinh lời trên vốn chủ sở hữu thành 3 động lực.</p>
+              </div>
+
+              <div class="p-5 rounded-2xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 shadow-editorial space-y-2">
+                <span class="font-mono text-[10px] uppercase tracking-widest text-champagne-600 dark:text-champagne-400 font-semibold">CAPITAL STRUCTURE</span>
+                <h3 class="font-serif font-semibold text-base text-obsidian-900 dark:text-[#F3EFE6]">Debt-to-Equity Ratio (D/E)</h3>
+                <div class="p-3 rounded-xl bg-ivory-100 dark:bg-obsidian-850 font-mono text-xs sm:text-sm text-obsidian-900 dark:text-champagne-300 border border-ivory-300/70 dark:border-obsidian-700">
+                  D/E = Total Debt / Total Shareholders' Equity
+                </div>
+                <p class="text-xs text-[#78736A]">Đo lường mức độ đòn bẩy tài chính của tổ chức phát hành.</p>
+              </div>
+
+              <div class="p-5 rounded-2xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 shadow-editorial space-y-2">
+                <span class="font-mono text-[10px] uppercase tracking-widest text-emeraldLux-800 dark:text-emerald-400 font-semibold">RETURN METRICS</span>
+                <h3 class="font-serif font-semibold text-base text-obsidian-900 dark:text-[#F3EFE6]">Return on Invested Capital (ROIC)</h3>
+                <div class="p-3 rounded-xl bg-ivory-100 dark:bg-obsidian-850 font-mono text-xs sm:text-sm text-obsidian-900 dark:text-emerald-300 border border-ivory-300/70 dark:border-obsidian-700">
+                  ROIC = NOPAT / Average Invested Capital
+                </div>
+                <p class="text-xs text-[#78736A]">So sánh trực tiếp với WACC để đánh giá khả năng tạo giá trị.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- ==================== TAB 6: BOOKMARKED (ĐÃ ĐÁNH DẤU) ==================== -->
+          <section id="view-bookmarked" class="hidden space-y-4">
+            <div id="bookmarked-container" class="bg-white dark:bg-obsidian-900 rounded-2xl p-6 border border-ivory-300 dark:border-obsidian-700 shadow-editorial">
+              <!-- Populated dynamically -->
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ==================== 3. RIGHT EXECUTIVE PROGRESS & ANALYTICS RAIL (4 cols) ==================== -->
+        <aside class="xl:col-span-4 space-y-5">
+          
+          <!-- Mechanical Chronometer Progress Card (Obsidian & Champagne Gold) -->
+          <div class="rounded-2xl bg-obsidian-900 text-[#F3EFE6] p-6 border border-obsidian-700 shadow-xl relative overflow-hidden">
+            <!-- Subtle Corner Gold Hairline Accent -->
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-champagne-400 font-semibold" data-i18n="journeyTitle">HÀNH TRÌNH CỦA BẠN</span>
+              <span class="text-[10px] font-mono text-[#8E897F]">2027 EDITION</span>
+            </div>
+
+            <!-- Circular Chronometer Gauge -->
+            <div class="flex flex-col items-center justify-center my-3">
+              <div class="relative w-40 h-40 flex items-center justify-center">
+                <svg class="w-full h-full" viewBox="0 0 130 130">
+                  <!-- Outer Fine Chronometer Ring -->
+                  <circle cx="65" cy="65" r="58" fill="transparent" stroke="#2E2C29" stroke-width="1" stroke-dasharray="2 4"></circle>
+                  <!-- Track Circle -->
+                  <circle cx="65" cy="65" r="50" fill="transparent" stroke="#21201E" stroke-width="7"></circle>
+                  <!-- Champagne Gold Progress Stroke -->
+                  <circle id="progress-ring" class="progress-ring-circle" cx="65" cy="65" r="50" fill="transparent" stroke="url(#champagneGrad)" stroke-width="7" stroke-linecap="round" stroke-dasharray="314.16" stroke-dashoffset="314.16"></circle>
+                  <defs>
+                    <linearGradient id="champagneGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#E5C97B" />
+                      <stop offset="50%" stop-color="#D4AF37" />
+                      <stop offset="100%" stop-color="#B48A3E" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                  <span id="overall-percent" class="font-serif font-semibold text-4xl text-[#F3EFE6] tracking-tight">0%</span>
+                  <span class="text-[11px] text-[#9E988E] mt-0.5" data-i18n="masteredLabel">đã nắm vững</span>
+                </div>
+              </div>
+
+              <p class="text-xs font-medium text-[#E5E0D5] mt-3 text-center">
+                <span id="journey-items-done" class="font-mono font-semibold text-champagne-400">0</span> trên <span class="font-mono">8</span> mục kiến thức
+              </p>
+              <p class="text-[11px] text-[#8E897F] mt-1 text-center" data-i18n="journeyQuote">
+                Mỗi lần hiểu thêm, một bước tiến.
+              </p>
+            </div>
+
+            <div class="h-px bg-obsidian-700/80 my-5"></div>
+
+            <!-- Key Metrics -->
+            <div class="space-y-3 text-xs sm:text-sm">
+              <div class="flex items-center justify-between">
+                <span class="text-[#9E988E]" data-i18n="statModules">Học phần</span>
+                <span class="font-mono font-semibold text-[#F3EFE6]">01</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-[#9E988E]" data-i18n="statQuestions">Câu hỏi ôn tập</span>
+                <span class="font-mono font-semibold text-[#F3EFE6]">18</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-[#9E988E]" data-i18n="statQuizDone">Lượt quiz hoàn thành</span>
+                <span id="stat-quiz-completed" class="font-mono font-semibold text-champagne-400">0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7-Day Discipline Streak Card -->
+          <div class="rounded-2xl bg-white dark:bg-obsidian-900 p-5 border border-ivory-300 dark:border-obsidian-700 shadow-editorial space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-[10px] font-mono uppercase tracking-widest text-champagne-600 dark:text-champagne-400 font-semibold">DISCIPLINE LEDGER</p>
+                <h3 class="font-serif font-semibold text-base text-obsidian-900 dark:text-[#F3EFE6]">Chuỗi kỷ luật 7 ngày</h3>
+              </div>
+              <span class="font-mono text-xs font-semibold px-2.5 py-1 rounded-lg bg-champagne-500/10 text-champagne-600 dark:text-champagne-300 border border-champagne-500/30">5 / 7 ngày</span>
+            </div>
+
+            <!-- 7 Rounded Metallic Squares -->
+            <div class="grid grid-cols-7 gap-2 text-center">
+              <div class="space-y-1.5">
+                <div class="h-9 rounded-lg bg-obsidian-900 dark:bg-champagne-500/20 border border-champagne-500/60 flex items-center justify-center text-champagne-400">
+                  <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                </div>
+                <span class="text-[10px] font-mono text-[#78736A]">T2</span>
+              </div>
+              <div class="space-y-1.5">
+                <div class="h-9 rounded-lg bg-obsidian-900 dark:bg-champagne-500/20 border border-champagne-500/60 flex items-center justify-center text-champagne-400">
+                  <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                </div>
+                <span class="text-[10px] font-mono text-[#78736A]">T3</span>
+              </div>
+              <div class="space-y-1.5">
+                <div class="h-9 rounded-lg bg-ivory-100 dark:bg-obsidian-850 border border-ivory-300 dark:border-obsidian-700 flex items-center justify-center text-[#C4BDB0]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
+                </div>
+                <span class="text-[10px] font-mono text-[#78736A]">T4</span>
+              </div>
+              <div class="space-y-1.5">
+                <div class="h-9 rounded-lg bg-obsidian-900 dark:bg-champagne-500/20 border border-champagne-500/60 flex items-center justify-center text-champagne-400">
+                  <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                </div>
+                <span class="text-[10px] font-mono text-[#78736A]">T5</span>
+              </div>
+              <div class="space-y-1.5">
+                <div class="h-9 rounded-lg bg-obsidian-900 dark:bg-champagne-500/20 border border-champagne-500/60 flex items-center justify-center text-champagne-400">
+                  <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                </div>
+                <span class="text-[10px] font-mono text-[#78736A]">T6</span>
+              </div>
+              <div class="space-y-1.5">
+                <div class="h-9 rounded-lg bg-emeraldLux-800 border border-champagne-400 flex items-center justify-center text-champagne-300 shadow-xs">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                </div>
+                <span class="text-[10px] font-mono font-bold text-obsidian-900 dark:text-champagne-400">Nay</span>
+              </div>
+              <div class="space-y-1.5">
+                <div class="h-9 rounded-lg bg-ivory-100 dark:bg-obsidian-850 border border-dashed border-ivory-300 dark:border-obsidian-700"></div>
+                <span class="text-[10px] font-mono text-[#78736A]">CN</span>
+              </div>
+            </div>
+          </div>
+
+        </aside>
+      </main>
+    </div>
+  </div>
+
+  <!-- ==================== SOURCE MATERIAL & QUICK NOTE MODAL ==================== -->
+  <div id="source-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-xs">
+    <div class="bg-white dark:bg-obsidian-900 w-full max-w-lg rounded-2xl border border-champagne-500/40 shadow-2xl overflow-hidden">
+      <div class="px-6 py-4 bg-obsidian-900 text-[#F3EFE6] border-b border-obsidian-700 flex items-center justify-between">
+        <div>
+          <span class="text-[10px] font-mono uppercase tracking-widest text-champagne-400">SOURCE ARCHIVE</span>
+          <h3 class="font-serif font-semibold text-lg">IFT Study Notes 2027 — Tài liệu nguồn</h3>
+        </div>
+        <button onclick="closeSourceModal()" class="p-1.5 rounded-lg text-[#9E988E] hover:text-white">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div class="p-6 space-y-4 text-sm">
+        <div class="p-4 rounded-xl bg-ivory-100 dark:bg-obsidian-850 border border-ivory-300 dark:border-obsidian-700 space-y-1.5">
+          <p class="font-semibold text-obsidian-900 dark:text-[#F3EFE6]">Corporate Issuers • Learning Module 01</p>
+          <p class="text-xs text-[#646058] dark:text-[#A39E93]">Tài liệu gốc gồm 12 trang tóm tắt chuẩn chương trình CFA Level I 2027, bao phủ toàn bộ LOS về hình thức pháp lý doanh nghiệp và cấu trúc sở hữu.</p>
+        </div>
+        <div class="space-y-2">
+          <label class="text-xs font-mono uppercase tracking-wider text-champagne-600 dark:text-champagne-400 font-semibold">Thêm ghi chú nhanh vào sổ tay</label>
+          <textarea id="quick-modal-note" rows="3" class="w-full p-3 rounded-xl bg-ivory-100 dark:bg-obsidian-850 border border-ivory-300 dark:border-obsidian-700 text-xs sm:text-sm focus:outline-none focus:border-champagne-500" placeholder="Nhập ghi chú nhanh..."></textarea>
+        </div>
+      </div>
+      <div class="px-6 py-3.5 bg-ivory-100 dark:bg-obsidian-850 border-t border-ivory-300 dark:border-obsidian-700 flex justify-end gap-2">
+        <button onclick="closeSourceModal()" class="px-4 py-2 rounded-xl text-xs font-medium text-[#646058] hover:text-obsidian-900 dark:hover:text-white">Đóng</button>
+        <button onclick="appendQuickNote()" class="px-4 py-2 rounded-xl bg-obsidian-900 dark:bg-champagne-500 text-[#F3EFE6] dark:text-obsidian-950 text-xs font-semibold">Lưu vào Ghi chú</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT APPLICATION STATE ==================== -->
+  <script>
+    // 8 Core Knowledge Items for Corporate Issuers LM 01
+    const knowledgeItems = [
+      {
+        id: 1,
+        title: "1. Sole Proprietorship (Doanh nghiệp tư nhân)",
+        summary: "Một cá nhân duy nhất sở hữu và điều hành. Lợi nhuận chịu thuế thu nhập cá nhân trực tiếp (pass-through), nhưng chủ sở hữu chịu trách nhiệm pháp lý vô hạn (Unlimited Liability)."
+      },
+      {
+        id: 2,
+        title: "2. General Partnership (Công ty hợp danh thông thường)",
+        summary: "Hai hay nhiều thành viên cùng góp vốn, điều hành và chia sẻ lợi nhuận theo thỏa thuận. Tất cả thành viên đều chịu trách nhiệm vô hạn đối với các khoản nợ doanh nghiệp."
+      },
+      {
+        id: 3,
+        title: "3. Limited Partnership (LP - Hợp danh hữu hạn)",
+        summary: "Gồm ít nhất một General Partner (GP - trực tiếp quản lý, trách nhiệm vô hạn) và các Limited Partners (LP - chỉ góp vốn, không điều hành hàng ngày, trách nhiệm hữu hạn)."
+      },
+      {
+        id: 4,
+        title: "4. Corporation (Công ty cổ phần)",
+        summary: "Pháp nhân độc lập tách biệt hoàn toàn với cổ đông. Cổ đông chịu trách nhiệm hữu hạn, dễ huy động vốn quy mô lớn nhưng phát sinh đánh thuế hai lần (Double Taxation)."
+      },
+      {
+        id: 5,
+        title: "5. Phân tách quyền sở hữu & quản lý (Separation of Ownership & Management)",
+        summary: "Ở Corporation, cổ đông bầu ra Hội đồng quản trị (Board of Directors) để giám sát Ban điều hành (Managers). Sự tách biệt này có thể tạo ra xung đột lợi ích (Agency Problem)."
+      },
+      {
+        id: 6,
+        title: "6. Cơ chế đánh thuế (Pass-Through vs. Double Taxation)",
+        summary: "Sole Proprietorship & Partnership áp dụng cơ chế thuế một lần ở cấp chủ sở hữu. Corporation chịu thuế TNDN ở cấp công ty và thuế TNCN khi chia cổ tức."
+      },
+      {
+        id: 7,
+        title: "7. Public Companies vs. Private Companies",
+        summary: "Công ty đại chúng (Public) niêm yết trên sàn giao dịch, có tính thanh khoản cao và nghĩa vụ công bố thông tin nghiêm ngặt hơn so với công ty tư nhân (Private)."
+      },
+      {
+        id: 8,
+        title: "8. Xu hướng chuyển đổi Private sang Public (IPO & Direct Listing)",
+        summary: "Doanh nghiệp tư nhân huy động vốn đại chúng thông qua IPO, Direct Listing hoặc sáp nhập với SPAC để mở rộng quy mô và tạo thanh khoản cho cổ đông hiện hữu."
+      }
+    ];
+
+    // 5 CFA Level I Standard Quiz Questions
+    const quizData = [
+      {
+        q: "Trong cấu trúc Limited Partnership (LP), nhận định nào sau đây mô tả chính xác nhất về trách nhiệm pháp lý và quyền điều hành?",
+        options: [
+          "A. Limited Partners trực tiếp điều hành hoạt động hàng ngày và chịu trách nhiệm hữu hạn",
+          "B. General Partner điều hành doanh nghiệp và chịu trách nhiệm pháp lý vô hạn",
+          "C. Tất cả các đối tác đều chịu trách nhiệm giới hạn trong phạm vi vốn góp"
+        ],
+        correct: 1,
+        rationale: "General Partner (GP) nắm quyền điều hành trực tiếp nên chịu trách nhiệm vô hạn (unlimited liability), trong khi Limited Partners (LP) là nhà đầu tư thụ động với trách nhiệm hữu hạn."
+      },
+      {
+        q: "Đặc điểm nào giúp mô hình Corporation thuận lợi nhất trong việc huy động nguồn vốn lớn từ công chúng?",
+        options: [
+          "A. Tư cách pháp nhân độc lập và trách nhiệm hữu hạn của cổ đông",
+          "B. Cơ chế miễn thuế thu nhập doanh nghiệp ở cấp công ty",
+          "C. Chủ sở hữu trực tiếp điều hành mọi hoạt động mà không cần Hội đồng quản trị"
+        ],
+        correct: 0,
+        rationale: "Trách nhiệm hữu hạn (limited liability) và khả năng chuyển nhượng cổ phần dễ dàng giúp nhà đầu tư yên tâm góp vốn mà không lo rủi ro vượt quá số tiền đầu tư."
+      },
+      {
+        q: "Hiện tượng 'Double Taxation' trong công ty cổ phần (Corporation) xảy ra như thế nào?",
+        options: [
+          "A. Công ty nộp thuế cả ở trong nước và nước ngoài cho cùng một khoản doanh thu",
+          "B. Lợi nhuận bị đánh thuế thu nhập doanh nghiệp, sau đó cổ tức chia cho cổ đông lại bị đánh thuế thu nhập cá nhân",
+          "C. Cổ đông phải nộp thuế hai lần khi mua và khi bán cổ phiếu"
+        ],
+        correct: 1,
+        rationale: "Corporation là thực thể chịu thuế độc lập nên nộp thuế TNDN trước; phần lợi nhuận sau thuế chia dưới dạng cổ tức tiếp tục chịu thuế ở cấp độ cổ đông."
+      },
+      {
+        q: "So với công ty tư nhân (Private Company), công ty đại chúng (Public Company) thường có đặc điểm nào sau đây?",
+        options: [
+          "A. Yêu cầu công bố thông tin tài chính định kỳ chặt chẽ hơn",
+          "B. Tính thanh khoản của cổ phần thấp hơn",
+          "C. Không chịu sự giám sát của cơ quan quản lý chứng khoán"
+        ],
+        correct: 0,
+        rationale: "Để bảo vệ nhà đầu tư đại chúng, các công ty niêm yết phải tuân thủ quy định công bố thông tin minh bạch và kiểm toán nghiêm ngặt."
+      },
+      {
+        q: "Chi phí đại diện (Agency Costs) trong doanh nghiệp phát sinh chủ yếu do nguyên nhân nào?",
+        options: [
+          "A. Chi phí thuê môi giới khi phát hành trái phiếu",
+          "B. Sự tách bạch giữa quyền sở hữu của cổ đông và quyền điều hành của ban giám đốc",
+          "C. Thuế suất thu nhập doanh nghiệp tăng cao"
+        ],
+        correct: 1,
+        rationale: "Khi nhà quản lý (Agents) hành động vì lợi ích riêng thay vì tối đa hóa giá trị cho cổ đông (Principals), doanh nghiệp phát sinh chi phí giám sát và tổn thất đại diện."
+      }
+    ];
+
+    // 5 Executive Flashcards
+    const flashcards = [
+      {
+        front: "Limited Liability (Trách nhiệm hữu hạn)",
+        back: "Mức tổn thất tối đa của chủ sở hữu/cổ đông chỉ giới hạn trong phạm vi số vốn đã đầu tư vào doanh nghiệp; tài sản cá nhân được bảo vệ trước các khoản nợ của công ty."
+      },
+      {
+        front: "Pass-Through Taxation",
+        back: "Cơ chế thuế áp dụng cho Sole Proprietorship và Partnership: lợi nhuận doanh nghiệp được chuyển thẳng sang tờ khai thuế thu nhập cá nhân của chủ sở hữu, không bị đánh thuế ở cấp doanh nghiệp."
+      },
+      {
+        front: "General Partner (GP) vs. Limited Partner (LP)",
+        back: "GP quản lý điều hành và chịu trách nhiệm vô hạn. LP góp vốn thụ động, không tham gia quản lý thường nhật và chịu trách nhiệm hữu hạn."
+      },
+      {
+        front: "Agency Conflict (Xung đột đại diện)",
+        back: "Xung đột lợi ích phát sinh khi Ban điều hành (Managers) ưu tiên mục tiêu cá nhân (lương thưởng, quyền lực) thay vì tối đa hóa tài sản cho Cổ đông (Shareholders)."
+      },
+      {
+        front: "Public vs. Private Issuer",
+        back: "Public Issuer có cổ phiếu giao dịch công khai trên sàn với tính thanh khoản cao và chuẩn công bố thông tin khắt khe; Private Issuer giao dịch thỏa thuận riêng lẻ, ít thanh khoản hơn."
+      }
+    ];
+
+    // Translations Dictionary (VI / EN)
+    const i18n = {
+      vi: {
+        brandSub: "Không gian học cá nhân",
+        navGroup: "Không gian của bạn",
+        navLibrary: "Thư viện",
+        navQuiz: "Luyện tập",
+        navFlashcards: "Thẻ ghi nhớ",
+        navNotes: "Ghi chú của tôi",
+        navFormulas: "Sổ tay công thức",
+        navBookmarked: "Đã đánh dấu",
+        currentlyStudying: "Đang học",
+        localTitle: "Lưu trên thiết bị này",
+        localSub: "Ghi chú & tiến độ học của bạn",
+        breadcrumbRoot: "Không gian học",
+        heroEyebrow: "SỔ TAY CFA CỦA BẠN",
+        heroTitle: "Kiến thức của bạn.<br />Theo cách tinh gọn & sâu sắc hơn.",
+        heroSubtitle: "Đọc để hiểu. Nhìn để nhớ. Luyện tập để nắm chắc.",
+        btnSource: "Tài liệu nguồn",
+        filterAll: "Tất cả",
+        filterStudying: "Đang học",
+        filterCompleted: "Hoàn thành",
+        moduleTitle: "Loại hình doanh nghiệp, đặc điểm tổ chức phát hành và quyền sở hữu",
+        moduleDesc: "Hiểu các loại hình doanh nghiệp, cách tổ chức phát hành vận hành và sự khác biệt giữa sở hữu public & private.",
+        knowledgeItemsLabel: "mục kiến thức",
+        sourcePagesLabel: "12 trang nguồn",
+        btnStartLearning: "Bắt đầu học",
+        journeyTitle: "HÀNH TRÌNH CỦA BẠN",
+        masteredLabel: "đã nắm vững",
+        journeyQuote: "Mỗi lần hiểu thêm, một bước tiến.",
+        statModules: "Học phần",
+        statQuestions: "Câu hỏi ôn tập",
+        statQuizDone: "Lượt quiz hoàn thành"
+      },
+      en: {
+        brandSub: "Personal Study Suite",
+        navGroup: "Your Workspace",
+        navLibrary: "Library",
+        navQuiz: "Practice Quiz",
+        navFlashcards: "Flashcards",
+        navNotes: "My Notes",
+        navFormulas: "Formula Vault",
+        navBookmarked: "Bookmarked",
+        currentlyStudying: "Currently Studying",
+        localTitle: "Saved on this device",
+        localSub: "Your notes & study progress",
+        breadcrumbRoot: "Workspace",
+        heroEyebrow: "YOUR CFA DOSSIER",
+        heroTitle: "Your Knowledge.<br />Refined for Deeper Retention.",
+        heroSubtitle: "Read to comprehend. Visualize to retain. Practice to master.",
+        btnSource: "Source Material",
+        filterAll: "All",
+        filterStudying: "In Progress",
+        filterCompleted: "Completed",
+        moduleTitle: "Business Structures, Issuer Characteristics, and Ownership",
+        moduleDesc: "Understand corporate legal structures, how issuers operate, and key distinctions between public & private ownership.",
+        knowledgeItemsLabel: "knowledge items",
+        sourcePagesLabel: "12 source pages",
+        btnStartLearning: "Start Learning",
+        journeyTitle: "YOUR JOURNEY",
+        masteredLabel: "mastered",
+        journeyQuote: "Every concept mastered is a step forward.",
+        statModules: "Modules",
+        statQuestions: "Practice Questions",
+        statQuizDone: "Quizzes Completed"
+      }
+    };
+
+    // Persistent State
+    let appState = {
+      masteredItemIds: [],
+      quizCorrectIds: [],
+      quizCompletedRuns: 0,
+      masteredFlashcardIds: [],
+      bookmarked: false,
+      notes: "• Sole Proprietorship & General Partnership: Trách nhiệm vô hạn (Unlimited Liability), áp dụng Pass-through taxation.\n• Limited Partnership (LP): General Partner (GP) điều hành & chịu trách nhiệm vô hạn; Limited Partner (LP) góp vốn & chịu trách nhiệm hữu hạn.\n• Corporation: Pháp nhân độc lập, trách nhiệm hữu hạn, chịu Double Taxation và có thể phát sinh Agency Costs.",
+      lang: 'vi'
+    };
+
+    let currentQuizIdx = 0;
+    let selectedOptionIdx = null;
+    let currentFcIdx = 0;
+    let sidebarCollapsed = false;
+
+    // Load & Save LocalStorage
+    function loadState() {
+      try {
+        const saved = localStorage.getItem('cfanotes_luxury_state_v1');
+        if (saved) {
+          appState = { ...appState, ...JSON.parse(saved) };
+        }
+      } catch (e) {}
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem('cfanotes_luxury_state_v1', JSON.stringify(appState));
+      } catch (e) {}
+    }
+
+    // Calculate & Update Real Progress Percentage
+    function updateAllProgressUI() {
+      // Weighted formula: 8 knowledge items (60%), 5 quiz questions (25%), 5 flashcards (15%)
+      const itemsRatio = appState.masteredItemIds.length / 8;
+      const quizRatio = appState.quizCorrectIds.length / quizData.length;
+      const fcRatio = appState.masteredFlashcardIds.length / flashcards.length;
+
+      const totalPct = Math.round((itemsRatio * 0.6 + quizRatio * 0.25 + fcRatio * 0.15) * 100);
+      const circumference = 314.16;
+      const offset = circumference - (totalPct / 100) * circumference;
+
+      document.getElementById('progress-ring').style.strokeDashoffset = offset;
+      document.getElementById('overall-percent').textContent = `${totalPct}%`;
+      document.getElementById('journey-items-done').textContent = appState.masteredItemIds.length;
+      document.getElementById('card-mastered-count').textContent = appState.masteredItemIds.length;
+      document.getElementById('stat-quiz-completed').textContent = appState.quizCompletedRuns;
+
+      // Sidebar mini progress
+      document.getElementById('sidebar-pct-text').textContent = `${totalPct}%`;
+      document.getElementById('sidebar-progress-bar').style.width = `${totalPct}%`;
+
+      // Completed status check
+      if (appState.masteredItemIds.length === 8) {
+        document.getElementById('count-completed').textContent = '1';
+        document.getElementById('count-studying').textContent = '0';
+        document.getElementById('module-status-pill').textContent = 'COMPLETED ✓';
+      } else {
+        document.getElementById('count-completed').textContent = '0';
+        document.getElementById('count-studying').textContent = '1';
+        document.getElementById('module-status-pill').textContent = 'LM 01 ACTIVE';
+      }
+
+      // Bookmark icon state
+      const bmIcon = document.getElementById('bookmark-icon');
+      if (appState.bookmarked) {
+        bmIcon.classList.add('fill-champagne-400', 'text-champagne-400');
+      } else {
+        bmIcon.classList.remove('fill-champagne-400', 'text-champagne-400');
+      }
+    }
+
+    // Render 8 Knowledge Items inside Executive Study Reader
+    function renderKnowledgeItems() {
+      const container = document.getElementById('knowledge-items-list');
+      container.innerHTML = knowledgeItems.map(item => {
+        const isDone = appState.masteredItemIds.includes(item.id);
+        return `
+          <div class="py-4 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+            <div class="space-y-1.5">
+              <h4 class="font-serif font-semibold text-base text-obsidian-900 dark:text-[#F3EFE6]">${item.title}</h4>
+              <p class="text-xs sm:text-sm text-[#646058] dark:text-[#A39E93] leading-relaxed">${item.summary}</p>
+            </div>
+            <button onclick="toggleMasteredItem(${item.id})" class="self-start shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold border transition flex items-center gap-1.5 ${
+              isDone
+                ? 'bg-emeraldLux-800 text-white border-emeraldLux-800'
+                : 'bg-ivory-100 dark:bg-obsidian-850 text-obsidian-900 dark:text-[#E5E0D5] border-ivory-300 dark:border-obsidian-700 hover:border-champagne-500'
+            }">
+              <i data-lucide="${isDone ? 'check-circle-2' : 'circle'}" class="w-3.5 h-3.5 ${isDone ? 'text-champagne-300' : 'text-champagne-500'}"></i>
+              <span>${isDone ? 'Đã nắm vững' : 'Đánh dấu nắm vững'}</span>
+            </button>
+          </div>
+        `;
+      }).join('');
+      window.lucide?.createIcons();
+    }
+
+    function toggleMasteredItem(id) {
+      const idx = appState.masteredItemIds.indexOf(id);
+      if (idx === -1) {
+        appState.masteredItemIds.push(id);
+        showToast('Đã ghi nhận hoàn thành mục kiến thức.');
+      } else {
+        appState.masteredItemIds.splice(idx, 1);
+      }
+      saveState();
+      renderKnowledgeItems();
+      updateAllProgressUI();
+    }
+
+    function openStudyReader() {
+      const panel = document.getElementById('study-reader-panel');
+      panel.classList.remove('hidden');
+      renderKnowledgeItems();
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function closeStudyReader() {
+      document.getElementById('study-reader-panel').classList.add('hidden');
+    }
+
+    // Library Filter
+    function filterLibrary(type) {
+      document.querySelectorAll('.lib-filter-btn').forEach(btn => {
+        btn.classList.remove('bg-obsidian-900', 'text-[#F3EFE6]', 'dark:bg-champagne-500', 'dark:text-obsidian-950', 'font-semibold');
+        btn.classList.add('text-[#646058]', 'dark:text-[#A39E93]', 'font-medium');
+      });
+      const active = document.getElementById(`filter-${type}`);
+      active.classList.add('bg-obsidian-900', 'text-[#F3EFE6]', 'dark:bg-champagne-500', 'dark:text-obsidian-950', 'font-semibold');
+      active.classList.remove('text-[#646058]', 'dark:text-[#A39E93]', 'font-medium');
+
+      const card = document.getElementById('module-card-0');
+      const isCompleted = appState.masteredItemIds.length === 8;
+
+      if (type === 'all') card.classList.remove('hidden');
+      if (type === 'studying') card.classList.toggle('hidden', isCompleted);
+      if (type === 'completed') card.classList.toggle('hidden', !isCompleted);
+    }
+
+    // Bookmark Toggle
+    function toggleBookmark() {
+      appState.bookmarked = !appState.bookmarked;
+      saveState();
+      updateAllProgressUI();
+      renderBookmarkedView();
+      showToast(appState.bookmarked ? 'Đã lưu học phần vào danh sách Đánh dấu ★' : 'Đã gỡ khỏi danh sách Đánh dấu');
+    }
+
+    function renderBookmarkedView() {
+      const box = document.getElementById('bookmarked-container');
+      if (appState.bookmarked) {
+        box.innerHTML = `
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <span class="font-mono text-[10px] uppercase tracking-widest text-champagne-600 dark:text-champagne-400">BOOKMARKED MODULE</span>
+              <h3 class="font-serif font-semibold text-lg text-obsidian-900 dark:text-[#F3EFE6] mt-1">LM 01: Loại hình doanh nghiệp, đặc điểm tổ chức phát hành và quyền sở hữu</h3>
+              <p class="text-xs text-[#78736A] mt-1">Corporate Issuers • 2027 Level I</p>
+            </div>
+            <button onclick="switchTab('library'); openStudyReader();" class="px-4 py-2 rounded-xl bg-obsidian-900 dark:bg-champagne-500 text-[#F3EFE6] dark:text-obsidian-950 text-xs font-semibold shrink-0">Mở bài học</button>
+          </div>
+        `;
+      } else {
+        box.innerHTML = `<p class="text-sm text-[#78736A] text-center py-6">Chưa có học phần nào được đánh dấu. Nhấn biểu tượng ngôi sao trên thẻ học phần để lưu tại đây.</p>`;
+      }
+    }
+
+    // Practice Quiz Logic
+    function renderQuiz() {
+      const q = quizData[currentQuizIdx];
+      selectedOptionIdx = null;
+      document.getElementById('quiz-counter').textContent = `Câu ${currentQuizIdx + 1} / ${quizData.length}`;
+      document.getElementById('quiz-question-text').textContent = q.q;
+      document.getElementById('quiz-rationale').classList.add('hidden');
+      document.getElementById('quiz-check-btn').disabled = true;
+      document.getElementById('quiz-next-btn').disabled = true;
+
+      const container = document.getElementById('quiz-options-container');
+      container.innerHTML = q.options.map((opt, idx) => `
+        <button onclick="selectOption(${idx})" id="q-opt-${idx}" class="w-full text-left p-4 rounded-xl border border-ivory-300 dark:border-obsidian-700 bg-ivory-100/70 dark:bg-obsidian-850 hover:border-champagne-500 text-xs sm:text-sm font-medium transition">
+          ${opt}
+        </button>
+      `).join('');
+    }
+
+    function selectOption(idx) {
+      selectedOptionIdx = idx;
+      document.querySelectorAll('#quiz-options-container button').forEach((btn, i) => {
+        btn.classList.remove('border-champagne-500', 'ring-1', 'ring-champagne-500');
+        if (i === idx) {
+          btn.classList.add('border-champagne-500', 'ring-1', 'ring-champagne-500');
+        }
+      });
+      document.getElementById('quiz-check-btn').disabled = false;
+    }
+
+    function checkQuizAnswer() {
+      if (selectedOptionIdx === null) return;
+      const q = quizData[currentQuizIdx];
+      const buttons = document.querySelectorAll('#quiz-options-container button');
+
+      buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === q.correct) {
+          btn.classList.add('bg-emeraldLux-800/15', 'border-emeraldLux-800', 'text-emeraldLux-900', 'dark:text-emerald-300');
+        } else if (i === selectedOptionIdx) {
+          btn.classList.add('bg-rose-500/10', 'border-rose-500', 'text-rose-700', 'dark:text-rose-300');
+        }
+      });
+
+      document.getElementById('quiz-rationale-text').textContent = q.rationale;
+      document.getElementById('quiz-rationale').classList.remove('hidden');
+      document.getElementById('quiz-check-btn').disabled = true;
+      document.getElementById('quiz-next-btn').disabled = false;
+
+      if (selectedOptionIdx === q.correct && !appState.quizCorrectIds.includes(currentQuizIdx)) {
+        appState.quizCorrectIds.push(currentQuizIdx);
+        saveState();
+        updateAllProgressUI();
+        showToast('Chính xác! Tiến độ nắm vững đã được cập nhật.');
+      }
+    }
+
+    function nextQuiz() {
+      if (currentQuizIdx < quizData.length - 1) {
+        currentQuizIdx++;
+        renderQuiz();
+      } else {
+        appState.quizCompletedRuns++;
+        saveState();
+        updateAllProgressUI();
+        showToast('Hoàn thành lượt luyện tập Corporate Issuers!');
+        currentQuizIdx = 0;
+        renderQuiz();
+      }
+    }
+
+    function resetQuiz() {
+      currentQuizIdx = 0;
+      renderQuiz();
+    }
+
+    // Flashcards 3D Logic
+    function renderFlashcard() {
+      const card = flashcards[currentFcIdx];
+      document.getElementById('fc-inner').classList.remove('rotate-y-180');
+      document.getElementById('fc-front').textContent = card.front;
+      document.getElementById('fc-back').textContent = card.back;
+      document.getElementById('fc-index-badge').textContent = `${currentFcIdx + 1} / ${flashcards.length}`;
+      const isMastered = appState.masteredFlashcardIds.includes(currentFcIdx);
+      document.getElementById('fc-mastered-tag').textContent = isMastered ? '✓ ĐÃ THUỘC' : '';
+    }
+
+    function flipFlashcard() {
+      document.getElementById('fc-inner').classList.toggle('rotate-y-180');
+    }
+
+    function nextFlashcard() {
+      currentFcIdx = (currentFcIdx + 1) % flashcards.length;
+      renderFlashcard();
+    }
+
+    function prevFlashcard() {
+      currentFcIdx = (currentFcIdx - 1 + flashcards.length) % flashcards.length;
+      renderFlashcard();
+    }
+
+    function markFlashcardMastered() {
+      if (!appState.masteredFlashcardIds.includes(currentFcIdx)) {
+        appState.masteredFlashcardIds.push(currentFcIdx);
+        saveState();
+        updateAllProgressUI();
+        showToast('Đã đánh dấu thuộc thẻ ghi nhớ!');
+      }
+      nextFlashcard();
+    }
+
+    // Notes & Source Modal
+    function saveNotes() {
+      appState.notes = document.getElementById('notes-editor').value;
+      saveState();
+      showToast('Đã lưu ghi chú cá nhân vào thiết bị.');
+    }
+
+    function openSourceModal() {
+      const m = document.getElementById('source-modal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function closeSourceModal() {
+      const m = document.getElementById('source-modal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    function appendQuickNote() {
+      const txt = document.getElementById('quick-modal-note').value.trim();
+      if (txt) {
+        appState.notes += `\n• ${txt}`;
+        document.getElementById('notes-editor').value = appState.notes;
+        document.getElementById('quick-modal-note').value = '';
+        saveState();
+        showToast('Đã thêm ghi chú nhanh vào sổ tay!');
+      }
+      closeSourceModal();
+    }
+
+    // Search Filter
+    function handleSearch(query) { renderAcademy(query);
+      const q = query.toLowerCase().trim();
+      if (document.getElementById('view-library').classList.contains('hidden')) {
+        switchTab('library');
+      }
+      const card = document.getElementById('module-card-0');
+      const match =
+        !q ||
+        'loại hình doanh nghiệp đặc điểm tổ chức phát hành quyền sở hữu corporate issuers lm 01'.includes(q);
+      card.classList.toggle('hidden', !match);
+    }
+
+    // Navigation Tabs
+    function switchTab(tab) {
+      const tabs = ['library', 'quiz', 'flashcards', 'notes', 'formulas', 'bookmarked'];
+      tabs.forEach(t => {
+        document.getElementById(`view-${t}`).classList.add('hidden');
+        const nav = document.getElementById(`nav-${t}`);
+        if (nav) {
+          nav.classList.remove('bg-obsidian-800/90', 'text-[#F3EFE6]', 'border-champagne-500/30');
+          nav.classList.add('text-[#9E988E]', 'border-transparent');
+          const ind = nav.querySelector('.nav-indicator');
+          if (ind) ind.classList.add('hidden');
+        }
+      });
+
+      document.getElementById(`view-${tab}`).classList.remove('hidden');
+      const activeNav = document.getElementById(`nav-${tab}`);
+      if (activeNav) {
+        activeNav.classList.add('bg-obsidian-800/90', 'text-[#F3EFE6]', 'border-champagne-500/30');
+        activeNav.classList.remove('text-[#9E988E]', 'border-transparent');
+        const ind = activeNav.querySelector('.nav-indicator');
+        if (ind) ind.classList.remove('hidden');
+      }
+
+      const keyMap = {
+        library: 'navLibrary',
+        quiz: 'navQuiz',
+        flashcards: 'navFlashcards',
+        notes: 'navNotes',
+        formulas: 'navFormulas',
+        bookmarked: 'navBookmarked'
+      };
+      document.getElementById('breadcrumb-current').textContent = i18n[appState.lang][keyMap[tab]];
+
+      if (tab === 'quiz' || tab === 'flashcards') renderCasePractice(tab);
+      
+      if (tab === 'bookmarked') renderBookmarkedView();
+    }
+
+    // Language Switcher (Translates entire UI)
+    function setLanguage(lang) {
+      appState.lang = lang; document.documentElement.lang=lang; renderAcademy(); for(const mode of ['quiz','flashcards']) if(!document.getElementById('view-'+mode).classList.contains('hidden'))renderCasePractice(mode);
+      saveState();
+
+      const viBtn = document.getElementById('lang-vi');
+      const enBtn = document.getElementById('lang-en');
+      if (lang === 'vi') {
+        viBtn.classList.add('bg-white', 'dark:bg-champagne-500', 'text-obsidian-900', 'dark:text-obsidian-950', 'shadow-2xs');
+        enBtn.classList.remove('bg-white', 'dark:bg-champagne-500', 'text-obsidian-900', 'dark:text-obsidian-950', 'shadow-2xs');
+      } else {
+        enBtn.classList.add('bg-white', 'dark:bg-champagne-500', 'text-obsidian-900', 'dark:text-obsidian-950', 'shadow-2xs');
+        viBtn.classList.remove('bg-white', 'dark:bg-champagne-500', 'text-obsidian-900', 'dark:text-obsidian-950', 'shadow-2xs');
+      }
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18n[lang][key]) {
+          el.innerHTML = i18n[lang][key];
+        }
+      });
+    }
+
+    // Theme, Level, Sidebar & Toast
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+    }
+
+    function setLevel(lvl) {
+      studyLevel=lvl.split(' ')[1];
+      document.getElementById('lm-original').hidden=studyLevel!=='I';
+      switchTab('library');renderAcademy();
+      document.getElementById('topbar-level').textContent = lvl;
+      document.querySelectorAll('.lvl-btn').forEach(btn => {
+        btn.classList.remove('bg-champagne-500', 'text-obsidian-950', 'shadow-xs');
+        btn.classList.add('text-[#8E897F]');
+      });
+      const activeButton = Array.from(document.querySelectorAll('.lvl-btn')).find(b=>b.textContent.trim()===lvl.replace('LEVEL','LVL'));
+      activeButton.classList.add('bg-champagne-500', 'text-obsidian-950', 'shadow-xs');
+      activeButton.classList.remove('text-[#8E897F]');
+      showToast(`Chương trình học: CFA ${lvl}`);
+    }
+
+    function toggleSidebarCollapse() {
+      const sidebar = document.getElementById('sidebar');
+      const labels = document.querySelectorAll('.sidebar-label');
+      sidebarCollapsed = !sidebarCollapsed;
+      if (sidebarCollapsed) {
+        sidebar.classList.replace('w-72', 'w-20');
+        labels.forEach(l => l.classList.add('hidden'));
+      } else {
+        sidebar.classList.replace('w-20', 'w-72');
+        labels.forEach(l => l.classList.remove('hidden'));
+      }
+    }
+
+    function toggleMobileSidebar() {
+      document.getElementById('sidebar').classList.toggle('-translate-x-full');
+      document.getElementById('mobile-backdrop').classList.toggle('hidden');
+    }
+
+    function showToast(msg) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-xl bg-obsidian-900 text-[#F3EFE6] text-xs sm:text-sm font-medium border border-champagne-500/40 shadow-2xl transition-all duration-300';
+      toast.innerHTML = `<span class="w-2 h-2 rounded-full bg-champagne-400"></span><span>${msg}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(8px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 2600);
+    }
+
+    // Ctrl + K Global Search Shortcut
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        const input = document.getElementById('global-search');
+        if (input) input.focus();
+      }
+    });
+
+    // Boot Application
+    window.addEventListener('DOMContentLoaded', () => {
+      loadState();
+      document.getElementById('notes-editor').value = appState.notes;
+      setLanguage(appState.lang);
+      updateAllProgressUI();
+      window.lucide?.createIcons();
+    });
+  </script>
+<script src="academy-data.js"></script><script src="academy.js"></script></body>
+</html>
