@@ -69,7 +69,7 @@ body > div.min-h-screen > div.flex-1 > header {
   border-color: var(--site-line) !important;
 }
 header [class*="bg-white"],header [class*="bg-ivory-"],header [class*="border-ivory-"],
-#sidebar [class*="border-obsidian-"] { border-color: var(--site-line) !important; }
+#sidebar [class*="border-obsidian-"] { border-color: rgba(255,255,255,.14) !important; }
 header [class*="bg-white"],header [class*="bg-ivory-"] { background: var(--site-paper) !important; }
 header [class*="text-obsidian-"],header [class*="text-\[\#F3EFE6\]"] { color: var(--site-ink) !important; }
 main .bg-white,main [class*="bg-white"],#source-modal > div,
@@ -136,6 +136,11 @@ input,textarea,select { background: var(--site-paper) !important; color: var(--s
 #road-progress button { color: var(--site-green) !important; }
 #road-progress hr { border-color: var(--site-line) !important; }
 #road-progress progress { accent-color: var(--site-green); }
+progress::-webkit-progress-bar { background: var(--site-line); border-radius: 999px; }
+progress::-webkit-progress-value { background: var(--site-green); border-radius: 999px; }
+progress::-moz-progress-bar { background: var(--site-green); border-radius: 999px; }
+#sidebar-progress-bar { background: linear-gradient(90deg,#aa7b36,#d0a457) !important; }
+#sidebar [class*="bg-obsidian-800/70"] { border-color: rgba(255,255,255,.14) !important; }
 .case-result { background: var(--site-paper); color: var(--site-ink); border: 1px solid var(--site-line); border-radius: var(--site-radius); margin-top: 12px; }
 .case-ring { background: conic-gradient(var(--site-green) var(--arc),var(--site-line) 0) !important; }
 .case-ring b { background: var(--site-paper) !important; color: var(--site-green) !important; }
