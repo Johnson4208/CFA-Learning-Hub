@@ -127,7 +127,7 @@
   </style>
 <style>
 #academy,.academy-unit{background:#fdfcfa;color:#272720}.dark #academy,.dark .academy-unit{background:#21201e;color:#f3efe6}#academy{border:1px solid #ded7c6;border-radius:18px;overflow:hidden}.academy-head{padding:24px;background:#1e3f32;color:#fff}.academy-head small{letter-spacing:.13em;color:#e5c97b}.academy-head h2{font:600 30px Georgia,serif;margin:6px 0}.academy-head p,.academy-unit p{font-size:14px;line-height:1.75}.academy-unit{padding:16px 22px;border-bottom:1px solid #c8bfaa66}.academy-unit summary{cursor:pointer;font-weight:600}.academy-unit p,.academy-unit h4,.academy-answer{margin-top:12px}.academy-equation{overflow-x:auto;background:#f2efe9;color:#152d24;padding:20px;border-radius:10px;margin-top:14px;font-size:1.4rem}.academy-answer summary,.archive{color:#96702d}.archive{display:block;padding:18px 22px;text-decoration:underline}
-</style><style>.academy-unit textarea{display:block;width:100%;margin:14px 0;border:1px solid #ad9d76;padding:10px;border-radius:8px;color:#25231e}.academy-unit button,.case-result button{background:#264e3e;color:white;border-radius:8px;padding:9px 16px;margin:14px 8px 0 0}.case-result{display:flex;align-items:center;justify-content:space-between;padding:24px;gap:14px}.case-ring{width:120px;aspect-ratio:1;border-radius:50%;background:conic-gradient(#96702d var(--arc),#e8e3d9 0);display:grid;place-items:center}.case-ring b{width:78%;aspect-ratio:1;border-radius:50%;background:#fdfcfa;color:#264e3e;display:grid;place-items:center}</style></head>
+</style><style>.academy-unit textarea{display:block;width:100%;margin:14px 0;border:1px solid #ad9d76;padding:10px;border-radius:8px;color:#25231e}.academy-unit button,.case-result button{background:#264e3e;color:white;border-radius:8px;padding:9px 16px;margin:14px 8px 0 0}.case-result{display:flex;align-items:center;justify-content:space-between;padding:24px;gap:14px}.case-ring{width:120px;aspect-ratio:1;border-radius:50%;background:conic-gradient(#96702d var(--arc),#e8e3d9 0);display:grid;place-items:center}.case-ring b{width:78%;aspect-ratio:1;border-radius:50%;background:#fdfcfa;color:#264e3e;display:grid;place-items:center}</style><style>.stage,#road-progress{padding:22px}.stage{background:#eae5da;color:#252a20}.stage h3,#road-progress h2{font:600 23px Georgia,serif;margin:5px 0}.stage p,#road-progress p{font-size:14px;line-height:1.65}.stage small,#road-progress small{letter-spacing:.08em}.academy-unit{scroll-margin-top:6rem}#road-progress{background:#1e3f32;color:#fff;border-radius:16px}#road-progress strong{font-size:32px}#road-progress progress{display:block;width:100%;accent-color:#d4af37;margin:8px 0 16px}#road-progress button{display:block;text-align:left;color:#f0d58f;padding:9px 0}#road-progress hr{margin:18px 0;border-color:#ffffff44}</style></head>
 <body class="bg-ivory-100 text-obsidian-900 dark:bg-obsidian-950 dark:text-[#F3EFE6] font-sans transition-colors duration-300 overflow-x-hidden">
 
   <!-- Toast Notification Container -->
@@ -179,7 +179,7 @@
                 <i data-lucide="layout-grid" class="w-4 h-4 text-champagne-400 shrink-0"></i>
                 <span class="sidebar-label" data-i18n="navLibrary">Thư viện</span>
               </div>
-              <span class="sidebar-label font-mono text-xs px-2 py-0.5 rounded bg-champagne-500/20 text-champagne-300 border border-champagne-500/30">01</span>
+              <span class="sidebar-label font-mono text-xs px-2 py-0.5 rounded bg-champagne-500/20 text-champagne-300 border border-champagne-500/30"></span>
             </button>
 
             <button onclick="switchTab('quiz')" id="nav-quiz" class="nav-item relative w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-[#9E988E] hover:text-[#F3EFE6] hover:bg-obsidian-800/50 border border-transparent transition">
@@ -235,8 +235,8 @@
             </div>
             <span id="sidebar-pct-text" class="font-mono text-[11px] text-champagne-300">0%</span>
           </div>
-          <p class="font-serif font-semibold text-sm text-[#F3EFE6]">Corporate Issuers</p>
-          <p class="text-[11px] text-[#8E897F] mt-0.5">Level I · Tài liệu 2027</p>
+          <p class="font-serif font-semibold text-sm text-[#F3EFE6]" id="sidebar-course">CFA</p>
+          <p class="text-[11px] text-[#8E897F] mt-0.5">CFA · 2027</p>
           <div class="w-full h-1 bg-obsidian-950 rounded-full mt-3 overflow-hidden">
             <div id="sidebar-progress-bar" class="h-full bg-gradient-to-r from-champagne-600 to-champagne-300 rounded-full transition-all duration-500" style="width: 0%"></div>
           </div>
@@ -335,143 +335,15 @@
                 Kiến thức của bạn.<br />Theo cách tinh gọn &amp; sâu sắc hơn.
               </h1>
               <p class="text-sm text-[#646058] dark:text-[#A39E93] mt-2.5" data-i18n="heroSubtitle">
-                Đọc để hiểu. Nhìn để nhớ. Luyện tập để nắm chắc.
+                38 bài học · 9 chặng · 3 bài tổng kết
               </p>
             </div>
 
-            <!-- Source Material Button -->
-            <button onclick="openSourceModal()" class="self-start sm:self-end inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 hover:border-champagne-500 text-obsidian-900 dark:text-[#F3EFE6] text-xs sm:text-sm font-medium shadow-editorial transition shrink-0">
-              <i data-lucide="book-open" class="w-4 h-4 text-champagne-500"></i>
-              <span data-i18n="btnSource">Tài liệu nguồn</span>
-            </button>
+            
           </div>
 
           <!-- ==================== TAB 1: LIBRARY (THƯ VIỆN) ==================== -->
-          <section id="view-library" class="space-y-5"><article id="academy"></article><div id="lm-original">
-            
-            <!-- Filter Bar -->
-            <div class="bg-white dark:bg-obsidian-900 rounded-2xl px-4 py-3 border border-ivory-300 dark:border-obsidian-700/90 shadow-editorial flex flex-wrap items-center justify-between gap-3">
-              <div class="flex items-center gap-2">
-                <button onclick="filterLibrary('all')" id="filter-all" class="lib-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-obsidian-900 text-[#F3EFE6] dark:bg-champagne-500 dark:text-obsidian-950 transition flex items-center gap-1.5">
-                  <span data-i18n="filterAll">Tất cả</span>
-                  <span class="font-mono text-[11px] opacity-80">1</span>
-                </button>
-                <button onclick="filterLibrary('studying')" id="filter-studying" class="lib-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-medium text-[#646058] dark:text-[#A39E93] hover:bg-ivory-200 dark:hover:bg-obsidian-800 transition flex items-center gap-1.5">
-                  <span data-i18n="filterStudying">Đang học</span>
-                  <span id="count-studying" class="font-mono text-[11px] px-1.5 rounded bg-ivory-200 dark:bg-obsidian-800">1</span>
-                </button>
-                <button onclick="filterLibrary('completed')" id="filter-completed" class="lib-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-medium text-[#646058] dark:text-[#A39E93] hover:bg-ivory-200 dark:hover:bg-obsidian-800 transition flex items-center gap-1.5">
-                  <span data-i18n="filterCompleted">Hoàn thành</span>
-                  <span id="count-completed" class="font-mono text-[11px] px-1.5 rounded bg-ivory-200 dark:bg-obsidian-800">0</span>
-                </button>
-              </div>
-
-              <!-- Mobile Search -->
-              <div class="md:hidden w-full">
-                <input type="text" oninput="handleSearch(this.value)" placeholder="Tìm trong tài liệu..." class="w-full px-3 py-2 text-xs rounded-xl bg-ivory-100 dark:bg-obsidian-850 border border-ivory-300 dark:border-obsidian-700 focus:outline-none focus:border-champagne-500">
-              </div>
-            </div>
-
-            <!-- Editorial Course Module Card -->
-            <article id="module-card-0" class="luxury-card rounded-2xl bg-white dark:bg-obsidian-900 p-6 sm:p-7 border border-ivory-300 dark:border-obsidian-700/90 shadow-editorial">
-              <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                
-                <!-- Left Details -->
-                <div class="space-y-3.5 flex-1 min-w-0">
-                  <!-- Refined Badges -->
-                  <div class="flex flex-wrap items-center gap-2">
-                    <span class="px-2.5 py-1 rounded-md text-[10px] font-mono font-semibold uppercase tracking-widest bg-champagne-500/10 text-champagne-600 dark:text-champagne-300 border border-champagne-500/35">
-                      CORPORATE ISSUERS
-                    </span>
-                    <span class="px-2.5 py-1 rounded-md text-[10px] font-mono font-medium uppercase tracking-wider bg-ivory-100 dark:bg-obsidian-850 text-[#646058] dark:text-[#A39E93] border border-ivory-300 dark:border-obsidian-700">
-                      2027 • LEVEL I
-                    </span>
-                    <span id="module-status-pill" class="px-2.5 py-1 rounded-md text-[10px] font-mono font-medium bg-emeraldLux-800/10 dark:bg-emeraldLux-800/40 text-emeraldLux-800 dark:text-emerald-300 border border-emeraldLux-800/20">
-                      LM 01 ACTIVE
-                    </span>
-                  </div>
-
-                  <!-- Serif Editorial Title -->
-                  <div>
-                    <h2 onclick="openStudyReader()" class="font-serif font-semibold text-xl sm:text-2xl text-obsidian-900 dark:text-[#F3EFE6] hover:text-champagne-600 dark:hover:text-champagne-300 transition cursor-pointer leading-snug" data-i18n="moduleTitle">
-                      Loại hình doanh nghiệp, đặc điểm tổ chức phát hành và quyền sở hữu
-                    </h2>
-                    <p class="text-xs sm:text-sm text-[#646058] dark:text-[#A39E93] mt-2 leading-relaxed" data-i18n="moduleDesc">
-                      Hiểu các loại hình doanh nghiệp, cách tổ chức phát hành vận hành và sự khác biệt giữa sở hữu public &amp; private.
-                    </p>
-                  </div>
-
-                  <!-- Metadata Strip -->
-                  <div class="flex flex-wrap items-center gap-3.5 text-xs font-mono text-[#78736A] pt-1">
-                    <span class="font-semibold text-obsidian-900 dark:text-[#E5E0D5]">LM 01</span>
-                    <span>•</span>
-                    <span><span id="card-mastered-count">0</span>/8 <span data-i18n="knowledgeItemsLabel">mục kiến thức</span></span>
-                    <span>•</span>
-                    <span data-i18n="sourcePagesLabel">12 trang nguồn</span>
-                  </div>
-                </div>
-
-                <!-- Minimalist Corporate Architecture Vector (Champagne Gold & Deep Emerald) -->
-                <div class="hidden sm:flex w-32 h-32 rounded-2xl bg-ivory-100 dark:bg-obsidian-850 border border-ivory-300 dark:border-obsidian-700/80 items-center justify-center shrink-0 relative">
-                  <svg class="w-24 h-24" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Subtle Isometric Grid Lines -->
-                    <circle cx="60" cy="60" r="46" stroke="#B48A3E" stroke-opacity="0.18" stroke-dasharray="3 3"/>
-                    <!-- Secondary Emerald Tower -->
-                    <path d="M66 42L84 50V86L66 78V42Z" fill="#1E3F32"/>
-                    <path d="M48 50L66 42V78L48 86V50Z" fill="#264E3E"/>
-                    <!-- Primary Champagne Gold Facade -->
-                    <path d="M42 36L60 28L78 36V84L60 92L42 84V36Z" fill="#141413" stroke="#B48A3E" stroke-width="1.5"/>
-                    <path d="M60 28L78 36V84L60 92V28Z" fill="#B48A3E" fill-opacity="0.22"/>
-                    <!-- Architectural Windows -->
-                    <line x1="48" y1="45" x2="55" y2="42" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
-                    <line x1="48" y1="54" x2="55" y2="51" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
-                    <line x1="48" y1="63" x2="55" y2="60" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
-                    <line x1="48" y1="72" x2="55" y2="69" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
-                    <!-- Stakeholder Nodes -->
-                    <circle cx="28" cy="40" r="4" fill="#F9F8F4" stroke="#B48A3E" stroke-width="1.5"/>
-                    <circle cx="92" cy="44" r="4" fill="#F9F8F4" stroke="#1E3F32" stroke-width="1.5"/>
-                    <circle cx="90" cy="78" r="4" fill="#F9F8F4" stroke="#B48A3E" stroke-width="1.5"/>
-                  </svg>
-                </div>
-              </div>
-
-              <!-- Footer Action Bar -->
-              <div class="mt-6 pt-4 border-t border-ivory-200 dark:border-obsidian-700/70 flex flex-wrap items-center justify-between gap-3">
-                <div>
-                  <p class="text-xs font-semibold text-obsidian-900 dark:text-[#E5E0D5]">01 / Tài liệu đầu tiên của bạn</p>
-                  <p class="text-[11px] text-[#78736A]">IFT Study Notes · Đã đưa vào thư viện</p>
-                </div>
-
-                <div class="flex items-center gap-2.5 ml-auto">
-                  <button onclick="openStudyReader()" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-obsidian-900 hover:bg-obsidian-800 dark:bg-champagne-500 dark:hover:bg-champagne-400 text-[#F3EFE6] dark:text-obsidian-950 text-xs sm:text-sm font-semibold border border-champagne-500/40 shadow-xs transition cursor-pointer">
-                    <span data-i18n="btnStartLearning">Bắt đầu học</span>
-                    <i data-lucide="arrow-up-right" class="w-4 h-4 text-champagne-400 dark:text-obsidian-950"></i>
-                  </button>
-                  <button onclick="toggleBookmark()" id="bookmark-btn" title="Đánh dấu học phần" class="p-2.5 rounded-xl bg-ivory-100 dark:bg-obsidian-850 border border-ivory-300 dark:border-obsidian-700 hover:border-champagne-500 text-[#78736A] transition">
-                    <i data-lucide="star" id="bookmark-icon" class="w-4 h-4"></i>
-                  </button>
-                </div>
-              </div>
-            </article>
-
-            <!-- Inline Executive Study Reader (Expands smoothly when clicking "Bắt đầu học") -->
-            <div id="study-reader-panel" class="hidden rounded-2xl bg-white dark:bg-obsidian-900 border border-champagne-500/40 shadow-editorial overflow-hidden transition-all">
-              <div class="px-6 py-4 bg-obsidian-900 text-[#F3EFE6] border-b border-obsidian-700 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                  <span class="px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-champagne-500/20 text-champagne-300 border border-champagne-500/30">EXECUTIVE READER</span>
-                  <h3 class="font-serif font-semibold text-base sm:text-lg">8 Mục Kiến Thức Trọng Tâm — LM 01</h3>
-                </div>
-                <button onclick="closeStudyReader()" class="p-1.5 rounded-lg text-[#9E988E] hover:text-white hover:bg-obsidian-800 transition">
-                  <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-              </div>
-
-              <div id="knowledge-items-list" class="p-5 sm:p-6 divide-y divide-ivory-200 dark:divide-obsidian-700/70">
-                <!-- 8 detailed knowledge items rendered by JS -->
-              </div>
-            </div>
-
-          </div></section>
+          <section id="view-library" class="space-y-5"><article id="academy"></article></section>
 
           <!-- ==================== TAB 2: PRACTICE QUIZ (LUYỆN TẬP) ==================== -->
           <section id="view-quiz" class="hidden space-y-5">
@@ -633,124 +505,7 @@
         </div>
 
         <!-- ==================== 3. RIGHT EXECUTIVE PROGRESS & ANALYTICS RAIL (4 cols) ==================== -->
-        <aside class="xl:col-span-4 space-y-5">
-          
-          <!-- Mechanical Chronometer Progress Card (Obsidian & Champagne Gold) -->
-          <div class="rounded-2xl bg-obsidian-900 text-[#F3EFE6] p-6 border border-obsidian-700 shadow-xl relative overflow-hidden">
-            <!-- Subtle Corner Gold Hairline Accent -->
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-champagne-400 font-semibold" data-i18n="journeyTitle">HÀNH TRÌNH CỦA BẠN</span>
-              <span class="text-[10px] font-mono text-[#8E897F]">2027 EDITION</span>
-            </div>
-
-            <!-- Circular Chronometer Gauge -->
-            <div class="flex flex-col items-center justify-center my-3">
-              <div class="relative w-40 h-40 flex items-center justify-center">
-                <svg class="w-full h-full" viewBox="0 0 130 130">
-                  <!-- Outer Fine Chronometer Ring -->
-                  <circle cx="65" cy="65" r="58" fill="transparent" stroke="#2E2C29" stroke-width="1" stroke-dasharray="2 4"></circle>
-                  <!-- Track Circle -->
-                  <circle cx="65" cy="65" r="50" fill="transparent" stroke="#21201E" stroke-width="7"></circle>
-                  <!-- Champagne Gold Progress Stroke -->
-                  <circle id="progress-ring" class="progress-ring-circle" cx="65" cy="65" r="50" fill="transparent" stroke="url(#champagneGrad)" stroke-width="7" stroke-linecap="round" stroke-dasharray="314.16" stroke-dashoffset="314.16"></circle>
-                  <defs>
-                    <linearGradient id="champagneGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#E5C97B" />
-                      <stop offset="50%" stop-color="#D4AF37" />
-                      <stop offset="100%" stop-color="#B48A3E" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-
-                <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-                  <span id="overall-percent" class="font-serif font-semibold text-4xl text-[#F3EFE6] tracking-tight">0%</span>
-                  <span class="text-[11px] text-[#9E988E] mt-0.5" data-i18n="masteredLabel">đã nắm vững</span>
-                </div>
-              </div>
-
-              <p class="text-xs font-medium text-[#E5E0D5] mt-3 text-center">
-                <span id="journey-items-done" class="font-mono font-semibold text-champagne-400">0</span> trên <span class="font-mono">8</span> mục kiến thức
-              </p>
-              <p class="text-[11px] text-[#8E897F] mt-1 text-center" data-i18n="journeyQuote">
-                Mỗi lần hiểu thêm, một bước tiến.
-              </p>
-            </div>
-
-            <div class="h-px bg-obsidian-700/80 my-5"></div>
-
-            <!-- Key Metrics -->
-            <div class="space-y-3 text-xs sm:text-sm">
-              <div class="flex items-center justify-between">
-                <span class="text-[#9E988E]" data-i18n="statModules">Học phần</span>
-                <span class="font-mono font-semibold text-[#F3EFE6]">01</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-[#9E988E]" data-i18n="statQuestions">Câu hỏi ôn tập</span>
-                <span class="font-mono font-semibold text-[#F3EFE6]">18</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-[#9E988E]" data-i18n="statQuizDone">Lượt quiz hoàn thành</span>
-                <span id="stat-quiz-completed" class="font-mono font-semibold text-champagne-400">0</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- 7-Day Discipline Streak Card -->
-          <div class="rounded-2xl bg-white dark:bg-obsidian-900 p-5 border border-ivory-300 dark:border-obsidian-700 shadow-editorial space-y-4">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-[10px] font-mono uppercase tracking-widest text-champagne-600 dark:text-champagne-400 font-semibold">DISCIPLINE LEDGER</p>
-                <h3 class="font-serif font-semibold text-base text-obsidian-900 dark:text-[#F3EFE6]">Chuỗi kỷ luật 7 ngày</h3>
-              </div>
-              <span class="font-mono text-xs font-semibold px-2.5 py-1 rounded-lg bg-champagne-500/10 text-champagne-600 dark:text-champagne-300 border border-champagne-500/30">5 / 7 ngày</span>
-            </div>
-
-            <!-- 7 Rounded Metallic Squares -->
-            <div class="grid grid-cols-7 gap-2 text-center">
-              <div class="space-y-1.5">
-                <div class="h-9 rounded-lg bg-obsidian-900 dark:bg-champagne-500/20 border border-champagne-500/60 flex items-center justify-center text-champagne-400">
-                  <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                </div>
-                <span class="text-[10px] font-mono text-[#78736A]">T2</span>
-              </div>
-              <div class="space-y-1.5">
-                <div class="h-9 rounded-lg bg-obsidian-900 dark:bg-champagne-500/20 border border-champagne-500/60 flex items-center justify-center text-champagne-400">
-                  <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                </div>
-                <span class="text-[10px] font-mono text-[#78736A]">T3</span>
-              </div>
-              <div class="space-y-1.5">
-                <div class="h-9 rounded-lg bg-ivory-100 dark:bg-obsidian-850 border border-ivory-300 dark:border-obsidian-700 flex items-center justify-center text-[#C4BDB0]">
-                  <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
-                </div>
-                <span class="text-[10px] font-mono text-[#78736A]">T4</span>
-              </div>
-              <div class="space-y-1.5">
-                <div class="h-9 rounded-lg bg-obsidian-900 dark:bg-champagne-500/20 border border-champagne-500/60 flex items-center justify-center text-champagne-400">
-                  <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                </div>
-                <span class="text-[10px] font-mono text-[#78736A]">T5</span>
-              </div>
-              <div class="space-y-1.5">
-                <div class="h-9 rounded-lg bg-obsidian-900 dark:bg-champagne-500/20 border border-champagne-500/60 flex items-center justify-center text-champagne-400">
-                  <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                </div>
-                <span class="text-[10px] font-mono text-[#78736A]">T6</span>
-              </div>
-              <div class="space-y-1.5">
-                <div class="h-9 rounded-lg bg-emeraldLux-800 border border-champagne-400 flex items-center justify-center text-champagne-300 shadow-xs">
-                  <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                </div>
-                <span class="text-[10px] font-mono font-bold text-obsidian-900 dark:text-champagne-400">Nay</span>
-              </div>
-              <div class="space-y-1.5">
-                <div class="h-9 rounded-lg bg-ivory-100 dark:bg-obsidian-850 border border-dashed border-ivory-300 dark:border-obsidian-700"></div>
-                <span class="text-[10px] font-mono text-[#78736A]">CN</span>
-              </div>
-            </div>
-          </div>
-
-        </aside>
+        <aside class="xl:col-span-4"><section id="road-progress"></section></aside>
       </main>
     </div>
   </div>
@@ -924,8 +679,8 @@
         localSub: "Ghi chú & tiến độ học của bạn",
         breadcrumbRoot: "Không gian học",
         heroEyebrow: "SỔ TAY CFA CỦA BẠN",
-        heroTitle: "Kiến thức của bạn.<br />Theo cách tinh gọn & sâu sắc hơn.",
-        heroSubtitle: "Đọc để hiểu. Nhìn để nhớ. Luyện tập để nắm chắc.",
+        heroTitle: "Khóa học CFA Level I–III",
+        heroSubtitle: "38 bài học · 9 chặng · 3 bài tổng kết",
         btnSource: "Tài liệu nguồn",
         filterAll: "Tất cả",
         filterStudying: "Đang học",
@@ -956,8 +711,8 @@
         localSub: "Your notes & study progress",
         breadcrumbRoot: "Workspace",
         heroEyebrow: "YOUR CFA DOSSIER",
-        heroTitle: "Your Knowledge.<br />Refined for Deeper Retention.",
-        heroSubtitle: "Read to comprehend. Visualize to retain. Practice to master.",
+        heroTitle: "CFA Level I–III Course",
+        heroSubtitle: "38 lessons · 9 stages · 3 capstone cases",
         btnSource: "Source Material",
         filterAll: "All",
         filterStudying: "In Progress",
@@ -1135,7 +890,7 @@
               <h3 class="font-serif font-semibold text-lg text-obsidian-900 dark:text-[#F3EFE6] mt-1">LM 01: Loại hình doanh nghiệp, đặc điểm tổ chức phát hành và quyền sở hữu</h3>
               <p class="text-xs text-[#78736A] mt-1">Corporate Issuers • 2027 Level I</p>
             </div>
-            <button onclick="switchTab('library'); openStudyReader();" class="px-4 py-2 rounded-xl bg-obsidian-900 dark:bg-champagne-500 text-[#F3EFE6] dark:text-obsidian-950 text-xs font-semibold shrink-0">Mở bài học</button>
+            <button onclick="location.href='notebook.html#learn/forms';" class="px-4 py-2 rounded-xl bg-obsidian-900 dark:bg-champagne-500 text-[#F3EFE6] dark:text-obsidian-950 text-xs font-semibold shrink-0">Mở bài học</button>
           </div>
         `;
       } else {
@@ -1290,11 +1045,7 @@
       if (document.getElementById('view-library').classList.contains('hidden')) {
         switchTab('library');
       }
-      const card = document.getElementById('module-card-0');
-      const match =
-        !q ||
-        'loại hình doanh nghiệp đặc điểm tổ chức phát hành quyền sở hữu corporate issuers lm 01'.includes(q);
-      card.classList.toggle('hidden', !match);
+
     }
 
     // Navigation Tabs
@@ -1365,7 +1116,7 @@
 
     function setLevel(lvl) {
       studyLevel=lvl.split(' ')[1];
-      document.getElementById('lm-original').hidden=studyLevel!=='I';
+      appState.courseLevel=studyLevel;saveState();
       switchTab('library');renderAcademy();
       document.getElementById('topbar-level').textContent = lvl;
       document.querySelectorAll('.lvl-btn').forEach(btn => {
@@ -1375,7 +1126,7 @@
       const activeButton = Array.from(document.querySelectorAll('.lvl-btn')).find(b=>b.textContent.trim()===lvl.replace('LEVEL','LVL'));
       activeButton.classList.add('bg-champagne-500', 'text-obsidian-950', 'shadow-xs');
       activeButton.classList.remove('text-[#8E897F]');
-      showToast(`Chương trình học: CFA ${lvl}`);
+      
     }
 
     function toggleSidebarCollapse() {
@@ -1421,9 +1172,10 @@
     // Boot Application
     window.addEventListener('DOMContentLoaded', () => {
       loadState();
+      studyLevel=stages[appState.courseLevel]?appState.courseLevel:"I";
+      setLevel("LEVEL "+studyLevel);
       document.getElementById('notes-editor').value = appState.notes;
       setLanguage(appState.lang);
-      updateAllProgressUI();
       window.lucide?.createIcons();
     });
   </script>
