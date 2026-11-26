@@ -104,7 +104,7 @@
 .academy-unit,.case-result,.academy-head{border:1px solid #e4e4e7;border-radius:8px;padding:20px;background:white}.academy-unit summary{cursor:pointer;font-weight:600}.academy-unit p,.academy-unit h4,.academy-unit textarea,.academy-unit button,.academy-answer{margin-top:14px}.academy-unit p{font-size:14px;line-height:1.7;color:#52525b}.academy-unit h3,.academy-head h2{font-size:21px;font-weight:600}.academy-unit small,.academy-head small{font:12px monospace;color:#71717a}.academy-equation{overflow:auto;padding:16px;margin-top:16px;background:#f7f7f8;font-size:1.35rem}.academy-unit textarea{width:100%;border:1px solid #d4d4d8;padding:10px;border-radius:6px}.academy-unit button+button{margin-left:8px}.case-result{display:flex;justify-content:space-between;align-items:center}.case-ring,.case-ring b{display:grid;place-items:center;border-radius:50%;aspect-ratio:1}.case-ring{width:110px;background:conic-gradient(#18181b var(--arc),#e4e4e7 0)}.case-ring b{width:78%;background:white}.case-result strong{font:32px monospace}.academy-unit>.academy-unit{margin-top:10px}
 </style><style>
 .quiz-switch{display:inline-flex;gap:3px;background:#f7f7f8;border:1px solid #e4e4e7;padding:3px;border-radius:7px}.quiz-switch button{padding:7px 13px;border-radius:4px;font-size:13px}.quiz-switch [aria-pressed=true]{background:#18181b;color:white}.lesson-picker{display:grid;gap:6px;margin-top:15px;font-size:13px}.lesson-picker select,.lesson-question fieldset label{border:1px solid #d4d4d8;background:white;border-radius:6px;padding:10px}.lesson-question fieldset{margin-top:16px;display:grid;gap:7px}.lesson-question legend{font-size:13px;margin-bottom:8px}.lesson-question fieldset label{display:flex;align-items:center;gap:10px;cursor:pointer}.lesson-question input{accent-color:#18181b}.lesson-question button:disabled{opacity:.45}.lesson-feedback{margin-top:16px;padding:16px;border:1px solid #e4e4e7;border-radius:6px;background:#f7f7f8}
-</style></head>
+</style><style>.extended-case{margin-top:20px;padding:18px;background:#f7f7f8;border:1px solid #e4e4e7;border-radius:7px}.extended-case h4{font-weight:650;margin:7px 0}.extended-case a{display:inline-block;font-size:12px;text-decoration:underline;margin-top:14px}.case-debrief{margin-top:14px;padding-top:12px;border-top:1px solid #d4d4d8}</style></head>
 <body class="bg-base-white text-ink-primary font-sans min-h-screen flex flex-col">
 
   <!-- Thông báo Toast gọn nhẹ -->
@@ -1261,11 +1261,250 @@ function equation(source) {
   const fraction = source.match(/^(.*?)frac\((.+);(.+)\)(.*)$/);
   return '<math display="block">'+(fraction ? token(fraction[1])+'<mfrac>'+token(fraction[2])+token(fraction[3])+'</mfrac>'+token(fraction[4]) : token(source))+'</math>';
 }
+const caseExtensions = {
+  "Professional ethics": {
+    "title": "Cuộc gọi riêng trước giờ đóng cửa|A private call before the close",
+    "brief": "Quỹ đang giữ cổ phiếu của nhà cung cấp. Tin mất khách hàng đến từ giám đốc trong cuộc gọi riêng. Nếu chỉ bán một nửa vị thế cho tài khoản cá nhân, quyết định có thay đổi không?|Your fund owns the supplier. Its director mentions the lost customer on a private call. Would selling half the position in your personal account change the decision?",
+    "solution": "Quy mô và chủ tài khoản không làm thông tin trở thành công khai. Ghi thời điểm, nguồn và lý do tin có thể ảnh hưởng giá. Báo bộ phận tuân thủ, tránh giao dịch hoặc gợi ý người khác giao dịch cho đến khi tin được phổ biến rộng rãi.|Neither trade size nor account ownership makes the information public. Record the time, source and likely price relevance. Alert compliance and avoid trading or inducing trades until broad dissemination.",
+    "source": "https://www.cfainstitute.org/standards/professionals/code-ethics-standards/professional-conduct-application-guidance"
+  },
+  "Time value of money": {
+    "title": "Nhà cung cấp đề nghị thanh toán sớm|A supplier offers early settlement",
+    "brief": "Doanh nghiệp có thể trả ngay 103 triệu để xóa khoản nợ 121 triệu đáo hạn sau hai năm. Tiền nhàn rỗi có thể sinh lãi chắc chắn 10% mỗi năm, cùng đồng tiền. Nên chọn thời điểm nào?|A supplier will cancel the 121 million due in two years for 103 million today. Idle cash can earn a certain 10% annually in the same currency. Which payment date is cheaper?",
+    "solution": "Cần đặt hai phương án về cùng ngày. Gửi 100 triệu hôm nay tạo ra 110 triệu cuối năm một và 121 triệu cuối năm hai. Trả sớm 103 triệu tốn thêm 3 triệu theo giá trị hôm nay. Nếu nhà cung cấp hạ giá xuống 98 triệu thì trả sớm tiết kiệm 2 triệu.|Compare both offers at one date. A deposit of 100 grows to 110 after one year and 121 after two. Paying 103 now costs 3 more in present value. An offer of 98 instead saves 2 today.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/time-value-money"
+  },
+  "Returns and probability": {
+    "title": "Lợi suất trên sao kê|The return on a brokerage statement",
+    "brief": "Một khách hàng thấy giá từ 50 lên 53 nên báo lãi 6%. Cổ tức 2 đã về tài khoản. Nếu phí mua và bán lần lượt là 0,5 và 0,5 trên mỗi cổ phiếu, lợi suất ròng là bao nhiêu?|A client reports a 6% gain from 50 to 53. A dividend of 2 was credited. If entry and exit fees are each 0.5 per share, what was the net holding return?",
+    "solution": "Bỏ ra 50,5 lúc mua. Khi bán, còn 52,5 cộng 2 cổ tức, tức 54,5. Lãi ròng 4 trên vốn 50,5, khoảng 7,92%. Con số 6% bỏ sót cổ tức, còn 10% là trước phí.|Cash invested was 50.5. Net sale proceeds of 52.5 plus the dividend give 54.5. Net gain of 4 on 50.5 is about 7.92%. The 6% figure omits income and 10% is before fees.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/rates-and-returns"
+  },
+  "Economics and purchasing power": {
+    "title": "Giỏ hàng của một gia đình|The household shopping basket",
+    "brief": "Gia đình có 100 triệu, gửi một năm được 108 triệu. Giỏ hàng giá 1 triệu hôm nay sẽ có giá 1,05 triệu. Nếu lạm phát thực tế lên 10%, tài khoản tăng có đồng nghĩa mua được nhiều hơn không?|A household deposits 100 million and receives 108 after one year. A basket costing 1 million now is forecast to cost 1.05. What if actual inflation reaches 10%?",
+    "solution": "Ở mức dự báo mua được 102,86 giỏ thay vì 100. Với giá thực tế 1,10 triệu, chỉ mua được 98,18 giỏ. Số dư tăng 8% nhưng sức mua giảm khoảng 1,82%. Dùng cùng kỳ cho lãi tiền gửi và lạm phát.|At the forecast price the balance buys 102.86 baskets instead of 100. At 1.10 million it buys 98.18. The balance rose 8% while purchasing power fell about 1.82%. Match the inflation and deposit periods.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/rates-and-returns"
+  },
+  "Reading financial statements": {
+    "title": "Đơn bán hàng sát ngày khóa sổ|A sale two days before closing",
+    "brief": "Nhà bán buôn giao lô hàng ngày 29/12, khách nhận quyền kiểm soát và trả tiền ngày 15/1. Giả sử không có thuế hay trả hàng. Trong tháng nào nên ghi doanh thu, dòng tiền và giá vốn?|A wholesaler delivers on 29 December, transferring control that day. The customer pays on 15 January. Assume no taxes or returns. Which month records revenue, cash and cost?",
+    "solution": "Tháng 12 ghi doanh thu 100, giá vốn 60 và phải thu 100. Lợi nhuận gộp 40 nhưng dòng tiền từ lần giao hàng là 0. Tháng 1 tiền tăng 100 và phải thu giảm 100. Ghi thêm doanh thu tháng 1 sẽ đếm hai lần.|December records 100 revenue, 60 cost and a 100 receivable. Gross profit is 40 with no cash from delivery. January increases cash by 100 and reduces receivables by 100. Recognizing January revenue again would double count.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/analyzing-income-statements"
+  },
+  "Capital budgeting": {
+    "title": "Máy mới và phí lắp đặt|A machine with an installation quote",
+    "brief": "Xưởng được chào máy giá 90. Dòng tiền cuối năm 110 đã trừ chi phí vận hành. Sau thẩm định phát hiện phải trả ngay phí lắp đặt 12. Khoản chi mới có đảo quyết định mua ở suất 10% không?|A workshop can buy the machine for 90. Its year-end cash flow of 110 is after operating costs. Due diligence uncovers an immediate installation charge of 12. Does that change the decision at 10%?",
+    "solution": "Giá trị hôm nay của 110 là 100. Ban đầu tạo thêm 10. Chi phí lắp đặt chỉ phát sinh nếu mua nên vốn đầu tư tăng lên 102 và NPV thành âm 2. Phí lắp đặt hòa vốn là 10. Không chiết khấu khoản chi ngay hôm nay.|The future receipt is worth 100 now. Initial value added is 10. Installation is incremental, taking the outlay to 102 and NPV to negative 2. Break-even installation cost is 10. Today's outlay needs no discounting.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/capital-investments-and-capital-allocation"
+  },
+  "Equities and indices": {
+    "title": "Nhà quản lý theo chỉ số nào?|Which index did the manager track?",
+    "brief": "Ủy ban so kết quả quỹ với hai chỉ số cùng giữ hai cổ phiếu. Một chỉ số theo vốn hóa, chỉ số kia chia đều tiền đầu kỳ. Vì sao cùng thị trường mà lợi suất kỳ này khác nhau?|A committee compares two indexes containing the same two stocks. One uses market capitalization and the other starts equally weighted. Why do their returns differ over the period?",
+    "solution": "Chỉ số vốn hóa đầu tư 80 trên mỗi 100 vào cổ phiếu tăng 5%, nên lãi 4. Chỉ số bằng trọng số chỉ đầu tư 50, lãi 2,5. Chênh 1,5 điểm phần trăm do cách phân bổ đầu kỳ. Chưa thể quy chênh lệch đó cho kỹ năng chọn mã.|The cap-weighted index puts 80 of each 100 in the winner, earning 4. The equal-weighted index puts 50 there and earns 2.5. The 1.5 percentage point gap comes from starting weights and cannot establish stock-selection skill.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/security-market-indexes"
+  },
+  "Bonds and yields": {
+    "title": "Nhà môi giới chào giá ngang mệnh giá|A dealer asks for par",
+    "brief": "Trái phiếu còn đúng một năm, chắc chắn trả gốc 100 và lãi 4. Nhà môi giới chào giá 100. So với khoản đầu tư cùng rủi ro sinh lợi 5%, người mua đang trả thêm bao nhiêu?|A bond has exactly one year left and will pay principal of 100 and interest of 4. A dealer asks 100. How much more is that than the value at a comparable 5% yield?",
+    "solution": "Chiết khấu toàn bộ 104 cho một năm được 99,05. Giá chào cao hơn khoảng 0,95 trên mỗi 100 mệnh giá. Nếu mua ở 100 và giữ đến hạn thì chỉ lãi 4%, thấp hơn mức yêu cầu 1 điểm phần trăm.|Discount the full 104 for one year to get 99.05. The offer exceeds that value by about 0.95 per 100 face. Buying at 100 and holding to maturity earns 4%, one percentage point below the hurdle.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/fixed-income-bond-valuation-prices-and-yields"
+  },
+  "Derivative contracts": {
+    "title": "Quyền chọn đáo hạn trên giá thực hiện|An option expires above strike",
+    "brief": "Nhà đầu tư trả phí 4 cho quyền mua ở 100. Ngoài trường hợp giá cuối kỳ 112, hãy thử giá 102 và 97. Khi nào thực hiện quyền dù cả giao dịch vẫn lỗ?|An investor pays 4 for the right to buy at 100. Alongside a terminal price of 112, test prices of 102 and 97. When does exercise make sense despite a net loss?",
+    "solution": "Ở 102, thực hiện thu về giá trị 2, trừ phí còn lỗ 2. Ở 97 để hết hạn, lỗ đúng 4. Ở 112 lãi 8. Giá hòa vốn khi đáo hạn là 104, còn ngưỡng thực hiện quyền là trên 100, bỏ qua phí giao dịch và tài trợ.|At 102, exercise yields 2 and net loss is 2 after premium. At 97, let it expire and lose 4. At 112, profit is 8. Break-even at expiry is 104, while exercise is valuable above 100, ignoring financing and trading costs.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/pricing-valuation-options"
+  },
+  "Alternative assets": {
+    "title": "Một tầng văn phòng bị bỏ trống|A vacant floor",
+    "brief": "Tòa nhà giá 10 triệu có NOI 600.000 mỗi năm. Một khách thuê rời đi làm NOI ổn định giảm còn 480.000. Nếu người mua vẫn yêu cầu tỷ suất vốn hóa 6%, họ có thể trả bao nhiêu?|A building costs 10 million and produces annual NOI of 600,000. A tenant leaves and stabilized NOI falls to 480,000. How much can a buyer pay at the same 6% cap rate?",
+    "solution": "Giá trị vốn hóa thu nhập mới là 8 triệu. Nếu giữ nguyên giá chào 10 triệu, tỷ suất thu nhập chỉ còn 4,8%. Bước thẩm định quan trọng là xem 480.000 có phản ánh thu nhập bền vững hay chỉ là một năm trống tạm thời.|Capitalizing the new income gives 8 million. At the unchanged asking price the income yield is only 4.8%. Investigate whether 480,000 represents sustainable income or just temporary vacancy before using it.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/real-estate-investments"
+  },
+  "Portfolio construction": {
+    "title": "Tỷ trọng sau một năm cổ phiếu tăng|Weights after a strong equity year",
+    "brief": "Đầu năm tài khoản có 60 triệu cổ phiếu và 40 triệu trái phiếu. Không có nộp rút hay tái cân bằng. Tỷ trọng cổ phiếu cuối năm có còn là 60% không?|A client starts with 60 million in equities and 40 million in bonds. With no flows or rebalancing, is the ending equity weight still 60%?",
+    "solution": "Cổ phiếu thành 66, trái phiếu thành 39,2. Tổng 105,2, nên lợi suất danh mục là 5,2%. Tỷ trọng cổ phiếu cuối kỳ khoảng 62,74%. Dùng tỷ trọng mới để tính lợi suất năm vừa qua sẽ tính trùng tác động tăng giá.|Equities grow to 66 and bonds fall to 39.2. Total 105.2 implies a 5.2% return. Ending equity weight is about 62.74%. Using that ending weight for the past year would count the price movement twice.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/portfolio-risk-return-part-1"
+  },
+  "Research independence": {
+    "title": "Nhà tài trợ thương lượng phí nghiên cứu|A sponsor negotiates the research fee",
+    "brief": "Doanh nghiệp đề nghị trả 40.000 cho báo cáo trung lập, 80.000 cho khuyến nghị mua. Trưởng nhóm đề xuất công bố bảng phí ở trang cuối. Bạn cần sửa điều khoản nào trước khi nhận việc?|An issuer offers 40,000 for neutral coverage and 80,000 for a buy. The team lead proposes publishing the schedule on the last page. What term must change before accepting?",
+    "solution": "Bỏ khoản 40.000 phụ thuộc kết luận, thỏa thuận phí cố định hợp lý cho phạm vi nghiên cứu. Công bố bên trả tiền và giữ quyền kiểm soát nội dung. Nếu bên thuê giữ điều kiện thưởng, từ chối nhiệm vụ. Việc công bố không loại bỏ động cơ tài chính.|Remove the 40,000 outcome bonus and agree reasonable fixed compensation for the work. Disclose sponsorship and retain editorial control. Decline if the sponsor insists on the bonus. Disclosure leaves the financial incentive intact.",
+    "source": "https://www.cfainstitute.org/standards/professionals/code-ethics-standards/standards-of-practice-i-b"
+  },
+  "Regression and inference": {
+    "title": "Một hệ số có vẻ ổn định|A coefficient that looks stable",
+    "brief": "Nhà phân tích dùng hồi quy để dự báo doanh thu theo nhu cầu. Khi điều chỉnh sai số chuẩn cho cấu trúc dữ liệu, sai số chuẩn tăng từ 0,2 lên 0,4 và hệ số vẫn 0,6. Với ngưỡng 2, kết luận có đổi không?|An analyst regresses sales on demand. A variance estimate appropriate to the data raises the standard error from 0.2 to 0.4 while the slope stays 0.6. Does the conclusion change at a critical value of 2?",
+    "solution": "Thống kê kiểm định giảm từ 3 xuống 1,5. Khoảng xấp xỉ theo ngưỡng đã cho chuyển từ [0,2; 1,0] sang [−0,2; 1,4]. Khoảng mới chứa 0, nên chưa đủ bằng chứng bác bỏ hệ số bằng 0. Hệ số ước lượng không hề giảm.|The test statistic falls from 3 to 1.5. Using the given critical value, the interval changes from [0.2, 1.0] to [−0.2, 1.4]. The new interval contains zero. Evidence weakens even though the point estimate is unchanged.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/simple-linear-regression"
+  },
+  "Currency parity": {
+    "title": "Hóa đơn euro của nhà nhập khẩu Mỹ|A euro invoice for a US importer",
+    "brief": "Nhà nhập khẩu cần 1 triệu EUR sau một năm. Giả sử được gửi và vay ở đúng lãi suất đề bài. Hãy dựng giao dịch tiền mặt tương đương mua EUR kỳ hạn để giải thích chiều tỷ giá.|A US importer needs EUR 1 million in one year and can borrow or lend at the stated rates. Build a money-market equivalent of buying EUR forward to check the quote direction.",
+    "solution": "Gửi khoảng 980.392 EUR hôm nay ở 2% để nhận 1 triệu EUR. Mua số euro này cần khoảng 1.176.471 USD ở tỷ giá 1,20. Vay số USD đó ở 5%, cuối năm trả khoảng 1.235.294 USD. Đây là chi phí khóa trước, không phải dự báo tỷ giá giao ngay.|Deposit about EUR 980,392 at 2% to receive EUR 1 million. Buying the deposit costs about USD 1,176,471 at spot. Borrow that amount at 5% and repay about USD 1,235,294. This locks a cost rather than forecasting future spot.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/exchange-rate-calculations"
+  },
+  "Earnings quality": {
+    "title": "Phải thu tăng nhanh hơn doanh thu|Receivables grow faster than sales",
+    "brief": "Doanh nghiệp bán thiết bị giải thích phải thu tăng 40% vì giao hàng cuối tháng. Chọn bằng chứng phân biệt mùa vụ với việc ghi doanh thu quá sớm. Một hóa đơn lớn ký nhận sau ngày khóa sổ sẽ thay đổi nhận định thế nào?|An equipment seller attributes 40% receivables growth to late-month deliveries. What distinguishes seasonality from premature revenue? How would a large invoice signed for after year-end affect your assessment?",
+    "solution": "Đối chiếu hợp đồng, điều khoản chuyển quyền, vận đơn và ngày khách chấp nhận. Kiểm tra tiền về và hàng trả lại sau kỳ. Nếu quyền chỉ chuyển khi ký nhận, doanh thu hóa đơn đó thuộc kỳ sau, kể cả khi sau đó thu được tiền. Tỷ lệ tăng phải thu chỉ là tín hiệu để chọn mẫu kiểm tra.|Match contracts, transfer terms, shipping records and customer acceptance. Inspect later receipts and returns. If control passes on acceptance, that invoice belongs in the next period even if collected later. Receivables growth identifies where to investigate.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/evaluating-quality-financial-reports"
+  },
+  "Cost of capital": {
+    "title": "Dự án vừa vượt ngưỡng vốn|A project just clears the hurdle",
+    "brief": "Dự án cùng rủi ro với doanh nghiệp có IRR 7,8%, dòng tiền thông thường. Nếu lãi vay trước thuế tăng từ 5% lên 6%, tỷ trọng và chi phí vốn chủ giữ nguyên, quyết định có đổi không?|A conventional project with the firm's operating risk offers a 7.8% IRR. If pre-tax debt cost rises from 5% to 6% with weights and equity cost unchanged, does it still clear the hurdle?",
+    "solution": "Ban đầu nợ đóng góp 1,6 điểm và vốn chủ 6 điểm, tổng 7,6%. Sau điều chỉnh, nợ đóng góp 1,92 điểm và WACC lên 7,92%. Biên dương 0,2 điểm thành âm 0,12 điểm. Chỉ dùng ngưỡng này nếu rủi ro dự án tương thích.|Debt initially contributes 1.6 points and equity 6, totaling 7.6%. Revised debt contribution is 1.92 points, lifting WACC to 7.92%. Headroom of 0.2 points becomes a shortfall of 0.12 points. This hurdle assumes comparable project risk.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/cost-capital-advanced-topics"
+  },
+  "Equity valuation": {
+    "title": "Cổ phiếu cổ tức giá 46|A dividend stock at 46",
+    "brief": "Ủy ban xem cổ phiếu giá 46 với cổ tức năm tới là 3. Tính mức sinh lời hàm ý nếu cổ tức tăng vĩnh viễn 3%. Vì sao hai thành viên dùng ngưỡng 9% và 10% có thể biểu quyết khác nhau?|A committee reviews a stock at 46 with next year's dividend of 3. Find the return implied by perpetual 3% growth. Why might members using hurdles of 9% and 10% vote differently?",
+    "solution": "Suất cổ tức kỳ tới khoảng 6,52%. Cộng tăng trưởng 3% được khoảng 9,52%. Giá 46 thấp hơn định giá 50 ở ngưỡng 9% nhưng cao hơn 42,86 ở 10%. Kiểm tra tính bền vững của tăng trưởng trước khi dùng kết quả.|Forward dividend yield is about 6.52%. Adding 3% growth implies about 9.52%. The price is below the value of 50 at 9% but above 42.86 at 10%. Challenge the sustainability of perpetual growth before relying on either estimate.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/discounted-dividend-valuation"
+  },
+  "Term structure": {
+    "title": "Hai khoản trả, hai lãi suất|Two payments, two discount rates",
+    "brief": "Bàn trái phiếu dùng 5% để chiết khấu cả hai dòng tiền và báo giá đúng 100. Kiểm tra sai lệch khi lãi suất giao ngay một năm thực ra là 4%, ghép lãi hằng năm.|A bond desk discounts both payments at 5% and reports par. Audit the valuation given that the one-year spot rate is actually 4%, with annual compounding.",
+    "solution": "Coupon năm một có hiện giá 4,8077. Khoản 105 năm hai có hiện giá 95,2381. Tổng 100,0458, làm tròn 100,05. Chỉ coupon đầu bị chiết khấu sai. Chênh lệch nhỏ ở đây vì coupon nhỏ so với gốc.|First coupon PV is 4.8077. The second payment has PV 95.2381. Total 100.0458 rounds to 100.05. Only the first coupon was misdiscounted. The error is small here because that payment is small relative to principal.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/term-structure-and-interest-rate-dynamics"
+  },
+  "Forward valuation": {
+    "title": "Đóng hợp đồng kỳ hạn cũ|Closing an old forward",
+    "brief": "Doanh nghiệp đã cam kết mua nguyên liệu ở 100. Có thể bán kỳ hạn cùng hàng, cùng ngày giao ở 106. Ghép hai hợp đồng giúp xác định giá trị hôm nay thế nào?|A manufacturer is committed to buying material at 100. It can sell the same quantity for the same delivery date at 106. How does pairing the contracts establish today's value?",
+    "solution": "Đến hạn mua 100 rồi bán 106, khóa 6 mỗi đơn vị, giả sử hai bên thực hiện nghĩa vụ và không có chi phí. Khoản 6 nhận sau một năm chỉ đáng 5,71 hôm nay ở 5%. Phía bán trong hợp đồng cũ có giá trị đối dấu.|At settlement buy for 100 and sell for 106, locking in 6 per unit assuming performance and no costs. That 6 is due in a year, worth 5.71 now at 5%. The original short has the opposite value.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/pricing-and-valuation-of-forward-commitments"
+  },
+  "Property valuation": {
+    "title": "Tiền thuê phải tăng bao nhiêu?|Can rent growth offset repricing?",
+    "brief": "Chủ tòa nhà muốn giữ giá 15 triệu dù người mua nâng tỷ suất vốn hóa lên 6%. NOI năm tới phải đạt bao nhiêu và tăng bao nhiêu so với 750.000 hiện tại?|An owner wants to maintain a 15 million valuation despite buyers requiring a 6% cap rate. What next-year NOI would be needed, and how much growth is that from 750,000?",
+    "solution": "Cần NOI 900.000, cao hơn 150.000 hay 20%. Nếu hợp đồng thuê cố định khiến mức tăng đó không khả thi thì giá 15 triệu cần giả định khác để bảo vệ. Tăng tỷ suất vốn hóa một điểm không đồng nghĩa giá giảm một phần trăm.|Required NOI is 900,000, an increase of 150,000 or 20%. If fixed leases prevent that growth, a 15 million valuation needs another justification. A one-point increase in cap rate does not mean a one-percent drop in price.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/real-estate-investments"
+  },
+  "Active management": {
+    "title": "So sánh hai ủy thác chủ động|Choosing between two active mandates",
+    "brief": "Quỹ A tạo lợi suất chủ động bình quân 2% với tracking error 4%. Quỹ B cùng chuẩn, cùng giai đoạn đạt 3% với tracking error 8%. Ai hiệu quả hơn trên mỗi đơn vị rủi ro chủ động?|Fund A earns mean active return of 2% with 4% tracking error. Fund B, measured over the same period against the same benchmark, earns 3% with 8% tracking error. Which is more efficient?",
+    "solution": "A có information ratio 0,50, B chỉ 0,375. B tạo thêm nhiều lợi suất tuyệt đối hơn so với chuẩn, nhưng cần gấp đôi tracking error. Trước khi chọn quỹ, thống nhất số liệu sau phí và xem ngân sách rủi ro của khách hàng.|A has an information ratio of 0.50 versus B's 0.375. B produces more excess return but takes twice the tracking error. Compare fee treatment and the client's risk budget before choosing a mandate.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/portfolio-performance-evaluation"
+  },
+  "Fair allocation": {
+    "title": "Lệnh chỉ khớp một phần|Partial fill at the morning auction",
+    "brief": "Hai tài khoản đủ điều kiện đặt mua 600 và 400 cổ phiếu trước khi giao dịch. Sau khi chỉ khớp 500, khách trả phí cao yêu cầu lấy 400. Bằng chứng nào cho thấy bàn lệnh tuân thủ chính sách đã công bố?|Two eligible accounts request 600 and 400 shares before trading. Only 500 fill and a high-fee client then requests 400. What records demonstrate compliance with the announced pro rata policy?",
+    "solution": "Lưu yêu cầu có dấu thời gian, quy tắc phân bổ trước giao dịch và phiếu xác nhận khớp. Tỷ lệ khớp 50% cho mỗi lệnh, lần lượt 300 và 200. Chuyển thêm 100 sau khi biết kết quả sẽ ưu tiên một khách và tạo sai lệch so với chính sách.|Keep timestamped orders, the pretrade allocation rule and the fill record. Each order fills 50%, yielding 300 and 200. Reassigning 100 shares after observing the fill favors a client and departs from policy.",
+    "source": "https://www.cfainstitute.org/standards/professionals/code-ethics-standards/professional-conduct-application-guidance"
+  },
+  "Strategic allocation": {
+    "title": "Biên độ kích hoạt giao dịch nào?|What does the band authorize?",
+    "brief": "Quỹ 10 triệu có 6,8 triệu cổ phiếu. So sánh hai quy định khi vượt biên 65%: trở lại tỷ trọng mục tiêu 60% hoặc chỉ về sát biên 65%. Tại sao phải đọc chính sách trước khi đặt lệnh?|A 10 million fund holds 6.8 million in stocks. Compare two breach rules: return to the 60% target or trade only to the 65% boundary. Why read the mandate first?",
+    "solution": "Về mục tiêu cần bán 800.000, còn về biên chỉ bán 300.000. Chênh 500.000 ảnh hưởng phí và mức rủi ro sau giao dịch. Nếu tài liệu yêu cầu về mục tiêu, bán 300.000 chưa hoàn thành chỉ dẫn.|Trading to target sells 800,000, while trading to the boundary sells 300,000. The 500,000 gap affects cost and remaining risk. If the policy specifies the target, selling only 300,000 does not fulfill it.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/principles-asset-allocation"
+  },
+  "Liability-aware portfolios": {
+    "title": "Quỹ hưu trí cân bằng hiện giá|A pension plan with balanced present values",
+    "brief": "Tài sản và nợ đều có hiện giá 100 triệu. Quỹ muốn hạn chế biến động thặng dư khi đường cong dịch chuyển song song. Cần thay đổi duration tài sản theo hướng nào?|Assets and liabilities both have a present value of 100 million. The plan wants to stabilize surplus under a parallel shift. In which direction should it change asset duration?",
+    "solution": "Mỗi điểm cơ bản giảm lãi suất làm tài sản tăng khoảng 60.000 và nợ tăng 100.000, nếu duration đã cho là duration điều chỉnh. Kéo dài duration tài sản từ 6 về gần 10 giúp cân bằng độ nhạy tiền tệ. Đường cong xoay hoặc thay đổi lớn cần kiểm tra riêng.|For modified durations as given, a one-basis-point decline raises assets by about 60,000 and liabilities by 100,000. Lengthening asset duration from 6 toward 10 aligns dollar sensitivities. Twists and large changes require separate stress tests.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/overview-fixed-income-portfolio-management"
+  },
+  "Hedging market risk": {
+    "title": "Giảm beta tạm thời|A temporary beta reduction",
+    "brief": "Quỹ 20 triệu muốn giảm beta mà chưa bán cổ phiếu. Sau khi bán số hợp đồng cần thiết, thị trường giảm 5%. Ước lượng tác động trước và sau phòng hộ, giả sử beta ổn định và hợp đồng bám chỉ số.|A 20 million fund wants lower beta without selling stocks. After establishing the futures hedge, the market falls 5%. Estimate the unhedged and hedged impacts assuming stable beta and index tracking.",
+    "solution": "Vị thế cổ phiếu dự kiến mất 1,2 triệu. Bán 40 hợp đồng tương ứng 8 triệu danh nghĩa giúp lãi khoảng 400.000 trên futures. Lỗ ròng khoảng 800.000, tức 4% danh mục, phù hợp beta mục tiêu 0,8. Vẫn cần tiền ký quỹ nếu thị trường đi ngược.|Equities are expected to lose 1.2 million. Selling 40 contracts covers 8 million of notional and gains about 400,000. Net loss is about 800,000 or 4%, consistent with beta 0.8. An adverse futures move still requires margin liquidity.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/swaps-forwards-futures-strategies"
+  },
+  "Performance attribution": {
+    "title": "Tách chọn ngành khỏi chọn cổ phiếu|Separating sector choice from stock choice",
+    "brief": "Ngành có tỷ trọng quỹ 30%, chuẩn 20%. Chuẩn ngành tăng 12%, chuẩn chung tăng 8%. Nếu cổ phiếu quỹ trong ngành chỉ tăng 10%, riêng hiệu ứng phân bổ ngành có đổi dấu không?|The fund weights a sector at 30% versus a 20% benchmark weight. Its sector benchmark earns 12% and the broad benchmark 8%. If the fund's sector stocks earn only 10%, does the allocation effect change sign?",
+    "solution": "Chênh tỷ trọng là 10 điểm phần trăm, chênh lợi suất chuẩn ngành với chuẩn chung là 4 điểm. Tích bằng +0,4 điểm phần trăm. Kết quả 10% của cổ phiếu quỹ tác động phần chọn cổ phiếu và tương tác trong phân rã ba thành phần, không đổi hiệu ứng phân bổ đã tính.|The weight difference is 10 points and sector benchmark excess return is 4 points. Their product is +0.4 percentage points. The fund's 10% affects selection and interaction in a three-effect attribution, leaving this allocation effect unchanged.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/portfolio-performance-evaluation"
+  },
+  "Portfolio Management pathway": {
+    "title": "Chi phí chờ khớp lệnh|The price of waiting to execute",
+    "brief": "Nhà quản lý quyết định mua 10.000 cổ phiếu ở 50. Tất cả khớp ở 50,12, phí 100. Nếu chỉ tính phí trên hóa đơn môi giới, báo cáo sẽ bỏ sót bao nhiêu?|A manager decides to buy 10,000 shares at 50. All fill at 50.12 and fees are 100. How much does a commission-only report miss?",
+    "solution": "Trượt giá 0,12 mỗi cổ phiếu nhân 10.000 thành 1.200. Cộng 100 phí được 1.300, tương đương 26 điểm cơ bản trên giá trị quyết định 500.000. Phiếu phí riêng chỉ thể hiện 2 điểm cơ bản. Không có chi phí cơ hội của phần chưa khớp vì lệnh khớp đủ.|Slippage of 0.12 on 10,000 shares costs 1,200. With fees the total is 1,300, or 26 basis points on decision value of 500,000. Commission alone shows 2 basis points. No unfilled-order opportunity cost arises because all shares traded.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/trade-strategy-execution"
+  },
+  "Private Markets pathway": {
+    "title": "Hạ định giá trước vòng gọi vốn mới|A markdown before the next fundraise",
+    "brief": "Quỹ tư nhân đã gọi 8 triệu, trả lại 3 triệu. Giá trị còn lại 9 triệu bị hạ 25% mà không có dòng tiền mới. Tách phần tiền thật khỏi phần định giá trên báo cáo.|A private fund has called 8 million and distributed 3 million. Its 9 million remaining NAV is marked down 25% with no new cash flow. Separate cash recovery from reported value.",
+    "solution": "NAV còn 6,75 triệu. DPI vẫn là 0,375 lần vì chưa phân phối thêm. RVPI còn khoảng 0,844 lần. TVPI mới khoảng 1,219 lần, giảm từ 1,5 lần dù người góp vốn không nhận hoặc nộp thêm tiền.|NAV falls to 6.75 million. DPI stays at 0.375 because distributions are unchanged. RVPI falls to about 0.844. TVPI becomes about 1.219, down from 1.5 despite no investor cash flows.",
+    "source": "https://rpc.cfainstitute.org/sites/default/files/-/media/documents/code/gips/2020-gips-standards-firms.pdf"
+  },
+  "Private Wealth pathway": {
+    "title": "Học phí khác đồng tiền đầu tư|Tuition in a different currency",
+    "brief": "Gia đình có tài sản quy đổi 12 triệu, học phí tương đương 1 triệu hôm nay nhưng phải trả bằng ngoại tệ sau sáu tháng. Nếu ngoại tệ tăng 8%, quỹ dự phòng nội tệ 1 triệu có đủ không?|A family owns assets worth 12 million in local currency. Tuition currently costs the equivalent of 1 million but is payable in a foreign currency in six months. Will a local-currency reserve of 1 million suffice if the foreign currency rises 8%?",
+    "solution": "Giả sử học phí ngoại tệ cố định và bỏ qua lãi, nghĩa vụ thành 1,08 triệu nội tệ. Thiếu 80.000 dù gia đình không đầu tư mạo hiểm phần dự phòng. Ghép cả kỳ hạn và đồng tiền cho khoản học phí trước khi phân bổ phần tài sản dài hạn.|Assuming fixed foreign tuition and no interest, local cost rises to 1.08 million. The reserve is short by 80,000 despite holding cash. Match both timing and currency before allocating the long-term assets.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/private-wealth-management-industry"
+  },
+  "Compounding across periods": {
+    "title": "Hai năm trên báo cáo hiệu quả|Two years in a performance report",
+    "brief": "Quỹ bắt đầu ở 100, tăng 25% năm đầu rồi giảm 20%. Khách hàng hỏi vì sao bình quân cộng dương mà tiền không tăng. Nếu năm đầu giảm 20%, năm sau tăng 25% thì sao?|A fund starts at 100, gains 25%, then loses 20%. Why does a positive arithmetic average leave wealth unchanged? What if the loss occurs first?",
+    "solution": "Lộ trình ban đầu đi từ 100 đến 125 rồi về 100. Đảo thứ tự đi từ 100 xuống 80 rồi về 100. Không có nộp rút thì kết quả cuối giống nhau và lợi suất kép năm là 0%. Nếu rút tiền giữa hai năm thì số vốn chịu kỳ sau thay đổi.|The first path goes from 100 to 125 to 100. Reversing it gives 100 to 80 to 100. Without flows both finish with a 0% compound annual return. A withdrawal between years changes capital exposed in the second period.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/rates-and-returns"
+  },
+  "Hypothesis testing": {
+    "title": "Nhà quản lý trình kết quả đẹp nhất|A manager presents the best backtest",
+    "brief": "Chiến lược báo p bằng 0,03. Sau đó bạn biết nhóm đã thử 20 chiến lược độc lập và chỉ trình kết quả đẹp nhất. Nếu cả 20 thực sự không có alpha, cơ hội thấy ít nhất một kết quả có p dưới 5% là bao nhiêu?|A strategy reports p of 0.03. You learn that 20 independent strategies were tried and only the best was shown. If all null hypotheses are true, how likely is at least one p-value below 5%?",
+    "solution": "Xác suất cả 20 không vượt ngưỡng là 0,95 lũy thừa 20, khoảng 35,85%. Phần bù khoảng 64,15%. Đây là xác suất trong thí nghiệm giả định, không phải xác suất nhà quản lý thiếu kỹ năng. Yêu cầu toàn bộ kết quả và mẫu kiểm định độc lập.|The chance of no false positive is 0.95 raised to 20, about 35.85%. The complement is about 64.15%. This is a probability under the specified experiment, not the probability the manager lacks skill. Request all trials and a separate validation sample.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/hypothesis-testing"
+  },
+  "Inflation and inventory": {
+    "title": "Lợi thế biên lợi nhuận trên sổ sách|An apparent margin advantage",
+    "brief": "Hai cửa hàng có cùng giao dịch. Một dùng FIFO, một dùng bình quân. Quản lý nhận thưởng nếu biên gộp đạt 45%. Ai vượt ngưỡng trong lần bán một đơn vị ở giá 20?|Two shops have identical transactions but one uses FIFO and one weighted average. Managers earn a bonus at a 45% gross margin. Which shop clears it on the sale at 20?",
+    "solution": "FIFO xuất đơn vị giá 10, lãi gộp 10 trên doanh thu 20, biên 50%. Bình quân xuất giá 12, lãi gộp 8, biên 40%. Chỉ cửa hàng FIFO đạt ngưỡng dù cùng giá mua, giá bán và lượng bán. Khi so hiệu quả vận hành cần điều chỉnh khác biệt chính sách.|FIFO expenses 10 and earns 10 on revenue of 20, a 50% margin. Average cost expenses 12 and earns 8, a 40% margin. Only FIFO clears the threshold despite identical trades. Adjust for cost policy when comparing operating performance.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/analysis-of-inventories"
+  },
+  "Forecasting free cash flow": {
+    "title": "Tăng trưởng hút tiền vào vốn lưu động|A growth plan absorbs cash",
+    "brief": "Ban điều hành dự báo EBIT 100 và FCFF 60. Để hỗ trợ khách hàng trả chậm, mức tăng vốn lưu động có thể lên 17 thay vì 7. Dự báo tiền cho cả chủ nợ và cổ đông thay đổi ra sao?|Management forecasts EBIT of 100 and FCFF of 60. Longer customer terms could increase operating working capital by 17 rather than 7. How does cash available to debt and equity change?",
+    "solution": "Lợi nhuận hoạt động sau thuế vẫn 75. Cộng khấu hao 12 được 87. Trừ đầu tư tài sản 20 còn 67. Trừ vốn lưu động tăng 17 còn 50. Lợi nhuận không đổi nhưng dòng tiền giảm 10. Không trừ lãi vay khi đang tính FCFF từ EBIT.|After-tax operating profit stays at 75. Add 12 depreciation to reach 87, deduct 20 capex to get 67 and deduct 17 working capital to get 50. Profit is unchanged but cash drops by 10. Do not subtract interest when deriving FCFF from EBIT.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/free-cash-flow-valuation"
+  },
+  "Credit losses": {
+    "title": "Vỡ nợ và thu hồi cùng xấu đi|Default and recovery deteriorate together",
+    "brief": "Khoản vay 2 triệu có tổn thất kỳ vọng cơ sở 36.000. Trong suy thoái giả định, xác suất vỡ nợ lên 5% và tỷ lệ thu hồi giảm từ 40% xuống 25%. Không đổi dư nợ. Kịch bản làm tăng tổn thất bao nhiêu?|A 2 million loan has baseline expected loss of 36,000. In a recession scenario default probability rises to 5% and recovery falls from 40% to 25%. Exposure is unchanged. What is the increase?",
+    "solution": "Nếu vỡ nợ sẽ mất 75% của 2 triệu, tức 1,5 triệu. Nhân xác suất 5% được 75.000, tăng 39.000 so với cơ sở. 75.000 là tổn thất bình quân theo mô hình, còn mức lỗ nếu thực sự vỡ nợ trong giả định này là 1,5 triệu.|Loss given default is 75% of 2 million or 1.5 million. Weight by 5% to get 75,000, an increase of 39,000. The model average is 75,000 while loss conditional on an actual default under these assumptions is 1.5 million.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/credit-analysis-models"
+  },
+  "Withdrawal and liquidity planning": {
+    "title": "Lệnh gọi vốn đến trước tiền phân phối|A capital call arrives before a distribution",
+    "brief": "Quỹ tài trợ có 4 triệu tiền mặt. Chi hoạt động 3 triệu ngày 10, góp vốn 2 triệu ngày 15, nhận phân phối 2 triệu ngày 30 nếu đúng lịch. Chỉ xem số dư cuối tháng có bỏ sót rủi ro không?|An endowment has 4 million cash. It pays 3 million on day 10, owes a 2 million capital call on day 15 and expects 2 million on day 30. What risk does month-end cash conceal?",
+    "solution": "Ngày 10 còn 1 triệu, ngày 15 thiếu 1 triệu. Sau ngày 30 số dư lý thuyết lại dương 1 triệu, quá muộn cho nghĩa vụ ngày 15. Chuẩn bị bán tài sản hoặc hạn mức có thể giải ngân trước ngày 15 và tính thời gian thanh toán.|Cash falls to 1 million on day 10 and a 1 million deficit on day 15. Projected month-end cash of positive 1 million comes too late. Arrange asset sales or committed funding that can settle before day 15.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/case-study-in-portfolio-management-institutional-endowment"
+  },
+  "Capstone · Build a first portfolio": {
+    "title": "Gia đình không thể hoãn khoản chi|A family cannot postpone its payment",
+    "brief": "Giả sử gia đình đầu tư cả 120 triệu theo tỷ trọng 60/40 thay vì tách tiền cho nghĩa vụ 21 triệu. So sánh tài sản còn lại sau thanh toán với phương án đã ghép kỳ hạn, ở cả hai kịch bản.|Suppose the family invests the entire 120 million at 60/40 instead of setting aside the payment of 21 million. Compare post-payment wealth with the matched strategy in each scenario.",
+    "solution": "Không tách khoản chi, danh mục đạt 128,64 hoặc 107,04. Trả 21 còn 107,64 hoặc 86,04. Tách trước tiền nghĩa vụ cho kết quả 107,2 hoặc 89,2. Trong hai kịch bản này gia đình hy sinh 0,44 lợi ích ở chiều tăng để cải thiện 3,16 ở chiều giảm và chắc chắn có khoản đến hạn theo giả định tiền gửi.|Without matching, portfolio value is 128.64 or 107.04. After paying 21, wealth is 107.64 or 86.04. Matching leaves 107.2 or 89.2. In these scenarios it gives up 0.44 of upside to improve the downside by 3.16 and secures the payment under the deposit assumptions.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/time-value-money"
+  },
+  "Capstone · Value and challenge a business": {
+    "title": "Giá thị trường hàm ý suất chiết khấu nào?|What discount rate does the market imply?",
+    "brief": "Bên mua hỏi liệu giá 6,50 có thật sự rẻ. Dùng chính giá đó, 10 triệu cổ phần, nợ ròng 30 triệu, FCFF năm tới 6 triệu và tăng trưởng 2% để suy ngược WACC mà thị trường đang hàm ý.|A buyer asks whether 6.50 is really cheap. Reverse the model using that price, 10 million shares, 30 million net debt, 6 million next-year FCFF and 2% growth to infer WACC.",
+    "solution": "Giá vốn chủ 65 triệu cộng nợ ròng 30 thành giá trị hoạt động 95. Suất sinh tiền kỳ tới khoảng 6,32%. Cộng tăng trưởng 2% suy ra WACC khoảng 8,32%. Nhận định rẻ ở WACC 8% chỉ cách ngưỡng đảo chiều khoảng 0,32 điểm phần trăm, giả sử dòng tiền và tăng trưởng đúng như dự báo.|Equity value of 65 million plus net debt of 30 gives operations worth 95. Next-year cash yield is about 6.32%. Add 2% growth for implied WACC of about 8.32%. The undervaluation at 8% has only about 0.32 percentage points of discount-rate headroom given the cash and growth assumptions.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/free-cash-flow-valuation"
+  },
+  "Capstone · Investment committee memo": {
+    "title": "Hai nhu cầu dùng cùng một quỹ tiền mặt|Two demands on the same cash balance",
+    "brief": "Sau khi bán hợp đồng để giảm beta, chỉ số tăng 5% trước ngày trả nghĩa vụ. Giả sử futures tăng cùng tỷ lệ. Cần huy động bao nhiêu nếu tiền ký quỹ biến đổi phải nộp trước, phần lãi cổ phiếu chưa chuyển thành tiền?|After the futures sale, the index rises 5% before the liability is due. Assume futures rise proportionally. How much must be raised if variation margin is due first and stock gains have not been monetized?",
+    "solution": "40 hợp đồng bán tương ứng 6 triệu danh nghĩa. Giá tăng 5% khiến phải nộp khoảng 300.000 tiền ký quỹ biến đổi. Cộng thiếu hụt nghĩa vụ 2 triệu thành ít nhất 2,3 triệu, chưa kể ký quỹ ban đầu và chi phí. Ghi riêng lịch tiền mặt và hiệu quả giảm beta trong biên bản.|The 40 short contracts represent 6 million notional. A 5% rise entails about 300,000 of variation margin. Added to the 2 million funding gap this requires at least 2.3 million before initial margin and expenses. Report the cash timetable separately from beta reduction.",
+    "source": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/swaps-forwards-futures-strategies"
+  }
+};
+
+function extendedCase(row){
+  const item=caseExtensions[row[1].split('|')[1]];
+  return '<section class="extended-case"><small>'+translated('CASE STUDY · TÌNH HUỐNG GIẢ ĐỊNH|CASE STUDY · SIMULATION')+'</small>'+
+    '<h4>'+translated(item.title)+'</h4><p>'+translated(item.brief)+'</p>'+
+    '<details class="case-debrief"><summary>'+translated('Đối chiếu lời giải và quyết định|Review the reasoning and decision')+'</summary>'+
+    '<p>'+translated(item.solution)+'</p></details>'+
+    '<a href="'+item.source+'" target="_blank" rel="noopener noreferrer">'+translated('Đọc cơ sở lý thuyết tại CFA Institute|Read the underlying CFA Institute material')+' ↗</a></section>';
+}
 function lessonBody(row, formulasOnly) {
   const [,title,concept,question,answer,formula,symbols] = row;
   return '<details class="academy-unit"><summary>'+translated(title)+'</summary><p>'+translated(concept)+'</p>'+
     (formula ? '<div class="academy-equation">'+equation(formula)+'</div><p>'+translated(symbols)+'</p>' : '')+
-    '<h4>'+translated('Tình huống ứng dụng|Application case')+'</h4><p>'+translated(question)+'</p><details class="academy-answer" '+(formulasOnly?'open':'')+'><summary>'+translated('Xem lời giải|Show worked solution')+'</summary><p>'+translated(answer)+'</p></details></details>';
+    '<h4>'+translated('Tình huống ứng dụng|Application case')+'</h4><p>'+translated(question)+'</p><details class="academy-answer" '+(formulasOnly?'open':'')+'><summary>'+translated('Xem lời giải|Show worked solution')+'</summary><p>'+translated(answer)+'</p></details>'+extendedCase(row)+'</details>';
 }
 const stages = {
  I:[
@@ -1605,6 +1844,7 @@ function renderQuizView(){
     const correct=options[0].includes('|')?translated(options[0]):options[0];
     result.innerHTML='<strong>'+translated(attempt.answer===0?'Chính xác|Correct':'Cần ôn lại|To review')+'</strong><p>'+translated('Đáp án đúng|Correct answer')+' · '+correct+'</p><p>'+translated(row[4])+'</p>';
     panel.append(result);
+    result.insertAdjacentHTML('beforeend',extendedCase(row));
   }
   panel.append(submit);
 }
