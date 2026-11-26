@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="deep-course.css" rel="stylesheet">
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -464,7 +465,7 @@
     <!-- Thanh hướng dẫn ngắn -->
     <div class="px-6 py-2.5 bg-base-subtle border-b border-base-border flex items-center justify-between text-xs text-ink-secondary shrink-0">
       <span><span data-i18n="drawerHelp">Mở bài để đọc và đánh dấu tiến độ.</span></span>
-      <button onclick="openSourceDrawer()" class="font-medium text-ink-primary underline underline-offset-2">Xem IFT Notes</button>
+      <button id="drawer-course-source" onclick="openSourceDrawer()" class="font-medium text-ink-primary underline underline-offset-2">Xem IFT Notes</button>
     </div>
 
     <!-- Nội dung 8 mục LOS -->
@@ -1897,4 +1898,6 @@ function setLevel(value){studyLevel=value.split(' ').pop();state.level='LVL '+st
       route();window.addEventListener('hashchange',route);window.lucide?.createIcons()
     });
     document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();byId('global-search-input').focus()}if(e.key==='Escape')closeLosDrawer()});
-  </script></body></html>
+  </script>
+  <script src="deep-course.js"></script>
+</body></html>
