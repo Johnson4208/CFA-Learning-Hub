@@ -104,7 +104,20 @@
 .academy-unit,.case-result,.academy-head{border:1px solid #e4e4e7;border-radius:8px;padding:20px;background:white}.academy-unit summary{cursor:pointer;font-weight:600}.academy-unit p,.academy-unit h4,.academy-unit textarea,.academy-unit button,.academy-answer{margin-top:14px}.academy-unit p{font-size:14px;line-height:1.7;color:#52525b}.academy-unit h3,.academy-head h2{font-size:21px;font-weight:600}.academy-unit small,.academy-head small{font:12px monospace;color:#71717a}.academy-equation{overflow:auto;padding:16px;margin-top:16px;background:#f7f7f8;font-size:1.35rem}.academy-unit textarea{width:100%;border:1px solid #d4d4d8;padding:10px;border-radius:6px}.academy-unit button+button{margin-left:8px}.case-result{display:flex;justify-content:space-between;align-items:center}.case-ring,.case-ring b{display:grid;place-items:center;border-radius:50%;aspect-ratio:1}.case-ring{width:110px;background:conic-gradient(#18181b var(--arc),#e4e4e7 0)}.case-ring b{width:78%;background:white}.case-result strong{font:32px monospace}.academy-unit>.academy-unit{margin-top:10px}
 </style><style>
 .quiz-switch{display:inline-flex;gap:3px;background:#f7f7f8;border:1px solid #e4e4e7;padding:3px;border-radius:7px}.quiz-switch button{padding:7px 13px;border-radius:4px;font-size:13px}.quiz-switch [aria-pressed=true]{background:#18181b;color:white}.lesson-picker{display:grid;gap:6px;margin-top:15px;font-size:13px}.lesson-picker select,.lesson-question fieldset label{border:1px solid #d4d4d8;background:white;border-radius:6px;padding:10px}.lesson-question fieldset{margin-top:16px;display:grid;gap:7px}.lesson-question legend{font-size:13px;margin-bottom:8px}.lesson-question fieldset label{display:flex;align-items:center;gap:10px;cursor:pointer}.lesson-question input{accent-color:#18181b}.lesson-question button:disabled{opacity:.45}.lesson-feedback{margin-top:16px;padding:16px;border:1px solid #e4e4e7;border-radius:6px;background:#f7f7f8}
-</style><style>.extended-case{margin-top:20px;padding:18px;background:#f7f7f8;border:1px solid #e4e4e7;border-radius:7px}.extended-case h4{font-weight:650;margin:7px 0}.extended-case a{display:inline-block;font-size:12px;text-decoration:underline;margin-top:14px}.case-debrief{margin-top:14px;padding-top:12px;border-top:1px solid #d4d4d8}</style></head>
+</style><style>.extended-case{margin-top:20px;padding:18px;background:#f7f7f8;border:1px solid #e4e4e7;border-radius:7px}.extended-case h4{font-weight:650;margin:7px 0}.extended-case a{display:inline-block;font-size:12px;text-decoration:underline;margin-top:14px}.case-debrief{margin-top:14px;padding-top:12px;border-top:1px solid #d4d4d8}</style>
+<style>
+/* Course modules open as a centered modal across every CFA level. */
+#los-drawer-backdrop{display:none!important}
+#los-drawer.hidden{display:none!important}
+#los-drawer.flex{display:flex!important}
+#los-drawer{background:rgba(24,24,27,.28)!important;backdrop-filter:blur(2px)}
+#los-drawer .module-modal-card{animation:module-modal-in .18s ease-out both}
+#drawer-los-list{min-height:0}
+#drawer-los-list .academy-unit{background:#fff!important;border:1px solid #e4e4e7!important;border-radius:8px!important;padding:16px 18px!important}
+#drawer-los-list .academy-unit[open]{border-color:#a1a1aa!important;box-shadow:0 3px 12px rgba(24,24,27,.06)}
+@keyframes module-modal-in{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:640px){#los-drawer{padding:12px!important}.module-modal-card{max-height:92vh!important}.module-modal-card #drawer-los-list{padding:16px!important}}
+</style></head>
 <body class="bg-base-white text-ink-primary font-sans min-h-screen flex flex-col">
 
   <!-- Thông báo Toast gọn nhẹ -->
@@ -428,7 +441,8 @@
 
   <!-- ==================== SLIDE-OVER PANEL: ĐỌC BÀI & CHECKLIST 8 LOS ==================== -->
   <div id="los-drawer-backdrop" onclick="closeLosDrawer()" class="fixed inset-0 z-40 bg-ink-primary/20 hidden transition-opacity"></div>
-  <aside id="los-drawer" class="fixed top-0 right-0 z-50 h-screen w-full max-w-2xl bg-base-white border-l border-base-border transform translate-x-full transition-transform duration-250 flex flex-col">
+  <aside id="los-drawer" onclick="if(event.target===this) closeLosDrawer()" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-8 bg-ink-primary/25 backdrop-blur-[2px]" role="dialog" aria-modal="true" aria-labelledby="drawer-module-title">
+    <div class="module-modal-card w-full max-w-3xl max-h-[88vh] bg-base-white border border-base-border rounded-lg shadow-2xl overflow-hidden flex flex-col pointer-events-auto">
     
     <!-- Header Drawer -->
     <div class="px-6 py-4 border-b border-base-border flex items-start justify-between gap-4 shrink-0">
@@ -456,6 +470,7 @@
     <!-- Nội dung 8 mục LOS -->
     <div id="drawer-los-list" class="flex-1 overflow-y-auto p-6 space-y-3">
       <!-- Render bằng JS -->
+    </div>
     </div>
   </aside>
 
@@ -902,12 +917,14 @@
     function openLosDrawer() {
       renderLosDrawerList();
       document.getElementById('los-drawer-backdrop').classList.remove('hidden');
-      document.getElementById('los-drawer').classList.remove('translate-x-full');
+      document.getElementById('los-drawer').classList.remove('hidden');
+      document.getElementById('los-drawer').classList.add('flex');
     }
 
     function closeLosDrawer() {
       document.getElementById('los-drawer-backdrop').classList.add('hidden');
-      document.getElementById('los-drawer').classList.add('translate-x-full');
+      document.getElementById('los-drawer').classList.add('hidden');
+      document.getElementById('los-drawer').classList.remove('flex');
     }
 
     // ==================== PRACTICE QUIZ ====================
@@ -1590,7 +1607,7 @@ function openStage(i){
  const done=completed(),key=lessonKey(rows[Number(b.dataset.id)]); done.has(key)?done.delete(key):done.add(key);
  state.completedLessons=[...done];saveState();renderLibraryModules();openStage(i);byId('drawer-los-list').querySelector('[data-id="'+b.dataset.id+'"]').closest('.academy-unit').open=true;
  });
- byId('los-drawer-backdrop').classList.remove('hidden');byId('los-drawer').classList.remove('translate-x-full');
+ byId('los-drawer-backdrop').classList.remove('hidden');byId('los-drawer').classList.remove('hidden');byId('los-drawer').classList.add('flex');
 }
 function renderFormulaList(){
  byId('view-formulas').innerHTML='<h2 class="text-xl font-semibold">'+translated('Sổ tay công thức|Formula notebook')+'</h2>'+levelRows().filter(r=>r[5]).map(r=>lessonBody(r,true)).join('');
