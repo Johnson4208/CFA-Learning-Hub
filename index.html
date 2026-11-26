@@ -1,58 +1,46 @@
 <!DOCTYPE html>
-<html lang="vi" class="light">
+<html lang="vi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script>if (/^#(learn\/|settings$)/.test(location.hash)) location.replace("notebook.html"+location.hash)</script><title>CFAnotes — Executive Private Study Suite</title>
+  <title>CFAnotes — Personal CFA Study Workspace</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Playfair Display (Editorial Luxury), Plus Jakarta Sans & JetBrains Mono -->
+  <!-- Google Fonts: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
-            serif: ['Playfair Display', 'Georgia', 'serif'],
-            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace'],
           },
           colors: {
-            ivory: {
-              50: '#FDFCFA',
-              100: '#F9F8F4',
-              200: '#F2EFE9',
-              300: '#E8E3D9',
+            base: {
+              white: '#FFFFFF',
+              subtle: '#F7F7F8',
+              border: '#E4E4E7',
+              borderHover: '#A1A1AA',
             },
-            obsidian: {
-              950: '#0C0C0E',
-              900: '#141413',
-              850: '#18181B',
-              800: '#21201E',
-              700: '#2E2C29',
+            ink: {
+              primary: '#18181B',
+              secondary: '#52525B',
+              muted: '#71717A',
             },
-            champagne: {
-              300: '#E5C97B',
-              400: '#D4AF37',
-              500: '#B48A3E',
-              600: '#96702D',
-            },
-            emeraldLux: {
-              700: '#264E3E',
-              800: '#1E3F32',
-              900: '#152D24',
+            status: {
+              greenText: '#15803D',
+              greenBg: '#F0FDF4',
+              greenBorder: '#BBF7D0',
+              amberText: '#B45309',
+              amberBg: '#FFFBEB',
+              amberBorder: '#FDE68A',
             }
-          },
-          boxShadow: {
-            'editorial': '0 4px 24px -4px rgba(20, 20, 19, 0.04), 0 1px 4px -1px rgba(20, 20, 19, 0.03)',
-            'gold-glow': '0 0 0 3px rgba(180, 138, 62, 0.16), 0 0 22px rgba(212, 175, 55, 0.18)',
-            'card-hover': '0 14px 32px -8px rgba(20, 20, 19, 0.08), 0 0 0 1px rgba(180, 138, 62, 0.45)',
           }
         }
       }
@@ -61,769 +49,833 @@
 
   <style>
     body {
+      background-color: #FFFFFF;
+      color: #18181B;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Champagne Gold Search Focus Glow */
-    .search-luxury:focus-within {
-      border-color: #B48A3E;
-      box-shadow: 0 0 0 3px rgba(180, 138, 62, 0.16), 0 0 20px rgba(212, 175, 55, 0.2);
+    /* Tinh tế hover nâng nhẹ và làm đậm viền */
+    .restrained-card {
+      transition: transform 0.18s ease, border-color 0.18s ease;
     }
-    .dark .search-luxury:focus-within {
-      border-color: #D4AF37;
-      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.18), 0 0 24px rgba(212, 175, 55, 0.22);
-    }
-
-    /* Editorial Card Transition */
-    .luxury-card {
-      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .luxury-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 32px -8px rgba(20, 20, 19, 0.08), 0 0 0 1px rgba(180, 138, 62, 0.45);
-    }
-    .dark .luxury-card:hover {
-      box-shadow: 0 14px 32px -8px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(212, 175, 55, 0.4);
+    .restrained-card:hover {
+      transform: translateY(-1px);
+      border-color: #A1A1AA;
     }
 
-    /* 3D Flashcard Flip */
-    .perspective-1000 {
-      perspective: 1000px;
+    /* Lật thẻ Flashcard phẳng, mượt mà */
+    .flashcard-stage {
+      perspective: 1200px;
     }
-    .transform-style-3d {
+    .flashcard-inner {
       transform-style: preserve-3d;
-      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
-    .backface-hidden {
+    .flashcard-face {
       backface-visibility: hidden;
     }
-    .rotate-y-180 {
+    .flashcard-back {
+      transform: rotateY(180deg);
+    }
+    .is-flipped {
       transform: rotateY(180deg);
     }
 
-    /* Progress Ring Smooth Animation */
-    .progress-ring-circle {
-      transition: stroke-dashoffset 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-      transform: rotate(-90deg);
-      transform-origin: 50% 50%;
-    }
-
-    /* Custom Scrollbar */
+    /* Thanh cuộn tối giản */
     ::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
+      width: 6px;
+      height: 6px;
     }
     ::-webkit-scrollbar-track {
       background: transparent;
     }
     ::-webkit-scrollbar-thumb {
-      background: rgba(180, 138, 62, 0.3);
-      border-radius: 9999px;
+      background: #E4E4E7;
+      border-radius: 3px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: rgba(180, 138, 62, 0.55);
+      background: #A1A1AA;
     }
   </style>
 <style>
-#academy,.academy-unit{background:#fdfcfa;color:#272720}.dark #academy,.dark .academy-unit{background:#21201e;color:#f3efe6}#academy{border:1px solid #ded7c6;border-radius:18px;overflow:hidden}.academy-head{padding:24px;background:#1e3f32;color:#fff}.academy-head small{letter-spacing:.13em;color:#e5c97b}.academy-head h2{font:600 30px Georgia,serif;margin:6px 0}.academy-head p,.academy-unit p{font-size:14px;line-height:1.75}.academy-unit{padding:16px 22px;border-bottom:1px solid #c8bfaa66}.academy-unit summary{cursor:pointer;font-weight:600}.academy-unit p,.academy-unit h4,.academy-answer{margin-top:12px}.academy-equation{overflow-x:auto;background:#f2efe9;color:#152d24;padding:20px;border-radius:10px;margin-top:14px;font-size:1.4rem}.academy-answer summary,.archive{color:#96702d}.archive{display:block;padding:18px 22px;text-decoration:underline}
-</style><style>.academy-unit textarea{display:block;width:100%;margin:14px 0;border:1px solid #ad9d76;padding:10px;border-radius:8px;color:#25231e}.academy-unit button,.case-result button{background:#264e3e;color:white;border-radius:8px;padding:9px 16px;margin:14px 8px 0 0}.case-result{display:flex;align-items:center;justify-content:space-between;padding:24px;gap:14px}.case-ring{width:120px;aspect-ratio:1;border-radius:50%;background:conic-gradient(#96702d var(--arc),#e8e3d9 0);display:grid;place-items:center}.case-ring b{width:78%;aspect-ratio:1;border-radius:50%;background:#fdfcfa;color:#264e3e;display:grid;place-items:center}</style><style>.stage,#road-progress{padding:22px}.stage{background:#eae5da;color:#252a20}.stage h3,#road-progress h2{font:600 23px Georgia,serif;margin:5px 0}.stage p,#road-progress p{font-size:14px;line-height:1.65}.stage small,#road-progress small{letter-spacing:.08em}.academy-unit{scroll-margin-top:6rem}#road-progress{background:#1e3f32;color:#fff;border-radius:16px}#road-progress strong{font-size:32px}#road-progress progress{display:block;width:100%;accent-color:#d4af37;margin:8px 0 16px}#road-progress button{display:block;text-align:left;color:#f0d58f;padding:9px 0}#road-progress hr{margin:18px 0;border-color:#ffffff44}</style><link rel="stylesheet" href="unified.css?v=3"><link rel="stylesheet" href="canva-layout.css"></head>
-<body class="bg-ivory-100 text-obsidian-900 dark:bg-obsidian-950 dark:text-[#F3EFE6] font-sans transition-colors duration-300 overflow-x-hidden">
+.lvl-pill.selected,.action,.academy-unit button,.case-result button{background:#18181b;color:white;border-radius:5px;padding:7px 12px;font-size:13px}.lvl-pill.selected{padding:2px 8px}
+.academy-unit,.case-result,.academy-head{border:1px solid #e4e4e7;border-radius:8px;padding:20px;background:white}.academy-unit summary{cursor:pointer;font-weight:600}.academy-unit p,.academy-unit h4,.academy-unit textarea,.academy-unit button,.academy-answer{margin-top:14px}.academy-unit p{font-size:14px;line-height:1.7;color:#52525b}.academy-unit h3,.academy-head h2{font-size:21px;font-weight:600}.academy-unit small,.academy-head small{font:12px monospace;color:#71717a}.academy-equation{overflow:auto;padding:16px;margin-top:16px;background:#f7f7f8;font-size:1.35rem}.academy-unit textarea{width:100%;border:1px solid #d4d4d8;padding:10px;border-radius:6px}.academy-unit button+button{margin-left:8px}.case-result{display:flex;justify-content:space-between;align-items:center}.case-ring,.case-ring b{display:grid;place-items:center;border-radius:50%;aspect-ratio:1}.case-ring{width:110px;background:conic-gradient(#18181b var(--arc),#e4e4e7 0)}.case-ring b{width:78%;background:white}.case-result strong{font:32px monospace}.academy-unit>.academy-unit{margin-top:10px}
+</style></head>
+<body class="bg-base-white text-ink-primary font-sans min-h-screen flex flex-col">
 
-  <div class="canvas-nav"><strong>CFA Notes</strong><nav class="canvas-links"><a href="index.html#home" data-route="home" data-en="Home" data-vi="Trang chủ">Trang chủ</a><a href="index.html#library" data-route="library" data-en="Library" data-vi="Thư viện">Thư viện</a><a href="index.html#quiz" data-route="quiz" data-en="Quizzes" data-vi="Luyện tập">Luyện tập</a><a href="index.html#flashcards" data-route="flashcards" data-en="Flashcards" data-vi="Thẻ ghi nhớ">Thẻ ghi nhớ</a><a href="index.html#notes" data-route="notes" data-en="Notes" data-vi="Ghi chú">Ghi chú</a><a href="index.html#formulas" data-route="formulas" data-en="Formulas" data-vi="Công thức">Công thức</a><a href="index.html#saved" data-route="saved" data-en="Saved" data-vi="Đã lưu">Đã lưu</a></nav></div><!-- Toast Notification Container -->
+  <!-- Thông báo Toast gọn nhẹ -->
   <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-  <!-- Mobile Sidebar Backdrop -->
-  <div id="mobile-backdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-30 hidden lg:hidden"></div>
-
-  <div class="min-h-screen flex">
-
-    <!-- ==================== 1. LEFT SIDEBAR (OBSIDIAN CHARCOAL #141413) ==================== -->
-    <aside id="sidebar" class="fixed lg:sticky top-0 left-0 z-40 h-screen w-72 bg-obsidian-900 text-[#D6D1C7] border-r border-obsidian-700/80 flex flex-col justify-between transition-all duration-300 -translate-x-full lg:translate-x-0 shrink-0">
+  <!-- ==================== TOP STICKY NAVIGATION BAR (56px) ==================== -->
+  <header class="sticky top-0 z-30 h-14 bg-base-white/95 backdrop-blur-xs border-b border-base-border">
+    <div class="max-w-[1160px] h-full mx-auto px-4 sm:px-6 flex items-center justify-between gap-3">
       
-      <div class="p-4 flex flex-col gap-5 overflow-y-auto">
-        <!-- Brand Monogram Header -->
-        <div class="flex items-center justify-between px-1 pt-1">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#262420] to-[#141413] border border-champagne-500/60 flex items-center justify-center shadow-inner shrink-0">
-              <span class="font-serif italic font-bold text-champagne-400 text-xl tracking-tighter">cn</span>
-            </div>
-            <div class="sidebar-label overflow-hidden">
-              <div class="flex items-center gap-2">
-                <span class="font-serif font-semibold text-[#F3EFE6] text-lg tracking-tight">CFAnotes</span>
-                <span class="text-[9px] font-mono uppercase tracking-widest px-1.5 py-0.5 rounded bg-champagne-500/15 text-champagne-300 border border-champagne-500/30">PRIVATE</span>
-              </div>
-              <p class="text-[10px] uppercase tracking-[0.16em] text-[#8E897F] font-medium truncate" data-i18n="brandSub">Không gian học cá nhân</p>
-            </div>
-          </div>
-          <!-- Collapse Button -->
-          <button onclick="toggleSidebarCollapse()" title="Thu gọn / Mở rộng" class="hidden lg:flex w-7 h-7 rounded-lg items-center justify-center text-[#8E897F] hover:text-champagne-300 hover:bg-obsidian-800 transition">
-            <i data-lucide="panel-left-close" class="w-4 h-4"></i>
-          </button>
-        </div>
+      <!-- Trái: Wordmark CFAnotes + Bộ chọn cấp độ -->
+      <div class="flex items-center gap-3 shrink-0">
+        <button onclick="switchTab('library')" class="flex items-center gap-2 text-left focus:outline-none">
+          <span class="w-6 h-6 rounded border border-ink-primary flex items-center justify-center font-mono text-xs font-semibold tracking-tighter text-ink-primary">cn</span>
+          <span class="font-semibold text-[15px] tracking-tight text-ink-primary">CFAnotes</span>
+        </button>
 
-        <!-- Level Selector Pill -->
-        <div class="sidebar-label bg-obsidian-950/80 p-1 rounded-xl border border-obsidian-700/80 grid grid-cols-3 gap-1">
-          <button onclick="setLevel('LEVEL I')" class="lvl-btn py-1.5 text-[11px] font-mono font-semibold rounded-lg bg-champagne-500 text-obsidian-950 shadow-xs transition">LVL I</button>
-          <button onclick="setLevel('LEVEL II')" class="lvl-btn py-1.5 text-[11px] font-mono font-semibold rounded-lg text-[#8E897F] hover:text-[#F3EFE6] transition">LVL II</button>
-          <button onclick="setLevel('LEVEL III')" class="lvl-btn py-1.5 text-[11px] font-mono font-semibold rounded-lg text-[#8E897F] hover:text-[#F3EFE6] transition">LVL III</button>
-        </div>
-
-        <!-- Main Navigation -->
-        <div>
-          <p class="sidebar-label px-3 mb-2 text-[10px] font-mono uppercase tracking-[0.18em] text-[#78736A]" data-i18n="navGroup">Không gian của bạn</p>
-          <nav class="space-y-1">
-            <button onclick="switchTab('library')" id="nav-library" class="nav-item relative w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium bg-obsidian-800/90 text-[#F3EFE6] border border-champagne-500/30 transition">
-              <span class="nav-indicator absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-champagne-400"></span>
-              <div class="flex items-center gap-3">
-                <i data-lucide="layout-grid" class="w-4 h-4 text-champagne-400 shrink-0"></i>
-                <span class="sidebar-label" data-i18n="navLibrary">Thư viện</span>
-              </div>
-              <span class="sidebar-label font-mono text-xs px-2 py-0.5 rounded bg-champagne-500/20 text-champagne-300 border border-champagne-500/30"></span>
-            </button>
-
-            <button onclick="switchTab('quiz')" id="nav-quiz" class="nav-item relative w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-[#9E988E] hover:text-[#F3EFE6] hover:bg-obsidian-800/50 border border-transparent transition">
-              <span class="nav-indicator hidden absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-champagne-400"></span>
-              <div class="flex items-center gap-3">
-                <i data-lucide="check-square" class="w-4 h-4 text-[#8E897F] shrink-0"></i>
-                <span class="sidebar-label" data-i18n="navQuiz">Luyện tập</span>
-              </div>
-              <span class="sidebar-label font-mono text-[11px] text-[#78736A]" id="case-count"></span>
-            </button>
-
-            <button onclick="switchTab('flashcards')" id="nav-flashcards" class="nav-item relative w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-[#9E988E] hover:text-[#F3EFE6] hover:bg-obsidian-800/50 border border-transparent transition">
-              <span class="nav-indicator hidden absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-champagne-400"></span>
-              <div class="flex items-center gap-3">
-                <i data-lucide="layers" class="w-4 h-4 text-[#8E897F] shrink-0"></i>
-                <span class="sidebar-label" data-i18n="navFlashcards">Thẻ ghi nhớ</span>
-              </div>
-              <span class="sidebar-label font-mono text-[11px] text-[#78736A]"></span>
-            </button>
-
-            <button onclick="switchTab('notes')" id="nav-notes" class="nav-item relative w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-[#9E988E] hover:text-[#F3EFE6] hover:bg-obsidian-800/50 border border-transparent transition">
-              <span class="nav-indicator hidden absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-champagne-400"></span>
-              <div class="flex items-center gap-3">
-                <i data-lucide="file-text" class="w-4 h-4 text-[#8E897F] shrink-0"></i>
-                <span class="sidebar-label" data-i18n="navNotes">Ghi chú của tôi</span>
-              </div>
-            </button>
-
-            <button onclick="switchTab('formulas')" id="nav-formulas" class="nav-item relative w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-[#9E988E] hover:text-[#F3EFE6] hover:bg-obsidian-800/50 border border-transparent transition">
-              <span class="nav-indicator hidden absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-champagne-400"></span>
-              <div class="flex items-center gap-3">
-                <i data-lucide="sigma" class="w-4 h-4 text-[#8E897F] shrink-0"></i>
-                <span class="sidebar-label" data-i18n="navFormulas">Sổ tay công thức</span>
-              </div>
-            </button>
-
-            <button onclick="switchTab('bookmarked')" id="nav-bookmarked" class="nav-item relative w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-[#9E988E] hover:text-[#F3EFE6] hover:bg-obsidian-800/50 border border-transparent transition">
-              <span class="nav-indicator hidden absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-champagne-400"></span>
-              <div class="flex items-center gap-3">
-                <i data-lucide="bookmark" class="w-4 h-4 text-[#8E897F] shrink-0"></i>
-                <span class="sidebar-label" data-i18n="navBookmarked">Đã đánh dấu</span>
-              </div>
-            </button>
-          </nav>
-        </div>
-
-        <!-- Currently Studying Card (Corporate Issuers - Level I 2027) -->
-        <div class="sidebar-label mt-2 p-3.5 rounded-xl bg-obsidian-800/70 border border-obsidian-700/90">
-          <div class="flex items-center justify-between mb-1.5">
-            <div class="flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-champagne-400"></span>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-champagne-300" data-i18n="currentlyStudying">Đang học</span>
-            </div>
-            <span id="sidebar-pct-text" class="font-mono text-[11px] text-champagne-300">0%</span>
-          </div>
-          <p class="font-serif font-semibold text-sm text-[#F3EFE6]" id="sidebar-course">CFA</p>
-          <p class="text-[11px] text-[#8E897F] mt-0.5">CFA · 2027</p>
-          <div class="w-full h-1 bg-obsidian-950 rounded-full mt-3 overflow-hidden">
-            <div id="sidebar-progress-bar" class="h-full bg-gradient-to-r from-champagne-600 to-champagne-300 rounded-full transition-all duration-500" style="width: 0%"></div>
-          </div>
+        <div class="flex items-center p-0.5 rounded-md bg-base-subtle border border-base-border">
+          <button onclick="setLevel('LVL I', this)" class="lvl-pill px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-base-white text-ink-primary border border-base-border transition">LVL I</button>
+          <button onclick="setLevel('LVL II', this)" class="lvl-pill px-2 py-0.5 rounded text-[11px] font-mono font-medium text-ink-muted hover:text-ink-primary border border-transparent transition">LVL II</button>
+          <button onclick="setLevel('LVL III', this)" class="lvl-pill px-2 py-0.5 rounded text-[11px] font-mono font-medium text-ink-muted hover:text-ink-primary border border-transparent transition">LVL III</button>
         </div>
       </div>
 
-      <!-- Bottom Local Storage Indicator -->
-      <div class="p-4 border-t border-obsidian-700/80 bg-obsidian-950/50">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            <div class="sidebar-label">
-              <p class="text-xs font-medium text-[#E5E0D5]" data-i18n="localTitle">Lưu trên thiết bị này</p>
-              <p class="text-[11px] text-[#78736A]" data-i18n="localSub">Ghi chú & tiến độ học của bạn</p>
-            </div>
-          </div>
-          <button onclick="showToast('Tất cả tiến độ đã được đồng bộ an toàn vào LocalStorage.')" title="Kiểm tra lưu trữ" class="sidebar-label p-1.5 rounded-lg text-[#8E897F] hover:text-champagne-300 transition">
-            <i data-lucide="shield-check" class="w-4 h-4"></i>
-          </button>
+      <!-- Giữa: Điều hướng Tab ngang tập trung (Desktop) -->
+      <nav class="hidden md:flex items-center gap-1 h-full">
+        <button onclick="switchTab('library')" id="tab-btn-library" class="top-nav-btn relative h-full px-3 flex items-center gap-1.5 text-[13px] font-medium text-ink-primary transition">
+          <span data-i18n="navLibrary">Thư viện</span>
+          <span class="nav-underline absolute bottom-0 left-3 right-3 h-[2px] bg-ink-primary"></span>
+        </button>
+        <button onclick="switchTab('quiz')" id="tab-btn-quiz" class="top-nav-btn relative h-full px-3 flex items-center gap-1.5 text-[13px] font-normal text-ink-secondary hover:text-ink-primary transition">
+          <span data-i18n="navQuiz">Luyện tập</span>
+          <span class="nav-underline hidden absolute bottom-0 left-3 right-3 h-[2px] bg-ink-primary"></span>
+        </button>
+        <button onclick="switchTab('flashcards')" id="tab-btn-flashcards" class="top-nav-btn relative h-full px-3 flex items-center gap-1.5 text-[13px] font-normal text-ink-secondary hover:text-ink-primary transition">
+          <span data-i18n="navFlashcards">Thẻ ghi nhớ</span>
+          <span class="nav-underline hidden absolute bottom-0 left-3 right-3 h-[2px] bg-ink-primary"></span>
+        </button>
+        <button onclick="switchTab('notes')" id="tab-btn-notes" class="top-nav-btn relative h-full px-3 flex items-center gap-1.5 text-[13px] font-normal text-ink-secondary hover:text-ink-primary transition">
+          <span data-i18n="navNotes">Ghi chú</span>
+          <span class="nav-underline hidden absolute bottom-0 left-3 right-3 h-[2px] bg-ink-primary"></span>
+        </button>
+        <button onclick="switchTab('formulas')" id="tab-btn-formulas" class="top-nav-btn relative h-full px-3 flex items-center gap-1.5 text-[13px] font-normal text-ink-secondary hover:text-ink-primary transition">
+          <span data-i18n="navFormulas">Công thức</span>
+          <span class="nav-underline hidden absolute bottom-0 left-3 right-3 h-[2px] bg-ink-primary"></span>
+        </button>
+      </nav>
+
+      <!-- Phải: Tìm kiếm Ctrl+K + VI/EN + Tải mã nguồn (.html) -->
+      <div class="flex items-center gap-2 shrink-0">
+        <!-- Tìm kiếm nhanh -->
+        <div class="hidden lg:flex items-center w-44 focus-within:w-56 bg-base-subtle border border-base-border focus-within:border-ink-primary rounded-md px-2.5 py-1 transition-all duration-150">
+          <i data-lucide="search" class="w-3.5 h-3.5 text-ink-muted mr-2 shrink-0"></i>
+          <input
+            id="global-search-input"
+            type="text"
+            oninput="handleGlobalSearch(this.value)"
+            placeholder="Tìm kiếm..."
+            class="w-full bg-transparent text-xs text-ink-primary placeholder-ink-muted focus:outline-none"
+          />
+          <kbd class="ml-1 px-1 py-0.2 text-[10px] font-mono text-ink-muted bg-base-white border border-base-border rounded">⌘K</kbd>
         </div>
+
+        <!-- Chuyển ngôn ngữ VI / EN -->
+        <div class="flex items-center p-0.5 rounded-md bg-base-subtle border border-base-border">
+          <button onclick="setLanguage('vi')" id="lang-btn-vi" class="px-1.5 py-0.5 text-[11px] font-mono font-semibold rounded bg-base-white text-ink-primary border border-base-border transition">VI</button>
+          <button onclick="setLanguage('en')" id="lang-btn-en" class="px-1.5 py-0.5 text-[11px] font-mono font-medium rounded text-ink-muted hover:text-ink-primary border border-transparent transition">EN</button>
+        </div>
+
+        <!-- Nút Tải mã nguồn (.html) -->
+        <button onclick="downloadStandaloneHTML()" title="Tải tệp HTML độc lập về máy & sao chép mã nguồn" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-ink-primary hover:bg-ink-secondary text-base-white text-xs font-medium transition cursor-pointer">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline" data-i18n="btnDownloadHtml">Tải mã nguồn (.html)</span>
+        </button>
       </div>
-    </aside>
-
-    <!-- ==================== 2. MAIN WORKSPACE ==================== -->
-    <div class="flex-1 flex flex-col min-w-0">
-
-      <!-- Top Header -->
-      <header class="sticky top-0 z-20 h-16 px-4 sm:px-8 bg-ivory-100/90 dark:bg-obsidian-950/90 backdrop-blur-md border-b border-ivory-300 dark:border-obsidian-700/80 flex items-center justify-between gap-4">
-        
-        <!-- Left: Mobile Toggle + Breadcrumb -->
-        <div class="flex items-center gap-3 min-w-0">
-          <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 rounded-xl border border-ivory-300 dark:border-obsidian-700 bg-white dark:bg-obsidian-900 text-obsidian-900 dark:text-[#F3EFE6]">
-            <i data-lucide="menu" class="w-5 h-5"></i>
-          </button>
-
-          <nav class="flex items-center gap-2 text-xs sm:text-sm truncate">
-            <span class="text-[#78736A] hidden sm:inline" data-i18n="breadcrumbRoot">Không gian học</span>
-            <span class="text-[#C4BDB0] dark:text-obsidian-700 hidden sm:inline">/</span>
-            <span id="breadcrumb-current" class="font-medium text-obsidian-900 dark:text-[#F3EFE6] truncate" data-i18n="navLibrary">Thư viện</span>
-          </nav>
-        </div>
-
-        <!-- Right: Ctrl+K Search + VI/EN + Level + Theme + Avatar -->
-        <div class="flex items-center gap-2.5 sm:gap-3">
-          
-          <!-- Ctrl+K Search Input -->
-          <div class="search-luxury hidden md:flex items-center w-60 lg:w-72 bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 rounded-xl px-3 py-1.5 transition-all duration-200">
-            <i data-lucide="search" class="w-3.5 h-3.5 text-[#8E897F] mr-2 shrink-0"></i>
-            <input 
-              id="global-search" 
-              type="text" 
-              oninput="handleSearch(this.value)"
-              placeholder="Tìm trong tài liệu..." 
-              class="w-full bg-transparent text-xs sm:text-sm text-obsidian-900 dark:text-[#F3EFE6] placeholder-[#9E988E] focus:outline-none"
-            />
-            <kbd class="ml-2 px-1.5 py-0.5 text-[10px] font-mono text-[#8E897F] bg-ivory-100 dark:bg-obsidian-800 border border-ivory-300 dark:border-obsidian-700 rounded">Ctrl K</kbd>
-          </div>
-
-          <!-- Language Switcher VI / EN -->
-          <div class="flex items-center p-0.5 rounded-xl bg-ivory-200 dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700">
-            <button onclick="setLanguage('vi')" id="lang-vi" class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-white dark:bg-champagne-500 text-obsidian-900 dark:text-obsidian-950 shadow-2xs transition">VI</button>
-            <button onclick="setLanguage('en')" id="lang-en" class="px-2.5 py-1 text-xs font-semibold rounded-lg text-[#78736A] hover:text-obsidian-900 dark:hover:text-[#F3EFE6] transition">EN</button>
-          </div>
-
-          <!-- Level Badge -->
-          <span id="topbar-level" class="hidden sm:inline-flex items-center px-3 py-1.5 rounded-xl font-mono text-xs font-medium bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 text-obsidian-900 dark:text-champagne-300">
-            LEVEL I
-          </span>
-
-          <!-- Theme Toggle (Ivory / Obsidian) -->
-          <button onclick="toggleTheme()" title="Chuyển chế độ Ivory / Obsidian" class="p-2 rounded-xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 text-obsidian-900 dark:text-champagne-400 hover:border-champagne-500 transition">
-            <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
-            <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
-          </button>
-
-          <!-- Personal Avatar with Thin Gold Ring -->
-          <button onclick="showToast('Hồ sơ học viên CFA Charterholder Candidate · 2027')" class="w-9 h-9 rounded-full bg-obsidian-900 dark:bg-obsidian-800 text-champagne-400 font-serif font-bold text-sm flex items-center justify-center ring-1 ring-champagne-500 shadow-xs">
-            T
-          </button>
-        </div>
-      </header>
-
-      <!-- 3-Column Content Body -->
-      <main class="flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-8 py-6 lg:py-8 grid grid-cols-1 xl:grid-cols-12 gap-7 items-start">
-        
-        <!-- ==================== CENTER COLUMN (8 cols) ==================== -->
-        <div class="xl:col-span-8 space-y-6 min-w-0">
-
-          <!-- Editorial Hero Header -->
-          <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-1">
-            <div>
-              <p class="text-[11px] font-mono uppercase tracking-[0.2em] text-champagne-600 dark:text-champagne-400 font-semibold mb-2" data-i18n="heroEyebrow">
-                SỔ TAY CFA CỦA BẠN
-              </p>
-              <h1 class="font-serif font-semibold text-2xl sm:text-3xl lg:text-[36px] text-obsidian-900 dark:text-[#F3EFE6] tracking-tight leading-[1.18]" data-i18n="heroTitle">
-                Kiến thức của bạn.<br />Theo cách tinh gọn &amp; sâu sắc hơn.
-              </h1>
-              <p class="text-sm text-[#646058] dark:text-[#A39E93] mt-2.5" data-i18n="heroSubtitle">
-                38 bài học · 9 chặng · 3 bài tổng kết
-              </p>
-            </div>
-
-            
-          </div>
-
-          <!-- ==================== TAB 1: LIBRARY (THƯ VIỆN) ==================== -->
-          <section id="view-library" class="space-y-5"><article id="academy"></article></section>
-
-          <!-- ==================== TAB 2: PRACTICE QUIZ (LUYỆN TẬP) ==================== -->
-          <section id="view-quiz" class="hidden space-y-5">
-            <div class="bg-white dark:bg-obsidian-900 rounded-2xl p-6 sm:p-7 border border-ivory-300 dark:border-obsidian-700 shadow-editorial">
-              <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-ivory-200 dark:border-obsidian-700">
-                <div>
-                  <span class="font-mono text-[11px] uppercase tracking-widest text-champagne-600 dark:text-champagne-400 font-semibold">PRACTICE ASSESSMENT • CORPORATE ISSUERS</span>
-                  <h2 class="font-serif font-semibold text-xl text-obsidian-900 dark:text-[#F3EFE6] mt-0.5">Trắc nghiệm chuẩn mực CFA Level I</h2>
-                </div>
-                <span id="quiz-counter" class="font-mono text-xs px-3 py-1.5 rounded-lg bg-ivory-100 dark:bg-obsidian-850 border border-ivory-300 dark:border-obsidian-700 font-semibold">Câu 1 / 5</span>
-              </div>
-
-              <div class="py-6 space-y-5">
-                <p id="quiz-question-text" class="font-serif text-lg sm:text-xl text-obsidian-900 dark:text-[#F3EFE6] leading-relaxed"></p>
-
-                <div id="quiz-options-container" class="space-y-3"></div>
-
-                <!-- Rationale Box -->
-                <div id="quiz-rationale" class="hidden p-4 rounded-xl bg-ivory-100 dark:bg-obsidian-850 border-l-4 border-champagne-500 text-sm space-y-1.5">
-                  <p class="font-mono text-xs uppercase tracking-wider font-semibold text-champagne-600 dark:text-champagne-400">Giải thích học thuật (Rationale)</p>
-                  <p id="quiz-rationale-text" class="text-[#4A463F] dark:text-[#D6D1C7] leading-relaxed"></p>
-                </div>
-              </div>
-
-              <div class="pt-4 border-t border-ivory-200 dark:border-obsidian-700 flex items-center justify-between">
-                <button onclick="resetQuiz()" class="text-xs font-medium text-[#78736A] hover:text-obsidian-900 dark:hover:text-[#F3EFE6] transition">Làm lại bộ đề</button>
-                <div class="flex items-center gap-2.5">
-                  <button id="quiz-check-btn" onclick="checkQuizAnswer()" class="px-4 py-2 rounded-xl bg-emeraldLux-800 hover:bg-emeraldLux-700 text-white text-xs sm:text-sm font-semibold transition disabled:opacity-40" disabled>Kiểm tra đáp án</button>
-                  <button id="quiz-next-btn" onclick="nextQuiz()" class="px-4 py-2 rounded-xl bg-obsidian-900 dark:bg-champagne-500 text-[#F3EFE6] dark:text-obsidian-950 text-xs sm:text-sm font-semibold transition disabled:opacity-40" disabled>Câu tiếp theo →</button>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- ==================== TAB 3: FLASHCARDS 3D (THẺ GHI NHỚ) ==================== -->
-          <section id="view-flashcards" class="hidden space-y-5">
-            <div class="flex items-center justify-between">
-              <div>
-                <h2 class="font-serif font-semibold text-xl text-obsidian-900 dark:text-[#F3EFE6]">Thẻ ghi nhớ Active Recall</h2>
-                <p class="text-xs text-[#78736A]">Thiết kế danh thiếp tài chính · Chạm để lật mặt định nghĩa</p>
-              </div>
-              <span id="fc-index-badge" class="font-mono text-xs px-3 py-1.5 rounded-xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 font-semibold">1 / 5</span>
-            </div>
-
-            <!-- 3D Executive Card -->
-            <div onclick="flipFlashcard()" class="perspective-1000 w-full h-72 sm:h-80 cursor-pointer select-none">
-              <div id="fc-inner" class="transform-style-3d relative w-full h-full">
-                
-                <!-- Front Face -->
-                <div class="backface-hidden absolute inset-0 rounded-2xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-champagne-500/30 shadow-editorial p-7 flex flex-col justify-between">
-                  <div class="flex items-center justify-between">
-                    <span class="text-[10px] font-mono uppercase tracking-[0.18em] text-champagne-600 dark:text-champagne-400 font-semibold">CORPORATE ISSUERS • TERM</span>
-                    <span class="text-xs text-[#8E897F] flex items-center gap-1"><i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i> Lật thẻ</span>
-                  </div>
-                  <div class="text-center my-auto px-4">
-                    <h3 id="fc-front" class="font-serif font-semibold text-xl sm:text-2xl text-obsidian-900 dark:text-[#F3EFE6] leading-snug"></h3>
-                  </div>
-                  <div class="flex items-center justify-between text-[11px] font-mono text-[#8E897F]">
-                    <span>CFA LEVEL I • 2027</span>
-                    <span id="fc-mastered-tag" class="text-emeraldLux-800 dark:text-emerald-400 font-semibold"></span>
-                  </div>
-                </div>
-
-                <!-- Back Face (Obsidian & Champagne Gold) -->
-                <div class="backface-hidden rotate-y-180 absolute inset-0 rounded-2xl bg-obsidian-900 text-[#F3EFE6] border border-champagne-500/50 shadow-xl p-7 flex flex-col justify-between">
-                  <div class="flex items-center justify-between">
-                    <span class="text-[10px] font-mono uppercase tracking-[0.18em] text-champagne-400 font-semibold">EXECUTIVE DEFINITION</span>
-                    <span class="text-xs text-[#8E897F]">Mặt sau</span>
-                  </div>
-                  <div class="text-center my-auto px-3 sm:px-6">
-                    <p id="fc-back" class="text-sm sm:text-base text-[#E5E0D5] leading-relaxed"></p>
-                  </div>
-                  <div class="text-center text-[11px] font-mono text-champagne-300/80">
-                    IFT Study Notes • Essential Concept
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Controls -->
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <div class="flex items-center gap-2">
-                <button onclick="prevFlashcard()" class="px-4 py-2.5 rounded-xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 text-xs font-semibold hover:border-champagne-500 transition">← Thẻ trước</button>
-                <button onclick="flipFlashcard()" class="px-4 py-2.5 rounded-xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 text-xs font-semibold hover:border-champagne-500 transition">Lật thẻ</button>
-                <button onclick="nextFlashcard()" class="px-4 py-2.5 rounded-xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 text-xs font-semibold hover:border-champagne-500 transition">Thẻ sau →</button>
-              </div>
-
-              <button onclick="markFlashcardMastered()" class="px-5 py-2.5 rounded-xl bg-emeraldLux-800 hover:bg-emeraldLux-700 text-white text-xs sm:text-sm font-semibold shadow-xs transition flex items-center gap-2">
-                <i data-lucide="check" class="w-4 h-4 text-champagne-300"></i>
-                <span>Đã thuộc thẻ này</span>
-              </button>
-            </div>
-          </section>
-
-          <!-- ==================== TAB 4: PERSONAL NOTES (GHI CHÚ CỦA TÔI) ==================== -->
-          <section id="view-notes" class="hidden space-y-4">
-            <div class="bg-white dark:bg-obsidian-900 rounded-2xl p-6 border border-ivory-300 dark:border-obsidian-700 shadow-editorial space-y-4">
-              <div class="flex items-center justify-between">
-                <div>
-                  <span class="font-mono text-[10px] uppercase tracking-widest text-champagne-600 dark:text-champagne-400">PERSONAL DOSSIER</span>
-                  <h2 class="font-serif font-semibold text-xl text-obsidian-900 dark:text-[#F3EFE6]">Ghi chú nghiên cứu cá nhân</h2>
-                </div>
-                <button onclick="saveNotes()" class="px-4 py-2 rounded-xl bg-obsidian-900 dark:bg-champagne-500 text-[#F3EFE6] dark:text-obsidian-950 text-xs font-semibold transition">
-                  Lưu ghi chú
-                </button>
-              </div>
-              <textarea id="notes-editor" rows="9" class="w-full p-4 rounded-xl bg-ivory-100 dark:bg-obsidian-850 border border-ivory-300 dark:border-obsidian-700 text-sm text-obsidian-900 dark:text-[#F3EFE6] leading-relaxed focus:outline-none focus:border-champagne-500" placeholder="Ghi chép nhận định, tóm tắt công thức và bẫy đề thi CFA tại đây..."></textarea>
-            </div>
-          <a class="archive" href="notebook.html#notes" data-i18n="archivedNotes">Ghi chú từ sổ tay cũ →</a></section>
-
-          <!-- ==================== TAB 5: FORMULA VAULT (SỔ TAY CÔNG THỨC) ==================== -->
-          <section id="view-formulas" class="hidden space-y-4">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="p-5 rounded-2xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 shadow-editorial space-y-2">
-                <span class="font-mono text-[10px] uppercase tracking-widest text-champagne-600 dark:text-champagne-400 font-semibold">CORPORATE ISSUERS</span>
-                <h3 class="font-serif font-semibold text-base text-obsidian-900 dark:text-[#F3EFE6]">Weighted Average Cost of Capital (WACC)</h3>
-                <div class="p-3 rounded-xl bg-ivory-100 dark:bg-obsidian-850 font-mono text-xs sm:text-sm text-obsidian-900 dark:text-champagne-300 border border-ivory-300/70 dark:border-obsidian-700">
-                  WACC = w_d·r_d(1 − t) + w_p·r_p + w_e·r_e
-                </div>
-                <p class="text-xs text-[#78736A]">Chi phí nợ sau thuế phản ánh lá chắn thuế từ lãi vay.</p>
-              </div>
-
-              <div class="p-5 rounded-2xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 shadow-editorial space-y-2">
-                <span class="font-mono text-[10px] uppercase tracking-widest text-emeraldLux-800 dark:text-emerald-400 font-semibold">FINANCIAL STATEMENT ANALYSIS</span>
-                <h3 class="font-serif font-semibold text-base text-obsidian-900 dark:text-[#F3EFE6]">DuPont Decomposition (3-Step ROE)</h3>
-                <div class="p-3 rounded-xl bg-ivory-100 dark:bg-obsidian-850 font-mono text-xs sm:text-sm text-obsidian-900 dark:text-emerald-300 border border-ivory-300/70 dark:border-obsidian-700">
-                  ROE = Net Profit Margin × Asset Turnover × Leverage
-                </div>
-                <p class="text-xs text-[#78736A]">Phân tách hiệu quả sinh lời trên vốn chủ sở hữu thành 3 động lực.</p>
-              </div>
-
-              <div class="p-5 rounded-2xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 shadow-editorial space-y-2">
-                <span class="font-mono text-[10px] uppercase tracking-widest text-champagne-600 dark:text-champagne-400 font-semibold">CAPITAL STRUCTURE</span>
-                <h3 class="font-serif font-semibold text-base text-obsidian-900 dark:text-[#F3EFE6]">Debt-to-Equity Ratio (D/E)</h3>
-                <div class="p-3 rounded-xl bg-ivory-100 dark:bg-obsidian-850 font-mono text-xs sm:text-sm text-obsidian-900 dark:text-champagne-300 border border-ivory-300/70 dark:border-obsidian-700">
-                  D/E = Total Debt / Total Shareholders' Equity
-                </div>
-                <p class="text-xs text-[#78736A]">Đo lường mức độ đòn bẩy tài chính của tổ chức phát hành.</p>
-              </div>
-
-              <div class="p-5 rounded-2xl bg-white dark:bg-obsidian-900 border border-ivory-300 dark:border-obsidian-700 shadow-editorial space-y-2">
-                <span class="font-mono text-[10px] uppercase tracking-widest text-emeraldLux-800 dark:text-emerald-400 font-semibold">RETURN METRICS</span>
-                <h3 class="font-serif font-semibold text-base text-obsidian-900 dark:text-[#F3EFE6]">Return on Invested Capital (ROIC)</h3>
-                <div class="p-3 rounded-xl bg-ivory-100 dark:bg-obsidian-850 font-mono text-xs sm:text-sm text-obsidian-900 dark:text-emerald-300 border border-ivory-300/70 dark:border-obsidian-700">
-                  ROIC = NOPAT / Average Invested Capital
-                </div>
-                <p class="text-xs text-[#78736A]">So sánh trực tiếp với WACC để đánh giá khả năng tạo giá trị.</p>
-              </div>
-            </div>
-          </section>
-
-          <!-- ==================== TAB 6: BOOKMARKED (ĐÃ ĐÁNH DẤU) ==================== -->
-          <section id="view-bookmarked" class="hidden space-y-4">
-            <div id="bookmarked-container" class="bg-white dark:bg-obsidian-900 rounded-2xl p-6 border border-ivory-300 dark:border-obsidian-700 shadow-editorial">
-              <!-- Populated dynamically -->
-            </div>
-          </section>
-
-        </div>
-
-        <!-- ==================== 3. RIGHT EXECUTIVE PROGRESS & ANALYTICS RAIL (4 cols) ==================== -->
-        <aside class="xl:col-span-4"><section id="road-progress"></section></aside>
-      </main>
     </div>
-  </div>
 
-  <!-- ==================== SOURCE MATERIAL & QUICK NOTE MODAL ==================== -->
-  <div id="source-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-xs">
-    <div class="bg-white dark:bg-obsidian-900 w-full max-w-lg rounded-2xl border border-champagne-500/40 shadow-2xl overflow-hidden">
-      <div class="px-6 py-4 bg-obsidian-900 text-[#F3EFE6] border-b border-obsidian-700 flex items-center justify-between">
-        <div>
-          <span class="text-[10px] font-mono uppercase tracking-widest text-champagne-400">SOURCE ARCHIVE</span>
-          <h3 class="font-serif font-semibold text-lg">IFT Study Notes 2027 — Tài liệu nguồn</h3>
+    <!-- Thanh điều hướng cuộn ngang trên thiết bị di động -->
+    <div class="md:hidden bg-base-white border-b border-base-border px-4 py-1.5 flex items-center gap-1 overflow-x-auto">
+      <button onclick="switchTab('library')" id="m-tab-library" class="m-nav-btn px-2.5 py-1 rounded text-xs font-medium bg-ink-primary text-base-white shrink-0" data-i18n="navLibrary">Thư viện</button>
+      <button onclick="switchTab('quiz')" id="m-tab-quiz" class="m-nav-btn px-2.5 py-1 rounded text-xs font-medium text-ink-secondary shrink-0" data-i18n="navQuiz">Luyện tập</button>
+      <button onclick="switchTab('flashcards')" id="m-tab-flashcards" class="m-nav-btn px-2.5 py-1 rounded text-xs font-medium text-ink-secondary shrink-0" data-i18n="navFlashcards">Thẻ ghi nhớ</button>
+      <button onclick="switchTab('notes')" id="m-tab-notes" class="m-nav-btn px-2.5 py-1 rounded text-xs font-medium text-ink-secondary shrink-0" data-i18n="navNotes">Ghi chú</button>
+      <button onclick="switchTab('formulas')" id="m-tab-formulas" class="m-nav-btn px-2.5 py-1 rounded text-xs font-medium text-ink-secondary shrink-0" data-i18n="navFormulas">Công thức</button>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN WORKSPACE (CENTERED MAX-WIDTH 960PX) ==================== -->
+  <main class="flex-1 w-full max-w-[960px] mx-auto px-4 sm:px-6 pt-14 md:pt-8 pb-16">
+
+    <!-- ==================== VIEW 1: THƯ VIỆN (LIBRARY) ==================== -->
+    <section id="view-library" class="space-y-6">
+      
+      <!-- Tiêu đề & Thanh tiến độ tổng hợp gọn gàng -->
+      <div class="p-5 sm:p-6 rounded-lg bg-base-subtle border border-base-border space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="flex items-center gap-2 text-xs font-mono text-ink-muted">
+              <span id="active-level-label">LVL I</span>
+              <span>·</span>
+              <span>CFA I–III</span>
+            </div>
+            <h1 class="text-xl sm:text-2xl font-semibold tracking-tight text-ink-primary mt-1" data-i18n="libraryHeading">
+              Sổ tay ôn tập CFA Level I
+            </h1>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="openSourceDrawer()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-base-white border border-base-border hover:border-base-borderHover text-xs font-medium text-ink-primary transition">
+              <i data-lucide="file-text" class="w-3.5 h-3.5 text-ink-secondary"></i>
+              <span data-i18n="btnSourceMaterial">Tài liệu nguồn (IFT 2027)</span>
+            </button>
+          </div>
         </div>
-        <button onclick="closeSourceModal()" class="p-1.5 rounded-lg text-[#9E988E] hover:text-white">
+
+        <!-- Thanh tiến độ ngang mảnh -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-ink-secondary" data-i18n="overallMasteryLabel">Tiến độ nắm vững tổng thể</span>
+            <span class="font-mono font-semibold text-ink-primary">
+              <span id="overall-mastery-pct">0%</span>
+              <span class="text-ink-muted font-normal ml-1">(<span id="mastered-los-count">0</span>/8 LOS)</span>
+            </span>
+          </div>
+          <div class="w-full h-1.5 bg-base-border rounded-full overflow-hidden">
+            <div id="overall-mastery-bar" class="h-full bg-ink-primary rounded-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bộ lọc trạng thái & Tìm kiếm di động -->
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <button onclick="setLibraryFilter('all')" id="lib-filter-all" class="lib-filter-pill px-3 py-1.5 rounded-md text-xs font-medium bg-ink-primary text-base-white border border-ink-primary transition" data-i18n="filterAll">Tất cả</button>
+          <button onclick="setLibraryFilter('studying')" id="lib-filter-studying" class="lib-filter-pill px-3 py-1.5 rounded-md text-xs font-medium bg-base-white text-ink-secondary border border-base-border hover:border-base-borderHover transition" data-i18n="filterStudying">Đang học</button>
+          <button onclick="setLibraryFilter('completed')" id="lib-filter-completed" class="lib-filter-pill px-3 py-1.5 rounded-md text-xs font-medium bg-base-white text-ink-secondary border border-base-border hover:border-base-borderHover transition" data-i18n="filterCompleted">Hoàn thành</button>
+          <button onclick="setLibraryFilter('bookmarked')" id="lib-filter-bookmarked" class="lib-filter-pill px-3 py-1.5 rounded-md text-xs font-medium bg-base-white text-ink-secondary border border-base-border hover:border-base-borderHover transition" data-i18n="filterBookmarked">Đã lưu</button>
+        </div>
+
+        <div class="lg:hidden w-full sm:w-60">
+          <input type="text" oninput="handleGlobalSearch(this.value)" placeholder="Lọc học phần..." class="w-full px-3 py-1.5 rounded-md bg-base-white border border-base-border text-xs focus:outline-none focus:border-ink-primary" />
+        </div>
+      </div>
+
+      <!-- Danh sách các Learning Modules -->
+      <div id="modules-list-container" class="space-y-3">
+        <!-- Render bằng JavaScript -->
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 2: LUYỆN TẬP (PRACTICE QUIZ) ==================== -->
+    <section id="view-quiz" class="hidden space-y-5">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-base-border">
+        <div>
+          <span class="font-mono text-[11px] uppercase tracking-wider text-ink-muted">CORPORATE ISSUERS · PRACTICE EXAM</span>
+          <h2 class="text-lg sm:text-xl font-semibold text-ink-primary mt-0.5" data-i18n="quizHeading">Luyện tập trắc nghiệm chuẩn CFA</h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="quiz-score-badge" class="font-mono text-xs px-2.5 py-1 rounded bg-status-greenBg text-status-greenText border border-status-greenBorder font-medium">Đúng: 0/5</span>
+          <span id="quiz-progress-badge" class="font-mono text-xs px-2.5 py-1 rounded bg-base-subtle text-ink-secondary border border-base-border">Câu 1 / 5</span>
+        </div>
+      </div>
+
+      <div class="p-5 sm:p-7 rounded-lg bg-base-white border border-base-border space-y-6">
+        <p id="quiz-question-prompt" class="text-base sm:text-[17px] font-medium text-ink-primary leading-relaxed"></p>
+
+        <!-- Danh sách lựa chọn dạng Radio tối giản -->
+        <div id="quiz-options-list" class="space-y-2.5"></div>
+
+        <!-- Khung giải thích học thuật -->
+        <div id="quiz-explanation-box" class="hidden p-4 rounded-md bg-base-subtle border border-base-border space-y-1">
+          <div class="font-mono text-[11px] font-semibold uppercase tracking-wider text-ink-primary">Giải thích (Rationale)</div>
+          <p id="quiz-explanation-text" class="text-xs sm:text-sm text-ink-secondary leading-relaxed"></p>
+        </div>
+
+        <div class="pt-4 border-t border-base-border flex items-center justify-between gap-3">
+          <button onclick="resetQuizSession()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-base-border hover:border-base-borderHover text-xs font-medium text-ink-secondary hover:text-ink-primary transition">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+            <span data-i18n="btnResetQuiz">Làm lại</span>
+          </button>
+
+          <div class="flex items-center gap-2">
+            <button id="btn-submit-answer" onclick="submitQuizAnswer()" disabled class="px-4 py-1.5 rounded-md bg-ink-primary hover:bg-ink-secondary text-base-white text-xs font-medium transition disabled:opacity-35 disabled:pointer-events-none">
+              Kiểm tra đáp án
+            </button>
+            <button id="btn-next-question" onclick="goToNextQuestion()" disabled class="px-4 py-1.5 rounded-md border border-base-border hover:border-ink-primary text-ink-primary text-xs font-medium transition disabled:opacity-35 disabled:pointer-events-none">
+              Câu tiếp theo →
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 3: THẺ GHI NHỚ (FLASHCARDS) ==================== -->
+    <section id="view-flashcards" class="hidden space-y-5">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-base-border">
+        <div>
+          <span class="font-mono text-[11px] uppercase tracking-wider text-ink-muted">ACTIVE RECALL · KEY CONCEPTS</span>
+          <h2 class="text-lg sm:text-xl font-semibold text-ink-primary mt-0.5" data-i18n="fcHeading">Thẻ ghi nhớ khái niệm</h2>
+        </div>
+        <div class="flex items-center gap-2 text-xs text-ink-muted">
+          <span class="hidden sm:inline">Phím tắt: <kbd class="px-1.5 py-0.5 rounded bg-base-subtle border border-base-border font-mono text-[10px]">Space</kbd> lật · <kbd class="px-1.5 py-0.5 rounded bg-base-subtle border border-base-border font-mono text-[10px]">←/→</kbd> chuyển</span>
+          <span id="fc-counter-pill" class="font-mono text-xs px-2.5 py-1 rounded bg-base-subtle border border-base-border text-ink-primary font-medium">1 / 6</span>
+        </div>
+      </div>
+
+      <!-- Sân khấu thẻ phẳng viền 1px -->
+      <div onclick="flipCard()" class="flashcard-stage w-full h-72 sm:h-80 cursor-pointer select-none">
+        <div id="flashcard-inner" class="flashcard-inner relative w-full h-full">
+          
+          <!-- Mặt trước -->
+          <div class="flashcard-face absolute inset-0 rounded-lg bg-base-white border border-base-border hover:border-base-borderHover p-6 sm:p-8 flex flex-col justify-between transition-colors">
+            <div class="flex items-center justify-between text-xs font-mono text-ink-muted">
+              <span id="fc-front-meta">CORPORATE ISSUERS · LOS 1.a</span>
+              <span class="flex items-center gap-1"><i data-lucide="repeat" class="w-3.5 h-3.5"></i> Mặt trước</span>
+            </div>
+
+            <div class="my-auto text-center px-4">
+              <h3 id="fc-front-title" class="text-xl sm:text-2xl font-semibold text-ink-primary tracking-tight leading-snug"></h3>
+            </div>
+
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-ink-muted"><span data-i18n="label5">Nhấn vào thẻ để xem định nghĩa</span></span>
+              <span id="fc-status-tag" class="font-mono text-[11px] font-medium"></span>
+            </div>
+          </div>
+
+          <!-- Mặt sau -->
+          <div class="flashcard-face flashcard-back absolute inset-0 rounded-lg bg-base-subtle border border-ink-primary p-6 sm:p-8 flex flex-col justify-between">
+            <div class="flex items-center justify-between text-xs font-mono text-ink-muted">
+              <span>DEFINITION &amp; EXAM NOTE</span>
+              <span><span data-i18n="label4">Mặt sau</span></span>
+            </div>
+
+            <div class="my-auto text-center px-2 sm:px-6 space-y-3">
+              <p id="fc-back-definition" class="text-sm sm:text-base text-ink-primary leading-relaxed"></p>
+              <p id="fc-back-note" class="text-xs font-mono text-ink-secondary bg-base-white inline-block px-3 py-1 rounded border border-base-border"></p>
+            </div>
+
+            <div class="text-center text-[11px] font-mono text-ink-muted">
+              CFA · Study Notes
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Thanh điều khiển Flashcard -->
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <button onclick="prevCard()" class="px-3 py-1.5 rounded-md bg-base-white border border-base-border hover:border-base-borderHover text-xs font-medium text-ink-primary transition"><span data-i18n="label0">← Trước</span></button>
+          <button onclick="flipCard()" class="px-3 py-1.5 rounded-md bg-base-white border border-base-border hover:border-base-borderHover text-xs font-medium text-ink-primary transition"><span data-i18n="label2">Lật thẻ</span></button>
+          <button onclick="nextCard()" class="px-3 py-1.5 rounded-md bg-base-white border border-base-border hover:border-base-borderHover text-xs font-medium text-ink-primary transition"><span data-i18n="label1">Tiếp →</span></button>
+        </div>
+
+        <button onclick="toggleCardMastered()" id="btn-toggle-fc-mastered" class="px-3.5 py-1.5 rounded-md border border-base-border hover:border-ink-primary text-xs font-medium text-ink-primary transition flex items-center gap-1.5">
+          <i data-lucide="check" class="w-3.5 h-3.5"></i>
+          <span><span data-i18n="label3">Đánh dấu đã thuộc</span></span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 4: GHI CHÚ CÁ NHÂN (NOTES) ==================== -->
+    <section id="view-notes" class="hidden space-y-5"><a href="notebook.html#notes" class="text-xs underline" data-i18n="archiveNotes">Sổ tay lưu trữ ↗</a>
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-base-border">
+        <div>
+          <span class="font-mono text-[11px] uppercase tracking-wider text-ink-muted">PERSONAL NOTEBOOK · LOCAL STORAGE</span>
+          <h2 class="text-lg sm:text-xl font-semibold text-ink-primary mt-0.5" data-i18n="notesHeading">Ghi chú ôn tập cá nhân</h2>
+        </div>
+        <div class="w-full sm:w-56">
+          <input type="text" id="notes-search-input" oninput="renderNotesList()" placeholder="Tìm trong ghi chú..." class="w-full px-3 py-1.5 rounded-md bg-base-subtle border border-base-border text-xs focus:outline-none focus:border-ink-primary" />
+        </div>
+      </div>
+
+      <!-- Trình soạn thảo ghi chú tối giản -->
+      <div class="p-4 sm:p-5 rounded-lg bg-base-subtle border border-base-border space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <select id="note-category-select" class="px-2.5 py-1.5 rounded-md bg-base-white border border-base-border text-xs font-mono text-ink-primary focus:outline-none focus:border-ink-primary">
+            <option value="Corporate Issuers">Corporate Issuers</option>
+            <option value="Quantitative Methods">Quantitative Methods</option>
+            <option value="Financial Statement Analysis">Financial Statement Analysis</option>
+            <option value="Equity Investments">Equity Investments</option>
+            <option value="Ethical & Professional Standards">Ethical &amp; Professional Standards</option>
+          </select>
+
+          <button onclick="saveNewNote()" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md bg-ink-primary hover:bg-ink-secondary text-base-white text-xs font-medium transition">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            <span><span data-i18n="label6">Lưu ghi chú</span></span>
+          </button>
+        </div>
+
+        <textarea id="note-textarea" rows="3" placeholder="Ghi lại ý chính LOS, bẫy thường gặp trong đề thi hoặc công thức cần lưu ý..." class="w-full p-3 rounded-md bg-base-white border border-base-border text-sm text-ink-primary placeholder-ink-muted leading-relaxed focus:outline-none focus:border-ink-primary"></textarea>
+      </div>
+
+      <!-- Danh sách ghi chú -->
+      <div id="notes-list-container" class="space-y-2.5"></div>
+    </section>
+
+    <!-- ==================== VIEW 5: CÔNG THỨC (FORMULA SHEET) ==================== -->
+    <section id="view-formulas" class="hidden space-y-5">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-base-border">
+        <div>
+          <span class="font-mono text-[11px] uppercase tracking-wider text-ink-muted">QUANTITATIVE &amp; CORPORATE REFERENCE</span>
+          <h2 class="text-lg sm:text-xl font-semibold text-ink-primary mt-0.5" data-i18n="formulasHeading">Bảng công thức trọng tâm CFA</h2>
+        </div>
+
+        <select id="formula-category-filter" onchange="renderFormulaList()" class="px-3 py-1.5 rounded-md bg-base-subtle border border-base-border text-xs font-mono text-ink-primary focus:outline-none focus:border-ink-primary">
+          <option value="ALL">Tất cả chuyên đề</option>
+          <option value="Corporate Issuers">Corporate Issuers</option>
+          <option value="Financial Statement Analysis">Financial Statement Analysis</option>
+          <option value="Equity Investments">Equity Investments</option>
+        </select>
+      </div>
+
+      <!-- Bảng danh sách công thức sạch sẽ, dễ tra cứu -->
+      <div class="rounded-lg border border-base-border overflow-hidden divide-y divide-base-border" id="formulas-table-container">
+        <!-- Render bằng JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== SLIDE-OVER PANEL: ĐỌC BÀI & CHECKLIST 8 LOS ==================== -->
+  <div id="los-drawer-backdrop" onclick="closeLosDrawer()" class="fixed inset-0 z-40 bg-ink-primary/20 hidden transition-opacity"></div>
+  <aside id="los-drawer" class="fixed top-0 right-0 z-50 h-screen w-full max-w-2xl bg-base-white border-l border-base-border transform translate-x-full transition-transform duration-250 flex flex-col">
+    
+    <!-- Header Drawer -->
+    <div class="px-6 py-4 border-b border-base-border flex items-start justify-between gap-4 shrink-0">
+      <div>
+        <div class="flex items-center gap-2 font-mono text-[11px] text-ink-muted">
+          <span id="drawer-module-code">CORPORATE ISSUERS · LM 01</span>
+          <span>·</span>
+          <span id="drawer-los-counter" class="text-ink-primary font-semibold">0/8 LOS</span>
+        </div>
+        <h3 id="drawer-module-title" class="text-base sm:text-lg font-semibold text-ink-primary mt-1 leading-snug">
+          Loại hình doanh nghiệp, đặc điểm tổ chức phát hành và quyền sở hữu
+        </h3>
+      </div>
+      <button onclick="closeLosDrawer()" class="p-1.5 rounded-md text-ink-muted hover:text-ink-primary hover:bg-base-subtle transition">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- Thanh hướng dẫn ngắn -->
+    <div class="px-6 py-2.5 bg-base-subtle border-b border-base-border flex items-center justify-between text-xs text-ink-secondary shrink-0">
+      <span><span data-i18n="drawerHelp">Mở bài để đọc và đánh dấu tiến độ.</span></span>
+      <button onclick="openSourceDrawer()" class="font-medium text-ink-primary underline underline-offset-2">Xem IFT Notes</button>
+    </div>
+
+    <!-- Nội dung 8 mục LOS -->
+    <div id="drawer-los-list" class="flex-1 overflow-y-auto p-6 space-y-3">
+      <!-- Render bằng JS -->
+    </div>
+  </aside>
+
+  <!-- ==================== MODAL: TÀI LIỆU NGUỒN (IFT STUDY NOTES 2027) ==================== -->
+  <div id="source-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-ink-primary/25">
+    <div class="bg-base-white w-full max-w-lg rounded-lg border border-base-border overflow-hidden">
+      <div class="px-5 py-4 border-b border-base-border flex items-center justify-between">
+        <div>
+          <span class="font-mono text-[10px] uppercase tracking-wider text-ink-muted">CURRICULUM REFERENCE</span>
+          <h3 class="text-base font-semibold text-ink-primary">Tài liệu nguồn — IFT Study Notes 2027</h3>
+        </div>
+        <button onclick="closeSourceDrawer()" class="p-1 rounded text-ink-muted hover:text-ink-primary">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
-      <div class="p-6 space-y-4 text-sm">
-        <div class="p-4 rounded-xl bg-ivory-100 dark:bg-obsidian-850 border border-ivory-300 dark:border-obsidian-700 space-y-1.5">
-          <p class="font-semibold text-obsidian-900 dark:text-[#F3EFE6]">Corporate Issuers • Learning Module 01</p>
-          <p class="text-xs text-[#646058] dark:text-[#A39E93]">Tài liệu gốc gồm 12 trang tóm tắt chuẩn chương trình CFA Level I 2027, bao phủ toàn bộ LOS về hình thức pháp lý doanh nghiệp và cấu trúc sở hữu.</p>
+      <div class="p-5 space-y-4 text-xs sm:text-sm">
+        <div class="p-3.5 rounded-md bg-base-subtle border border-base-border space-y-1">
+          <p class="font-semibold text-ink-primary">CFA Program Level I · 2027 Edition</p>
+          <p class="text-xs text-ink-secondary leading-relaxed">
+            Nội dung được hệ thống hóa bám sát các Learning Outcome Statements (LOS) chính thức từ CFA Institute và IFT Study Notes 2027, tập trung vào bản chất khái niệm, so sánh cấu trúc pháp lý và công thức trọng tâm.
+          </p>
         </div>
-        <div class="space-y-2">
-          <label class="text-xs font-mono uppercase tracking-wider text-champagne-600 dark:text-champagne-400 font-semibold">Thêm ghi chú nhanh vào sổ tay</label>
-          <textarea id="quick-modal-note" rows="3" class="w-full p-3 rounded-xl bg-ivory-100 dark:bg-obsidian-850 border border-ivory-300 dark:border-obsidian-700 text-xs sm:text-sm focus:outline-none focus:border-champagne-500" placeholder="Nhập ghi chú nhanh..."></textarea>
+        <div class="space-y-1.5">
+          <label class="text-xs font-medium text-ink-primary">Ghi chú nhanh từ tài liệu nguồn</label>
+          <textarea id="modal-quick-note" rows="3" placeholder="Nhập ghi chú nhanh để lưu vào tab Ghi chú..." class="w-full p-2.5 rounded-md bg-base-white border border-base-border text-xs sm:text-sm focus:outline-none focus:border-ink-primary"></textarea>
         </div>
       </div>
-      <div class="px-6 py-3.5 bg-ivory-100 dark:bg-obsidian-850 border-t border-ivory-300 dark:border-obsidian-700 flex justify-end gap-2">
-        <button onclick="closeSourceModal()" class="px-4 py-2 rounded-xl text-xs font-medium text-[#646058] hover:text-obsidian-900 dark:hover:text-white">Đóng</button>
-        <button onclick="appendQuickNote()" class="px-4 py-2 rounded-xl bg-obsidian-900 dark:bg-champagne-500 text-[#F3EFE6] dark:text-obsidian-950 text-xs font-semibold">Lưu vào Ghi chú</button>
+      <div class="px-5 py-3 bg-base-subtle border-t border-base-border flex justify-end gap-2">
+        <button onclick="closeSourceDrawer()" class="px-3 py-1.5 rounded-md border border-base-border bg-base-white text-xs font-medium text-ink-secondary hover:text-ink-primary">Đóng</button>
+        <button onclick="saveModalQuickNote()" class="px-3.5 py-1.5 rounded-md bg-ink-primary hover:bg-ink-secondary text-base-white text-xs font-medium">Lưu vào Ghi chú</button>
       </div>
     </div>
   </div>
 
-  <!-- ==================== JAVASCRIPT APPLICATION STATE ==================== -->
+  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
   <script>
-    // 8 Core Knowledge Items for Corporate Issuers LM 01
-    const knowledgeItems = [
+    // 1. Dữ liệu Thư viện Learning Modules (Level I)
+    const libraryModules = [
+      {
+        id: 'ci-lm01',
+        topic: 'CORPORATE ISSUERS',
+        code: 'LM 01',
+        level: '2027 · LEVEL I',
+        titleVi: 'Loại hình doanh nghiệp, đặc điểm tổ chức phát hành và quyền sở hữu',
+        titleEn: 'Business Structures, Issuer Characteristics, and Ownership',
+        descVi: 'So sánh cấu trúc pháp lý (Sole Proprietorship, Partnership, Corporation), cơ chế đánh thuế và sự khác biệt giữa công ty đại chúng (Public) và tư nhân (Private).',
+        descEn: 'Compare legal structures (Sole Proprietorship, Partnership, Corporation), taxation mechanisms, and public vs. private issuer characteristics.',
+        losTotal: 8,
+        pages: 12,
+        interactive: true
+      },
+      {
+        id: 'qm-lm01',
+        topic: 'QUANTITATIVE METHODS',
+        code: 'LM 01',
+        level: '2027 · LEVEL I',
+        titleVi: 'Giá trị thời gian của tiền và Lãi suất chiết khấu',
+        titleEn: 'Rates and Returns & Time Value of Money in Finance',
+        descVi: 'Các thước đo tỷ suất sinh lợi (HPR, TWR, MWR), lãi suất danh nghĩa so với lãi suất thực hiệu dụng (EAR) và định giá dòng tiền chiết khấu.',
+        descEn: 'Return measures (HPR, TWR, MWR), nominal vs. effective annual rates (EAR), and discounted cash flow valuation.',
+        losTotal: 6,
+        pages: 15,
+        interactive: false
+      },
+      {
+        id: 'fsa-lm01',
+        topic: 'FINANCIAL STATEMENT ANALYSIS',
+        code: 'LM 01',
+        level: '2027 · LEVEL I',
+        titleVi: 'Tổng quan báo cáo tài chính và Chuẩn mực kế toán (IFRS & US GAAP)',
+        titleEn: 'Introduction to Financial Statement Analysis',
+        descVi: 'Vai trò của báo cáo kết quả hoạt động kinh doanh, bảng cân đối kế toán, lưu chuyển tiền tệ và thuyết minh báo cáo tài chính trong phân tích đầu tư.',
+        descEn: 'Role of income statement, balance sheet, cash flow statement, and footnotes in investment decision-making.',
+        losTotal: 5,
+        pages: 14,
+        interactive: false
+      },
+      {
+        id: 'eq-lm01',
+        topic: 'EQUITY INVESTMENTS',
+        code: 'LM 01',
+        level: '2027 · LEVEL I',
+        titleVi: 'Tổ chức và vận hành thị trường chứng khoán',
+        titleEn: 'Market Organization and Structure',
+        descVi: 'Phân loại tài sản tài chính, trung gian tài chính, các loại lệnh giao dịch (Market, Limit, Stop) và cơ chế giao dịch ký quỹ (Margin Buying).',
+        descEn: 'Classification of assets, financial intermediaries, order types (Market, Limit, Stop), and margin buying mechanics.',
+        losTotal: 7,
+        pages: 18,
+        interactive: false
+      }
+    ];
+
+    // 2. Chi tiết 8 mục LOS của Corporate Issuers - LM 01
+    const ciLosItems = [
       {
         id: 1,
-        title: "1. Sole Proprietorship (Doanh nghiệp tư nhân)",
-        summary: "Một cá nhân duy nhất sở hữu và điều hành. Lợi nhuận chịu thuế thu nhập cá nhân trực tiếp (pass-through), nhưng chủ sở hữu chịu trách nhiệm pháp lý vô hạn (Unlimited Liability)."
+        code: 'LOS 1.a',
+        title: 'Sole Proprietorship (Doanh nghiệp tư nhân)',
+        body: 'Do một cá nhân duy nhất sở hữu và vận hành. Thủ tục thành lập đơn giản, lợi nhuận chịu thuế một lần ở cấp độ cá nhân (pass-through), nhưng chủ sở hữu chịu trách nhiệm pháp lý vô hạn (Unlimited Liability).'
       },
       {
         id: 2,
-        title: "2. General Partnership (Công ty hợp danh thông thường)",
-        summary: "Hai hay nhiều thành viên cùng góp vốn, điều hành và chia sẻ lợi nhuận theo thỏa thuận. Tất cả thành viên đều chịu trách nhiệm vô hạn đối với các khoản nợ doanh nghiệp."
+        code: 'LOS 1.a',
+        title: 'General Partnership (Công ty hợp danh thông thường)',
+        body: 'Hai hoặc nhiều thành viên cùng góp vốn, chia sẻ quyền quản lý và lợi nhuận theo hợp đồng hợp danh. Tất cả các thành viên đều chịu trách nhiệm liên đới và vô hạn đối với các khoản nợ doanh nghiệp.'
       },
       {
         id: 3,
-        title: "3. Limited Partnership (LP - Hợp danh hữu hạn)",
-        summary: "Gồm ít nhất một General Partner (GP - trực tiếp quản lý, trách nhiệm vô hạn) và các Limited Partners (LP - chỉ góp vốn, không điều hành hàng ngày, trách nhiệm hữu hạn)."
+        code: 'LOS 1.a',
+        title: 'Limited Partnership (LP — Hợp danh hữu hạn)',
+        body: 'Gồm ít nhất một General Partner (GP — trực tiếp điều hành và chịu trách nhiệm vô hạn) và các Limited Partners (LP — chỉ góp vốn thụ động, không tham gia điều hành hàng ngày và chịu trách nhiệm hữu hạn).'
       },
       {
         id: 4,
-        title: "4. Corporation (Công ty cổ phần)",
-        summary: "Pháp nhân độc lập tách biệt hoàn toàn với cổ đông. Cổ đông chịu trách nhiệm hữu hạn, dễ huy động vốn quy mô lớn nhưng phát sinh đánh thuế hai lần (Double Taxation)."
+        code: 'LOS 1.a',
+        title: 'Corporation (Công ty cổ phần)',
+        body: 'Pháp nhân độc lập tách biệt hoàn toàn với chủ sở hữu. Cổ đông chịu trách nhiệm hữu hạn trong phạm vi vốn góp, dễ huy động vốn lớn nhưng phát sinh đánh thuế hai lần (Double Taxation).'
       },
       {
         id: 5,
-        title: "5. Phân tách quyền sở hữu & quản lý (Separation of Ownership & Management)",
-        summary: "Ở Corporation, cổ đông bầu ra Hội đồng quản trị (Board of Directors) để giám sát Ban điều hành (Managers). Sự tách biệt này có thể tạo ra xung đột lợi ích (Agency Problem)."
+        code: 'LOS 1.b',
+        title: 'Tách bạch quyền sở hữu và quản lý (Separation of Ownership & Management)',
+        body: 'Trong Corporation, cổ đông bầu ra Hội đồng quản trị (Board of Directors) để giám sát Ban điều hành (Managers). Sự tách biệt này giúp chuyên môn hóa quản trị nhưng dễ phát sinh xung đột đại diện (Agency Problem).'
       },
       {
         id: 6,
-        title: "6. Cơ chế đánh thuế (Pass-Through vs. Double Taxation)",
-        summary: "Sole Proprietorship & Partnership áp dụng cơ chế thuế một lần ở cấp chủ sở hữu. Corporation chịu thuế TNDN ở cấp công ty và thuế TNCN khi chia cổ tức."
+        code: 'LOS 1.b',
+        title: 'Cơ chế đánh thuế (Pass-Through vs. Double Taxation)',
+        body: 'Sole Proprietorship và Partnership áp dụng thuế pass-through (thuế thu nhập cá nhân một lần). Corporation chịu thuế thu nhập doanh nghiệp ở cấp công ty, sau đó cổ tức chia cho cổ đông tiếp tục chịu thuế thu nhập cá nhân.'
       },
       {
         id: 7,
-        title: "7. Public Companies vs. Private Companies",
-        summary: "Công ty đại chúng (Public) niêm yết trên sàn giao dịch, có tính thanh khoản cao và nghĩa vụ công bố thông tin nghiêm ngặt hơn so với công ty tư nhân (Private)."
+        code: 'LOS 1.c',
+        title: 'Công ty đại chúng (Public) vs. Công ty tư nhân (Private)',
+        body: 'Công ty đại chúng niêm yết cổ phiếu trên sàn giao dịch, có tính thanh khoản cao và chịu quy định công bố thông tin định kỳ khắt khe hơn so với công ty tư nhân.'
       },
       {
         id: 8,
-        title: "8. Xu hướng chuyển đổi Private sang Public (IPO & Direct Listing)",
-        summary: "Doanh nghiệp tư nhân huy động vốn đại chúng thông qua IPO, Direct Listing hoặc sáp nhập với SPAC để mở rộng quy mô và tạo thanh khoản cho cổ đông hiện hữu."
+        code: 'LOS 1.c',
+        title: 'Chuyển đổi từ Private sang Public (IPO, Direct Listing, SPAC)',
+        body: 'Doanh nghiệp tư nhân huy động vốn đại chúng thông qua phát hành lần đầu ra công chúng (IPO), niêm yết trực tiếp (Direct Listing) hoặc sáp nhập với công ty thâu tóm mục đích đặc biệt (SPAC).'
       }
     ];
 
-    // 5 CFA Level I Standard Quiz Questions
-    const quizData = [
+    // 3. Bộ 5 câu hỏi trắc nghiệm chuẩn CFA
+    const quizQuestions = [
       {
-        q: "Trong cấu trúc Limited Partnership (LP), nhận định nào sau đây mô tả chính xác nhất về trách nhiệm pháp lý và quyền điều hành?",
+        prompt: 'Trong cấu trúc Limited Partnership (LP), phát biểu nào sau đây mô tả chính xác nhất trách nhiệm pháp lý của các bên?',
         options: [
-          "A. Limited Partners trực tiếp điều hành hoạt động hàng ngày và chịu trách nhiệm hữu hạn",
-          "B. General Partner điều hành doanh nghiệp và chịu trách nhiệm pháp lý vô hạn",
-          "C. Tất cả các đối tác đều chịu trách nhiệm giới hạn trong phạm vi vốn góp"
+          'A. Limited Partners trực tiếp điều hành hoạt động hàng ngày và chịu trách nhiệm hữu hạn.',
+          'B. General Partner điều hành hoạt động kinh doanh và chịu trách nhiệm pháp lý vô hạn.',
+          'C. Tất cả các đối tác đều chịu trách nhiệm giới hạn trong phạm vi vốn góp.'
         ],
-        correct: 1,
-        rationale: "General Partner (GP) nắm quyền điều hành trực tiếp nên chịu trách nhiệm vô hạn (unlimited liability), trong khi Limited Partners (LP) là nhà đầu tư thụ động với trách nhiệm hữu hạn."
+        answer: 1,
+        rationale: 'General Partner (GP) nắm quyền quản lý điều hành trực tiếp nên chịu trách nhiệm vô hạn (unlimited liability), trong khi Limited Partners (LP) là nhà đầu tư thụ động với trách nhiệm hữu hạn.'
       },
       {
-        q: "Đặc điểm nào giúp mô hình Corporation thuận lợi nhất trong việc huy động nguồn vốn lớn từ công chúng?",
+        prompt: 'Yếu tố nào giúp mô hình Corporation thuận lợi nhất trong việc huy động nguồn vốn quy mô lớn từ công chúng?',
         options: [
-          "A. Tư cách pháp nhân độc lập và trách nhiệm hữu hạn của cổ đông",
-          "B. Cơ chế miễn thuế thu nhập doanh nghiệp ở cấp công ty",
-          "C. Chủ sở hữu trực tiếp điều hành mọi hoạt động mà không cần Hội đồng quản trị"
+          'A. Tư cách pháp nhân độc lập và trách nhiệm hữu hạn của cổ đông.',
+          'B. Lợi nhuận doanh nghiệp được miễn thuế ở cấp độ công ty.',
+          'C. Cổ đông trực tiếp điều hành mọi quyết định kinh doanh hàng ngày.'
         ],
-        correct: 0,
-        rationale: "Trách nhiệm hữu hạn (limited liability) và khả năng chuyển nhượng cổ phần dễ dàng giúp nhà đầu tư yên tâm góp vốn mà không lo rủi ro vượt quá số tiền đầu tư."
+        answer: 0,
+        rationale: 'Trách nhiệm hữu hạn (limited liability) giới hạn rủi ro tối đa bằng số vốn đầu tư, giúp thu hút đông đảo nhà đầu tư đại chúng.'
       },
       {
-        q: "Hiện tượng 'Double Taxation' trong công ty cổ phần (Corporation) xảy ra như thế nào?",
+        prompt: 'Hiện tượng đánh thuế hai lần (Double Taxation) đối với công ty cổ phần (Corporation) diễn ra như thế nào?',
         options: [
-          "A. Công ty nộp thuế cả ở trong nước và nước ngoài cho cùng một khoản doanh thu",
-          "B. Lợi nhuận bị đánh thuế thu nhập doanh nghiệp, sau đó cổ tức chia cho cổ đông lại bị đánh thuế thu nhập cá nhân",
-          "C. Cổ đông phải nộp thuế hai lần khi mua và khi bán cổ phiếu"
+          'A. Công ty nộp thuế hai lần cho cùng một kỳ kế toán nếu có lợi nhuận vượt định mức.',
+          'B. Lợi nhuận bị đánh thuế TNDN ở cấp công ty, sau đó cổ tức chia cho cổ đông tiếp tục chịu thuế TNCN.',
+          'C. Cổ đông nộp thuế khi mua cổ phiếu và nộp lại khi nhận quyền biểu quyết.'
         ],
-        correct: 1,
-        rationale: "Corporation là thực thể chịu thuế độc lập nên nộp thuế TNDN trước; phần lợi nhuận sau thuế chia dưới dạng cổ tức tiếp tục chịu thuế ở cấp độ cổ đông."
+        answer: 1,
+        rationale: 'Corporation là thực thể chịu thuế độc lập nên nộp thuế TNDN trước; phần lợi nhuận sau thuế chi trả cổ tức tiếp tục chịu thuế thu nhập ở cấp độ cổ đông.'
       },
       {
-        q: "So với công ty tư nhân (Private Company), công ty đại chúng (Public Company) thường có đặc điểm nào sau đây?",
+        prompt: 'So với công ty tư nhân (Private Company), công ty đại chúng (Public Company) thường có đặc điểm nào?',
         options: [
-          "A. Yêu cầu công bố thông tin tài chính định kỳ chặt chẽ hơn",
-          "B. Tính thanh khoản của cổ phần thấp hơn",
-          "C. Không chịu sự giám sát của cơ quan quản lý chứng khoán"
+          'A. Nghĩa vụ công bố thông tin tài chính định kỳ và kiểm toán nghiêm ngặt hơn.',
+          'B. Tính thanh khoản của cổ phần thấp hơn đáng kể.',
+          'C. Không chịu sự giám sát của ủy ban chứng khoán.'
         ],
-        correct: 0,
-        rationale: "Để bảo vệ nhà đầu tư đại chúng, các công ty niêm yết phải tuân thủ quy định công bố thông tin minh bạch và kiểm toán nghiêm ngặt."
+        answer: 0,
+        rationale: 'Để bảo vệ nhà đầu tư trên thị trường thứ cấp, các công ty niêm yết bắt buộc công bố báo cáo tài chính minh bạch và định kỳ.'
       },
       {
-        q: "Chi phí đại diện (Agency Costs) trong doanh nghiệp phát sinh chủ yếu do nguyên nhân nào?",
+        prompt: 'Chi phí đại diện (Agency Costs) trong doanh nghiệp phát sinh chủ yếu từ nguyên nhân nào?',
         options: [
-          "A. Chi phí thuê môi giới khi phát hành trái phiếu",
-          "B. Sự tách bạch giữa quyền sở hữu của cổ đông và quyền điều hành của ban giám đốc",
-          "C. Thuế suất thu nhập doanh nghiệp tăng cao"
+          'A. Chi phí thuê tổ chức bảo lãnh phát hành trái phiếu.',
+          'B. Sự tách biệt giữa quyền sở hữu của cổ đông và quyền điều hành của ban giám đốc.',
+          'C. Biến động tỷ giá hối đoái đối với doanh nghiệp xuất khẩu.'
         ],
-        correct: 1,
-        rationale: "Khi nhà quản lý (Agents) hành động vì lợi ích riêng thay vì tối đa hóa giá trị cho cổ đông (Principals), doanh nghiệp phát sinh chi phí giám sát và tổn thất đại diện."
+        answer: 1,
+        rationale: 'Khi nhà quản lý (Agents) hành động vì lợi ích cá nhân thay vì tối đa hóa giá trị cho cổ đông (Principals), doanh nghiệp phát sinh chi phí giám sát và tổn thất đại diện.'
       }
     ];
 
-    // 5 Executive Flashcards
-    const flashcards = [
+    // 4. Bộ 6 Flashcards Active Recall
+    const flashcardsData = [
       {
-        front: "Limited Liability (Trách nhiệm hữu hạn)",
-        back: "Mức tổn thất tối đa của chủ sở hữu/cổ đông chỉ giới hạn trong phạm vi số vốn đã đầu tư vào doanh nghiệp; tài sản cá nhân được bảo vệ trước các khoản nợ của công ty."
+        meta: 'CORPORATE ISSUERS · LOS 1.a',
+        front: 'Limited Liability (Trách nhiệm hữu hạn)',
+        back: 'Tổn thất tối đa của chủ sở hữu chỉ giới hạn trong phạm vi số vốn đã góp; tài sản cá nhân được bảo vệ trước các khoản nợ của doanh nghiệp.',
+        note: 'Áp dụng cho Shareholders (Corporation) & Limited Partners (LP).'
       },
       {
-        front: "Pass-Through Taxation",
-        back: "Cơ chế thuế áp dụng cho Sole Proprietorship và Partnership: lợi nhuận doanh nghiệp được chuyển thẳng sang tờ khai thuế thu nhập cá nhân của chủ sở hữu, không bị đánh thuế ở cấp doanh nghiệp."
+        meta: 'CORPORATE ISSUERS · LOS 1.b',
+        front: 'Pass-Through Taxation',
+        back: 'Lợi nhuận doanh nghiệp không bị đánh thuế ở cấp thực thể kinh doanh mà chuyển thẳng sang tờ khai thuế thu nhập cá nhân của chủ sở hữu.',
+        note: 'Áp dụng cho Sole Proprietorship & Partnership.'
       },
       {
-        front: "General Partner (GP) vs. Limited Partner (LP)",
-        back: "GP quản lý điều hành và chịu trách nhiệm vô hạn. LP góp vốn thụ động, không tham gia quản lý thường nhật và chịu trách nhiệm hữu hạn."
+        meta: 'CORPORATE ISSUERS · LOS 1.a',
+        front: 'General Partner (GP) vs. Limited Partner (LP)',
+        back: 'GP trực tiếp điều hành và chịu trách nhiệm vô hạn. LP chỉ góp vốn thụ động, không tham gia điều hành thường nhật và chịu trách nhiệm hữu hạn.',
+        note: 'Cấu trúc phổ biến của các quỹ Private Equity & Venture Capital.'
       },
       {
-        front: "Agency Conflict (Xung đột đại diện)",
-        back: "Xung đột lợi ích phát sinh khi Ban điều hành (Managers) ưu tiên mục tiêu cá nhân (lương thưởng, quyền lực) thay vì tối đa hóa tài sản cho Cổ đông (Shareholders)."
+        meta: 'CORPORATE ISSUERS · LOS 1.b',
+        front: 'Agency Conflict (Xung đột đại diện)',
+        back: 'Xung đột lợi ích phát sinh khi Ban điều hành (Managers) ưu tiên mục tiêu cá nhân thay vì tối đa hóa giá trị tài sản cho Cổ đông (Shareholders).',
+        note: 'Giảm thiểu thông qua giám sát của Board of Directors & đãi ngộ gắn với cổ phiếu.'
       },
       {
-        front: "Public vs. Private Issuer",
-        back: "Public Issuer có cổ phiếu giao dịch công khai trên sàn với tính thanh khoản cao và chuẩn công bố thông tin khắt khe; Private Issuer giao dịch thỏa thuận riêng lẻ, ít thanh khoản hơn."
+        meta: 'CORPORATE ISSUERS · LOS 1.c',
+        front: 'Public vs. Private Issuer',
+        back: 'Public Issuer niêm yết cổ phiếu trên sàn với thanh khoản cao và chuẩn công bố thông tin khắt khe; Private Issuer giao dịch thỏa thuận riêng lẻ, ít thanh khoản hơn.',
+        note: 'Chuyển đổi sang Public qua IPO, Direct Listing hoặc SPAC.'
+      },
+      {
+        meta: 'CORPORATE FINANCE · COST OF CAPITAL',
+        front: 'Weighted Average Cost of Capital (WACC)',
+        back: 'Chi phí sử dụng vốn bình quân gia quyền phản ánh tỷ suất sinh lợi tối thiểu mà doanh nghiệp cần đạt được để thỏa mãn các nhà cung cấp vốn.',
+        note: 'WACC = wd · rd(1 − t) + wp · rp + we · re'
       }
     ];
 
-    // Translations Dictionary (VI / EN)
-    const i18n = {
+    // 5. Danh sách công thức trọng tâm
+    const formulasData = [
+      {
+        category: 'Corporate Issuers',
+        name: 'Weighted Average Cost of Capital (WACC)',
+        formula: 'WACC = wd · rd(1 − t) + wp · rp + we · re',
+        desc: 'Chi phí sử dụng vốn bình quân sau thuế; wd, wp, we là tỷ trọng thị trường của nợ, cổ phiếu ưu đãi và vốn cổ phần thường.'
+      },
+      {
+        category: 'Financial Statement Analysis',
+        name: 'DuPont Decomposition (3-Step ROE)',
+        formula: 'ROE = (Net Income / Revenue) × (Revenue / Avg Assets) × (Avg Assets / Avg Equity)',
+        desc: 'Phân tách ROE thành 3 nhân tố: Biên lợi nhuận ròng × Vòng quay tổng tài sản × Đòn bẩy tài chính.'
+      },
+      {
+        category: 'Corporate Issuers',
+        name: 'Debt-to-Equity Ratio (D/E)',
+        formula: 'D/E = Total Debt / Total Shareholders\' Equity',
+        desc: 'Đo lường tỷ lệ nợ trên vốn chủ sở hữu để đánh giá mức độ đòn bẩy và rủi ro tài chính.'
+      },
+      {
+        category: 'Corporate Issuers',
+        name: 'Return on Invested Capital (ROIC)',
+        formula: 'ROIC = NOPAT / Average Invested Capital',
+        desc: 'NOPAT = EBIT × (1 − t). Khi ROIC > WACC, doanh nghiệp đang tạo ra giá trị kinh tế ròng.'
+      },
+      {
+        category: 'Equity Investments',
+        name: 'Capital Asset Pricing Model (CAPM)',
+        formula: 'E(Ri) = Rf + βi × [E(Rm) − Rf]',
+        desc: 'Xác định tỷ suất sinh lợi kỳ vọng của tài sản dựa trên lãi suất phi rủi ro (Rf), hệ số Beta và phần bù rủi ro thị trường.'
+      },
+      {
+        category: 'Equity Investments',
+        name: 'Free Cash Flow to the Firm (FCFF)',
+        formula: 'FCFF = NI + NCC + Int(1 − t) − FCInv − WCInv',
+        desc: 'Dòng tiền tự do thuộc về tất cả các nhà cung cấp vốn (cả chủ nợ và cổ đông) sau khi trừ đầu tư TSCĐ và vốn lưu động.'
+      }
+    ];
+
+    // 6. Từ điển song ngữ VI / EN
+    const translations = {
       vi: {
-        brandSub: "Không gian học cá nhân",
-        navGroup: "Không gian của bạn",
-        navLibrary: "Thư viện",
-        navQuiz: "Luyện tập",
-        navFlashcards: "Thẻ ghi nhớ",
-        navNotes: "Ghi chú của tôi",
-        navFormulas: "Sổ tay công thức",
-        navBookmarked: "Đã đánh dấu",
-        currentlyStudying: "Đang học",
-        localTitle: "Lưu trên thiết bị này",
-        localSub: "Ghi chú & tiến độ học của bạn",
-        breadcrumbRoot: "Không gian học",
-        heroEyebrow: "SỔ TAY CFA CỦA BẠN",
-        archivedNotes:"Ghi chú từ sổ tay cũ →",
-        heroTitle: "Khóa học CFA Level I–III",
-        heroSubtitle: "38 bài học · 9 chặng · 3 bài tổng kết",
-        btnSource: "Tài liệu nguồn",
-        filterAll: "Tất cả",
-        filterStudying: "Đang học",
-        filterCompleted: "Hoàn thành",
-        moduleTitle: "Loại hình doanh nghiệp, đặc điểm tổ chức phát hành và quyền sở hữu",
-        moduleDesc: "Hiểu các loại hình doanh nghiệp, cách tổ chức phát hành vận hành và sự khác biệt giữa sở hữu public & private.",
-        knowledgeItemsLabel: "mục kiến thức",
-        sourcePagesLabel: "12 trang nguồn",
-        btnStartLearning: "Bắt đầu học",
-        journeyTitle: "HÀNH TRÌNH CỦA BẠN",
-        masteredLabel: "đã nắm vững",
-        journeyQuote: "Mỗi lần hiểu thêm, một bước tiến.",
-        statModules: "Học phần",
-        statQuestions: "Câu hỏi ôn tập",
-        statQuizDone: "Lượt quiz hoàn thành"
+        drawerHelp:'Mở bài để đọc và đánh dấu tiến độ.',archiveNotes:'Sổ tay lưu trữ ↗',label0: '← Trước',label1: 'Tiếp →',label2: 'Lật thẻ',label3: 'Đánh dấu đã thuộc',label4: 'Mặt sau',label5: 'Nhấn vào thẻ để xem định nghĩa',label6: 'Lưu ghi chú',navLibrary: 'Thư viện',
+        navQuiz: 'Luyện tập',
+        navFlashcards: 'Thẻ ghi nhớ',
+        navNotes: 'Ghi chú',
+        navFormulas: 'Công thức',
+        btnDownloadHtml: 'Tải mã nguồn (.html)',
+        libraryHeading: 'Sổ tay ôn tập CFA Level I',
+        btnSourceMaterial: 'Tài liệu nguồn (IFT 2027)',
+        overallMasteryLabel: 'Tiến độ nắm vững tổng thể',
+        filterAll: 'Tất cả',
+        filterStudying: 'Đang học',
+        filterCompleted: 'Hoàn thành',
+        filterBookmarked: 'Đã lưu',
+        quizHeading: 'Luyện tập trắc nghiệm chuẩn CFA',
+        btnResetQuiz: 'Làm lại',
+        fcHeading: 'Thẻ ghi nhớ khái niệm',
+        notesHeading: 'Ghi chú ôn tập cá nhân',
+        formulasHeading: 'Bảng công thức trọng tâm CFA'
       },
       en: {
-        brandSub: "Personal Study Suite",
-        navGroup: "Your Workspace",
-        navLibrary: "Library",
-        navQuiz: "Practice Quiz",
-        navFlashcards: "Flashcards",
-        navNotes: "My Notes",
-        navFormulas: "Formula Vault",
-        navBookmarked: "Bookmarked",
-        currentlyStudying: "Currently Studying",
-        localTitle: "Saved on this device",
-        localSub: "Your notes & study progress",
-        breadcrumbRoot: "Workspace",
-        heroEyebrow: "YOUR CFA DOSSIER",
-        archivedNotes:"Notes from your earlier notebook →",
-        heroTitle: "CFA Level I–III Course",
-        heroSubtitle: "38 lessons · 9 stages · 3 capstone cases",
-        btnSource: "Source Material",
-        filterAll: "All",
-        filterStudying: "In Progress",
-        filterCompleted: "Completed",
-        moduleTitle: "Business Structures, Issuer Characteristics, and Ownership",
-        moduleDesc: "Understand corporate legal structures, how issuers operate, and key distinctions between public & private ownership.",
-        knowledgeItemsLabel: "knowledge items",
-        sourcePagesLabel: "12 source pages",
-        btnStartLearning: "Start Learning",
-        journeyTitle: "YOUR JOURNEY",
-        masteredLabel: "mastered",
-        journeyQuote: "Every concept mastered is a step forward.",
-        statModules: "Modules",
-        statQuestions: "Practice Questions",
-        statQuizDone: "Quizzes Completed"
+        drawerHelp:'Open a lesson to read and mark it complete.',archiveNotes:'Archived notebook ↗',label0: '← Previous',label1: 'Next →',label2: 'Flip card',label3: 'Mark known',label4: 'Back',label5: 'Flip to see the answer',label6: 'Save note',navLibrary: 'Library',
+        navQuiz: 'Practice Quiz',
+        navFlashcards: 'Flashcards',
+        navNotes: 'Notes',
+        navFormulas: 'Formulas',
+        btnDownloadHtml: 'Download (.html)',
+        libraryHeading: 'CFA Level I Study Notebook',
+        btnSourceMaterial: 'Source Notes (IFT 2027)',
+        overallMasteryLabel: 'Overall mastery progress',
+        filterAll: 'All',
+        filterStudying: 'In Progress',
+        filterCompleted: 'Completed',
+        filterBookmarked: 'Bookmarked',
+        quizHeading: 'CFA Practice Assessment',
+        btnResetQuiz: 'Reset',
+        fcHeading: 'Concept Flashcards',
+        notesHeading: 'Personal Study Notes',
+        formulasHeading: 'Core CFA Formula Sheet'
       }
     };
 
-    // Persistent State
-    let appState = {
-      masteredItemIds: [],
-      quizCorrectIds: [],
-      quizCompletedRuns: 0,
-      masteredFlashcardIds: [],
-      bookmarked: false,
-      notes: "• Sole Proprietorship & General Partnership: Trách nhiệm vô hạn (Unlimited Liability), áp dụng Pass-through taxation.\n• Limited Partnership (LP): General Partner (GP) điều hành & chịu trách nhiệm vô hạn; Limited Partner (LP) góp vốn & chịu trách nhiệm hữu hạn.\n• Corporation: Pháp nhân độc lập, trách nhiệm hữu hạn, chịu Double Taxation và có thể phát sinh Agency Costs.",
-      lang: 'vi'
+    // Trạng thái lưu trữ localStorage
+    let state = {
+      lang: 'vi',
+      level: 'LVL I',
+      masteredLos: [],
+      quizCorrect: [],
+      masteredCards: [],
+      bookmarkedModules: ['ci-lm01'],
+      notes: [
+        {
+          id: 101,
+          category: 'Corporate Issuers',
+          date: '26/11/2026',
+          text: 'Sole Proprietorship & General Partnership chịu trách nhiệm vô hạn (Unlimited Liability) và thuế pass-through. Riêng Limited Partnership tách bạch GP (điều hành, vô hạn) và LP (góp vốn, hữu hạn).'
+        },
+        {
+          id: 102,
+          category: 'Corporate Issuers',
+          date: '26/11/2026',
+          text: 'Corporation có tư cách pháp nhân độc lập, cổ đông chịu trách nhiệm hữu hạn nhưng phát sinh Double Taxation và xung đột đại diện (Agency Conflict).'
+        }
+      ]
     };
 
-    let currentQuizIdx = 0;
-    let selectedOptionIdx = null;
-    let currentFcIdx = 0;
-    let sidebarCollapsed = false;
+    state.notes=[];state.bookmarkedModules=[];
+    let currentFilter = 'all';
+    let currentSearch = '';
+    let quizIdx = 0;
+    let selectedOption = null;
+    let cardIdx = 0;
 
-    // Load & Save LocalStorage
-    function loadState() {
+    function loadAppState() {
       try {
-        const saved = localStorage.getItem('cfanotes_luxury_state_v1');
-        if (saved) {
-          appState = { ...appState, ...JSON.parse(saved) };
+        const raw = localStorage.getItem('cfanotes_clean_v1');
+        if (!raw) {
+          const old=JSON.parse(localStorage.getItem('cfanotes_luxury_state_v1')||'{}');
+          state.lang=old.lang||'vi';state.level='LVL '+(old.courseLevel||'I');
+          state.completedLessons=old.completedLessons||[];
+          if(old.notes)state.notes=[{id:1,category:'CFA',date:'',text:old.notes}];
+        }
+        if (raw) {
+          Object.assign(state, JSON.parse(raw));
         }
       } catch (e) {}
     }
 
-    function saveState() {
+    function saveAppState() {
       try {
-        localStorage.setItem('cfanotes_luxury_state_v1', JSON.stringify(appState));
+        localStorage.setItem('cfanotes_clean_v1', JSON.stringify(state));
       } catch (e) {}
     }
 
-    // Calculate & Update Real Progress Percentage
-    function updateAllProgressUI() {
-      // Weighted formula: 8 knowledge items (60%), 5 quiz questions (25%), 5 flashcards (15%)
-      const itemsRatio = appState.masteredItemIds.length / 8;
-      const quizRatio = appState.quizCorrectIds.length / quizData.length;
-      const fcRatio = appState.masteredFlashcardIds.length / flashcards.length;
+    // Cập nhật tiến độ tổng hợp
 
-      const totalPct = Math.round((itemsRatio * 0.6 + quizRatio * 0.25 + fcRatio * 0.15) * 100);
-      const circumference = 314.16;
-      const offset = circumference - (totalPct / 100) * circumference;
+    // ==================== LIBRARY RENDER & FILTER ====================
 
-      document.getElementById('progress-ring').style.strokeDashoffset = offset;
-      document.getElementById('overall-percent').textContent = `${totalPct}%`;
-      document.getElementById('journey-items-done').textContent = appState.masteredItemIds.length;
-      document.getElementById('card-mastered-count').textContent = appState.masteredItemIds.length;
-      document.getElementById('stat-quiz-completed').textContent = appState.quizCompletedRuns;
-
-      // Sidebar mini progress
-      document.getElementById('sidebar-pct-text').textContent = `${totalPct}%`;
-      document.getElementById('sidebar-progress-bar').style.width = `${totalPct}%`;
-
-      // Completed status check
-      if (appState.masteredItemIds.length === 8) {
-        document.getElementById('count-completed').textContent = '1';
-        document.getElementById('count-studying').textContent = '0';
-        document.getElementById('module-status-pill').textContent = 'COMPLETED ✓';
-      } else {
-        document.getElementById('count-completed').textContent = '0';
-        document.getElementById('count-studying').textContent = '1';
-        document.getElementById('module-status-pill').textContent = 'LM 01 ACTIVE';
-      }
-
-      // Bookmark icon state
-      const bmIcon = document.getElementById('bookmark-icon');
-      if (appState.bookmarked) {
-        bmIcon.classList.add('fill-champagne-400', 'text-champagne-400');
-      } else {
-        bmIcon.classList.remove('fill-champagne-400', 'text-champagne-400');
-      }
+    function setLibraryFilter(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('.lib-filter-pill').forEach(btn => {
+        btn.classList.remove('bg-ink-primary', 'text-base-white', 'border-ink-primary');
+        btn.classList.add('bg-base-white', 'text-ink-secondary', 'border-base-border');
+      });
+      const active = document.getElementById(`lib-filter-${filter}`);
+      active.classList.add('bg-ink-primary', 'text-base-white', 'border-ink-primary');
+      active.classList.remove('bg-base-white', 'text-ink-secondary', 'border-base-border');
+      renderLibraryModules();
     }
 
-    // Render 8 Knowledge Items inside Executive Study Reader
-    function renderKnowledgeItems() {
-      const container = document.getElementById('knowledge-items-list');
-      container.innerHTML = knowledgeItems.map(item => {
-        const isDone = appState.masteredItemIds.includes(item.id);
+    function toggleModuleBookmark(id) {
+      const idx = state.bookmarkedModules.indexOf(id);
+      if (idx === -1) {
+        state.bookmarkedModules.push(id);
+        showToast('Đã lưu học phần vào danh sách.');
+      } else {
+        state.bookmarkedModules.splice(idx, 1);
+        showToast('Đã bỏ lưu học phần.');
+      }
+      saveAppState();
+      renderLibraryModules();
+    }
+
+    // ==================== SLIDE-OVER DRAWER: 8 LOS ====================
+    function renderLosDrawerList() {
+      const container = document.getElementById('drawer-los-list');
+      container.innerHTML = ciLosItems.map(item => {
+        const checked = state.masteredLos.includes(item.id);
         return `
-          <div class="py-4 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-            <div class="space-y-1.5">
-              <h4 class="font-serif font-semibold text-base text-obsidian-900 dark:text-[#F3EFE6]">${item.title}</h4>
-              <p class="text-xs sm:text-sm text-[#646058] dark:text-[#A39E93] leading-relaxed">${item.summary}</p>
+          <div class="p-4 rounded-lg border ${checked ? 'bg-status-greenBg/40 border-status-greenBorder' : 'bg-base-white border-base-border'} flex items-start justify-between gap-4 transition">
+            <div class="space-y-1">
+              <span class="font-mono text-[11px] font-semibold text-ink-muted">${item.code}</span>
+              <h4 class="text-sm font-semibold text-ink-primary">${item.title}</h4>
+              <p class="text-xs sm:text-[13px] text-ink-secondary leading-relaxed">${item.body}</p>
             </div>
-            <button onclick="toggleMasteredItem(${item.id})" class="self-start shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold border transition flex items-center gap-1.5 ${
-              isDone
-                ? 'bg-emeraldLux-800 text-white border-emeraldLux-800'
-                : 'bg-ivory-100 dark:bg-obsidian-850 text-obsidian-900 dark:text-[#E5E0D5] border-ivory-300 dark:border-obsidian-700 hover:border-champagne-500'
+
+            <button onclick="toggleLosItem(${item.id})" class="shrink-0 mt-0.5 px-2.5 py-1.5 rounded-md border text-xs font-medium flex items-center gap-1.5 transition ${
+              checked
+                ? 'bg-status-greenBg text-status-greenText border-status-greenBorder'
+                : 'bg-base-white text-ink-secondary border-base-border hover:border-ink-primary hover:text-ink-primary'
             }">
-              <i data-lucide="${isDone ? 'check-circle-2' : 'circle'}" class="w-3.5 h-3.5 ${isDone ? 'text-champagne-300' : 'text-champagne-500'}"></i>
-              <span>${isDone ? 'Đã nắm vững' : 'Đánh dấu nắm vững'}</span>
+              <i data-lucide="${checked ? 'check-square' : 'square'}" class="w-3.5 h-3.5"></i>
+              <span>${checked ? 'Đã nắm' : 'Đánh dấu'}</span>
             </button>
           </div>
         `;
@@ -831,365 +883,506 @@
       window.lucide?.createIcons();
     }
 
-    function toggleMasteredItem(id) {
-      const idx = appState.masteredItemIds.indexOf(id);
+    function toggleLosItem(id) {
+      const idx = state.masteredLos.indexOf(id);
       if (idx === -1) {
-        appState.masteredItemIds.push(id);
-        showToast('Đã ghi nhận hoàn thành mục kiến thức.');
+        state.masteredLos.push(id);
       } else {
-        appState.masteredItemIds.splice(idx, 1);
+        state.masteredLos.splice(idx, 1);
       }
-      saveState();
-      renderKnowledgeItems();
-      updateAllProgressUI();
+      saveAppState();
+      renderLosDrawerList();
+      syncMasteryMetrics();
+      renderLibraryModules();
     }
 
-    function openStudyReader() {
-      const panel = document.getElementById('study-reader-panel');
-      panel.classList.remove('hidden');
-      renderKnowledgeItems();
-      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    function openLosDrawer() {
+      renderLosDrawerList();
+      document.getElementById('los-drawer-backdrop').classList.remove('hidden');
+      document.getElementById('los-drawer').classList.remove('translate-x-full');
     }
 
-    function closeStudyReader() {
-      document.getElementById('study-reader-panel').classList.add('hidden');
+    function closeLosDrawer() {
+      document.getElementById('los-drawer-backdrop').classList.add('hidden');
+      document.getElementById('los-drawer').classList.add('translate-x-full');
     }
 
-    // Library Filter
-    function filterLibrary(type) {
-      document.querySelectorAll('.lib-filter-btn').forEach(btn => {
-        btn.classList.remove('bg-obsidian-900', 'text-[#F3EFE6]', 'dark:bg-champagne-500', 'dark:text-obsidian-950', 'font-semibold');
-        btn.classList.add('text-[#646058]', 'dark:text-[#A39E93]', 'font-medium');
-      });
-      const active = document.getElementById(`filter-${type}`);
-      active.classList.add('bg-obsidian-900', 'text-[#F3EFE6]', 'dark:bg-champagne-500', 'dark:text-obsidian-950', 'font-semibold');
-      active.classList.remove('text-[#646058]', 'dark:text-[#A39E93]', 'font-medium');
+    // ==================== PRACTICE QUIZ ====================
 
-      const card = document.getElementById('module-card-0');
-      const isCompleted = appState.masteredItemIds.length === 8;
-
-      if (type === 'all') card.classList.remove('hidden');
-      if (type === 'studying') card.classList.toggle('hidden', isCompleted);
-      if (type === 'completed') card.classList.toggle('hidden', !isCompleted);
-    }
-
-    // Bookmark Toggle
-    function toggleBookmark() {
-      appState.bookmarked = !appState.bookmarked;
-      saveState();
-      updateAllProgressUI();
-      renderBookmarkedView();
-      showToast(appState.bookmarked ? 'Đã lưu học phần vào danh sách Đánh dấu ★' : 'Đã gỡ khỏi danh sách Đánh dấu');
-    }
-
-    function renderBookmarkedView() {
-      const box = document.getElementById('bookmarked-container');
-      if (appState.bookmarked) {
-        box.innerHTML = `
-          <div class="flex items-center justify-between gap-4">
-            <div>
-              <span class="font-mono text-[10px] uppercase tracking-widest text-champagne-600 dark:text-champagne-400">BOOKMARKED MODULE</span>
-              <h3 class="font-serif font-semibold text-lg text-obsidian-900 dark:text-[#F3EFE6] mt-1">LM 01: Loại hình doanh nghiệp, đặc điểm tổ chức phát hành và quyền sở hữu</h3>
-              <p class="text-xs text-[#78736A] mt-1">Corporate Issuers • 2027 Level I</p>
-            </div>
-            <button onclick="location.href='notebook.html#learn/forms';" class="px-4 py-2 rounded-xl bg-obsidian-900 dark:bg-champagne-500 text-[#F3EFE6] dark:text-obsidian-950 text-xs font-semibold shrink-0">Mở bài học</button>
-          </div>
-        `;
-      } else {
-        box.innerHTML = `<p class="text-sm text-[#78736A] text-center py-6">Chưa có học phần nào được đánh dấu. Nhấn biểu tượng ngôi sao trên thẻ học phần để lưu tại đây.</p>`;
-      }
-    }
-
-    // Practice Quiz Logic
-    function renderQuiz() {
-      const q = quizData[currentQuizIdx];
-      selectedOptionIdx = null;
-      document.getElementById('quiz-counter').textContent = `Câu ${currentQuizIdx + 1} / ${quizData.length}`;
-      document.getElementById('quiz-question-text').textContent = q.q;
-      document.getElementById('quiz-rationale').classList.add('hidden');
-      document.getElementById('quiz-check-btn').disabled = true;
-      document.getElementById('quiz-next-btn').disabled = true;
-
-      const container = document.getElementById('quiz-options-container');
-      container.innerHTML = q.options.map((opt, idx) => `
-        <button onclick="selectOption(${idx})" id="q-opt-${idx}" class="w-full text-left p-4 rounded-xl border border-ivory-300 dark:border-obsidian-700 bg-ivory-100/70 dark:bg-obsidian-850 hover:border-champagne-500 text-xs sm:text-sm font-medium transition">
-          ${opt}
-        </button>
-      `).join('');
-    }
-
-    function selectOption(idx) {
-      selectedOptionIdx = idx;
-      document.querySelectorAll('#quiz-options-container button').forEach((btn, i) => {
-        btn.classList.remove('border-champagne-500', 'ring-1', 'ring-champagne-500');
+    function chooseQuizOption(idx) {
+      selectedOption = idx;
+      document.querySelectorAll('#quiz-options-list button').forEach((btn, i) => {
+        const dot = btn.querySelector('.quiz-radio-dot');
         if (i === idx) {
-          btn.classList.add('border-champagne-500', 'ring-1', 'ring-champagne-500');
+          btn.classList.add('border-ink-primary', 'bg-base-subtle');
+          dot.innerHTML = '<span class="w-2 h-2 rounded-full bg-ink-primary"></span>';
+        } else {
+          btn.classList.remove('border-ink-primary', 'bg-base-subtle');
+          dot.innerHTML = '';
         }
       });
-      document.getElementById('quiz-check-btn').disabled = false;
+      document.getElementById('btn-submit-answer').disabled = false;
     }
 
-    function checkQuizAnswer() {
-      if (selectedOptionIdx === null) return;
-      const q = quizData[currentQuizIdx];
-      const buttons = document.querySelectorAll('#quiz-options-container button');
+    function submitQuizAnswer() {
+      if (selectedOption === null) return;
+      const q = quizQuestions[quizIdx];
+      const buttons = document.querySelectorAll('#quiz-options-list button');
 
       buttons.forEach((btn, i) => {
         btn.disabled = true;
-        if (i === q.correct) {
-          btn.classList.add('bg-emeraldLux-800/15', 'border-emeraldLux-800', 'text-emeraldLux-900', 'dark:text-emerald-300');
-        } else if (i === selectedOptionIdx) {
-          btn.classList.add('bg-rose-500/10', 'border-rose-500', 'text-rose-700', 'dark:text-rose-300');
+        if (i === q.answer) {
+          btn.classList.remove('bg-base-subtle', 'border-ink-primary');
+          btn.classList.add('bg-status-greenBg', 'border-status-greenBorder', 'text-status-greenText', 'font-medium');
+        } else if (i === selectedOption) {
+          btn.classList.remove('bg-base-subtle', 'border-ink-primary');
+          btn.classList.add('bg-status-amberBg', 'border-status-amberBorder', 'text-status-amberText');
         }
       });
 
-      document.getElementById('quiz-rationale-text').textContent = q.rationale;
-      document.getElementById('quiz-rationale').classList.remove('hidden');
-      document.getElementById('quiz-check-btn').disabled = true;
-      document.getElementById('quiz-next-btn').disabled = false;
+      document.getElementById('quiz-explanation-text').textContent = q.rationale;
+      document.getElementById('quiz-explanation-box').classList.remove('hidden');
+      document.getElementById('btn-submit-answer').disabled = true;
+      document.getElementById('btn-next-question').disabled = false;
 
-      if (selectedOptionIdx === q.correct && !appState.quizCorrectIds.includes(currentQuizIdx)) {
-        appState.quizCorrectIds.push(currentQuizIdx);
-        saveState();
-        updateAllProgressUI();
-        showToast('Chính xác! Tiến độ nắm vững đã được cập nhật.');
+      if (selectedOption === q.answer && !state.quizCorrect.includes(quizIdx)) {
+        state.quizCorrect.push(quizIdx);
+        saveAppState();
+        syncMasteryMetrics();
       }
     }
 
-    function nextQuiz() {
-      if (currentQuizIdx < quizData.length - 1) {
-        currentQuizIdx++;
-        renderQuiz();
+    function goToNextQuestion() {
+      if (quizIdx < quizQuestions.length - 1) {
+        quizIdx++;
       } else {
-        appState.quizCompletedRuns++;
-        saveState();
-        updateAllProgressUI();
-        showToast('Hoàn thành lượt luyện tập Corporate Issuers!');
-        currentQuizIdx = 0;
-        renderQuiz();
+        quizIdx = 0;
+        showToast('Đã hoàn thành vòng luyện tập Corporate Issuers.');
       }
+      renderQuizView();
     }
 
-    function resetQuiz() {
-      currentQuizIdx = 0;
-      renderQuiz();
+    function resetQuizSession() {
+      quizIdx = 0;
+      renderQuizView();
     }
 
-    // Flashcards 3D Logic
-    function renderFlashcard() {
-      const card = flashcards[currentFcIdx];
-      document.getElementById('fc-inner').classList.remove('rotate-y-180');
-      document.getElementById('fc-front').textContent = card.front;
-      document.getElementById('fc-back').textContent = card.back;
-      document.getElementById('fc-index-badge').textContent = `${currentFcIdx + 1} / ${flashcards.length}`;
-      const isMastered = appState.masteredFlashcardIds.includes(currentFcIdx);
-      document.getElementById('fc-mastered-tag').textContent = isMastered ? '✓ ĐÃ THUỘC' : '';
+    // ==================== FLASHCARDS ====================
+
+    function flipCard() {
+      document.getElementById('flashcard-inner').classList.toggle('is-flipped');
     }
 
-    function flipFlashcard() {
-      document.getElementById('fc-inner').classList.toggle('rotate-y-180');
+    function nextCard() {
+      cardIdx = (cardIdx + 1) % levelRows().length;
+      renderFlashcardView();
     }
 
-    function nextFlashcard() {
-      currentFcIdx = (currentFcIdx + 1) % flashcards.length;
-      renderFlashcard();
+    function prevCard() {
+      cardIdx = (cardIdx - 1 + levelRows().length) % levelRows().length;
+      renderFlashcardView();
     }
 
-    function prevFlashcard() {
-      currentFcIdx = (currentFcIdx - 1 + flashcards.length) % flashcards.length;
-      renderFlashcard();
-    }
 
-    function markFlashcardMastered() {
-      if (!appState.masteredFlashcardIds.includes(currentFcIdx)) {
-        appState.masteredFlashcardIds.push(currentFcIdx);
-        saveState();
-        updateAllProgressUI();
-        showToast('Đã đánh dấu thuộc thẻ ghi nhớ!');
-      }
-      nextFlashcard();
-    }
+    // ==================== NOTES ====================
+    function renderNotesList() {
+      const container = document.getElementById('notes-list-container');
+      const q = (document.getElementById('notes-search-input')?.value || '').toLowerCase().trim();
 
-    // Notes & Source Modal
-    function saveNotes() {
-      appState.notes = document.getElementById('notes-editor').value;
-      saveState();
-      showToast('Đã lưu ghi chú cá nhân vào thiết bị.');
-    }
+      const items = state.notes.filter(n => !q || `${n.category} ${n.text}`.toLowerCase().includes(q));
 
-    function openSourceModal() {
-      const m = document.getElementById('source-modal');
-      m.classList.remove('hidden');
-      m.classList.add('flex');
-    }
-
-    function closeSourceModal() {
-      const m = document.getElementById('source-modal');
-      m.classList.add('hidden');
-      m.classList.remove('flex');
-    }
-
-    function appendQuickNote() {
-      const txt = document.getElementById('quick-modal-note').value.trim();
-      if (txt) {
-        appState.notes += `\n• ${txt}`;
-        document.getElementById('notes-editor').value = appState.notes;
-        document.getElementById('quick-modal-note').value = '';
-        saveState();
-        showToast('Đã thêm ghi chú nhanh vào sổ tay!');
-      }
-      closeSourceModal();
-    }
-
-    // Search Filter
-    function handleSearch(query) { renderAcademy(query);
-      const q = query.toLowerCase().trim();
-      if (document.getElementById('view-library').classList.contains('hidden')) {
-        switchTab('library');
+      if (!items.length) {
+        container.innerHTML = `<div class="p-6 rounded-lg border border-base-border text-center text-xs text-ink-muted">Chưa có ghi chú nào phù hợp.</div>`;
+        return;
       }
 
+      container.innerHTML = items.map(note => `
+        <div class="p-4 rounded-lg bg-base-white border border-base-border flex items-start justify-between gap-4">
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2 font-mono text-[11px]">
+              <span class="px-2 py-0.5 rounded bg-base-subtle border border-base-border text-ink-primary font-medium">${escapeText(note.category)}</span>
+              <span class="text-ink-muted">${escapeText(note.date)}</span>
+            </div>
+            <p class="text-xs sm:text-sm text-ink-primary leading-relaxed whitespace-pre-line">${escapeText(note.text)}</p>
+          </div>
+          <button onclick="deleteNote(${Number(note.id)})" title="Xóa ghi chú" class="p-1.5 rounded text-ink-muted hover:text-ink-primary transition shrink-0">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+          </button>
+        </div>
+      `).join('');
+      window.lucide?.createIcons();
     }
 
-    // Navigation Tabs
+    function saveNewNote() {
+      const textarea = document.getElementById('note-textarea');
+      const text = textarea.value.trim();
+      if (!text) {
+        showToast('Vui lòng nhập nội dung ghi chú.');
+        return;
+      }
+      const category = document.getElementById('note-category-select').value;
+      const d = new Date();
+      const dateStr = `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+
+      state.notes.unshift({
+        id: Date.now(),
+        category,
+        date: dateStr,
+        text
+      });
+      textarea.value = '';
+      saveAppState();
+      renderNotesList();
+      showToast('Đã lưu ghi chú vào bộ nhớ trình duyệt.');
+    }
+
+    function deleteNote(id) {
+      state.notes = state.notes.filter(n => n.id !== id);
+      saveAppState();
+      renderNotesList();
+      showToast('Đã xóa ghi chú.');
+    }
+
+    // ==================== FORMULAS ====================
+
+    function copyFormulaText(eq) {
+      copyToClipboard(eq, `Đã sao chép: ${eq}`);
+    }
+
+    // ==================== SOURCE MODAL & DOWNLOAD HTML ====================
+    function openSourceDrawer() {
+      const modal = document.getElementById('source-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeSourceDrawer() {
+      const modal = document.getElementById('source-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function saveModalQuickNote() {
+      const box = document.getElementById('modal-quick-note');
+      const text = box.value.trim();
+      if (text) {
+        const d = new Date();
+        const dateStr = `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+        state.notes.unshift({
+          id: Date.now(),
+          category: 'IFT Study Notes',
+          date: dateStr,
+          text
+        });
+        box.value = '';
+        saveAppState();
+        renderNotesList();
+        showToast('Đã thêm vào Ghi chú cá nhân.');
+      }
+      closeSourceDrawer();
+    }
+
+    function downloadStandaloneHTML() {
+      const fullHtml = originalDocument;
+      // Tải trực tiếp file .html về máy
+      try {
+        const blob = new Blob([fullHtml], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'index.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } catch (e) {}
+
+      // Đồng thời sao chép vào Clipboard
+      copyToClipboard(fullHtml, 'Đã tải tệp index.html & sao chép mã nguồn!');
+    }
+
+    function copyToClipboard(text, message) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast(message);
+      } catch (e) {
+        showToast('Đã hoàn tất thao tác.');
+      }
+      document.body.removeChild(ta);
+    }
+
+    // ==================== NAVIGATION, SEARCH & I18N ====================
     function switchTab(tab) {
-      const crumb = document.getElementById('breadcrumb-current');
-      const tabs = ['library', 'quiz', 'flashcards', 'notes', 'formulas', 'bookmarked'];
-      tabs.forEach(t => {
+      const allTabs = ['library', 'quiz', 'flashcards', 'notes', 'formulas'];
+      allTabs.forEach(t => {
         document.getElementById(`view-${t}`).classList.add('hidden');
-        const nav = document.getElementById(`nav-${t}`);
-        if (nav) {
-          nav.classList.remove('bg-obsidian-800/90', 'text-[#F3EFE6]', 'border-champagne-500/30');
-          nav.classList.add('text-[#9E988E]', 'border-transparent');
-          const ind = nav.querySelector('.nav-indicator');
-          if (ind) ind.classList.add('hidden');
+        const btn = document.getElementById(`tab-btn-${t}`);
+        if (btn) {
+          btn.classList.remove('font-medium', 'text-ink-primary');
+          btn.classList.add('font-normal', 'text-ink-secondary');
+          btn.querySelector('.nav-underline').classList.add('hidden');
+        }
+        const mBtn = document.getElementById(`m-tab-${t}`);
+        if (mBtn) {
+          mBtn.classList.remove('bg-ink-primary', 'text-base-white');
+          mBtn.classList.add('text-ink-secondary');
         }
       });
 
       document.getElementById(`view-${tab}`).classList.remove('hidden');
-      const activeNav = document.getElementById(`nav-${tab}`);
-      if (activeNav) {
-        activeNav.classList.add('bg-obsidian-800/90', 'text-[#F3EFE6]', 'border-champagne-500/30');
-        activeNav.classList.remove('text-[#9E988E]', 'border-transparent');
-        const ind = activeNav.querySelector('.nav-indicator');
-        if (ind) ind.classList.remove('hidden');
+      const activeBtn = document.getElementById(`tab-btn-${tab}`);
+      if (activeBtn) {
+        activeBtn.classList.add('font-medium', 'text-ink-primary');
+        activeBtn.classList.remove('font-normal', 'text-ink-secondary');
+        activeBtn.querySelector('.nav-underline').classList.remove('hidden');
+      }
+      const activeMBtn = document.getElementById(`m-tab-${tab}`);
+      if (activeMBtn) {
+        activeMBtn.classList.add('bg-ink-primary', 'text-base-white');
+        activeMBtn.classList.remove('text-ink-secondary');
       }
 
-      const keyMap = {
-        library: 'navLibrary',
-        quiz: 'navQuiz',
-        flashcards: 'navFlashcards',
-        notes: 'navNotes',
-        formulas: 'navFormulas',
-        bookmarked: 'navBookmarked'
-      };
-      crumb.dataset.i18n=keyMap[tab];
-      crumb.textContent=i18n[appState.lang][keyMap[tab]];
-
-      if (tab === 'quiz' || tab === 'flashcards') renderCasePractice(tab);
-      
-      if (tab === 'bookmarked') renderBookmarkedView();
+      if (tab === 'quiz') renderQuizView();
+      if (tab === 'flashcards') renderFlashcardView();
+      if (tab === 'notes') renderNotesList();
+      if (tab === 'formulas') renderFormulaList();
     }
 
-    // Language Switcher (Translates entire UI)
-    function setLanguage(lang) {
-      appState.lang = lang; document.documentElement.lang=lang; renderAcademy(); for(const mode of ['quiz','flashcards']) if(!document.getElementById('view-'+mode).classList.contains('hidden'))renderCasePractice(mode);
-      saveState();
+    function handleGlobalSearch(query) {
+      currentSearch = query.toLowerCase().trim();
+      if (document.getElementById('view-library').classList.contains('hidden')) {
+        switchTab('library');
+      }
+      renderLibraryModules();
+    }
 
-      const viBtn = document.getElementById('lang-vi');
-      const enBtn = document.getElementById('lang-en');
+    function setLanguage(lang) {
+      state.lang = lang;
+      saveAppState();
+
+      const viBtn = document.getElementById('lang-btn-vi');
+      const enBtn = document.getElementById('lang-btn-en');
       if (lang === 'vi') {
-        viBtn.classList.add('bg-white', 'dark:bg-champagne-500', 'text-obsidian-900', 'dark:text-obsidian-950', 'shadow-2xs');
-        enBtn.classList.remove('bg-white', 'dark:bg-champagne-500', 'text-obsidian-900', 'dark:text-obsidian-950', 'shadow-2xs');
+        viBtn.classList.add('bg-base-white', 'text-ink-primary', 'border-base-border', 'font-semibold');
+        viBtn.classList.remove('text-ink-muted', 'border-transparent', 'font-medium');
+        enBtn.classList.remove('bg-base-white', 'text-ink-primary', 'border-base-border', 'font-semibold');
+        enBtn.classList.add('text-ink-muted', 'border-transparent', 'font-medium');
       } else {
-        enBtn.classList.add('bg-white', 'dark:bg-champagne-500', 'text-obsidian-900', 'dark:text-obsidian-950', 'shadow-2xs');
-        viBtn.classList.remove('bg-white', 'dark:bg-champagne-500', 'text-obsidian-900', 'dark:text-obsidian-950', 'shadow-2xs');
+        enBtn.classList.add('bg-base-white', 'text-ink-primary', 'border-base-border', 'font-semibold');
+        enBtn.classList.remove('text-ink-muted', 'border-transparent', 'font-medium');
+        viBtn.classList.remove('bg-base-white', 'text-ink-primary', 'border-base-border', 'font-semibold');
+        viBtn.classList.add('text-ink-muted', 'border-transparent', 'font-medium');
       }
 
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (i18n[lang][key]) {
-          el.innerHTML = i18n[lang][key];
+        if (translations[lang][key]) {
+          el.textContent = translations[lang][key];
         }
       });
+
+      refreshWorkspace();
     }
 
-    // Theme, Level, Sidebar & Toast
-    function toggleTheme() {
-      document.documentElement.classList.toggle('dark');
-    }
-
-    function setLevel(lvl) {
-      studyLevel=lvl.split(' ')[1];
-      appState.courseLevel=studyLevel;saveState();
-      switchTab('library');renderAcademy();
-      document.getElementById('case-count').textContent=curriculum.filter(row=>row[0]===studyLevel).length;
-      document.getElementById('topbar-level').textContent = lvl;
-      document.querySelectorAll('.lvl-btn').forEach(btn => {
-        btn.classList.remove('bg-champagne-500', 'text-obsidian-950', 'shadow-xs');
-        btn.classList.add('text-[#8E897F]');
-      });
-      const activeButton = Array.from(document.querySelectorAll('.lvl-btn')).find(b=>b.textContent.trim()===lvl.replace('LEVEL','LVL'));
-      activeButton.classList.add('bg-champagne-500', 'text-obsidian-950', 'shadow-xs');
-      activeButton.classList.remove('text-[#8E897F]');
-      
-    }
-
-    function toggleSidebarCollapse() {
-      const sidebar = document.getElementById('sidebar');
-      const labels = document.querySelectorAll('.sidebar-label');
-      sidebarCollapsed = !sidebarCollapsed;
-      if (sidebarCollapsed) {
-        sidebar.classList.replace('w-72', 'w-20');
-        labels.forEach(l => l.classList.add('hidden'));
-      } else {
-        sidebar.classList.replace('w-20', 'w-72');
-        labels.forEach(l => l.classList.remove('hidden'));
-      }
-    }
-
-    function toggleMobileSidebar() {
-      document.getElementById('sidebar').classList.toggle('-translate-x-full');
-      document.getElementById('mobile-backdrop').classList.toggle('hidden');
-    }
 
     function showToast(msg) {
       const container = document.getElementById('toast-container');
-      const toast = document.createElement('div');
-      toast.className = 'pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-xl bg-obsidian-900 text-[#F3EFE6] text-xs sm:text-sm font-medium border border-champagne-500/40 shadow-2xl transition-all duration-300';
-      toast.innerHTML = `<span class="w-2 h-2 rounded-full bg-champagne-400"></span><span>${msg}</span>`;
-      container.appendChild(toast);
+      const el = document.createElement('div');
+      el.className = 'pointer-events-auto px-3.5 py-2 rounded-md bg-ink-primary text-base-white text-xs font-medium transition-opacity duration-200';
+      el.textContent = msg;
+      container.appendChild(el);
       setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateY(8px)';
-        setTimeout(() => toast.remove(), 300);
-      }, 2600);
+        el.style.opacity = '0';
+        setTimeout(() => el.remove(), 200);
+      }, 2200);
     }
 
-    // Ctrl + K Global Search Shortcut
-    document.addEventListener('keydown', (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        const input = document.getElementById('global-search');
-        if (input) input.focus();
-      }
-    });
+// Each case includes a decision, the assumptions that support it and a worked solution.
+const curriculum = [
+['I','Đạo đức nghề nghiệp|Professional ethics','Thông tin trọng yếu có thể làm nhà đầu tư thay đổi quyết định. Khi thông tin chưa công khai, dừng giao dịch, hạn chế chia sẻ và báo bộ phận tuân thủ.|Material information can change an investment decision. Restrict trading and disclosure while it is nonpublic and notify compliance.','Giám đốc tiết lộ riêng rằng công ty vừa mất khách hàng lớn. Có nên bán trước khi thông báo?|A director privately discloses the loss of a major customer. Sell before the announcement?','Không. Ghi nhận nguồn tin và chờ công bố rộng rãi trước khi đánh giá lại.|No. Document the source and wait for public dissemination before reassessing.'],
+['I','Giá trị thời gian của tiền|Time value of money','Quy các dòng tiền về cùng ngày. Ghép lãi dùng lãi suất mỗi kỳ và số kỳ tương ứng. Khi cả rủi ro và thời hạn tăng, phải xem lại suất chiết khấu.|Compare cash flows at one date. Match the periodic rate to the number of periods and reassess the discount rate if risk changes.','Một khoản trả chắc chắn 121 triệu sau hai năm đáng giá bao nhiêu hôm nay nếu lãi suất là 10% mỗi năm?|What is a payment of 121 in two years worth at 10% annually?','100 triệu. Sau hai năm, 100 tăng thành 110 rồi 121.|100. The balance grows to 110 and then 121.', 'PV=frac(FV;(1+r)ⁿ)','PV hiện giá, FV giá trị tương lai, r lãi mỗi kỳ, n số kỳ|PV present value, FV future value, r periodic rate, n periods'],
+['I','Lợi suất và xác suất|Returns and probability','Lợi suất nắm giữ gồm thay đổi giá và tiền nhận trong kỳ. Khi dự báo, gán xác suất cho từng kịch bản và cộng các lợi suất có trọng số. Giá trị kỳ vọng có thể khác mọi kết quả thực tế.|Holding returns include price changes and distributions. Weight each scenario return by its probability. The expectation can differ from every realized outcome.','Mua ở 50, bán ở 53 và nhận 2 cổ tức. Lợi suất trước phí?|Buy at 50, sell at 53 and collect 2 in dividends. What is the pre-fee return?','10%. Nhà đầu tư thu tổng cộng 55 trên vốn ban đầu 50.|10%. Total proceeds are 55 on an initial investment of 50.','R=frac(P₁−P₀+D;P₀)','R lợi suất kỳ, P₀ giá mua, P₁ giá bán, D cổ tức|R period return, P₀ purchase price, P₁ sale price, D dividends'],
+['I','Kinh tế và sức mua|Economics and purchasing power','Lãi danh nghĩa đo mức tăng tiền. Lãi thực đo mức tăng lượng hàng mua được. Trong phân tích chu kỳ, xem xét cả lạm phát, sản lượng và phản ứng của ngân hàng trung ương.|Nominal return measures money growth. Real return measures purchasing power. Interpret inflation alongside output and the central bank response.','Tiền gửi tăng 8%, giá hàng tăng 5%. Sức mua tăng bao nhiêu?|Savings grow 8% while prices rise 5%. How much does purchasing power grow?','Khoảng 2,86%. Chia 1,08 cho 1,05 rồi trừ một.|About 2.86%. Divide 1.08 by 1.05 and subtract one.','r=frac(1+i;1+π)−1','r lợi suất thực, i lợi suất danh nghĩa, π lạm phát cùng kỳ|r real return, i nominal return, π inflation over the same period'],
+['I','Đọc báo cáo tài chính|Reading financial statements','Bảng cân đối ghi tài sản và nguồn vốn tại một ngày. Báo cáo kết quả ghi doanh thu, chi phí theo kỳ. Đối chiếu với lưu chuyển tiền để nhận ra doanh thu bán chịu.|The balance sheet measures resources and claims at a date. The income statement measures activity over a period. Reconcile earnings with cash flow to identify credit sales.','Bán chịu 100, giá vốn 60 đã trả kỳ trước. Ảnh hưởng tức thời khi giao hàng?|Inventory costing 60 was paid for last period and sold on credit for 100. What changes on delivery?','Lãi gộp 40, phải thu tăng 100, hàng tồn giảm 60. Chưa thu tiền.|Gross profit is 40, receivables rise 100, inventory falls 60. No cash is collected.'],
+['I','Quyết định đầu tư vốn|Capital budgeting','Dùng dòng tiền tăng thêm sau thuế, gồm chi phí cơ hội và vốn lưu động. Loại chi phí chìm. Dự án tạo giá trị khi hiện giá thu về vượt vốn bỏ ra.|Use incremental after-tax cash flows including opportunity costs and working capital. Exclude sunk costs. A project adds value when discounted proceeds exceed its cost.','Máy giá 90, tạo dòng tiền 110 sau một năm, suất yêu cầu 10%. Có mua?|A machine costs 90 and pays 110 in one year. At a 10% hurdle, buy?','Có theo tiêu chí NPV. Hiện giá thu về là 100, nên giá trị tăng thêm là 10.|Yes on NPV grounds. Discounted proceeds are 100 and value added is 10.','NPV=frac(C₁;1+r)−I₀','NPV hiện giá ròng, C₁ dòng tiền cuối năm, r suất yêu cầu, I₀ vốn đầu tư hôm nay|NPV net present value, C₁ year-end cash flow, r required return, I₀ initial investment'],
+['I','Cổ phiếu và chỉ số|Equities and indices','Cổ đông thường nhận phần còn lại sau các chủ nợ. Chỉ số theo vốn hóa phản ánh quy mô thị trường và có thể tập trung vào một số doanh nghiệp lớn.|Common shareholders hold a residual claim. A market-cap index weights firms by equity value and can concentrate exposure in large issuers.','Hai công ty có vốn hóa 80 và 20. Nếu công ty lớn tăng 5%, công ty nhỏ đi ngang, chỉ số tăng bao nhiêu?|Two stocks have market caps of 80 and 20. The larger gains 5% and the smaller is flat. Index return?','4%, vì 80% danh mục hưởng mức tăng 5%. Giả sử không có cổ tức hay thay đổi số cổ phần.|4%, because 80% of the portfolio earns 5%. Assume no dividends or share-count changes.'],
+['I','Trái phiếu và lãi suất|Bonds and yields','Định giá từng coupon và gốc theo thời điểm nhận tiền. Với dòng tiền cố định, lợi suất yêu cầu tăng làm giá giảm. Lợi suất đáo hạn giả định thanh toán đủ và tái đầu tư thích hợp.|Discount coupons and principal by payment date. Higher required yields reduce the value of fixed cash flows. Realizing yield to maturity depends on promised payments and reinvestment.','Trái phiếu một năm trả coupon 4 và gốc 100. Nếu lợi suất yêu cầu 5%, giá hợp lý?|A one-year bond pays 4 interest plus 100 principal. Value at a 5% required yield?','99,05. Coupon thấp hơn mức sinh lời yêu cầu nên giá dưới mệnh giá.|99.05. The coupon is below the required yield so price is below par.','P=frac(C+F;1+y)','P giá hiện tại, C coupon, F mệnh giá, y lợi suất một năm|P current price, C coupon, F face value, y one-year yield'],
+['I','Hợp đồng phái sinh|Derivative contracts','Kỳ hạn khóa giá giao dịch tương lai cho cả hai bên. Quyền chọn cho người mua quyền lựa chọn và đòi hỏi trả phí. Tách khoản thanh toán khi đáo hạn khỏi lợi nhuận sau phí.|A forward locks a future transaction price for both parties. An option buyer pays a premium for discretion. Separate terminal payoff from profit after premium.','Mua quyền mua giá thực hiện 100, phí 4. Giá đáo hạn 112. Lãi bao nhiêu mỗi cổ phần?|Buy a call struck at 100 for 4. The stock ends at 112. Profit per share?','8. Thực hiện quyền thu 12, trừ phí 4, bỏ qua chi phí tài trợ.|8. Exercise produces 12, less the premium of 4, ignoring financing.'],
+['I','Tài sản thay thế|Alternative assets','So sánh bất động sản, hạ tầng, vốn tư nhân và hàng hóa theo nguồn thu, đòn bẩy, phí và khả năng thoái vốn. Giá thẩm định cập nhật chậm có thể làm biến động quan sát thấp.|Compare property, infrastructure, private capital and commodities by income source, leverage, fees and exit liquidity. Slow appraisals can suppress measured volatility.','Tòa nhà giá 10 tỷ, thu nhập hoạt động ròng 600 triệu mỗi năm. Tỷ suất vốn hóa?|A building costs 10 million and earns 0.6 million annual net operating income. Cap rate?','6% trước chi phí vay. Tăng giá tài sản trong tương lai chưa được tính.|6% before financing. Future appreciation is excluded.','c=frac(NOI;V)','c tỷ suất vốn hóa, NOI thu nhập hoạt động ròng năm, V giá trị tài sản|c cap rate, NOI annual net operating income, V property value'],
+['I','Xây dựng danh mục|Portfolio construction','Bắt đầu bằng mục tiêu, thời hạn, mức chịu lỗ và nhu cầu tiền mặt. Lợi suất danh mục là bình quân theo tỷ trọng đầu kỳ. Rủi ro còn phụ thuộc sự đồng biến giữa tài sản.|Start with objectives, horizon, loss tolerance and cash needs. Portfolio return is a beginning-weight average. Risk also depends on how assets move together.','60% cổ phiếu tăng 10%, 40% trái phiếu giảm 2%. Danh mục đạt bao nhiêu?|60% stocks gain 10% and 40% bonds lose 2%. Portfolio return?','5,2%. Phần cổ phiếu đóng góp 6 điểm phần trăm và trái phiếu trừ 0,8 điểm.|5.2%. Stocks contribute 6 percentage points and bonds subtract 0.8.','Rₚ=w₁R₁+w₂R₂','Rₚ lợi suất danh mục, w₁ và w₂ tỷ trọng đầu kỳ, R₁ và R₂ lợi suất tài sản|Rₚ portfolio return, w₁ and w₂ beginning weights, R₁ and R₂ asset returns'],
+['II','Chuẩn mực trong phân tích|Research independence','Khi bên phát hành tài trợ nghiên cứu, đánh giá tính độc lập, thù lao và phạm vi công bố. Lưu cơ sở phân tích để độc giả phân biệt giả định và dữ kiện.|For issuer-sponsored research, examine independence, compensation and disclosure. Retain research support and distinguish assumptions from observations.','Phí nghiên cứu tăng gấp đôi nếu báo cáo khuyến nghị mua. Công bố điều khoản đã đủ chưa?|A research fee doubles for a buy recommendation. Is disclosure sufficient?','Chưa. Loại điều khoản phụ thuộc kết luận và thỏa thuận phí cố định trước khi phân tích.|No. Remove the outcome-dependent payment and agree a fixed fee before analysis.'],
+['II','Hồi quy và kiểm định|Regression and inference','Hệ số hồi quy mô tả thay đổi dự báo khi một biến tăng và các biến khác cố định. Kiểm tra phần dư, phương sai thay đổi và tính ổn định ngoài mẫu trước khi dùng kết quả.|A slope measures the predicted change holding other regressors fixed. Inspect residuals, heteroskedasticity and out-of-sample stability before relying on the model.','Hệ số 0,6 với sai số chuẩn 0,2. Với ngưỡng hai phía 2, có bác bỏ hệ số bằng 0?|Slope 0.6, standard error 0.2 and a two-sided critical value of 2. Reject zero?','Có. Thống kê bằng 3. Ý nghĩa thống kê chưa chứng minh quan hệ nhân quả.|Yes. The statistic is 3. Statistical significance does not establish causality.','t=frac(b−b₀;SE)','t thống kê kiểm định, b ước lượng, b₀ giá trị giả thuyết, SE sai số chuẩn|t test statistic, b estimated slope, b₀ hypothesized slope, SE standard error'],
+['II','Tỷ giá kỳ hạn|Currency parity','So sánh hai khoản tiền gửi cùng thời hạn bằng hai đồng tiền. Với phòng hộ đầy đủ, tỷ giá kỳ hạn cân bằng chênh lệch lãi suất theo điều kiện không có cơ hội kinh doanh chênh lệch giá.|Compare equal-maturity deposits in two currencies. With a full hedge, the forward rate offsets the rate differential under covered interest parity.','Giao ngay 1,20 USD/EUR, lãi USD 5%, EUR 2%. Giá kỳ hạn một năm?|Spot is 1.20 USD per EUR. USD earns 5% and EUR earns 2%. One-year forward?','1,2353 USD/EUR. Phải đặt lãi suất USD ở tử số theo cách yết giá này.|1.2353 USD per EUR. The quote convention puts the USD rate in the numerator.','F=S frac(1+iᵈ;1+iᶠ)','F tỷ giá kỳ hạn, S giao ngay, iᵈ lãi đồng định giá, iᶠ lãi đồng cơ sở|F forward rate, S spot, iᵈ quote-currency rate, iᶠ base-currency rate'],
+['II','Chất lượng lợi nhuận|Earnings quality','Khi doanh thu tăng nhanh hơn tiền thu, xem tuổi nợ, điều khoản tín dụng, hàng trả lại và giao dịch cuối kỳ. Dòng tiền yếu có thể do tăng trưởng hoặc ghi nhận sớm.|If sales outrun collections, examine receivable aging, credit terms, returns and period-end transactions. Weak cash conversion can reflect growth or early recognition.','Doanh thu tăng 5% nhưng phải thu tăng 40%. Bằng chứng nào giúp phân biệt?|Sales rise 5% while receivables rise 40%. What evidence distinguishes competing explanations?','Đối chiếu thu tiền sau ngày khóa sổ, tuổi nợ và điều khoản giao hàng. Riêng hai tốc độ tăng chưa đủ kết luận gian lận.|Check subsequent collections, aging and delivery terms. The two growth rates alone do not establish fraud.'],
+['II','Chi phí vốn|Cost of capital','Định giá dòng tiền cho toàn doanh nghiệp bằng suất sinh lời yêu cầu của cả nợ và vốn chủ. Dùng tỷ trọng thị trường và chỉ tính lá chắn thuế khi có thể sử dụng.|Discount firm-wide cash flows at the required return on debt and equity. Use market weights and recognize tax shields only when usable.','Nợ chiếm 40%, lãi 5%, thuế 20%. Vốn chủ yêu cầu 10%. Chi phí vốn?|Debt is 40% at 5%, tax is 20% and equity requires 10%. Blended cost?','7,6%. Nợ sau thuế đóng góp 1,6 điểm và vốn chủ 6 điểm.|7.6%. After-tax debt contributes 1.6 points and equity contributes 6.','WACC=wᴅrᴅ(1−T)+wᴇrᴇ','wᴅ,wᴇ tỷ trọng nợ và vốn chủ, rᴅ,rᴇ chi phí tương ứng, T thuế suất, WACC chi phí vốn bình quân|wᴅ,wᴇ debt and equity weights, rᴅ,rᴇ required returns, T tax rate, WACC weighted average cost of capital'],
+['II','Định giá cổ phiếu|Equity valuation','Dùng mô hình tăng trưởng đều cho doanh nghiệp trưởng thành có tỷ lệ chi trả ổn định. Dự báo cổ tức kỳ tới và kiểm tra độ nhạy với chênh lệch giữa suất yêu cầu và tăng trưởng.|Use constant growth for a mature issuer with sustainable payouts. Forecast the next dividend and test sensitivity to the spread between required return and growth.','Cổ tức sắp tới 3, yêu cầu 9%, tăng trưởng dài hạn 3%. Nếu yêu cầu tăng lên 10% thì sao?|Next dividend is 3, required return 9%, perpetual growth 3%. What if the required return rises to 10%?','Giá giảm từ 50 xuống 42,86. Mô hình yêu cầu suất chiết khấu lớn hơn tăng trưởng.|Value falls from 50 to 42.86. The discount rate must exceed growth.','V₀=frac(D₁;r−g)','V₀ giá trị hôm nay, D₁ cổ tức kỳ tới, r suất yêu cầu, g tăng trưởng đều|V₀ current value, D₁ next dividend, r required return, g constant growth'],
+['II','Đường cong lãi suất|Term structure','Dùng lãi suất giao ngay riêng cho mỗi kỳ hạn thay vì một lợi suất duy nhất. Lãi kỳ hạn ngụ ý là mức làm hai chiến lược tái đầu tư tương đương về giá.|Use maturity-specific spot rates to price cash flows. An implied forward rate makes a sequence of investments equivalent in price to a longer investment.','Trái phiếu trả 5 sau một năm và 105 sau hai năm. Lãi giao ngay lần lượt 4% và 5%. Giá?|A bond pays 5 after one year and 105 after two. Spot rates are 4% and 5%. Price?','100,05 sau làm tròn. Khoản đầu chiết khấu một kỳ, khoản cuối chiết khấu hai kỳ.|100.05 rounded. Discount the first payment once and the final payment twice.','P=frac(C₁;1+s₁)+frac(C₂;(1+s₂)²)','P giá, C₁,C₂ dòng tiền năm 1 và 2, s₁,s₂ lãi giao ngay năm hóa|P price, C₁,C₂ year-one and year-two payments, s₁,s₂ annualized spot rates'],
+['II','Định giá hợp đồng kỳ hạn|Forward valuation','Giá giao hàng được cố định khi ký. Giá trị hợp đồng sau đó thay đổi với thị trường. So sánh giá giao hàng cũ với kỳ hạn mới cùng ngày đáo hạn rồi chiết khấu chênh lệch.|Delivery price is fixed at inception while contract value changes. Compare the original strike with a new forward for the same maturity and discount the difference.','Bạn mua kỳ hạn ở 100. Còn một năm, giá kỳ hạn mới 106, lãi 5%. Giá trị vị thế?|Long at 100. One year remains, the new forward is 106 and rates are 5%. Position value?','Dương 5,71 mỗi đơn vị. Bạn có quyền mua rẻ hơn hợp đồng mới.|Positive 5.71 per unit. The old contract locks a lower purchase price.','V=frac(F−K;1+r)','V giá trị vị thế mua, F kỳ hạn mới, K giá đã ký, r lãi một năm còn lại|V long value, F replacement forward price, K original strike, r remaining one-year rate'],
+['II','Định giá bất động sản|Property valuation','Ước tính thu nhập sau phần trống và chi phí vận hành, trước lãi vay. Dùng thu nhập năm tới ổn định và tỷ suất vốn hóa của tài sản so sánh có rủi ro tương tự.|Estimate income after vacancy and operating expenses but before interest. Capitalize stabilized next-year income using comparable risk.','Thu nhập ròng dự kiến 750 nghìn. Tỷ suất vốn hóa từ 5% lên 6% trong khi thu nhập giữ nguyên. Giá đổi ra sao?|Expected NOI is 750 thousand. Cap rate rises from 5% to 6% with unchanged income. Effect?','Giảm từ 15 triệu xuống 12,5 triệu. Giá nhạy với cả thu nhập lẫn tỷ suất vốn hóa.|Value falls from 15 million to 12.5 million. Both income and capitalization rates drive price.','V=frac(NOI;c)','V giá trị tài sản, NOI thu nhập ròng năm tới, c tỷ suất vốn hóa|V property value, NOI next-year net operating income, c capitalization rate'],
+['II','Đánh giá quản lý chủ động|Active management','Đánh giá lợi suất vượt chỉ số cùng mức rủi ro sai lệch chỉ số. Chọn chỉ số phù hợp phong cách trước khi đo kỹ năng. Dùng cùng tần suất và cùng cơ sở phí.|Evaluate excess benchmark return relative to benchmark-relative risk. Choose a style-appropriate benchmark first and align frequency and fees.','Quỹ vượt chỉ số bình quân 2% năm, độ lệch chuẩn lợi suất chủ động 4% năm. Hiệu quả?|Average annual active return is 2% and annual tracking error 4%. Efficiency?','Tỷ số thông tin 0,5. So với quỹ cùng chỉ số, tỷ số cao hơn thể hiện nhiều lợi suất vượt trội hơn trên mỗi đơn vị rủi ro chủ động.|Information ratio is 0.5. Against the same benchmark a higher ratio indicates more active return per unit of active risk.','IR=frac(A;TE)','IR tỷ số thông tin, A lợi suất chủ động bình quân, TE độ lệch chuẩn lợi suất chủ động|IR information ratio, A mean active return, TE tracking error'],
+['III','Đạo đức khi phân bổ lệnh|Fair allocation','Lập quy tắc phân bổ trước giao dịch. Nếu khớp một phần, phân bổ công bằng theo chính sách và ghi nhận ngoại lệ. Quyền lợi khách hàng có thứ tự ưu tiên cao hơn lợi ích cá nhân.|Establish allocation rules before trading. Allocate partial fills fairly under policy and document exceptions. Client interests take priority over personal interests.','Hai tài khoản tương đương đặt 600 và 400, chỉ khớp 500. Theo chính sách tỷ lệ, phân bổ thế nào?|Comparable accounts request 600 and 400 shares. Only 500 fill. Allocate under a pro rata policy.','300 và 200. Ghi nhận cơ sở và tránh chuyển phần có lợi cho tài khoản trả phí cao hơn.|300 and 200. Document the basis and avoid favoring the higher-fee account.'],
+['III','Phân bổ tài sản chiến lược|Strategic allocation','Lập giả định lợi suất, biến động và tương quan dài hạn. Kiểm tra danh mục trong kịch bản xấu, sau đó ấn định tỷ trọng và biên tái cân bằng phù hợp chi phí giao dịch.|Form long-run return, volatility and correlation assumptions. Stress test the allocation, then set targets and rebalancing bands consistent with trading costs.','Danh mục 10 triệu, cổ phiếu hiện 68%, mục tiêu 60%, biên trên 65%. Nếu quay về mục tiêu thì giao dịch bao nhiêu?|A 10 million portfolio has 68% equity versus a 60% target and 65% upper band. Trade to target?','Bán 0,8 triệu cổ phiếu, chuyển sang tài sản thiếu tỷ trọng. Xem xét thuế và thanh khoản khi thực hiện.|Sell 0.8 million of equities and fund underweight assets. Consider taxes and liquidity on execution.'],
+['III','Xây dựng danh mục theo nghĩa vụ|Liability-aware portfolios','Đánh giá khả năng chi trả bằng lịch dòng tiền, giá trị hiện tại và độ nhạy lãi suất của cả hai phía bảng cân đối. Đối sánh duration cần tái cân bằng khi thời gian trôi qua.|Assess solvency using cash schedules, present values and rate sensitivities of assets and liabilities. Duration matching requires rebalancing over time.','Quỹ hưu trí có tài sản và nghĩa vụ cùng hiện giá 100 triệu. Duration lần lượt 6 và 10. Khi lãi giảm 1 điểm %, phía nào tăng nhiều hơn?|Assets and liabilities each have PV of 100 million and duration of 6 and 10. Which rises more on a one-point rate fall?','Nghĩa vụ tăng khoảng 10 triệu, tài sản tăng 6 triệu. Thặng dư giảm khoảng 4 triệu theo xấp xỉ bậc nhất cho dịch chuyển song song.|Liabilities rise about 10 million versus 6 million for assets. Surplus falls about 4 million under a first-order parallel shift.'],
+['III','Phòng hộ rủi ro thị trường|Hedging market risk','Hợp đồng tương lai chỉ số cho phép đổi beta mà không thanh lý cổ phiếu. Ước tính giá trị danh nghĩa mỗi hợp đồng, chọn hướng giao dịch rồi kiểm tra sai lệch cơ sở và nhu cầu ký quỹ.|Index futures change market beta without liquidating stocks. Estimate contract notional, determine direction and monitor basis and margin needs.','Danh mục 20 triệu, beta 1,2. Muốn giảm về 0,8. Mỗi hợp đồng có giá trị 200 nghìn, beta 1. Giao dịch?|A 20 million portfolio has beta 1.2. Target 0.8 with beta-one futures worth 200 thousand each. Trade?','Bán 40 hợp đồng. Giảm 8 triệu giá trị tiếp xúc thị trường và theo dõi sai lệch giữa danh mục với chỉ số.|Sell 40 contracts. Remove 8 million of market exposure and monitor imperfect index tracking.','N=frac((βₜ−βₚ)V;F)','N số hợp đồng có dấu, βₜ beta mục tiêu, βₚ beta hiện tại, V giá trị danh mục, F giá trị danh nghĩa hợp đồng beta 1|N signed contracts, βₜ target beta, βₚ current beta, V portfolio value, F beta-one contract notional'],
+['III','Đo lường và quy kết hiệu quả|Performance attribution','Tách hiệu ứng phân bổ ngành và chọn chứng khoán. Dùng lợi suất ngành của chỉ số để cô lập quyết định tăng hoặc giảm tỷ trọng. Kiểm tra tính nhất quán của kỳ đo và số liệu tổng.|Separate sector allocation from security selection. Use benchmark sector returns to isolate overweight decisions. Reconcile components to the total over a consistent measurement period.','Tỷ trọng ngành ở quỹ là 30%, chỉ số 20%. Ngành đạt 12%, toàn chỉ số 8%. Đóng góp phân bổ Brinson–Fachler?|Fund sector weight is 30%, benchmark 20%. Sector benchmark earns 12%, total benchmark earns 8%. Brinson–Fachler allocation contribution?','Dương 0,4 điểm phần trăm. Quỹ tăng tỷ trọng một ngành vượt chỉ số chung.|Positive 0.4 percentage points. The fund overweighted an outperforming sector.','A=(wₚ−wᵦ)(Rₛ−Rᵦ)','A đóng góp phân bổ, wₚ,wᵦ tỷ trọng ngành của quỹ và chỉ số, Rₛ lợi suất ngành chuẩn, Rᵦ lợi suất chỉ số chung|A allocation contribution, wₚ,wᵦ fund and benchmark sector weights, Rₛ benchmark sector return, Rᵦ total benchmark return'],
+['III','Chuyên sâu quản lý danh mục|Portfolio Management pathway','Thiết kế nhiệm vụ chủ động hoặc thụ động, ngân sách rủi ro và kế hoạch thực hiện lệnh. So sánh giá thực hiện với giá quyết định, tính cả phí và phần cơ hội bị bỏ lỡ.|Set an active or passive mandate, risk budget and execution plan. Compare execution prices with the decision price, including fees and unfilled opportunity cost.','Quyết định mua 10.000 cổ phần giá 50, khớp toàn bộ giá 50,12, phí 100. Chi phí thực hiện?|Decide to buy 10,000 at 50, fill all at 50.12 and pay fees of 100. Implementation cost?','1.300, tức 26 điểm cơ bản trên giá trị quyết định 500.000. Với lệnh lớn, cân nhắc tác động thị trường so với rủi ro trì hoãn.|1,300 or 26 basis points on 500,000 decision value. Balance market impact against delay risk.'],
+['III','Chuyên sâu thị trường tư nhân|Private Markets pathway','Theo dõi vốn cam kết, vốn đã gọi, phân phối và giá trị còn lại. So sánh quỹ cùng năm thành lập. Định giá chưa thoái vốn mang tính ước lượng và thời điểm dòng tiền ảnh hưởng IRR.|Track commitments, paid-in capital, distributions and remaining value. Compare funds of similar vintage. Unrealized marks are estimates and timing affects IRR.','Quỹ gọi 8 triệu, trả 3 triệu, danh mục còn lại định giá 9 triệu. Nhà đầu tư đã thu lại bao nhiêu và tổng bội số bao nhiêu?|A fund calls 8 million, distributes 3 million and marks remaining assets at 9 million. Cash recovered and total multiple?','Đã nhận tiền 3 triệu, tương ứng 0,375 lần vốn góp. Tổng giá trị 12 triệu hay 1,5 lần, trong đó phần lớn chưa hiện thực hóa.|Cash recovered is 3 million or 0.375 times paid-in capital. Total value is 12 million or 1.5 times, mostly unrealized.','TVPI=frac(D+RV;PIC)','TVPI bội số tổng giá trị, D tiền đã phân phối, RV giá trị còn lại, PIC vốn đã góp|TVPI total value multiple, D distributions, RV residual value, PIC paid-in capital'],
+['III','Chuyên sâu tài sản cá nhân|Private Wealth pathway','Viết chính sách đầu tư theo mục tiêu, nghĩa vụ thuế, thanh khoản và mức chấp nhận rủi ro. Tách nhu cầu gần hạn khỏi tài sản dùng cho mục tiêu liên thế hệ. Kiểm tra kịch bản chi tiêu khi thị trường giảm.|Write an investment policy around goals, tax, liquidity and risk tolerance. Separate near-term spending from intergenerational assets. Stress test withdrawals during market declines.','Gia đình có 12 triệu, cần trả học phí 1 triệu sau sáu tháng và muốn đầu tư phần còn lại dài hạn. Phân bổ bước đầu?|A family has 12 million, owes tuition of 1 million in six months and invests the rest long term. First allocation decision?','Dành 1 triệu cho công cụ thanh khoản cao cùng loại tiền và phù hợp kỳ hạn thanh toán. Lập chính sách cho 11 triệu còn lại theo mục tiêu, thuế và khả năng chịu lỗ.|Reserve 1 million in liquid assets matching currency and payment date. Set policy for the other 11 million around goals, taxation and loss capacity.']
+];
 
-    // Boot Application
-    window.addEventListener('DOMContentLoaded', () => {
-      loadState();
-      studyLevel=stages[appState.courseLevel]?appState.courseLevel:"I";
-      setLevel("LEVEL "+studyLevel);
-      document.getElementById('notes-editor').value = appState.notes;
-      setLanguage(appState.lang);
-      function openLinkedTab(){
-        const route=location.hash.slice(1);
-        const tabs={quiz:'quiz',flashcards:'flashcards',notes:'notes',saved:'bookmarked',formulas:'formulas',home:'library'};
-        if(Object.hasOwn(tabs,route))switchTab(tabs[route]);
-      }
-      openLinkedTab();
-      window.addEventListener('hashchange',openLinkedTab);
-      window.lucide?.createIcons();
+curriculum.push(
+['I','Ghép lãi qua nhiều kỳ|Compounding across periods','Từng kỳ áp dụng lợi suất lên số dư mới. Bình quân cộng mô tả một kỳ điển hình, còn mức tăng trưởng kép đo trải nghiệm của số vốn đầu tư xuyên suốt.|Apply each return to the updated balance. The arithmetic mean describes a typical period while compound growth measures the experience of continuously invested capital.','Đầu tư 100, tăng 25% rồi giảm 20%. Hãy giải thích cho khách hàng vì sao tài khoản không lãi dù lợi suất bình quân dương.|Invest 100, gain 25%, then lose 20%. Explain why a positive arithmetic mean produces no gain.','Số dư lần lượt là 125 và 100. Khoản giảm 20% tính trên cơ sở lớn hơn. Bình quân cộng là 2,5% nhưng tăng trưởng kép là 0%.|Balances are 125 and then 100. The loss applies to a larger base. The arithmetic mean is 2.5% while compound growth is zero.'],
+['I','Kiểm định giả thuyết|Hypothesis testing','Đặt giả thuyết và mức ý nghĩa trước khi xem dữ liệu. Giá trị p đo xác suất quan sát kết quả ít nhất cũng cực đoan như mẫu nếu giả thuyết không và giả định mô hình đúng.|Specify the null and significance level before inspecting data. The p-value measures the probability of a result at least as extreme under the null and model assumptions.','Kiểm định alpha bằng 0 cho p bằng 0,03, mức ý nghĩa 5%. Có thể kết luận nhà quản lý chắc chắn có kỹ năng không?|An alpha test gives p of 0.03 against a 5% significance level. Is manager skill certain?','Bác bỏ giả thuyết alpha bằng 0 ở mức 5%. Đánh giá thêm phí, số lần thử chiến lược và kết quả ngoài mẫu trước khi quyết định.|Reject zero alpha at 5%. Assess fees, the number of strategies tested and out-of-sample performance before acting.'],
+['I','Lạm phát và hàng tồn kho|Inflation and inventory','Khi giá mua tăng, phương pháp dòng chi phí quyết định giá vốn nào được chuyển vào kết quả kinh doanh. Đọc chính sách kế toán trước khi so biên lợi nhuận giữa hai doanh nghiệp.|When purchase prices rise, the cost-flow method determines which costs reach earnings. Check accounting policy before comparing margins across issuers.','Mua hai đơn vị lần lượt giá 10 và 14, bán một đơn vị giá 20. So sánh FIFO và bình quân.|Buy one unit at 10 and another at 14, then sell one for 20. Compare FIFO and weighted average.','FIFO ghi giá vốn 10, lãi gộp 10, tồn kho 14. Bình quân ghi giá vốn 12, lãi gộp 8, tồn kho 12. Tiền thu từ khách giống nhau.|FIFO records cost 10, profit 10 and inventory 14. Average cost gives cost 12, profit 8 and inventory 12. Customer cash proceeds are identical.'],
+['II','Dự báo dòng tiền tự do|Forecasting free cash flow','Bắt đầu bằng lợi nhuận hoạt động sau thuế. Cộng lại khấu hao, trừ đầu tư tài sản cố định và phần vốn lưu động tăng thêm. Khoản phải thu tăng có thể khiến tiền tạo ra thấp hơn lợi nhuận.|Start with after-tax operating profit. Add depreciation, subtract capital spending and incremental operating working capital. Growing receivables can make cash generation lag earnings.','EBIT 100, thuế 25%, khấu hao 12, đầu tư tài sản 20, vốn lưu động tăng 7. Dòng tiền cho mọi nhà cung cấp vốn?|EBIT is 100, tax 25%, depreciation 12, capex 20 and operating working capital rises 7. Cash available to capital providers?','Lợi nhuận hoạt động sau thuế 75. Cộng 12 rồi trừ 20 và 7, còn 60. Chiết khấu bằng WACC khi rủi ro và cơ cấu vốn phù hợp.|After-tax operating profit is 75. Add 12 and deduct 20 and 7 to reach 60. Discount at WACC consistent with risk and financing.','FCFF=EBIT(1−T)+D−I−ΔW','FCFF dòng tiền tự do doanh nghiệp, EBIT lợi nhuận trước lãi và thuế, T thuế suất, D khấu hao, I đầu tư tài sản, ΔW mức tăng vốn lưu động hoạt động|FCFF free cash flow to firm, EBIT operating profit, T tax rate, D depreciation, I capital spending, ΔW increase in operating working capital'],
+['II','Rủi ro tín dụng|Credit losses','Tách tần suất vỡ nợ khỏi mức thiệt hại khi vỡ nợ. Giá trị thu hồi phụ thuộc thứ tự ưu tiên và tài sản bảo đảm. Khi kinh tế suy yếu, xác suất vỡ nợ và tổn thất có thể cùng tăng.|Separate default frequency from severity. Recoveries depend on seniority and collateral. In a downturn default probability and loss severity may rise together.','Khoản vay 2 triệu, xác suất vỡ nợ năm tới 3%, dự kiến thu hồi 40% nếu vỡ nợ. Tổn thất kỳ vọng?|A 2 million loan has a one-year default probability of 3% and conditional recovery of 40%. Expected loss?','36.000. Khi vỡ nợ mất 1,2 triệu. Nhân với xác suất 3% để lấy bình quân theo kịch bản.|36,000. Loss conditional on default is 1.2 million. Weight by the 3% default probability.','EL=PD·LGD·EAD','EL tổn thất kỳ vọng, PD xác suất vỡ nợ, LGD tỷ lệ mất khi vỡ nợ, EAD dư nợ tại thời điểm vỡ nợ|EL expected loss, PD default probability, LGD loss fraction upon default, EAD exposure at default'],
+['III','Kế hoạch rút tiền và thanh khoản|Withdrawal and liquidity planning','Lập lịch chi tiêu bắt buộc, dòng tiền chắc chắn và ngày tài sản có thể chuyển thành tiền. Kiểm thử đồng thời cú sốc giá, trì hoãn phân phối và yêu cầu góp vốn bổ sung.|Map mandatory spending, reliable inflows and asset redemption dates. Stress simultaneous price declines, delayed distributions and capital calls.','Quỹ có tiền mặt 4 triệu, chi 3 triệu và có thể phải góp thêm 2 triệu trong quý. Phân phối kỳ vọng 2 triệu có thể bị hoãn. Cần làm gì?|A fund has 4 million cash, 3 million committed spending and possible calls of 2 million this quarter. Expected distributions of 2 million might be delayed. Action?','Trong kịch bản trì hoãn, thiếu 1 triệu. Bố trí trước thanh khoản đủ cho khoảng thiếu và xác định tài sản bán được trong thời hạn, sau chi phí.|Under delayed distributions the shortfall is 1 million. Arrange liquidity in advance and identify assets that can settle in time after costs.']
+);
+curriculum.push(
+['I','Bài tổng kết · Lập danh mục đầu tiên|Capstone · Build a first portfolio','Lập bảng nhu cầu tiền mặt trước khi mua tài sản rủi ro. Ghép kỳ hạn tài sản an toàn với nghĩa vụ, rồi tính lợi suất của phần vốn còn lại trong hai kịch bản.|Map cash needs before taking risk. Match a safe asset to the liability date, then calculate the risky sleeve in two scenarios.','Bạn có 120 triệu, cần 21 triệu sau một năm. Khoản tiền gửi một năm sinh lời chắc chắn 5%. Phần vốn còn lại đầu tư 60% cổ phiếu và 40% trái phiếu. Tính số tiền cuối năm sau khi trả nghĩa vụ nếu cổ phiếu tăng 10% hoặc giảm 20%, trái phiếu tăng 3% ở cả hai kịch bản.|You have 120 and owe 21 in one year. A one-year deposit yields a certain 5%. Invest the remainder 60% in stocks and 40% in bonds. Find ending wealth after payment if stocks gain 10% or lose 20% and bonds earn 3% in both scenarios.','Dành 20 cho tiền gửi để có đúng 21 khi cần. Chia 100 còn lại thành 60 và 40. Kịch bản tốt còn 107,2; kịch bản xấu còn 89,2. Khoản phải trả đã được bảo đảm ở cả hai kịch bản, giả sử cùng đồng tiền và không có phí hay thuế.|Reserve 20 to deliver 21. Split the remaining 100 into 60 and 40. Ending wealth after payment is 107.2 or 89.2. The liability is covered in either scenario assuming matching currencies and no fees or tax.'],
+['II','Bài tổng kết · Định giá và phản biện|Capstone · Value and challenge a business','Dự báo tiền hoạt động, chọn suất chiết khấu tương ứng rồi chuyển giá trị doanh nghiệp thành giá trị vốn chủ. Viết một giả định có thể làm thay đổi kết luận.|Forecast operating cash, match the discount rate and bridge enterprise value to equity. Identify an assumption that could reverse the decision.','FCFF năm tới là 6 triệu, tăng trưởng dài hạn 2%, WACC 8%, nợ ròng 30 triệu, 10 triệu cổ phần. Giá thị trường 6,50. Tính giá trị mỗi cổ phần rồi thử lại với WACC 9%.|Next-year FCFF is 6 million, perpetual growth 2%, WACC 8%, net debt 30 million and 10 million shares outstanding. Market price is 6.50. Value each share and repeat at 9% WACC.','Ở 8%, giá trị hoạt động là 100 triệu, vốn chủ 70 triệu và mỗi cổ phần 7. Ở 9%, giá trị hoạt động còn 85,71 triệu và mỗi cổ phần khoảng 5,57. Giá thị trường nằm giữa hai ước tính. Kiểm tra độ bền của dòng tiền và suất chiết khấu trước khi kết luận.|At 8%, enterprise value is 100 million, equity is 70 million and each share is worth 7. At 9%, enterprise value is 85.71 million and each share about 5.57. Market price lies between the estimates. Test cash-flow durability and discount-rate assumptions.','EV=frac(FCFF₁;WACC−g)','EV giá trị hoạt động, FCFF₁ dòng tiền tự do doanh nghiệp năm tới, WACC chi phí vốn bình quân, g tăng trưởng vĩnh viễn thấp hơn WACC|EV operating enterprise value, FCFF₁ next-year free cash flow to firm, WACC weighted average cost of capital, g perpetual growth below WACC'],
+['III','Bài tổng kết · Bản ghi nhớ cho ủy ban đầu tư|Capstone · Investment committee memo','Trình bày quyết định, số liệu hỗ trợ, rủi ro còn lại và điều kiện xem xét lại. Xử lý ràng buộc thanh khoản trước khi đề xuất giao dịch phòng hộ.|State a decision, supporting figures, residual risks and review triggers. Address liquidity before proposing a hedge.','Quỹ có 50 triệu tài sản, gồm danh mục cổ phiếu 30 triệu beta 1 và 4 triệu tiền mặt. Trong quý phải trả 6 triệu, không có dòng tiền vào. Hãy bảo đảm thanh khoản từ phần tài sản khác rồi giảm beta của riêng phần cổ phiếu về 0,8 bằng hợp đồng danh nghĩa 150.000, beta 1.|A 50 million fund has 30 million in beta-one equities and 4 million cash. It owes 6 million this quarter with no inflows. Secure the shortfall from other assets, then reduce the equity sleeve beta to 0.8 with beta-one contracts of 150,000 each.','Thu xếp ít nhất 2 triệu từ tài sản thanh khoản khác trước hạn và dự phòng riêng cho ký quỹ. Bán 40 hợp đồng để giảm 6 triệu giá trị tiếp xúc. Theo dõi sai lệch cơ sở, biến động beta, tiền ký quỹ và tái đánh giá khi nghĩa vụ hoặc quy mô cổ phiếu đổi.|Raise at least 2 million from other liquid assets before settlement and budget separately for margin. Sell 40 contracts to remove 6 million of exposure. Monitor basis, beta drift and margin, and revisit when obligations or sleeve value change.']
+);
+
+let studyLevel = 'I';
+const translated = value => value.split('|')[appState.lang === 'en' ? 1 : 0];
+function equation(source) {
+  const token = value => '<mrow>' + (value.match(/[A-Za-zΑ-ω₀-₉ᵈᶠᴅᴇₚₜᵦₛ]+|[0-9]+|./gu) || []).map(s =>
+    /^[0-9]+$/.test(s) ? '<mn>'+s+'</mn>' : /[=+−()]/.test(s) ? '<mo>'+s+'</mo>' : '<mi>'+s+'</mi>').join('') + '</mrow>';
+  const fraction = source.match(/^(.*?)frac\((.+);(.+)\)(.*)$/);
+  return '<math display="block">'+(fraction ? token(fraction[1])+'<mfrac>'+token(fraction[2])+token(fraction[3])+'</mfrac>'+token(fraction[4]) : token(source))+'</math>';
+}
+function lessonBody(row, formulasOnly) {
+  const [,title,concept,question,answer,formula,symbols] = row;
+  return '<details class="academy-unit"><summary>'+translated(title)+'</summary><p>'+translated(concept)+'</p>'+
+    (formula ? '<div class="academy-equation">'+equation(formula)+'</div><p>'+translated(symbols)+'</p>' : '')+
+    '<h4>'+translated('Tình huống ứng dụng|Application case')+'</h4><p>'+translated(question)+'</p><details class="academy-answer" '+(formulasOnly?'open':'')+'><summary>'+translated('Xem lời giải|Show worked solution')+'</summary><p>'+translated(answer)+'</p></details></details>';
+}
+const stages = {
+ I:[
+  ['Đọc số liệu và đánh giá bằng chứng|Read data and evaluate evidence','Tính hiện giá, lợi suất nhiều kỳ và diễn giải một kết quả kiểm định.|Calculate present value, compound returns and interpret a hypothesis test.',[1,2,11,12,3]],
+  ['Đọc doanh nghiệp|Understand a business','Đối chiếu lợi nhuận với tiền mặt rồi quyết định có đầu tư thêm vốn hay không.|Reconcile profit to cash and decide whether a project earns its cost of capital.',[4,13,5]],
+  ['Từ công cụ đến danh mục|From securities to a portfolio','So sánh nguồn lợi suất, rủi ro và thanh khoản trước khi phối hợp các tài sản. Kết thúc bằng một quyết định đạo đức.|Compare return drivers, risk and liquidity before combining assets. Finish with an ethical decision.',[6,7,8,9,10,0,14]]
+ ],
+ II:[
+  ['Kiểm tra đầu vào|Validate inputs','Kiểm tra độ tin cậy của mô hình, tỷ giá và chất lượng lợi nhuận trước khi lập dự báo.|Check model reliability, currency assumptions and earnings quality before forecasting.',[1,2,3]],
+  ['Định giá từ dòng tiền|Value cash flows','Chọn dòng tiền, ghép đúng suất chiết khấu và thử lại định giá khi giả định thay đổi.|Select cash flows, match discount rates and revalue under changed assumptions.',[10,4,5,6,11,7,8]],
+  ['Viết kết luận phân tích|Defend an investment conclusion','So sánh kết quả với chỉ số chuẩn, ghi rõ giả định và xử lý xung đột lợi ích.|Benchmark results, state assumptions and address conflicts of interest.',[9,0,12]]
+ ],
+ III:[
+  ['Xác định nhiệm vụ đầu tư|Define the mandate','Ghi rõ mục tiêu, lịch chi trả và dự phòng thanh khoản trước khi đặt tỷ trọng.|Document objectives, payment dates and liquidity reserves before setting weights.',[1,2,8]],
+  ['Thực thi và đánh giá|Implement and evaluate','Tính quy mô phòng hộ, quy kết kết quả và bảo vệ quyết định phân bổ lệnh.|Size a hedge, attribute performance and defend a trade allocation.',[3,4,0]],
+  ['So sánh ba hướng chuyên sâu|Explore the three pathways','Học tình huống của cả ba hướng để so sánh. Khi ôn thi, tập trung sâu vào hướng bạn đăng ký.|Study all three cases for comparison. For exam preparation, concentrate on your selected pathway.',[5,6,7,9]]
+ ]
+};
+const lessonKey = row => row[0]+'|'+row[1].split('|')[1];
+const completed = () => new Set(appState.completedLessons || []);
+const practiceState = {};
+function renderCasePractice(mode) {
+  const cases=curriculum.filter(row=>row[0]===studyLevel);
+  const key=studyLevel+mode;
+  const session=practiceState[key] ??= {index:0,answers:[],revealed:false,marks:[]};
+  const area=document.getElementById('view-'+mode);
+  const quizMode=mode==='quiz';
+  const label=quizMode?'Luyện tình huống|Case practice':'Thẻ ghi nhớ|Flashcards';
+  const header='<div class="academy-head"><small>LEVEL '+studyLevel+'</small><h2>'+translated(label)+'</h2></div>';
+  if(session.index===cases.length){
+    const correct=session.marks.filter(Boolean).length;
+    const pct=Math.round(correct/cases.length*100);
+    const wrong=cases.filter((row,i)=>!session.marks[i]);
+    area.innerHTML=header+'<div class="case-result"><div><h3>'+translated('Tự đánh giá|Self-assessment')+'</h3><strong>'+correct+' / '+cases.length+'</strong><br><button>'+translated('Làm lại|Restart')+'</button></div><div class="case-ring" style="--arc:'+pct+'%"><b>'+pct+'%</b></div></div>'+
+      (wrong.length?'<section class="academy-unit"><h3>'+translated('Cần ôn lại|To review')+'</h3>'+wrong.map(r=>lessonBody(r,false)).join('')+'</section>':'');
+    area.querySelector('button').onclick=()=>{delete practiceState[key];renderCasePractice(mode)};
+    return;
+  }
+  const row=cases[session.index];
+  area.innerHTML=header+'<article class="academy-unit"><small>'+ (session.index+1)+' / '+cases.length+'</small><h3>'+translated(row[1])+'</h3><p>'+translated(row[3])+'</p>'+
+    (quizMode?'<textarea aria-label="'+translated('Câu trả lời|Your answer')+'" rows="3"></textarea>':'')+
+    (session.revealed?'<p>'+translated(row[4])+'</p><button data-mark="0">'+translated('Cần ôn lại|Review again')+'</button><button data-mark="1">'+translated('Đã hiểu|Understood')+'</button>':'<button data-reveal>'+translated('Đối chiếu lời giải|Check solution')+'</button>')+'</article>';
+  const field=area.querySelector('textarea');
+  if(field){field.value=session.answers[session.index]||'';field.oninput=()=>session.answers[session.index]=field.value;}
+  area.querySelector('[data-reveal]')?.addEventListener('click',()=>{session.revealed=true;renderCasePractice(mode)});
+  area.querySelectorAll('[data-mark]').forEach(btn=>btn.onclick=()=>{session.marks.push(btn.dataset.mark==='1');session.index++;session.revealed=false;renderCasePractice(mode)});
+}
+const byId=id=>document.getElementById(id);
+const appState=state;
+const saveState=saveAppState;
+let stageIndex=0;
+const levelRows=()=>curriculum.filter(row=>row[0]===studyLevel);
+const stageId=i=>studyLevel+'-'+i;
+function escapeText(value){const node=document.createElement('span');node.textContent=value;return node.innerHTML}
+function syncMasteryMetrics(){
+ const rows=levelRows(), n=rows.filter(row=>completed().has(lessonKey(row))).length;
+ const pct=Math.round(100*n/rows.length);
+ byId('overall-mastery-pct').textContent=pct+'%';
+ byId('overall-mastery-bar').style.width=pct+'%';
+ byId('overall-mastery-pct').nextElementSibling.textContent='('+n+'/'+rows.length+')';
+}
+function renderLibraryModules(){
+ const rows=levelRows(),done=completed();
+ byId('active-level-label').textContent='LVL '+studyLevel;
+ document.querySelector('[data-i18n="libraryHeading"]').textContent=translated('Sổ tay ôn tập CFA Level |CFA Level Study Notebook · ')+studyLevel;
+ const cards=stages[studyLevel].map(([name,goal,indices],i)=>{
+ const n=indices.filter(j=>done.has(lessonKey(rows[j]))).length;
+ const saved=state.bookmarkedModules.includes(stageId(i));
+ const match=[name,goal,...indices.map(j=>rows[j][1])].join(' ').toLowerCase().includes(currentSearch);
+ if(!match || currentFilter==='completed'&&n!==indices.length || currentFilter==='studying'&&(!n||n===indices.length) || currentFilter==='bookmarked'&&!saved)return '';
+ return '<article class="restrained-card p-5 rounded-lg border border-base-border bg-white"><div class="flex justify-between gap-3"><button class="text-left flex-1" onclick="openStage('+i+')"><small class="font-mono text-ink-muted">LEVEL '+studyLevel+' · '+translated('CHẶNG|STAGE')+' '+(i+1)+'</small><h2 class="font-semibold mt-2">'+translated(name)+'</h2><p class="mt-1 text-sm text-ink-secondary">'+translated(goal)+'</p></button><button aria-label="'+translated('Đánh dấu|Bookmark')+'" aria-pressed="'+saved+'" onclick="toggleModuleBookmark(stageId('+i+'))">'+(saved?'★':'☆')+'</button></div><div class="mt-4 flex justify-between items-center"><small>'+n+'/'+indices.length+' '+translated('bài đã học|lessons completed')+'</small><button class="action" onclick="openStage('+i+')">'+translated('Mở học phần|Open module')+' →</button></div></article>';
+ });
+ byId('modules-list-container').innerHTML=cards.join('')||translated('Không có học phần phù hợp.|No matching modules.');
+ syncMasteryMetrics();
+}
+function openStage(i){
+ stageIndex=i;const rows=levelRows(),[name,,indices]=stages[studyLevel][i];
+ byId('drawer-module-code').textContent='CFA · LEVEL '+studyLevel;
+ byId('drawer-module-title').textContent=translated(name);
+ byId('drawer-los-counter').textContent=indices.filter(j=>completed().has(lessonKey(rows[j]))).length+'/'+indices.length;
+ byId('drawer-los-list').innerHTML=indices.map(j=>lessonBody(rows[j],false).replace(/<\/details>$/,'<button class="action" data-id="'+j+'">'+translated(completed().has(lessonKey(rows[j]))?'✓ Đã học|✓ Completed':'Đánh dấu đã học|Mark complete')+'</button></details>')).join('');
+ byId('drawer-los-list').querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>{
+ const done=completed(),key=lessonKey(rows[Number(b.dataset.id)]); done.has(key)?done.delete(key):done.add(key);
+ state.completedLessons=[...done];saveState();renderLibraryModules();openStage(i);byId('drawer-los-list').querySelector('[data-id="'+b.dataset.id+'"]').closest('.academy-unit').open=true;
+ });
+ byId('los-drawer-backdrop').classList.remove('hidden');byId('los-drawer').classList.remove('translate-x-full');
+}
+function renderFormulaList(){
+ byId('view-formulas').innerHTML='<h2 class="text-xl font-semibold">'+translated('Sổ tay công thức|Formula notebook')+'</h2>'+levelRows().filter(r=>r[5]).map(r=>lessonBody(r,true)).join('');
+}
+function renderQuizView(){renderCasePractice('quiz')}
+function renderFlashcardView(){
+ const rows=levelRows();cardIdx%=rows.length;const row=rows[cardIdx];
+ byId('fc-counter-pill').textContent=(cardIdx+1)+' / '+rows.length;
+ byId('fc-front-meta').textContent='CFA · LEVEL '+studyLevel;
+ byId('fc-front-title').textContent=translated(row[3]);
+ byId('fc-back-definition').textContent=translated(row[4]);
+ byId('fc-back-note').textContent=translated(row[1]);
+ byId('fc-status-tag').textContent=state.masteredCards.includes(lessonKey(row))?translated('✓ Đã thuộc|✓ Known'):'';
+ byId('flashcard-inner').classList.remove('is-flipped');
+}
+function toggleCardMastered(){
+ const key=lessonKey(levelRows()[cardIdx]),known=new Set(state.masteredCards);
+ known.has(key)?known.delete(key):known.add(key);state.masteredCards=[...known];saveState();renderFlashcardView();
+}
+function refreshWorkspace(){
+ document.documentElement.lang=state.lang;
+ document.querySelectorAll('.lvl-pill').forEach(b=>b.classList.toggle('selected',b.textContent.trim()==='LVL '+studyLevel));
+ renderLibraryModules();renderFormulaList();
+ for(const tab of ['quiz','flashcards'])if(!byId('view-'+tab).classList.contains('hidden'))(tab==='quiz'?renderQuizView:renderFlashcardView)();
+}
+function setLevel(value){studyLevel=value.split(' ').pop();state.level='LVL '+studyLevel;saveState();closeLosDrawer();refreshWorkspace()}
+
+    const originalDocument='<!DOCTYPE html>'+document.documentElement.outerHTML;
+    window.addEventListener('DOMContentLoaded',()=>{
+      loadAppState();studyLevel=state.level.split(' ').pop();if(!stages[studyLevel])studyLevel='I';
+      setLanguage(state.lang);refreshWorkspace();
+      const route=()=>{let key=location.hash.slice(1);if(key.startsWith('learn/')||key==='settings'){location.replace('notebook.html'+location.hash);return}
+        if(key==='saved'){switchTab('library');setLibraryFilter('bookmarked')}else switchTab(['quiz','flashcards','notes','formulas'].includes(key)?key:'library')};
+      route();window.addEventListener('hashchange',route);window.lucide?.createIcons()
     });
-  </script>
-<script src="academy-data.js?v=38.1"></script><script src="academy.js?v=38.1"></script><script src="canva-layout.js"></script></body>
-</html>
+    document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();byId('global-search-input').focus()}if(e.key==='Escape')closeLosDrawer()});
+  </script></body></html>
