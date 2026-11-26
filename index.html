@@ -101,6 +101,8 @@
 <style>
 .lvl-pill.selected,.action,.academy-unit button,.case-result button{background:#18181b;color:white;border-radius:5px;padding:7px 12px;font-size:13px}.lvl-pill.selected{padding:2px 8px}
 .academy-unit,.case-result,.academy-head{border:1px solid #e4e4e7;border-radius:8px;padding:20px;background:white}.academy-unit summary{cursor:pointer;font-weight:600}.academy-unit p,.academy-unit h4,.academy-unit textarea,.academy-unit button,.academy-answer{margin-top:14px}.academy-unit p{font-size:14px;line-height:1.7;color:#52525b}.academy-unit h3,.academy-head h2{font-size:21px;font-weight:600}.academy-unit small,.academy-head small{font:12px monospace;color:#71717a}.academy-equation{overflow:auto;padding:16px;margin-top:16px;background:#f7f7f8;font-size:1.35rem}.academy-unit textarea{width:100%;border:1px solid #d4d4d8;padding:10px;border-radius:6px}.academy-unit button+button{margin-left:8px}.case-result{display:flex;justify-content:space-between;align-items:center}.case-ring,.case-ring b{display:grid;place-items:center;border-radius:50%;aspect-ratio:1}.case-ring{width:110px;background:conic-gradient(#18181b var(--arc),#e4e4e7 0)}.case-ring b{width:78%;background:white}.case-result strong{font:32px monospace}.academy-unit>.academy-unit{margin-top:10px}
+</style><style>
+.quiz-switch{display:inline-flex;gap:3px;background:#f7f7f8;border:1px solid #e4e4e7;padding:3px;border-radius:7px}.quiz-switch button{padding:7px 13px;border-radius:4px;font-size:13px}.quiz-switch [aria-pressed=true]{background:#18181b;color:white}.lesson-picker{display:grid;gap:6px;margin-top:15px;font-size:13px}.lesson-picker select,.lesson-question fieldset label{border:1px solid #d4d4d8;background:white;border-radius:6px;padding:10px}.lesson-question fieldset{margin-top:16px;display:grid;gap:7px}.lesson-question legend{font-size:13px;margin-bottom:8px}.lesson-question fieldset label{display:flex;align-items:center;gap:10px;cursor:pointer}.lesson-question input{accent-color:#18181b}.lesson-question button:disabled{opacity:.45}.lesson-feedback{margin-top:16px;padding:16px;border:1px solid #e4e4e7;border-radius:6px;background:#f7f7f8}
 </style></head>
 <body class="bg-base-white text-ink-primary font-sans min-h-screen flex flex-col">
 
@@ -1288,7 +1290,7 @@ function renderCasePractice(mode) {
   const cases=curriculum.filter(row=>row[0]===studyLevel);
   const key=studyLevel+mode;
   const session=practiceState[key] ??= {index:0,answers:[],revealed:false,marks:[]};
-  const area=document.getElementById('view-'+mode);
+  const area=document.getElementById(mode==='quiz'?'quiz-body':'view-'+mode);
   const quizMode=mode==='quiz';
   const label=quizMode?'Luyện tình huống|Case practice':'Thẻ ghi nhớ|Flashcards';
   const header='<div class="academy-head"><small>LEVEL '+studyLevel+'</small><h2>'+translated(label)+'</h2></div>';
@@ -1353,7 +1355,259 @@ function openStage(i){
 function renderFormulaList(){
  byId('view-formulas').innerHTML='<h2 class="text-xl font-semibold">'+translated('Sổ tay công thức|Formula notebook')+'</h2>'+levelRows().filter(r=>r[5]).map(r=>lessonBody(r,true)).join('');
 }
-function renderQuizView(){renderCasePractice('quiz')}
+const lessonOptions={
+  "Professional ethics": [
+    "Chờ công bố rộng rãi|Wait for public disclosure",
+    "Bán ngay|Sell immediately",
+    "Chỉ báo khách hàng lớn|Tell only major clients"
+  ],
+  "Time value of money": [
+    "100",
+    "110",
+    "121"
+  ],
+  "Returns and probability": [
+    "10%",
+    "6%",
+    "4%"
+  ],
+  "Economics and purchasing power": [
+    "2.86%",
+    "3.00%",
+    "13.00%"
+  ],
+  "Reading financial statements": [
+    "Lãi gộp 40, tiền thu 0|Gross profit 40, cash collected 0",
+    "Lãi gộp 40, tiền thu 100|Gross profit 40, cash collected 100",
+    "Lãi gộp 100, tiền thu 0|Gross profit 100, cash collected 0"
+  ],
+  "Capital budgeting": [
+    "Mua, NPV = 10|Buy, NPV = 10",
+    "Mua, NPV = 20|Buy, NPV = 20",
+    "Từ chối, NPV = −10|Reject, NPV = −10"
+  ],
+  "Equities and indices": [
+    "4%",
+    "2.5%",
+    "5%"
+  ],
+  "Bonds and yields": [
+    "99.05",
+    "100",
+    "104"
+  ],
+  "Derivative contracts": [
+    "8",
+    "12",
+    "16"
+  ],
+  "Alternative assets": [
+    "6%",
+    "0.6%",
+    "16.67%"
+  ],
+  "Portfolio construction": [
+    "5.2%",
+    "6.8%",
+    "4%"
+  ],
+  "Research independence": [
+    "Chuyển sang phí cố định|Agree a fixed fee",
+    "Chỉ cần công bố phí|Disclosure alone is enough",
+    "Chờ đến sau báo cáo mới thỏa thuận phí|Set the fee after publication"
+  ],
+  "Regression and inference": [
+    "Bác bỏ, t = 3|Reject, t = 3",
+    "Không bác bỏ, t = 0.33|Do not reject, t = 0.33",
+    "Bác bỏ, suy ra quan hệ nhân quả|Reject and infer causation"
+  ],
+  "Currency parity": [
+    "1.2353",
+    "1.1657",
+    "1.2000"
+  ],
+  "Earnings quality": [
+    "Kiểm tra tuổi nợ và thu tiền sau kỳ|Check aging and subsequent collections",
+    "Kết luận gian lận ngay|Immediately conclude fraud",
+    "Chỉ xem tăng trưởng doanh thu|Use only sales growth"
+  ],
+  "Cost of capital": [
+    "7.6%",
+    "8.0%",
+    "6.4%"
+  ],
+  "Equity valuation": [
+    "50 → 42.86",
+    "50 → 55.56",
+    "50 → 50"
+  ],
+  "Term structure": [
+    "100.05",
+    "100.00",
+    "104.81"
+  ],
+  "Forward valuation": [
+    "+5.71",
+    "+6.00",
+    "−5.71"
+  ],
+  "Property valuation": [
+    "15 → 12.5",
+    "12.5 → 15",
+    "15 → 18"
+  ],
+  "Active management": [
+    "0.5",
+    "2",
+    "0.08"
+  ],
+  "Fair allocation": [
+    "300 / 200",
+    "250 / 250",
+    "400 / 100"
+  ],
+  "Strategic allocation": [
+    "Bán 0,8 triệu cổ phiếu|Sell 0.8 million in equities",
+    "Bán 0,3 triệu cổ phiếu|Sell 0.3 million in equities",
+    "Mua 0,8 triệu cổ phiếu|Buy 0.8 million in equities"
+  ],
+  "Liability-aware portfolios": [
+    "Nợ tăng nhiều hơn 4 triệu|Liabilities rise by 4 million more",
+    "Tài sản tăng nhiều hơn 4 triệu|Assets rise by 4 million more",
+    "Hai bên tăng bằng nhau|Both rise equally"
+  ],
+  "Hedging market risk": [
+    "Bán 40|Sell 40",
+    "Mua 40|Buy 40",
+    "Bán 80|Sell 80"
+  ],
+  "Performance attribution": [
+    "+0.4 pp",
+    "−0.4 pp",
+    "+1.2 pp"
+  ],
+  "Portfolio Management pathway": [
+    "1,300 (26 bp)",
+    "1,200 (24 bp)",
+    "100 (2 bp)"
+  ],
+  "Private Markets pathway": [
+    "3 / 1.5×",
+    "9 / 1.125×",
+    "3 / 0.375×"
+  ],
+  "Private Wealth pathway": [
+    "Dành 1 triệu thanh khoản cho học phí|Reserve 1 million in liquid assets for tuition",
+    "Đầu tư cả 12 triệu dài hạn|Invest all 12 million long term",
+    "Vay để đầu tư thêm 1 triệu|Borrow another million to invest"
+  ],
+  "Compounding across periods": [
+    "125 → 100",
+    "125 → 105",
+    "125 → 102.5"
+  ],
+  "Hypothesis testing": [
+    "Bác bỏ alpha bằng 0, cần thêm bằng chứng về kỹ năng|Reject zero alpha and seek more evidence of skill",
+    "Chắc chắn nhà quản lý có kỹ năng|Manager skill is certain",
+    "Không bác bỏ alpha bằng 0|Do not reject zero alpha"
+  ],
+  "Inflation and inventory": [
+    "Lãi gộp FIFO 10, bình quân 8|Gross profit under FIFO 10, average cost 8",
+    "Lãi gộp FIFO 8, bình quân 10|Gross profit under FIFO 8, average cost 10",
+    "Cả hai đều lãi gộp 8|Gross profit is 8 under both"
+  ],
+  "Forecasting free cash flow": [
+    "60",
+    "74",
+    "48"
+  ],
+  "Credit losses": [
+    "36,000",
+    "24,000",
+    "60,000"
+  ],
+  "Withdrawal and liquidity planning": [
+    "Chuẩn bị bù thiếu 1 triệu|Arrange for a 1 million shortfall",
+    "Chuẩn bị bù thiếu 3 triệu|Arrange for a 3 million shortfall",
+    "Tiền mặt đủ trong mọi kịch bản|Cash covers all scenarios"
+  ],
+  "Capstone · Build a first portfolio": [
+    "107.2 / 89.2",
+    "128.2 / 110.2",
+    "106.0 / 88.0"
+  ],
+  "Capstone · Value and challenge a business": [
+    "7.00 / 5.57",
+    "10.00 / 8.57",
+    "5.57 / 7.00"
+  ],
+  "Capstone · Investment committee memo": [
+    "Huy động 2 triệu, bán 40 hợp đồng|Raise 2 million and sell 40 contracts",
+    "Huy động 6 triệu, mua 40 hợp đồng|Raise 6 million and buy 40 contracts",
+    "Huy động 2 triệu, bán 20 hợp đồng|Raise 2 million and sell 20 contracts"
+  ]
+};
+let quizMode='level';
+const lessonReviews=new Map();
+const selectedLessons=new Map();
+function renderQuizView(){
+  const area=byId('view-quiz');
+  area.innerHTML='<div class="quiz-switch" role="group" aria-label="'+translated('Chế độ luyện tập|Practice mode')+'"></div><div id="quiz-body" class="space-y-4"></div>';
+  const group=area.firstElementChild;
+  for(const [mode,label] of [['lesson','Ôn theo bài|Lesson review'],['level','Luyện theo Level|Level practice']]){
+    const button=document.createElement('button');
+    button.textContent=translated(label);
+    button.setAttribute('aria-pressed',String(mode===quizMode));
+    button.onclick=()=>{quizMode=mode;renderQuizView()};
+    group.append(button);
+  }
+  if(quizMode==='level'){renderCasePractice('quiz');return}
+  const rows=levelRows();
+  const body=byId('quiz-body');
+  body.innerHTML='<div class="academy-head"><small>LEVEL '+studyLevel+'</small><h2>'+translated('Ôn theo bài|Lesson review')+'</h2><label class="lesson-picker">'+translated('Chọn bài học|Choose a lesson')+'<select></select></label></div>';
+  const select=body.querySelector('select');
+  select.add(new Option(translated('Chọn một bài để bắt đầu|Select a lesson to begin'),''));
+  for(const [name,,indices] of stages[studyLevel]){
+    const group=document.createElement('optgroup');
+    group.label=translated(name);
+    indices.forEach(i=>group.append(new Option(translated(rows[i][1]),i)));
+    select.append(group);
+  }
+  select.value=selectedLessons.get(studyLevel)??'';
+  select.onchange=()=>{selectedLessons.set(studyLevel,select.value);renderQuizView()};
+  if(select.value==='')return;
+  const row=rows[Number(select.value)],key=lessonKey(row);
+  const options=lessonOptions[row[1].split('|')[1]];
+  const attempt=lessonReviews.get(key)??{order:[0,1,2],answer:null,graded:false};
+  if(!lessonReviews.has(key)){
+    for(let i=2;i>0;i--){const j=Math.floor(Math.random()*(i+1));[attempt.order[i],attempt.order[j]]=[attempt.order[j],attempt.order[i]]}
+    lessonReviews.set(key,attempt);
+  }
+  const panel=document.createElement('article');
+  panel.className='academy-unit lesson-question';
+  panel.innerHTML='<h3>'+translated(row[1])+'</h3><p>'+translated(row[3])+'</p><fieldset><legend>'+translated('Chọn một đáp án|Choose one answer')+'</legend></fieldset>';
+  body.append(panel);
+  for(const index of attempt.order){
+    const label=document.createElement('label'),input=document.createElement('input');
+    input.type='radio';input.name='lesson-answer';input.checked=attempt.answer===index;input.disabled=attempt.graded;
+    input.onchange=()=>{attempt.answer=index;submit.disabled=false};
+    label.append(input,options[index].includes('|')?translated(options[index]):options[index]);
+    panel.querySelector('fieldset').append(label);
+  }
+  const submit=document.createElement('button');
+  submit.textContent=translated(attempt.graded?'Làm lại bài này|Retry lesson':'Kiểm tra đáp án|Check answer');
+  submit.disabled=attempt.answer===null;
+  submit.onclick=()=>{if(attempt.graded)lessonReviews.delete(key);else attempt.graded=true;renderQuizView()};
+  if(attempt.graded){
+    const result=document.createElement('div');
+    result.className='lesson-feedback';result.setAttribute('role','status');
+    const correct=options[0].includes('|')?translated(options[0]):options[0];
+    result.innerHTML='<strong>'+translated(attempt.answer===0?'Chính xác|Correct':'Cần ôn lại|To review')+'</strong><p>'+translated('Đáp án đúng|Correct answer')+' · '+correct+'</p><p>'+translated(row[4])+'</p>';
+    panel.append(result);
+  }
+  panel.append(submit);
+}
+
 function renderFlashcardView(){
  const rows=levelRows();cardIdx%=rows.length;const row=rows[cardIdx];
  byId('fc-counter-pill').textContent=(cardIdx+1)+' / '+rows.length;
