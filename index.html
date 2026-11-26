@@ -99,7 +99,8 @@
     }
   </style>
 <style>
-.lvl-pill.selected,.action,.academy-unit button,.case-result button{background:#18181b;color:white;border-radius:5px;padding:7px 12px;font-size:13px}.lvl-pill.selected{padding:2px 8px}
+.action,.academy-unit button,.case-result button{background:#18181b;color:white;border-radius:5px;padding:7px 12px;font-size:13px}.lvl-pill{padding:2px 8px;border:1px solid transparent;border-radius:4px;background:transparent;color:#71717a;font:500 11px/1.5 "JetBrains Mono",monospace;white-space:nowrap}
+.lvl-pill:hover{color:#18181b}.lvl-pill[aria-pressed="true"]{color:#fff;background:#18181b}
 .academy-unit,.case-result,.academy-head{border:1px solid #e4e4e7;border-radius:8px;padding:20px;background:white}.academy-unit summary{cursor:pointer;font-weight:600}.academy-unit p,.academy-unit h4,.academy-unit textarea,.academy-unit button,.academy-answer{margin-top:14px}.academy-unit p{font-size:14px;line-height:1.7;color:#52525b}.academy-unit h3,.academy-head h2{font-size:21px;font-weight:600}.academy-unit small,.academy-head small{font:12px monospace;color:#71717a}.academy-equation{overflow:auto;padding:16px;margin-top:16px;background:#f7f7f8;font-size:1.35rem}.academy-unit textarea{width:100%;border:1px solid #d4d4d8;padding:10px;border-radius:6px}.academy-unit button+button{margin-left:8px}.case-result{display:flex;justify-content:space-between;align-items:center}.case-ring,.case-ring b{display:grid;place-items:center;border-radius:50%;aspect-ratio:1}.case-ring{width:110px;background:conic-gradient(#18181b var(--arc),#e4e4e7 0)}.case-ring b{width:78%;background:white}.case-result strong{font:32px monospace}.academy-unit>.academy-unit{margin-top:10px}
 </style><style>
 .quiz-switch{display:inline-flex;gap:3px;background:#f7f7f8;border:1px solid #e4e4e7;padding:3px;border-radius:7px}.quiz-switch button{padding:7px 13px;border-radius:4px;font-size:13px}.quiz-switch [aria-pressed=true]{background:#18181b;color:white}.lesson-picker{display:grid;gap:6px;margin-top:15px;font-size:13px}.lesson-picker select,.lesson-question fieldset label{border:1px solid #d4d4d8;background:white;border-radius:6px;padding:10px}.lesson-question fieldset{margin-top:16px;display:grid;gap:7px}.lesson-question legend{font-size:13px;margin-bottom:8px}.lesson-question fieldset label{display:flex;align-items:center;gap:10px;cursor:pointer}.lesson-question input{accent-color:#18181b}.lesson-question button:disabled{opacity:.45}.lesson-feedback{margin-top:16px;padding:16px;border:1px solid #e4e4e7;border-radius:6px;background:#f7f7f8}
@@ -121,9 +122,9 @@
         </button>
 
         <div class="flex items-center p-0.5 rounded-md bg-base-subtle border border-base-border">
-          <button onclick="setLevel('LVL I', this)" class="lvl-pill px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-base-white text-ink-primary border border-base-border transition">LVL I</button>
-          <button onclick="setLevel('LVL II', this)" class="lvl-pill px-2 py-0.5 rounded text-[11px] font-mono font-medium text-ink-muted hover:text-ink-primary border border-transparent transition">LVL II</button>
-          <button onclick="setLevel('LVL III', this)" class="lvl-pill px-2 py-0.5 rounded text-[11px] font-mono font-medium text-ink-muted hover:text-ink-primary border border-transparent transition">LVL III</button>
+          <button onclick="setLevel('LVL I', this)" class="lvl-pill" aria-pressed="false">LVL I</button>
+          <button onclick="setLevel('LVL II', this)" class="lvl-pill" aria-pressed="false">LVL II</button>
+          <button onclick="setLevel('LVL III', this)" class="lvl-pill" aria-pressed="false">LVL III</button>
         </div>
       </div>
 
@@ -1624,7 +1625,7 @@ function toggleCardMastered(){
 }
 function refreshWorkspace(){
  document.documentElement.lang=state.lang;
- document.querySelectorAll('.lvl-pill').forEach(b=>b.classList.toggle('selected',b.textContent.trim()==='LVL '+studyLevel));
+ document.querySelectorAll('.lvl-pill').forEach(b=>b.setAttribute('aria-pressed',String(b.textContent.trim()==='LVL '+studyLevel)));
  renderLibraryModules();renderFormulaList();
  for(const tab of ['quiz','flashcards'])if(!byId('view-'+tab).classList.contains('hidden'))(tab==='quiz'?renderQuizView:renderFlashcardView)();
 }
