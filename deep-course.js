@@ -695,11 +695,39 @@
     byId('drawer-los-list').innerHTML='<div class="course-modal-layout">'+nav+lessonHtml(course,unit,current.unitIndex)+'</div>';
   }
 
+  const rememberCurrentUnit=()=>{
+    if(!current.courseId)return;
+    state.deepCourseLast={courseId:current.courseId,unitIndex:current.unitIndex,level:studyLevel};
+    saveState();
+  };
+
   window.openDeepCourse=(courseId,unitIndex=0)=>{
-    current.courseId=courseId;current.unitIndex=unitIndex;renderCourseModal();
+    current.courseId=courseId;current.unitIndex=unitIndex;rememberCurrentUnit();renderCourseModal();
     byId('los-drawer').classList.remove('hidden');byId('los-drawer').classList.add('flex');
   };
-  window.selectDeepUnit=index=>{current.unitIndex=index;renderCourseModal();byId('course-unit-detail')?.scrollTo?.(0,0)};
+  window.selectDeepUnit=index=>{
+    current.unitIndex=index;rememberCurrentUnit();renderCourseModal();
+    byId('course-unit-detail')?.scrollTo?.(0,0);
+  };
+  window.openQuickAccess=()=>{
+    let saved=state.deepCourseLast||null;
+    let course=saved&&courses.find(item=>item.id===saved.courseId&&item.status==='ready');
+    if(course&&saved.level&&course.levels.includes(saved.level)&&studyLevel!==saved.level){
+      studyLevel=saved.level;state.level='LVL '+studyLevel;saveState();refreshWorkspace();
+    }
+    if(!course||!course.levels.includes(studyLevel)){
+      const ready=visibleCourses().filter(item=>item.status==='ready');
+      course=ready.find(item=>{const done=courseDone(item);return done>0&&done<item.units.length})||
+        ready.find(item=>courseDone(item)<item.units.length)||ready[0];
+      saved=null;
+    }
+    if(!course){showToast(tr('Chưa có bài học khả dụng.|No lesson is available yet.'));return}
+    const complete=completionSet();
+    let unitIndex=saved?Math.min(Math.max(Number(saved.unitIndex)||0,0),course.units.length-1):
+      course.units.findIndex(unit=>!complete.has(completionKey(course,unit)));
+    if(unitIndex<0)unitIndex=0;
+    switchTab('library');renderRoadmap();openDeepCourse(course.id,unitIndex);
+  };
   window.toggleDeepUnitComplete=()=>{
     const course=courses.find(item=>item.id===current.courseId),unit=course.units[current.unitIndex];
     const set=completionSet(),key=completionKey(course,unit);set.has(key)?set.delete(key):set.add(key);

@@ -166,7 +166,7 @@
         </button>
       </nav>
 
-      <!-- Phải: Tìm kiếm Ctrl+K + VI/EN + Tải mã nguồn (.html) -->
+      <!-- Phải: Tìm kiếm Ctrl+K + VI/EN + Quick Access -->
       <div class="flex items-center gap-2 shrink-0">
         <!-- Tìm kiếm nhanh -->
         <div class="hidden lg:flex items-center w-44 focus-within:w-56 bg-base-subtle border border-base-border focus-within:border-ink-primary rounded-md px-2.5 py-1 transition-all duration-150">
@@ -187,10 +187,10 @@
           <button onclick="setLanguage('en')" id="lang-btn-en" class="px-1.5 py-0.5 text-[11px] font-mono font-medium rounded text-ink-muted hover:text-ink-primary border border-transparent transition">EN</button>
         </div>
 
-        <!-- Nút Tải mã nguồn (.html) -->
-        <button onclick="downloadStandaloneHTML()" title="Tải tệp HTML độc lập về máy & sao chép mã nguồn" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-ink-primary hover:bg-ink-secondary text-base-white text-xs font-medium transition cursor-pointer">
-          <i data-lucide="download" class="w-3.5 h-3.5"></i>
-          <span class="hidden sm:inline" data-i18n="btnDownloadHtml">Tải mã nguồn (.html)</span>
+        <!-- Mở nhanh bài đang học gần nhất -->
+        <button id="quick-access-button" onclick="openQuickAccess()" title="Mở nhanh bài đang học" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-ink-primary hover:bg-ink-secondary text-base-white text-xs font-medium transition cursor-pointer">
+          <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline" data-i18n="btnQuickAccess">Quick Access</span>
         </button>
       </div>
     </div>
@@ -758,7 +758,7 @@
         navFlashcards: 'Thẻ ghi nhớ',
         navNotes: 'Ghi chú',
         navFormulas: 'Công thức',
-        btnDownloadHtml: 'Tải mã nguồn (.html)',
+        btnQuickAccess: 'Truy cập nhanh',
         libraryHeading: 'Sổ tay ôn tập CFA Level I',
         btnSourceMaterial: 'Tài liệu nguồn (IFT 2027)',
         overallMasteryLabel: 'Tiến độ nắm vững tổng thể',
@@ -778,7 +778,7 @@
         navFlashcards: 'Flashcards',
         navNotes: 'Notes',
         navFormulas: 'Formulas',
-        btnDownloadHtml: 'Download (.html)',
+        btnQuickAccess: 'Quick Access',
         libraryHeading: 'CFA Level I Study Notebook',
         btnSourceMaterial: 'Source Notes (IFT 2027)',
         overallMasteryLabel: 'Overall mastery progress',
