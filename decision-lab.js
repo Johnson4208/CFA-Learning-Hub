@@ -63,7 +63,7 @@ const selectedCourse=()=>catalog().find(c=>c.id===courseId);
 const readyUnits=()=>selectedCourse()?.units.filter(u=>bank[u.id]?.length===u.cases.length)||[];
 const money=(v)=>new Intl.NumberFormat(state.lang==='en'?'en-US':'vi-VN',{style:'currency',currency,maximumFractionDigits:0}).format(Math.abs(v)*(currency==='VND'?25000:1));
 const signed=v=>(v<0?'−':'+')+money(v);
-const baseBg='assets/decision-office-ai.webp';
+const baseBg='assets/decision-office-hd.webp';
 const reducedMotion=()=>window.matchMedia?.('(prefers-reduced-motion: reduce)').matches===true;
 function transitionTo(action,chosen){
  const panel=root?.querySelector('.dl-monitor'),session=game,host=root;
