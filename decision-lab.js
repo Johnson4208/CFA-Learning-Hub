@@ -63,7 +63,31 @@ const selectedCourse=()=>catalog().find(c=>c.id===courseId);
 const readyUnits=()=>selectedCourse()?.units.filter(u=>bank[u.id]?.length===u.cases.length)||[];
 const money=(v)=>new Intl.NumberFormat(state.lang==='en'?'en-US':'vi-VN',{style:'currency',currency,maximumFractionDigits:0}).format(Math.abs(v)*(currency==='VND'?25000:1));
 const signed=v=>(v<0?'−':'+')+money(v);
-const baseBg='assets/decision-office.webp';
+const baseBg='assets/decision-office-ai.webp';
+const reducedMotion=()=>window.matchMedia?.('(prefers-reduced-motion: reduce)').matches===true;
+function transitionTo(action,chosen){
+ const panel=root?.querySelector('.dl-monitor'),session=game,host=root;
+ if(!panel||reducedMotion()||!panel.animate){action();return}
+ if(chosen){chosen.classList.add('dl-choice-picked');panel.querySelectorAll('[data-answer]').forEach(b=>b.disabled=true)}
+ const animation=panel.animate([{opacity:1,transform:'translateY(0) scale(1)'},{opacity:0,transform:'translateY(-6px) scale(.985)'}],{duration:220,easing:'ease-in',fill:'forwards'});
+ let settled=false;
+ const finish=()=>{if(settled)return;settled=true;if(game===session&&root===host&&panel.isConnected)action()};
+ animation.finished.then(finish,finish);
+}
+function animateImpact(value){
+ const amount=root?.querySelector('.dl-impact-value');
+ if(!amount||reducedMotion()||typeof window.requestAnimationFrame!=='function')return;
+ const duration=1100;let start=null;
+ amount.textContent=signed(0);
+ const tick=now=>{
+  if(!amount.isConnected)return;
+  if(start===null)start=now;
+  const p=Math.min(1,(now-start)/duration),eased=1-Math.pow(1-p,3);
+  amount.textContent=signed(Math.round(value*eased));
+  if(p<1)window.requestAnimationFrame(tick);
+ };
+ window.requestAnimationFrame(tick);
+}
 function setup(){
  if(!catalog().some(c=>c.id===courseId)){courseId=catalog()[0]?.id||'';selection=[]}
  const units=readyUnits();selection=selection.filter(id=>units.some(u=>u.id===id)).slice(0,3);
@@ -75,17 +99,26 @@ function setup(){
  root.querySelector('#dl-currency').onchange=e=>{currency=e.target.value};
  root.querySelector('#dl-image').onchange=e=>{const file=e.target.files[0];if(!file||!['image/png','image/jpeg','image/webp'].includes(file.type))return;if(localBackground)URL.revokeObjectURL(localBackground);localBackground=URL.createObjectURL(file);};
  root.querySelectorAll('[data-unit]').forEach(b=>b.onclick=()=>{const id=b.dataset.unit;if(selection.includes(id))selection=selection.filter(x=>x!==id);else if(selection.length<3)selection.push(id);setup()});
- root.querySelector('#dl-start').onclick=()=>{if(!count)return;const rounds=units.filter(u=>selection.includes(u.id)).flatMap(u=>u.cases.map((item,i)=>({unit:u.title,item,decision:bank[u.id][i]})));game={rounds,index:0,answers:[],stage:'question'};play()};
+ root.querySelector('#dl-start').onclick=()=>{if(!count)return;const rounds=units.filter(u=>selection.includes(u.id)).flatMap(u=>u.cases.map((item,i)=>({unit:u.title,item,decision:bank[u.id][i]})));game={rounds,index:0,answers:[],stage:'question'};play(false,true)};
 }
-function play(){
+function play(animateResult=false,animateEntry=false){
  const g=game;if(!g)return setup();
  if(g.stage==='complete')return complete();
  const r=g.rounds[g.index],d=r.decision,answer=g.answers[g.index],result=g.stage==='result';
  const right=result&&answer===d.correct, opt=result?d.options[answer]:null;
- root.innerHTML='<div class="dl-office"><div class="dl-office-top"><div><span class="dl-kicker">CFA / DECISION LAB</span><strong>'+L('Phòng điều hành|Executive office')+'</strong></div><div class="dl-hud"><span>'+L('Vòng|Round')+' '+(g.index+1)+'/'+g.rounds.length+'</span><span>'+L('Quyết định tốt|Sound decisions')+' '+g.answers.filter((a,i)=>a===g.rounds[i].decision.correct).length+'</span><button id="dl-quit">'+L('Thoát|Exit')+'</button></div></div><div class="dl-office-progress"><i style="width:'+((g.index+(result?1:0))/g.rounds.length*100)+'%"></i></div><div class="dl-scene"><div class="dl-scene-note"><span class="dl-kicker">'+L('HỒ SƠ DOANH NGHIỆP|CLIENT FILE')+'</span><strong>'+L(r.unit)+'</strong><span>'+L('Số liệu tình huống tính theo USD. Kết quả mô phỏng, không phải dự báo thực tế.|Case figures use USD. Simulated outcomes are not real forecasts.')+'</span></div><article class="dl-monitor"><div class="dl-monitor-head"><span class="dl-kicker">'+(result?L('BÁO CÁO KẾT QUẢ|OUTCOME REPORT'):L('QUYẾT ĐỊNH QUẢN TRỊ|MANAGEMENT DECISION'))+'</span><span>0'+(g.index+1)+'</span></div><h2>'+L(r.item.title)+'</h2>'+(result?'<div class="dl-result '+(right?'good':'bad')+'"><span>'+L(right?'QUYẾT ĐỊNH HỢP LÝ|SOUND DECISION':'CẦN XEM XÉT LẠI|DECISION NEEDS REVIEW')+'</span><strong>'+signed(opt.delta)+'</strong><small>'+L(opt.metric)+'</small></div><p class="dl-assumption">'+H(opt.assumption)+'</p><h3>'+L('Điều gì đã xảy ra?|What happened?')+'</h3><p>'+H(opt.reason)+'</p><div class="dl-guidance"><strong>'+L('Phân tích của chuyên gia|Analyst guidance')+'</strong><p>'+H(r.item.guidance)+'</p></div>'+(!right?'<p class="dl-best"><strong>'+L('Phương án tốt hơn: |Better decision: ')+'</strong>'+L(d.options[d.correct].title)+'</p>':'')+'<button class="dl-primary" id="dl-next">'+L(g.index+1===g.rounds.length?'Xem báo cáo cuối phiên|View session report':'Tình huống tiếp theo|Next decision')+' →</button>':'<div class="dl-context">'+H(r.item.context)+'</div><h3>'+H(r.item.task)+'</h3><div class="dl-options">'+d.options.map((o,i)=>'<button type="button" data-answer="'+i+'"><span>'+String.fromCharCode(65+i)+'</span><strong>'+L(o.title)+'</strong><span aria-hidden="true">›</span></button>').join('')+'</div>')+'</article></div></div>';
- const office=root.querySelector('.dl-office');office.style.backgroundImage='linear-gradient(90deg,rgba(15,23,42,.17),rgba(15,23,42,.28)),url("'+(localBackground||baseBg)+'")';
+ const effect=result&&animateResult?(right?' dl-win':' dl-loss'):'';
+ root.innerHTML='<div class="dl-office'+effect+'"><div class="dl-office-top"><div><span class="dl-kicker">CFA / DECISION LAB</span><strong>'+L('Phòng điều hành|Executive office')+'</strong></div><div class="dl-hud"><span>'+L('Vòng|Round')+' '+(g.index+1)+'/'+g.rounds.length+'</span><span>'+L('Quyết định tốt|Sound decisions')+' '+g.answers.filter((a,i)=>a===g.rounds[i].decision.correct).length+'</span><button id="dl-quit">'+L('Thoát|Exit')+'</button></div></div><div class="dl-office-progress"><i style="width:'+((g.index+(result?1:0))/g.rounds.length*100)+'%"></i></div><div class="dl-scene"><div class="dl-scene-note"><span class="dl-kicker">'+L('HỒ SƠ DOANH NGHIỆP|CLIENT FILE')+'</span><strong>'+L(r.unit)+'</strong><span>'+L('Số liệu tình huống tính theo USD. Kết quả mô phỏng, không phải dự báo thực tế.|Case figures use USD. Simulated outcomes are not real forecasts.')+'</span></div><article class="dl-monitor'+(animateResult||animateEntry?' dl-arrive':'')+'" tabindex="-1"><div class="dl-monitor-head"><span class="dl-kicker">'+(result?L('BÁO CÁO KẾT QUẢ|OUTCOME REPORT'):L('QUYẾT ĐỊNH QUẢN TRỊ|MANAGEMENT DECISION'))+'</span><span>0'+(g.index+1)+'</span></div><h2>'+L(r.item.title)+'</h2>'+(result?'<div class="dl-result '+(right?'good':'bad')+'"><span>'+L(right?'QUYẾT ĐỊNH HỢP LÝ|SOUND DECISION':'CẦN XEM XÉT LẠI|DECISION NEEDS REVIEW')+'</span><div class="dl-impact-line"><span class="dl-impact-arrow" aria-hidden="true">'+(opt.delta>=0?'↗':'↘')+'</span><strong class="dl-impact-value" aria-hidden="true">'+signed(opt.delta)+'</strong><span class="dl-sr-only" role="status">'+signed(opt.delta)+' '+L(opt.metric)+'</span></div><small>'+L(opt.metric)+'</small><div class="dl-impact-track" aria-hidden="true"><i></i></div></div><p class="dl-assumption">'+H(opt.assumption)+'</p><h3>'+L('Điều gì đã xảy ra?|What happened?')+'</h3><p>'+H(opt.reason)+'</p><div class="dl-guidance"><strong>'+L('Phân tích của chuyên gia|Analyst guidance')+'</strong><p>'+H(r.item.guidance)+'</p></div>'+(!right?'<p class="dl-best"><strong>'+L('Phương án tốt hơn: |Better decision: ')+'</strong>'+L(d.options[d.correct].title)+'</p>':'')+'<button class="dl-primary" id="dl-next">'+L(g.index+1===g.rounds.length?'Xem báo cáo cuối phiên|View session report':'Tình huống tiếp theo|Next decision')+' →</button>':'<div class="dl-context">'+H(r.item.context)+'</div><h3>'+H(r.item.task)+'</h3><div class="dl-options">'+d.options.map((o,i)=>'<button type="button" data-answer="'+i+'"><span>'+String.fromCharCode(65+i)+'</span><strong>'+L(o.title)+'</strong><span aria-hidden="true">›</span></button>').join('')+'</div>')+'</article></div></div>';
+ const office=root.querySelector('.dl-office');office.style.backgroundImage='linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.20)),url("'+(localBackground||baseBg)+'")';
  root.querySelector('#dl-quit').onclick=()=>{if(window.confirm(T('Thoát phiên mô phỏng hiện tại?|Exit this simulation session?'))){game=null;setup()}};
- if(result)root.querySelector('#dl-next').onclick=()=>{if(g.index+1===g.rounds.length)g.stage='complete';else{g.index++;g.stage='question'}play()};else root.querySelectorAll('[data-answer]').forEach(b=>b.onclick=()=>{if(g.stage!=='question')return;g.answers[g.index]=Number(b.dataset.answer);g.stage='result';play()});
+ if(result){
+  if(animateResult){animateImpact(opt.delta);root.querySelector('.dl-monitor')?.focus?.({preventScroll:true})}
+  const next=root.querySelector('#dl-next');
+  next.onclick=()=>{if(next.disabled)return;next.disabled=true;transitionTo(()=>{if(g.index+1===g.rounds.length)g.stage='complete';else{g.index++;g.stage='question'}play(false,true)})};
+ }else root.querySelectorAll('[data-answer]').forEach(b=>b.onclick=()=>{
+  if(g.stage!=='question')return;
+  g.answers[g.index]=Number(b.dataset.answer);g.stage='result';
+  transitionTo(()=>play(true),b);
+ });
 }
 function complete(){
  const g=game;const score=g.answers.filter((a,i)=>a===g.rounds[i].decision.correct).length;
