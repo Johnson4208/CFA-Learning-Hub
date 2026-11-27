@@ -117,7 +117,31 @@
 .quiz-switch-caption{font-size:10px;color:#67676e;line-height:1.35}
 .quiz-switch [aria-pressed=true] .quiz-switch-caption{color:#c7c7cc}
 .quiz-switch button:focus-visible{outline:2px solid #52525b;outline-offset:2px}
-@media(max-width:600px){.quiz-switch{gap:4px;padding:4px;border-radius:10px}.quiz-switch button{min-height:68px;padding:8px 4px;gap:5px;flex-direction:column;justify-content:center;text-align:center}.quiz-switch-icon{width:27px;height:27px}.quiz-switch-icon svg{width:16px;height:16px}.quiz-switch-title{font-size:11px}.quiz-switch-caption{display:none}.quiz-switch-copy{flex:none}}.lesson-picker{display:grid;gap:6px;margin-top:15px;font-size:13px}.lesson-picker select,.lesson-question fieldset label{border:1px solid #d4d4d8;background:white;border-radius:6px;padding:10px}.lesson-question fieldset{margin-top:16px;display:grid;gap:7px}.lesson-question legend{font-size:13px;margin-bottom:8px}.lesson-question fieldset label{display:flex;align-items:center;gap:10px;cursor:pointer}.lesson-question input{accent-color:#18181b}.lesson-question button:disabled{opacity:.45}.lesson-feedback{margin-top:16px;padding:16px;border:1px solid #e4e4e7;border-radius:6px;background:#f7f7f8}
+@media(max-width:600px){.quiz-switch{gap:4px;padding:4px;border-radius:10px}.quiz-switch button{min-height:68px;padding:8px 4px;gap:5px;flex-direction:column;justify-content:center;text-align:center}.quiz-switch-icon{width:27px;height:27px}.quiz-switch-icon svg{width:16px;height:16px}.quiz-switch-title{font-size:11px}.quiz-switch-caption{display:none}.quiz-switch-copy{flex:none}}.lesson-picker{display:grid;gap:8px;margin-top:18px;font-size:13px}
+.lesson-picker-label{font-size:13px;font-weight:600;color:#27272a}
+.lesson-picker-dropdown{min-width:0}
+.lesson-picker-trigger{display:flex;align-items:center;gap:10px;min-height:46px;list-style:none;cursor:pointer;border:1px solid #d4d4d8;border-radius:8px;background:#fff;padding:12px 15px;color:#18181b;font-size:13px;font-weight:550;transition:border-color .18s,background .18s}
+.lesson-picker-trigger::-webkit-details-marker{display:none}
+.lesson-picker-trigger:hover,.lesson-picker-dropdown[open]>.lesson-picker-trigger{border-color:#777;background:#fafafa}
+.lesson-picker-trigger svg{flex:none;width:17px;height:17px;color:#52525b}
+.lesson-picker-trigger .lesson-picker-value{flex:1;min-width:0;overflow-wrap:anywhere}
+.lesson-picker-trigger .lesson-picker-chevron{width:15px;height:15px;transition:transform .18s}
+.lesson-picker-dropdown[open] .lesson-picker-chevron{transform:rotate(180deg)}
+.lesson-picker-menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 22px;margin-top:8px;padding:17px;border:1px solid #dedee2;border-radius:9px;background:#fafafa;box-shadow:0 6px 20px #00000009;animation:lesson-picker-enter .18s ease-out}
+.lesson-picker-group{min-width:0;align-self:start}
+.lesson-picker-group h4{font-size:10px;line-height:1.5;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#606067;margin:0 0 7px;padding:0 8px 6px;border-bottom:1px solid #e4e4e7}
+.lesson-picker-option{display:flex;align-items:center;gap:9px;min-height:37px;width:100%;border:1px solid transparent;border-radius:6px;padding:7px 9px;color:#242428;font-size:12.5px;line-height:1.45;font-weight:500;text-align:left;background:transparent;cursor:pointer}
+.lesson-picker-option:hover{border-color:#dedee2;background:white}
+.lesson-picker-option[aria-pressed=true]{background:#18181b;color:white;border-color:#18181b}
+.lesson-picker-option .lesson-picker-option-number{flex:none;color:#73737b;font-size:10px;font-variant-numeric:tabular-nums}
+.lesson-picker-option[aria-pressed=true] .lesson-picker-option-number{color:#c6c6cb}
+.lesson-picker-option .lesson-picker-option-title{flex:1;min-width:0;overflow-wrap:anywhere}
+.lesson-picker-option .lesson-picker-option-check{flex:none;width:14px;height:14px}
+.lesson-picker-trigger:focus-visible,.lesson-picker-option:focus-visible{outline:2px solid #52525b;outline-offset:2px}
+@keyframes lesson-picker-enter{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:640px){.lesson-picker-menu{grid-template-columns:1fr;gap:12px;padding:12px}.lesson-picker-option{min-height:42px}}
+@media(prefers-reduced-motion:reduce){.lesson-picker-menu{animation:none}.lesson-picker-chevron{transition:none}}
+.lesson-question fieldset label{border:1px solid #d4d4d8;background:white;border-radius:6px;padding:10px}.lesson-question fieldset{margin-top:16px;display:grid;gap:7px}.lesson-question legend{font-size:13px;margin-bottom:8px}.lesson-question fieldset label{display:flex;align-items:center;gap:10px;cursor:pointer}.lesson-question input{accent-color:#18181b}.lesson-question button:disabled{opacity:.45}.lesson-feedback{margin-top:16px;padding:16px;border:1px solid #e4e4e7;border-radius:6px;background:#f7f7f8}
 </style><style>.extended-case{margin-top:20px;padding:18px;background:#f7f7f8;border:1px solid #e4e4e7;border-radius:7px}.extended-case h4{font-weight:650;margin:7px 0}.extended-case a{display:inline-block;font-size:12px;text-decoration:underline;margin-top:14px}.case-debrief{margin-top:14px;padding-top:12px;border-top:1px solid #d4d4d8}</style>
 <style>
 /* Course modules open as a centered modal across every CFA level. */
@@ -1881,19 +1905,58 @@ function renderQuizView(){
   if(quizMode==='level'){renderCasePractice('quiz');return}
   const rows=levelRows();
   const body=byId('quiz-body');
-  body.innerHTML='<div class="academy-head"><small>LEVEL '+studyLevel+'</small><h2>'+translated('Ôn theo bài|Lesson review')+'</h2><label class="lesson-picker">'+translated('Chọn bài học|Choose a lesson')+'<select></select></label></div>';
-  const select=body.querySelector('select');
-  select.add(new Option(translated('Chọn một bài để bắt đầu|Select a lesson to begin'),''));
+  body.innerHTML='<div class="academy-head"><small>LEVEL '+studyLevel+'</small><h2>'+translated('Ôn theo bài|Lesson review')+'</h2><div class="lesson-picker"><span class="lesson-picker-label" id="lesson-picker-label">'+translated('Chọn bài học|Choose a lesson')+'</span><details class="lesson-picker-dropdown"><summary class="lesson-picker-trigger" aria-labelledby="lesson-picker-label lesson-picker-value"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14M3 4h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5v15h-5a4 4 0 0 0-4 2 4 4 0 0 0-4-2H3z"/></svg><span class="lesson-picker-value" id="lesson-picker-value"></span><svg class="lesson-picker-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><div class="lesson-picker-menu"></div></details></div></div>';
+  const picker=body.querySelector('.lesson-picker-dropdown');
+  const trigger=picker.querySelector('summary');
+  const menu=picker.querySelector('.lesson-picker-menu');
+  let selected=selectedLessons.get(studyLevel)??'';
+  if(selected!==''&&!rows[Number(selected)])selected='';
+  trigger.querySelector('.lesson-picker-value').textContent=selected===''?translated('Chọn một bài để bắt đầu|Select a lesson to begin'):translated(rows[Number(selected)][1]);
   for(const [name,,indices] of stages[studyLevel]){
-    const group=document.createElement('optgroup');
-    group.label=translated(name);
-    indices.forEach(i=>group.append(new Option(translated(rows[i][1]),i)));
-    select.append(group);
+    const section=document.createElement('section');
+    section.className='lesson-picker-group';
+    const heading=document.createElement('h4');
+    heading.textContent=translated(name);
+    section.append(heading);
+    indices.forEach(i=>{
+      const choice=document.createElement('button');
+      choice.type='button';
+      choice.className='lesson-picker-option';
+      choice.setAttribute('aria-pressed',String(String(i)===selected));
+      const number=document.createElement('span');
+      number.className='lesson-picker-option-number';
+      number.setAttribute('aria-hidden','true');
+      number.textContent=String(i+1).padStart(2,'0');
+      const title=document.createElement('span');
+      title.className='lesson-picker-option-title';
+      title.textContent=translated(rows[i][1]);
+      choice.append(number,title);
+      if(String(i)===selected){
+        const check=document.createElement('span');
+        check.className='lesson-picker-option-check';
+        check.setAttribute('aria-hidden','true');
+        check.textContent='✓';
+        choice.append(check);
+      }
+      choice.onclick=()=>{
+        selectedLessons.set(studyLevel,String(i));
+        renderQuizView();
+        byId('quiz-body').querySelector('.lesson-picker-trigger')?.focus({preventScroll:true});
+      };
+      section.append(choice);
+    });
+    menu.append(section);
   }
-  select.value=selectedLessons.get(studyLevel)??'';
-  select.onchange=()=>{selectedLessons.set(studyLevel,select.value);renderQuizView()};
-  if(select.value==='')return;
-  const row=rows[Number(select.value)],key=lessonKey(row);
+  picker.addEventListener('keydown',event=>{
+    if(event.key==='Escape'&&picker.open){
+      event.preventDefault();
+      event.stopPropagation();
+      picker.open=false;
+      trigger.focus({preventScroll:true});
+    }
+  });
+  if(selected==='')return;
+  const row=rows[Number(selected)],key=lessonKey(row);
   const options=lessonOptions[row[1].split('|')[1]];
   const attempt=lessonReviews.get(key)??{order:[0,1,2],answer:null,graded:false};
   if(!lessonReviews.has(key)){
