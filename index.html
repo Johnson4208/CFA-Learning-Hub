@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link href="deep-course.css?v=20261128-course-map-scan1" rel="stylesheet">
+  <link href="decision-lab.css?v=20261128-1" rel="stylesheet">
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -1833,13 +1834,14 @@ function renderQuizView(){
   const area=byId('view-quiz');
   area.innerHTML='<div class="quiz-switch" role="group" aria-label="'+translated('Chế độ luyện tập|Practice mode')+'"></div><div id="quiz-body" class="space-y-4"></div>';
   const group=area.firstElementChild;
-  for(const [mode,label] of [['lesson','Ôn theo bài|Lesson review'],['level','Luyện theo Level|Level practice']]){
+  for(const [mode,label] of [['lesson','Ôn theo bài|Lesson review'],['level','Luyện theo Level|Level practice'],['decision','Decision Lab|Decision Lab']]){
     const button=document.createElement('button');
     button.textContent=translated(label);
     button.setAttribute('aria-pressed',String(mode===quizMode));
     button.onclick=()=>{quizMode=mode;renderQuizView()};
     group.append(button);
   }
+  if(quizMode==='decision'){window.CFA_DECISION_LAB?.render(byId('quiz-body'));return}
   if(quizMode==='level'){renderCasePractice('quiz');return}
   const rows=levelRows();
   const body=byId('quiz-body');
@@ -1923,7 +1925,8 @@ function setLevel(value){studyLevel=value.split(' ').pop();state.level='LVL '+st
   <script src="course-textbook.js?v=20261127-textbook1"></script>
   <script src="core-depth.js?v=20261127-core2"></script>
   <script src="course-keywords.js?v=20261127-inline1"></script>
-  <script src="deep-course.js?v=20261128-course-map-scan1"></script>
+  <script src="deep-course.js?v=20261128-decision-lab1"></script>
+  <script src="decision-lab.js?v=20261128-1"></script>
 </body></html>
 
 
