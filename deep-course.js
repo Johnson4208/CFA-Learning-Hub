@@ -1187,10 +1187,15 @@
       (index<course.units.length-1?'<button class="lesson-secondary" onclick="selectDeepUnit('+(index+1)+')">'+esc(tr('Bài tiếp|Next'))+' →</button>':'')+'</div></div></article>';
   }
 
+  let renderedCourseMapId=null;
   function renderCourseModal(){
     const course=courses.find(item=>item.id===current.courseId);
     if(!course||course.status!=='ready')return;
     const unit=course.units[current.unitIndex];
+    const drawer=byId('drawer-los-list');
+    const oldNav=renderedCourseMapId===course.id?drawer.querySelector?.('.course-unit-nav'):null;
+    const navScroll=oldNav?{top:oldNav.scrollTop,left:oldNav.scrollLeft}:null;
+    const restoreNavFocus=!!oldNav?.contains(document.activeElement);
     const complete=completionSet();
     byId('drawer-module-code').textContent=course.code+' · LEVEL '+course.levels.join('/');
     byId('drawer-module-title').textContent=tr(course.title);
@@ -1204,7 +1209,14 @@
     ];
     const nav='<nav class="course-unit-nav" aria-label="'+esc(tr('Năm bài trong khóa học|Five course units'))+'"><div class="course-map-head"><span>'+esc(tr('BẢN ĐỒ KHÓA HỌC|COURSE MAP'))+'</span><strong>'+courseDone(course)+' / '+course.units.length+'</strong><div><i style="width:'+(courseDone(course)/course.units.length*100)+'%"></i></div></div>'+phaseDefs.map(phase=>'<section class="course-nav-phase"><h4>'+esc(phase.label)+'</h4>'+phase.indexes.map(index=>{const item=course.units[index],detail=foundationDepth[course.id]?.[item.id],finished=complete.has(completionKey(course,item));return '<button class="course-unit-button" aria-current="'+(index===current.unitIndex)+'" onclick="selectDeepUnit('+index+')"><span class="course-unit-number">'+String(index+1).padStart(2,'0')+'</span><span class="course-unit-copy"><span class="course-unit-name">'+esc(tr(item.title))+'</span>'+(detail?.objectives?.[0]?'<small>'+esc(tr(detail.objectives[0]))+'</small>':'')+'</span><span class="course-unit-check">'+(finished?'✓':'')+'</span></button>'}).join('')+'</section>').join('')+'</nav>';
     if(businessModelState.trigger)window.closeBusinessModel();
-    byId('drawer-los-list').innerHTML='<div class="course-modal-layout">'+nav+lessonHtml(course,unit,current.unitIndex)+'</div>';
+    drawer.innerHTML='<div class="course-modal-layout">'+nav+lessonHtml(course,unit,current.unitIndex)+'</div>';
+    renderedCourseMapId=course.id;
+    const newNav=drawer.querySelector?.('.course-unit-nav');
+    if(newNav&&navScroll){
+      if(restoreNavFocus)newNav.querySelector('[aria-current="true"]')?.focus({preventScroll:true});
+      newNav.scrollTop=navScroll.top;
+      newNav.scrollLeft=navScroll.left;
+    }
   }
 
   const rememberCurrentUnit=()=>{
@@ -1255,7 +1267,7 @@
   window.refreshWorkspace=function(){priorRefresh();if(current.courseId)renderCourseModal()};
 
   const priorClose=window.closeLosDrawer;
-  window.closeLosDrawer=function(){if(businessModelState.trigger)window.closeBusinessModel();current.courseId=null;priorClose()};
+  window.closeLosDrawer=function(){if(businessModelState.trigger)window.closeBusinessModel();current.courseId=null;renderedCourseMapId=null;priorClose()};
 })();
 
 
