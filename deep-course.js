@@ -994,6 +994,66 @@
   const courseWeight=course=>courseWeights[course.id]?.[studyLevel]||tr('Tích hợp|Integrated');
   const depthLabel=course=>course.group==='foundation'?tr('NỀN TẢNG|FOUNDATION'):(studyLevel==='III'?tr('TÍCH HỢP + ESSAY|INTEGRATION + ESSAY'):tr('EXAM-READY|EXAM-READY'));
 
+
+  const businessModelMeta=[
+    {icon:'↻',type:'Doanh thu định kỳ|Recurring revenue',flow:['Thu hút khách hàng|Acquire customers','Thanh toán định kỳ|Recurring payment','Gia hạn|Renewal'],formula:'MRR = Thuê bao hoạt động × ARPA tháng|MRR = Active subscriptions × Monthly ARPA'},
+    {icon:'⇄',type:'Nền tảng giao dịch|Platform economy',flow:['Người bán|Seller supply','Ghép nối trên nền tảng|Platform matching','Giao dịch người mua|Buyer transaction'],formula:'Doanh thu hoa hồng = GMV × Take rate|Commission revenue = GMV × Take rate'},
+    {icon:'◫',type:'Thu hút khách hàng|Customer acquisition',flow:['Người dùng miễn phí|Free users','Trải nghiệm sản phẩm|Product adoption','Chuyển đổi trả phí|Paid conversion'],formula:'Doanh thu = Người dùng hoạt động × Conversion × ARPPU|Paid revenue = Active users × Conversion × ARPPU'},
+    {icon:'⊕',type:'Sản phẩm bổ sung|Complementary products',flow:['Sản phẩm ban đầu|Initial product','Thiết bị đang sử dụng|Installed base','Mua vật tư lặp lại|Repeat purchases'],formula:'Đóng góp vòng đời = Biên thiết bị + Biên vật tư − Chi phí bổ sung|Lifetime contribution = Device margin + Consumable margins − Extra support costs'},
+    {icon:'◇',type:'Tài sản trí tuệ|Intellectual property',flow:['Tạo IP|Create IP','Cấp phép|Grant license','Thu royalty|Collect royalties'],formula:'Royalty = Doanh số đủ điều kiện × Tỷ lệ royalty|Royalty = Eligible sales × Royalty rate'},
+    {icon:'▦',type:'Mở rộng kinh doanh|Business expansion',flow:['Bên nhượng quyền|Franchisor','Đầu tư của franchisee|Franchisee investment','Vận hành điểm bán|Outlet operations'],formula:'Royalty = Doanh số franchisee × Tỷ lệ royalty|Royalty = Franchisee sales × Royalty rate'},
+    {icon:'↗',type:'Kênh phân phối|Distribution strategy',flow:['Thương hiệu|Brand','Kênh bán trực tiếp|Direct sales channel','Người tiêu dùng|Consumer'],formula:'Đóng góp = Doanh thu thuần − Chi phí biến đổi|Contribution = Net sales − Variable costs'},
+    {icon:'≋',type:'Tính giá theo tiêu thụ|Consumption pricing',flow:['Khách sử dụng|Customer usage','Đo lượng tiêu thụ|Meter consumption','Tính hóa đơn|Generate bill'],formula:'Doanh thu = Lượng tiêu thụ × Đơn giá|Revenue = Consumption × Unit price'}
+  ];
+  const businessModelTabs=['Tổng quan|Overview','Tài chính|Financials','Chỉ số & rủi ro|Metrics & risks','So sánh|Comparison'];
+  const businessModelState={index:0,tab:0,trigger:null};
+  const businessModels=()=>foundationDepth['business-foundations']['business-model'].theories;
+  const modelNumber=i=>String(i+1).padStart(2,'0');
+  function businessModelCards(items){
+    return items.map((item,i)=>{
+      const meta=businessModelMeta[i];
+      return '<button type="button" class="theory-card business-model-card" aria-haspopup="dialog" onclick="openBusinessModel('+i+',this)"><span class="business-model-card-top"><span class="business-model-icon" aria-hidden="true">'+meta.icon+'</span><span class="business-model-number">'+modelNumber(i)+'</span></span><span class="business-model-title">'+esc(tr(item[0]))+'</span><span class="business-model-type">'+esc(tr(meta.type))+'</span><span class="business-model-summary">'+esc(tr(item[1]))+'</span><span class="business-model-card-link">'+esc(tr('Khám phá mô hình|Explore model'))+'<span aria-hidden="true">↗</span></span></button>';
+    }).join('')+'<dialog id="business-model-dialog" class="business-model-dialog" aria-labelledby="business-model-dialog-title" onclick="if(event.target===this)closeBusinessModel()" onclose="restoreBusinessModelFocus()"></dialog>';
+  }
+  function businessModelDetail(index,tab){
+    const item=businessModels()[index],meta=businessModelMeta[index],sections=item[2];
+    const section=(i,cls='')=>'<section class="business-model-detail-section '+cls+'"><h3>'+esc(tr(sections[i][0]))+'</h3><p>'+rich(sections[i][1])+'</p></section>';
+    let content='';
+    if(tab===0){
+      content=section(0)+'<section class="business-model-detail-section"><h3>'+esc(tr('Cơ chế kinh doanh|Business mechanism'))+'</h3><div class="business-model-flow">'+meta.flow.map((step,i)=>'<div><span>'+modelNumber(i)+'</span><strong>'+esc(tr(step))+'</strong></div>').join('<span class="business-model-flow-arrow" aria-hidden="true">→</span>')+'</div></section>';
+    }else if(tab===1){
+      content='<div class="business-model-formula"><span>'+esc(tr('CÔNG THỨC CỐT LÕI|CORE FINANCIAL FORMULA'))+'</span><strong>'+esc(tr(meta.formula))+'</strong></div>'+section(1)+section(2,'business-model-example');
+      if(index===3)content+='<div class="business-model-example-numbers">'+[['Biên máy in|Device margin','−$15','loss'],['Biên 4 hộp mực|Four cartridges','+$48','gain'],['Đóng góp vòng đời|Lifetime contribution','$33','total']].map(([label,value,cls])=>'<div class="'+cls+'"><span>'+esc(tr(label))+'</span><strong>'+value+'</strong></div>').join('')+'</div><p class="business-model-footnote">'+esc(tr('Trước CAC, hỗ trợ bổ sung và chiết khấu.|Before CAC, extra support and discounting.'))+'</p>';
+    }else if(tab===2){
+      content=section(3);
+    }else{
+      content=section(4)+'<section class="business-model-detail-section"><h3>'+esc(tr('Khám phá các mô hình khác|Explore other models'))+'</h3><div class="business-model-related">'+businessModels().map((m,i)=>i===index?'':'<button type="button" onclick="selectBusinessModel('+i+',3)">'+esc(tr(m[0]))+' <span aria-hidden="true">↗</span></button>').join('')+'</div></section>';
+    }
+    return '<div class="business-model-shell"><header class="business-model-header"><div class="business-model-header-top"><span>'+esc(tr('MÔ HÌNH|MODEL'))+' '+modelNumber(index)+' / '+String(businessModels().length).padStart(2,'0')+'</span><button type="button" class="business-model-close" aria-label="'+esc(tr('Đóng|Close'))+'" onclick="closeBusinessModel()" autofocus>×</button></div><div class="business-model-heading"><span class="business-model-icon" aria-hidden="true">'+meta.icon+'</span><div><span class="business-model-type">'+esc(tr(meta.type))+'</span><h2 id="business-model-dialog-title">'+esc(tr(item[0]))+'</h2></div></div><p>'+esc(tr(item[1]))+'</p><nav class="business-model-tabs" aria-label="'+esc(tr('Phần nội dung|Model sections'))+'">'+businessModelTabs.map((label,i)=>'<button type="button" data-model-tab="'+i+'" aria-pressed="'+(tab===i)+'" onclick="selectBusinessModel('+index+','+i+')">'+esc(tr(label))+'</button>').join('')+'</nav></header><div class="business-model-body" tabindex="0">'+content+'</div><footer class="business-model-footer"><button type="button" data-model-prev '+(index===0?'disabled':'')+' onclick="selectBusinessModel('+(index-1)+',0)">← '+esc(tr('Mô hình trước|Previous model'))+'</button><span>'+modelNumber(index)+' / '+String(businessModels().length).padStart(2,'0')+'</span><button type="button" data-model-next '+(index===businessModels().length-1?'disabled':'')+' onclick="selectBusinessModel('+(index+1)+',0)">'+esc(tr('Mô hình tiếp|Next model'))+' →</button></footer></div>';
+  }
+  window.openBusinessModel=(index,trigger)=>{
+    const dialog=byId('business-model-dialog');
+    if(!dialog||!businessModels()[index])return;
+    businessModelState.index=index;businessModelState.tab=0;businessModelState.trigger=trigger;
+    dialog.innerHTML=businessModelDetail(index,0);
+    if(!dialog.open)dialog.showModal();
+  };
+  window.selectBusinessModel=(index,tab)=>{
+    const dialog=byId('business-model-dialog');
+    if(!dialog?.open||!businessModels()[index]||!businessModelTabs[tab])return;
+    businessModelState.index=index;businessModelState.tab=tab;
+    dialog.innerHTML=businessModelDetail(index,tab);
+    dialog.querySelector('[data-model-tab="'+tab+'"]')?.focus({preventScroll:true});
+  };
+  window.closeBusinessModel=()=>{
+    const dialog=byId('business-model-dialog');
+    if(dialog?.open)dialog.close();
+  };
+  window.restoreBusinessModelFocus=()=>{
+    const trigger=businessModelState.trigger;businessModelState.trigger=null;
+    if(trigger?.isConnected)trigger.focus({preventScroll:true});
+  };
+
   const current={courseId:null,unitIndex:0};
   const completionSet=()=>new Set(state.deepCourseCompleted||[]);
   const completionKey=(course,unit)=>'deep|'+course.id+'|'+unit.id;
@@ -1113,7 +1173,7 @@
     const lens='<section class="lesson-depth-lens"><div class="lesson-lens-card"><small>'+esc(tr('ĐỘ SÂU|DEPTH'))+'</small><strong>'+esc(depthLabel(course))+'</strong><p>'+esc(tr('Trọng số kỳ thi: |Exam weight: '))+esc(tr(courseWeight(course)))+'</p></div>'+trap+bridge+'</section>';
     const objectives=depth?'<section class="lesson-block lesson-objectives"><h4>'+esc(tr('Sau bài này, bạn có thể|After this unit, you can'))+'</h4><ol>'+depth.objectives.map(item=>'<li>'+esc(tr(item))+'</li>').join('')+'</ol></section>':'';
     const deepDive=depth?'<section class="lesson-block lesson-deep-dive"><span class="lesson-section-kicker">'+esc(tr('GIẢI THÍCH CHUYÊN SÂU|DEEP EXPLANATION'))+'</span><h4>'+esc(tr('Từ khái niệm đến tư duy phân tích|From concept to analytical reasoning'))+'</h4>'+depth.deepDive.map(item=>'<p>'+rich(item)+'</p>').join('')+'</section>':'';
-    const theory=depth?.theories?'<section class="lesson-block lesson-theory"><div class="lesson-section-heading"><div><span class="lesson-section-kicker">'+esc(tr('THƯ VIỆN LÝ THUYẾT|THEORY LIBRARY'))+'</span><h4>'+esc(tr('Các mô hình và framework phải hiểu|Models and frameworks to understand'))+'</h4></div><span>'+depth.theories.length+' '+esc(tr('mô hình|models'))+'</span></div><div class="theory-grid">'+depth.theories.map((item,i)=>'<article class="theory-card"><span>'+String(i+1).padStart(2,'0')+'</span><h5>'+esc(tr(item[0]))+'</h5><p>'+esc(tr(item[1]))+'</p>'+(item[2]||[]).map(([label,body])=>'<p><strong>'+esc(tr(label))+'</strong><br>'+rich(body)+'</p>').join('')+'</article>').join('')+'</div></section>':'';
+    const theory=depth?.theories?'<section class="lesson-block lesson-theory"><div class="lesson-section-heading"><div><span class="lesson-section-kicker">'+esc(tr('THƯ VIỆN LÝ THUYẾT|THEORY LIBRARY'))+'</span><h4>'+esc(tr('Các mô hình và framework phải hiểu|Models and frameworks to understand'))+'</h4></div><span>'+depth.theories.length+' '+esc(tr('mô hình|models'))+'</span></div><div class="theory-grid">'+(course.id==='business-foundations'&&unit.id==='business-model'?businessModelCards(depth.theories):depth.theories.map((item,i)=>'<article class="theory-card"><span>'+String(i+1).padStart(2,'0')+'</span><h5>'+esc(tr(item[0]))+'</h5><p>'+esc(tr(item[1]))+'</p>'+(item[2]||[]).map(([label,body])=>'<p><strong>'+esc(tr(label))+'</strong><br>'+rich(body)+'</p>').join('')+'</article>').join(''))+'</div></section>':'';
     const checklist=depth?'<section class="lesson-block lesson-practitioner"><div><span class="lesson-section-kicker">'+esc(tr('QUY TRÌNH THỰC HÀNH|PRACTITIONER WORKFLOW'))+'</span><h4>'+esc(tr('Cách áp dụng khi phân tích thực tế|How to apply it in real analysis'))+'</h4></div><ol>'+depth.checklist.map(item=>'<li><span>'+String(depth.checklist.indexOf(item)+1).padStart(2,'0')+'</span><p>'+esc(tr(item))+'</p></li>').join('')+'</ol></section>':'';
     const situations=depth?.situations?'<section class="lesson-block situation-lab"><div class="lesson-section-heading"><div><span class="lesson-section-kicker">'+esc(tr('DECISION LAB|DECISION LAB'))+'</span><h4>'+esc(tr('Đặt bạn vào tình huống phải ra quyết định|Put yourself in the decision-maker’s seat'))+'</h4></div><span>'+depth.situations.length+' '+esc(tr('tình huống|situations'))+'</span></div>'+depth.situations.map((item,i)=>'<article class="situation-card"><div class="situation-index">'+String(i+1).padStart(2,'0')+'</div><div><h5>'+esc(tr(item.title))+'</h5><p>'+rich(item.context)+'</p><div class="situation-task"><strong>'+esc(tr('Nhiệm vụ của bạn|Your task'))+'</strong><p>'+rich(item.task)+'</p></div><details><summary>'+esc(tr('Mở hướng dẫn phân tích|Open analysis guidance'))+'</summary><p>'+rich(item.guidance)+'</p></details></div></article>').join('')+'</section>':'';
     const textbook=textbookHtml(course,unit);
@@ -1143,6 +1203,7 @@
       {label:'03 · '+tr('RA QUYẾT ĐỊNH|DECIDE'),indexes:[4]}
     ];
     const nav='<nav class="course-unit-nav" aria-label="'+esc(tr('Năm bài trong khóa học|Five course units'))+'"><div class="course-map-head"><span>'+esc(tr('BẢN ĐỒ KHÓA HỌC|COURSE MAP'))+'</span><strong>'+courseDone(course)+' / '+course.units.length+'</strong><div><i style="width:'+(courseDone(course)/course.units.length*100)+'%"></i></div></div>'+phaseDefs.map(phase=>'<section class="course-nav-phase"><h4>'+esc(phase.label)+'</h4>'+phase.indexes.map(index=>{const item=course.units[index],detail=foundationDepth[course.id]?.[item.id],finished=complete.has(completionKey(course,item));return '<button class="course-unit-button" aria-current="'+(index===current.unitIndex)+'" onclick="selectDeepUnit('+index+')"><span class="course-unit-number">'+String(index+1).padStart(2,'0')+'</span><span class="course-unit-copy"><span class="course-unit-name">'+esc(tr(item.title))+'</span>'+(detail?.objectives?.[0]?'<small>'+esc(tr(detail.objectives[0]))+'</small>':'')+'</span><span class="course-unit-check">'+(finished?'✓':'')+'</span></button>'}).join('')+'</section>').join('')+'</nav>';
+    if(businessModelState.trigger)window.closeBusinessModel();
     byId('drawer-los-list').innerHTML='<div class="course-modal-layout">'+nav+lessonHtml(course,unit,current.unitIndex)+'</div>';
   }
 
@@ -1194,7 +1255,7 @@
   window.refreshWorkspace=function(){priorRefresh();if(current.courseId)renderCourseModal()};
 
   const priorClose=window.closeLosDrawer;
-  window.closeLosDrawer=function(){current.courseId=null;priorClose()};
+  window.closeLosDrawer=function(){if(businessModelState.trigger)window.closeBusinessModel();current.courseId=null;priorClose()};
 })();
 
 

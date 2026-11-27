@@ -225,3 +225,60 @@ mark.inline-study-keyword{color:inherit;background:#fff0b3;border-radius:2px;pad
   .core-seminar{padding:18px}.core-model-formula{padding:14px}.core-case-solution li{grid-template-columns:1fr;gap:4px}
 }
 
+
+/* Business foundations: compact model library and native detail dialog. */
+.business-model-card.theory-card{display:flex;flex-direction:column;text-align:left;width:100%;min-height:0;padding:20px;gap:8px;cursor:pointer;color:#18181b;font:inherit;transition:border-color .15s,box-shadow .15s,background .15s}
+.business-model-card.theory-card:hover{border-color:#71717a;background:#fafafa;box-shadow:0 3px 12px #18181b0d}
+.business-model-card.theory-card:focus-visible,.business-model-dialog button:focus-visible{outline:2px solid #52525b;outline-offset:3px}
+.business-model-card.theory-card>span{font-family:inherit;color:inherit;line-height:1.5}
+.business-model-card.theory-card>.business-model-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.business-model-icon{display:inline-flex;flex:0 0 auto;align-items:center;justify-content:center;width:38px;height:38px;border-radius:8px;background:#f0f0f2;color:#27272a;font:600 23px/1 Inter,sans-serif}
+.business-model-number{font:600 11px/1.4 "JetBrains Mono",monospace;color:#71717a}
+.business-model-card.theory-card>.business-model-title{font-size:1.04rem;font-weight:700}
+.business-model-type,.business-model-card.theory-card>.business-model-type{color:#71717a;font-size:.75rem;font-weight:500}
+.business-model-card.theory-card>.business-model-summary{font-size:.875rem;font-weight:400;line-height:1.65;color:#52525b;margin:2px 0 8px}
+.business-model-card.theory-card>.business-model-card-link{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #e4e4e7;padding-top:12px;margin-top:auto;font-size:.8125rem;font-weight:650;color:#27272a}
+dialog.business-model-dialog{position:fixed;inset:0;margin:auto;padding:0;border:1px solid #d4d4d8;border-radius:12px;background:#fff;color:#18181b;width:min(960px,calc(100% - 40px));max-width:none;height:min(720px,calc(100dvh - 56px));max-height:none;overflow:hidden;box-shadow:0 24px 80px #18181b33;font:inherit}
+dialog.business-model-dialog:not([open]){display:none}
+dialog.business-model-dialog::backdrop{background:#18181b80;backdrop-filter:blur(3px)}
+.business-model-shell{display:grid;grid-template-rows:auto minmax(0,1fr) auto;height:100%;min-height:0}
+.business-model-header{padding:20px 28px 0;border-bottom:1px solid #e4e4e7}
+.business-model-header-top{display:flex;align-items:center;justify-content:space-between;color:#71717a;font:600 11px/1.5 "JetBrains Mono",monospace;letter-spacing:.06em}
+.business-model-close{width:34px;height:34px;border:0;border-radius:6px;background:#f4f4f5;color:#3f3f46;font:400 23px/1 sans-serif;cursor:pointer}
+.business-model-heading{display:flex;gap:14px;align-items:center;margin:7px 0 12px}
+.business-model-heading .business-model-icon{width:48px;height:48px;font-size:28px}
+.business-model-dialog .business-model-heading h2{font-size:clamp(1.3rem,3vw,1.85rem);font-weight:700;line-height:1.25;margin:3px 0 0;color:#18181b}
+.business-model-header>p{font-size:.9rem;line-height:1.55;color:#52525b;margin:0 0 16px}
+.business-model-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;background:#f4f4f5;border-radius:8px;padding:4px;margin-bottom:16px}
+.business-model-tabs button{border:0;background:transparent;border-radius:5px;padding:10px 5px;font:600 .82rem/1.3 Inter,sans-serif;color:#52525b;cursor:pointer}
+.business-model-tabs button[aria-pressed="true"]{background:#fff;box-shadow:0 1px 4px #18181b18;color:#18181b}
+.business-model-body{overflow:auto;overscroll-behavior:contain;padding:24px 28px 30px;min-height:0}
+.business-model-detail-section+.business-model-detail-section{margin-top:24px}
+.business-model-dialog .business-model-detail-section h3{font:650 1.05rem/1.5 Inter,sans-serif;color:#18181b;margin:0 0 10px}
+.business-model-dialog .business-model-detail-section p{font-size:1rem;line-height:1.85;color:#3f3f46;margin:0;overflow-wrap:anywhere}
+.business-model-flow{display:flex;gap:10px;align-items:center}
+.business-model-flow>div{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;text-align:center;min-height:86px;background:#f7f7f8;border:1px solid #e4e4e7;border-radius:8px;padding:12px}
+.business-model-flow>div>span{font-size:.7rem;color:#71717a}.business-model-flow strong{font-size:.85rem;font-weight:650}.business-model-flow-arrow{color:#71717a}
+.business-model-formula{background:#f4f4f5;border:1px solid #e4e4e7;border-radius:8px;padding:18px;margin-bottom:24px;display:grid;gap:9px}
+.business-model-formula>span{font:600 .7rem/1.4 "JetBrains Mono",monospace;color:#71717a;letter-spacing:.04em}.business-model-formula strong{font-size:1rem;line-height:1.65;overflow-wrap:anywhere}
+.business-model-example{padding:18px;border:1px solid #d4d4d8;border-radius:8px;background:#fafafa}
+.business-model-example-numbers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:15px}
+.business-model-example-numbers>div{display:grid;gap:10px;padding:14px;border:1px solid #e4e4e7;border-radius:8px}
+.business-model-example-numbers span{font-size:.75rem;color:#52525b}.business-model-example-numbers strong{font-size:1.6rem;line-height:1.2}.business-model-example-numbers .loss strong{color:#b44242}.business-model-example-numbers .gain strong{color:#26734d}
+.business-model-footnote{margin-top:10px;color:#71717a;font-size:.8rem}
+.business-model-related{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.business-model-related button{display:flex;justify-content:space-between;gap:6px;text-align:left;border:1px solid #e4e4e7;border-radius:6px;padding:12px;background:#fff;font-size:.875rem;cursor:pointer}
+.business-model-footer{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 28px;border-top:1px solid #e4e4e7;background:#fff}
+.business-model-footer>span{font:500 .75rem/1.5 "JetBrains Mono",monospace;color:#71717a;white-space:nowrap}
+.business-model-footer button{border:1px solid #d4d4d8;border-radius:6px;background:#fff;color:#27272a;padding:10px 14px;font:600 .82rem/1.4 Inter,sans-serif;cursor:pointer}
+.business-model-footer button[data-model-next]{background:#18181b;color:#fff;border-color:#18181b}
+.business-model-footer button:disabled{opacity:.35;cursor:default}
+@media(max-width:600px){
+  dialog.business-model-dialog{width:calc(100% - 16px);height:calc(100dvh - 20px);border-radius:9px}
+  .business-model-header{padding:13px 16px 0}.business-model-body{padding:18px 16px}.business-model-footer{padding:12px 16px}
+  .business-model-tabs{grid-template-columns:repeat(2,minmax(0,1fr));margin-bottom:12px}.business-model-tabs button{padding:7px 4px}
+  .business-model-header>p{font-size:.82rem;margin-bottom:12px}.business-model-heading{margin:4px 0 8px}
+  .business-model-flow{flex-direction:column}.business-model-flow>div{width:100%;min-height:56px}.business-model-flow-arrow{transform:rotate(90deg)}
+  .business-model-related{grid-template-columns:1fr}.business-model-example-numbers{grid-template-columns:1fr}
+  .business-model-footer button{padding:8px;font-size:.75rem}
+}
