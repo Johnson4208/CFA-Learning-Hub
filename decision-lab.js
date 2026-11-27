@@ -126,5 +126,5 @@ function complete(){
  root.querySelector('#dl-restart').onclick=()=>{game=null;setup()};
 }
 window.CFA_DECISION_LAB={render(el){root=el;if(game)play();else setup()},select(c,u){courseId=c;selection=[u];game=null}};
-window.openDecisionLabFromLesson=(c,u)=>{window.CFA_DECISION_LAB.select(c,u);closeLosDrawer();quizMode='decision';switchTab('quiz')};
+window.openDecisionLabFromLesson=(c,u)=>{window.CFA_DECISION_LAB.select(c,u);closeLosDrawer();setQuizMode('decision');switchTab('quiz')};
 })();
