@@ -141,16 +141,61 @@
 .lesson-complete.done{background:#fff;color:#18181b}
 .lesson-source{font-size:11px;color:#71717a;text-decoration:underline;text-underline-offset:3px}
 .course-phase-note{padding:18px;border:1px solid #d4d4d8;border-radius:8px;background:#fafafa;color:#52525b;font-size:13px;line-height:1.7}
+.textbook-reading{margin-top:28px;overflow-wrap:anywhere}
+.textbook-route{border-left:3px solid #18181b;padding:2px 0 2px 18px}
+.textbook-route>span,.textbook-references>span{display:block;font:600 .75rem/1.5 "JetBrains Mono",monospace;color:#71717a;letter-spacing:.04em}
+.textbook-route p{font-size:.9375rem;line-height:1.8;color:#52525b;margin-top:7px}
+.textbook-toc{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 8px;padding:16px 0;border-top:1px solid #e4e4e7;border-bottom:1px solid #e4e4e7}
+.textbook-toc button{background:#fff;border:1px solid #d4d4d8;border-radius:5px;padding:8px 11px;font-size:.875rem;line-height:1.5;text-align:left;cursor:pointer;transition:background .15s}
+.textbook-toc button:hover{background:#f4f4f5;border-color:#71717a}
+.textbook-toc button:focus-visible,.textbook-recall textarea:focus-visible{outline:2px solid #18181b;outline-offset:3px}
+.textbook-section{padding:26px 0;border-bottom:1px solid #e4e4e7;scroll-margin-top:20px}
+.textbook-section h4,.textbook-models>h4,.textbook-worked h4,.textbook-recall h4{font-size:1.2rem;font-weight:650;line-height:1.5;letter-spacing:-.015em;margin:0 0 12px}
+.textbook-section p,.textbook-models p,.textbook-worked p,.textbook-recall>p,.textbook-recall details p{font-size:1rem;line-height:1.9;color:#3f3f46;max-width:72ch}
+.textbook-table-wrap{overflow:auto;margin:26px 0;border:1px solid #d4d4d8;border-radius:8px}
+.textbook-table-wrap table{width:100%;border-collapse:collapse;text-align:left;font-size:.9375rem;line-height:1.7}
+.textbook-table-wrap th,.textbook-table-wrap td{padding:13px 16px;border-bottom:1px solid #e4e4e7;vertical-align:top}
+.textbook-table-wrap thead th{background:#f4f4f5;font-weight:650}
+.textbook-table-wrap tbody th{width:31%;font-weight:600}
+.textbook-table-wrap tr:last-child>*{border-bottom:0}
+.textbook-models{margin-top:28px}
+.textbook-models article{margin-top:18px;border:1px solid #d4d4d8;border-radius:9px;padding:22px}
+.textbook-models h5{font-size:1.1rem;font-weight:650;margin-bottom:11px}
+.model-worked{border-left:2px solid #a1a1aa;margin-top:18px;padding:4px 0 4px 16px}
+.model-worked strong{font-size:.875rem;font-weight:650}
+.model-worked p{margin-top:7px}
+.textbook-models .model-watch{font-size:.9375rem;margin-top:16px;color:#52525b}
+.textbook-worked,.textbook-recall{margin-top:28px;padding:24px;border:1px solid #d4d4d8;border-radius:9px}
+.textbook-worked{border-color:#a1a1aa;background:#fafafa}
+.textbook-worked>div{margin-top:20px;padding-top:18px;border-top:1px solid #d4d4d8}
+.textbook-worked strong{font-size:.9375rem;font-weight:650}
+.textbook-worked>div p{margin-top:8px}
+.textbook-recall label{display:block;font-size:.875rem;font-weight:600;margin:20px 0 9px}
+.textbook-recall textarea{display:block;width:100%;resize:vertical;min-height:128px;padding:13px 15px;border:1px solid #a1a1aa;background:#fff;border-radius:6px;font:400 1rem/1.8 Inter,sans-serif;color:#18181b}
+.textbook-recall textarea::placeholder{color:#71717a}
+.textbook-recall>small{display:block;font-size:.8125rem;color:#71717a;line-height:1.6;margin-top:9px}
+.textbook-recall details{margin-top:18px;border-top:1px solid #e4e4e7;padding-top:16px}
+.textbook-recall summary{font-size:.9375rem;font-weight:600;cursor:pointer;list-style:none;text-decoration:underline;text-underline-offset:4px}
+.textbook-recall summary::-webkit-details-marker{display:none}
+.textbook-recall details[open] summary{margin-bottom:14px}
+.textbook-references{margin-top:24px;padding:18px 0;border-bottom:1px solid #d4d4d8;display:flex;flex-wrap:wrap;gap:10px 18px}
+.textbook-references>span{flex-basis:100%}
+.textbook-references a{font-size:.875rem;text-decoration:underline;text-underline-offset:3px}
+.lesson-formula{overflow-x:auto}
+.lesson-formula h4{font-size:.9375rem;font-weight:650;margin-bottom:12px}
+.lesson-formula p{font-size:.9375rem;line-height:1.8;margin-top:13px;color:#52525b}
+.lesson-formula math{font-size:1.35rem;min-width:max-content;padding:8px 0}
 
 @media(max-width:760px){
   .course-roadmap-intro{grid-template-columns:1fr;padding:20px}.course-roadmap-summary{border-left:0;border-top:1px solid #e4e4e7;padding:16px 0 0}
   .exam-blueprint{grid-template-columns:1fr;padding:18px}.exam-blueprint-facts{border-left:0;border-top:1px solid #3f3f46;padding:14px 0 0}.mastery-gates{grid-template-columns:repeat(2,minmax(0,1fr))}
   .course-grid{grid-template-columns:1fr}.course-section-head{align-items:start;flex-direction:column}.course-section-head p{text-align:left}
-  #los-drawer .module-modal-card{max-height:94vh}.course-modal-layout{grid-template-columns:1fr;height:calc(94vh - 128px);min-height:0}
+  #los-drawer .module-modal-card{max-height:94vh}.course-modal-layout{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);height:calc(94vh - 128px);min-height:0}
   .course-unit-nav{display:flex;gap:7px;border-right:0;border-bottom:1px solid #e4e4e7;overflow-x:auto;padding:11px}.course-map-head,.course-nav-phase h4{display:none}.course-nav-phase{display:flex;gap:7px}.course-nav-phase+.course-nav-phase{margin:0;padding:0;border:0}
   .course-unit-button{min-width:210px;grid-template-columns:24px minmax(0,1fr) 12px;padding:10px}.course-unit-button+.course-unit-button{margin-top:0}
   .course-unit-detail{padding:22px 18px 32px}.lesson-points{grid-template-columns:1fr}.course-unit-detail h3{font-size:22px}
   .lesson-practitioner{grid-template-columns:1fr;gap:16px;padding:18px}
   .theory-grid{grid-template-columns:1fr}.theory-card{min-height:0}.lesson-section-heading{align-items:start;flex-direction:column}.situation-card{grid-template-columns:32px minmax(0,1fr);gap:10px}
+  .course-unit-copy small{display:none}.course-unit-nav{max-height:100px}.textbook-models article,.textbook-worked,.textbook-recall{padding:18px}.textbook-section p,.textbook-models p,.textbook-worked p,.textbook-recall>p,.textbook-recall details p{font-size:1rem;line-height:1.85}
 }
 
