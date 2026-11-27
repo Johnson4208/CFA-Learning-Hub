@@ -44,17 +44,26 @@
 .mastery-gates{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid #3f3f46;padding-top:16px;gap:8px}
 .mastery-gates span{font:600 10px/1.4 "JetBrains Mono",monospace;color:#d4d4d8;letter-spacing:.05em}
 
-#los-drawer .module-modal-card{max-width:1080px;max-height:92vh}
+#los-drawer .module-modal-card{max-width:1180px;max-height:92vh}
 #drawer-los-list{padding:0!important;background:#fff}
-.course-modal-layout{display:grid;grid-template-columns:270px minmax(0,1fr);height:min(690px,calc(92vh - 122px));min-height:520px}
-.course-unit-nav{padding:18px 14px;border-right:1px solid #e4e4e7;background:#fafafa;overflow-y:auto}
-.course-unit-nav-label{display:block;margin:2px 8px 12px;font:600 10px/1.4 "JetBrains Mono",monospace;letter-spacing:.12em;color:#71717a;text-transform:uppercase}
-.course-unit-button{width:100%;display:grid;grid-template-columns:30px minmax(0,1fr) 16px;align-items:start;gap:9px;padding:12px 10px;border:1px solid transparent;border-radius:7px;background:transparent;text-align:left;color:#3f3f46;cursor:pointer}
+.course-modal-layout{display:grid;grid-template-columns:315px minmax(0,1fr);height:min(720px,calc(92vh - 122px));min-height:540px}
+.course-unit-nav{padding:18px 14px 24px;border-right:1px solid #e4e4e7;background:#fafafa;overflow-y:auto}
+.course-map-head{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px;margin:0 7px 19px}
+.course-map-head>span{font:600 10px/1.4 "JetBrains Mono",monospace;letter-spacing:.12em;color:#52525b}
+.course-map-head>strong{font:600 10px/1.4 "JetBrains Mono",monospace;color:#18181b}
+.course-map-head>div{grid-column:1/-1;height:3px;border-radius:99px;background:#e4e4e7;overflow:hidden}
+.course-map-head i{display:block;height:100%;background:#18181b}
+.course-nav-phase+.course-nav-phase{margin-top:16px;padding-top:14px;border-top:1px solid #e4e4e7}
+.course-nav-phase h4{margin:0 8px 7px;color:#a1a1aa;font:600 8px/1.4 "JetBrains Mono",monospace;letter-spacing:.12em}
+.course-unit-button{width:100%;display:grid;grid-template-columns:28px minmax(0,1fr) 16px;align-items:start;gap:8px;padding:11px 10px;border:1px solid transparent;border-radius:7px;background:transparent;text-align:left;color:#3f3f46;cursor:pointer}
 .course-unit-button+.course-unit-button{margin-top:5px}
 .course-unit-button:hover{background:#fff;border-color:#e4e4e7}
 .course-unit-button[aria-current="true"]{background:#18181b;border-color:#18181b;color:#fff}
 .course-unit-number{font:600 10px/1.5 "JetBrains Mono",monospace;opacity:.65}
 .course-unit-name{font-size:12px;line-height:1.45;font-weight:600}
+.course-unit-copy{display:grid;gap:5px}
+.course-unit-copy small{display:-webkit-box;overflow:hidden;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:9px;line-height:1.45;font-weight:400;opacity:.62}
+.course-unit-button[aria-current="true"] .course-unit-copy small{opacity:.7}
 .course-unit-check{font-size:12px;color:inherit;opacity:.75}
 .course-unit-detail{overflow-y:auto;padding:30px 34px 40px;scrollbar-gutter:stable}
 .lesson-kicker{font:600 10px/1.4 "JetBrains Mono",monospace;letter-spacing:.12em;color:#71717a;text-transform:uppercase}
@@ -78,6 +87,14 @@
 .lesson-deep-dive{padding-top:26px}
 .lesson-deep-dive h4{font-size:18px;margin-bottom:12px;letter-spacing:-.01em}
 .lesson-deep-dive p+p{margin-top:12px}
+.lesson-section-heading{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:14px}
+.lesson-section-heading h4{font-size:18px;letter-spacing:-.01em;margin:0}
+.lesson-section-heading>span{flex:0 0 auto;padding:5px 8px;border:1px solid #e4e4e7;border-radius:999px;color:#71717a;font:600 9px/1.3 "JetBrains Mono",monospace}
+.theory-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.theory-card{position:relative;min-height:142px;padding:16px;border:1px solid #d4d4d8;border-radius:8px;background:#fff}
+.theory-card>span{display:block;color:#a1a1aa;font:600 9px/1.4 "JetBrains Mono",monospace}
+.theory-card h5{margin-top:14px;font-size:14px;line-height:1.35;font-weight:650}
+.theory-card p{margin-top:8px;color:#62626d;font-size:11px;line-height:1.6}
 .lesson-practitioner{display:grid;grid-template-columns:minmax(180px,.7fr) minmax(0,1.3fr);gap:26px;padding:22px;border:1px solid #18181b;border-radius:8px;background:#18181b;color:#fff}
 .lesson-practitioner h4{color:#fff;line-height:1.45;margin:0}
 .lesson-practitioner .lesson-section-kicker{color:#a1a1aa}
@@ -86,6 +103,18 @@
 .lesson-practitioner li:first-child{border-top:0;padding-top:0}
 .lesson-practitioner li span{color:#a1a1aa;font:600 9px/1.7 "JetBrains Mono",monospace}
 .lesson-practitioner li p{margin:0;color:#e4e4e7;font-size:12px;line-height:1.55}
+.situation-lab{padding-top:28px}
+.situation-card{display:grid;grid-template-columns:42px minmax(0,1fr);gap:15px;padding:20px 0;border-top:1px solid #d4d4d8}
+.situation-card:last-child{border-bottom:1px solid #d4d4d8}
+.situation-index{display:grid;place-items:center;width:34px;height:34px;border:1px solid #18181b;border-radius:50%;font:600 9px/1 "JetBrains Mono",monospace}
+.situation-card h5{font-size:15px;line-height:1.4;font-weight:650}
+.situation-card>div>p{margin-top:8px;color:#62626d;font-size:12px;line-height:1.65}
+.situation-task{margin-top:13px;padding:13px 14px;border-left:2px solid #18181b;background:#fafafa}
+.situation-task strong{display:block;font-size:10px;letter-spacing:.04em}
+.situation-task p{margin-top:6px;color:#3f3f46;font-size:12px;line-height:1.6}
+.situation-card details{margin-top:12px}
+.situation-card summary{cursor:pointer;font-size:11px;font-weight:650;text-decoration:underline;text-underline-offset:3px}
+.situation-card details p{margin-top:10px;color:#52525b;font-size:12px;line-height:1.65}
 .lesson-points{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px}
 .lesson-point{padding:13px 14px;border:1px solid #e4e4e7;border-radius:7px;background:#fafafa;color:#3f3f46;font-size:12px;line-height:1.55}
 .lesson-case{margin-top:26px;padding:21px;border:1px solid #a1a1aa;border-radius:8px;background:#fff}
@@ -118,9 +147,10 @@
   .exam-blueprint{grid-template-columns:1fr;padding:18px}.exam-blueprint-facts{border-left:0;border-top:1px solid #3f3f46;padding:14px 0 0}.mastery-gates{grid-template-columns:repeat(2,minmax(0,1fr))}
   .course-grid{grid-template-columns:1fr}.course-section-head{align-items:start;flex-direction:column}.course-section-head p{text-align:left}
   #los-drawer .module-modal-card{max-height:94vh}.course-modal-layout{grid-template-columns:1fr;height:calc(94vh - 128px);min-height:0}
-  .course-unit-nav{display:flex;gap:7px;border-right:0;border-bottom:1px solid #e4e4e7;overflow-x:auto;padding:11px}.course-unit-nav-label{display:none}
-  .course-unit-button{min-width:190px;grid-template-columns:24px minmax(0,1fr) 12px;padding:10px}.course-unit-button+.course-unit-button{margin-top:0}
+  .course-unit-nav{display:flex;gap:7px;border-right:0;border-bottom:1px solid #e4e4e7;overflow-x:auto;padding:11px}.course-map-head,.course-nav-phase h4{display:none}.course-nav-phase{display:flex;gap:7px}.course-nav-phase+.course-nav-phase{margin:0;padding:0;border:0}
+  .course-unit-button{min-width:210px;grid-template-columns:24px minmax(0,1fr) 12px;padding:10px}.course-unit-button+.course-unit-button{margin-top:0}
   .course-unit-detail{padding:22px 18px 32px}.lesson-points{grid-template-columns:1fr}.course-unit-detail h3{font-size:22px}
   .lesson-practitioner{grid-template-columns:1fr;gap:16px;padding:18px}
+  .theory-grid{grid-template-columns:1fr}.theory-card{min-height:0}.lesson-section-heading{align-items:start;flex-direction:column}.situation-card{grid-template-columns:32px minmax(0,1fr);gap:10px}
 }
 
