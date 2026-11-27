@@ -47,24 +47,24 @@
 #los-drawer .module-modal-card{max-width:1180px;max-height:92vh}
 #drawer-los-list{padding:0!important;background:#fff}
 .course-modal-layout{display:grid;grid-template-columns:315px minmax(0,1fr);height:min(720px,calc(92vh - 122px));min-height:540px}
-.course-unit-nav{padding:18px 14px 24px;border-right:1px solid #e4e4e7;background:#fafafa;overflow-y:auto}
-.course-map-head{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px;margin:0 7px 19px}
-.course-map-head>span{font:600 10px/1.4 "JetBrains Mono",monospace;letter-spacing:.12em;color:#52525b}
-.course-map-head>strong{font:600 10px/1.4 "JetBrains Mono",monospace;color:#18181b}
-.course-map-head>div{grid-column:1/-1;height:3px;border-radius:99px;background:#e4e4e7;overflow:hidden}
+.course-unit-nav{min-width:0;min-height:0;padding:17px 16px 18px;border-right:1px solid #e4e4e7;background:#f8f8f9;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#d4d4d8 transparent;font-family:Inter,system-ui,sans-serif}
+.course-map-head{display:grid;grid-template-columns:1fr auto;align-items:center;gap:9px;margin:0 5px 17px}
+.course-map-head>span{font:650 10px/1.4 Inter,system-ui,sans-serif;letter-spacing:.095em;color:#52525b}
+.course-map-head>strong{font:600 11px/1.4 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;color:#52525b}
+.course-map-head>div{grid-column:1/-1;height:4px;border-radius:99px;background:#e4e4e7;overflow:hidden}
 .course-map-head i{display:block;height:100%;background:#18181b}
-.course-nav-phase+.course-nav-phase{margin-top:16px;padding-top:14px;border-top:1px solid #e4e4e7}
-.course-nav-phase h4{margin:0 8px 7px;color:#a1a1aa;font:600 8px/1.4 "JetBrains Mono",monospace;letter-spacing:.12em}
-.course-unit-button{width:100%;display:grid;grid-template-columns:28px minmax(0,1fr) 16px;align-items:start;gap:8px;padding:11px 10px;border:1px solid transparent;border-radius:7px;background:transparent;text-align:left;color:#3f3f46;cursor:pointer}
-.course-unit-button+.course-unit-button{margin-top:5px}
+.course-nav-phase+.course-nav-phase{margin-top:12px;padding-top:12px;border-top:1px solid #e4e4e7}
+.course-nav-phase h4{margin:0 5px 6px;color:#71717a;font:600 9px/1.4 Inter,system-ui,sans-serif;letter-spacing:.08em}
+.course-unit-button{width:100%;display:grid;grid-template-columns:22px minmax(0,1fr) auto;align-items:start;gap:7px;padding:10px 9px;border:1px solid transparent;border-radius:7px;background:transparent;text-align:left;color:#3f3f46;cursor:pointer;font-family:inherit;transition:background .15s,border-color .15s}
+.course-unit-button+.course-unit-button{margin-top:3px}
 .course-unit-button:hover{background:#fff;border-color:#e4e4e7}
-.course-unit-button[aria-current="true"]{background:#18181b;border-color:#18181b;color:#fff}
-.course-unit-number{font:600 10px/1.5 "JetBrains Mono",monospace;opacity:.65}
-.course-unit-name{font-size:12px;line-height:1.45;font-weight:600}
-.course-unit-copy{display:grid;gap:5px}
-.course-unit-copy small{display:-webkit-box;overflow:hidden;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:9px;line-height:1.45;font-weight:400;opacity:.62}
-.course-unit-button[aria-current="true"] .course-unit-copy small{opacity:.7}
-.course-unit-check{font-size:12px;color:inherit;opacity:.75}
+.course-unit-button[aria-current="true"]{background:#e9eaed;border-color:#d5d7dc;color:#18181b;box-shadow:inset 3px 0 0 #343840}
+.course-unit-number{display:flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:5px;background:#ececef;color:#66666f;font:600 10px/1 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}.course-unit-button[aria-current="true"] .course-unit-number{background:#343840;color:#fff}
+.course-unit-name{font-size:12px;line-height:1.4;font-weight:550;letter-spacing:-.01em;overflow-wrap:anywhere}.course-unit-button[aria-current="true"] .course-unit-name{font-weight:650}
+.course-unit-copy{display:grid;min-width:0;gap:4px;padding-top:2px}
+.course-unit-copy small{display:-webkit-box;overflow:hidden;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:9.75px;line-height:1.45;font-weight:400;color:#676772;opacity:1}
+.course-unit-button[aria-current="true"] .course-unit-copy small{color:#52525b;opacity:1}
+.course-unit-check{font-size:11px;line-height:22px;color:#287450;font-weight:650}.course-unit-check:empty{display:none}
 .course-unit-detail{overflow-y:auto;padding:30px 34px 40px;scrollbar-gutter:stable}
 .lesson-kicker{font:600 10px/1.4 "JetBrains Mono",monospace;letter-spacing:.12em;color:#71717a;text-transform:uppercase}
 .course-unit-detail h3{margin-top:8px;font-size:25px;line-height:1.2;font-weight:650;letter-spacing:-.025em}
@@ -217,7 +217,7 @@ mark.inline-study-keyword{color:inherit;background:#fff0b3;border-radius:2px;pad
   .course-grid{grid-template-columns:1fr}.course-section-head{align-items:start;flex-direction:column}.course-section-head p{text-align:left}
   #los-drawer .module-modal-card{max-height:94vh}.course-modal-layout{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);height:calc(94vh - 128px);min-height:0}
   .course-unit-nav{display:flex;gap:7px;border-right:0;border-bottom:1px solid #e4e4e7;overflow-x:auto;padding:11px}.course-map-head,.course-nav-phase h4{display:none}.course-nav-phase{display:flex;gap:7px}.course-nav-phase+.course-nav-phase{margin:0;padding:0;border:0}
-  .course-unit-button{min-width:210px;grid-template-columns:24px minmax(0,1fr) 12px;padding:10px}.course-unit-button+.course-unit-button{margin-top:0}
+  .course-unit-button{min-width:190px;grid-template-columns:22px minmax(0,1fr) auto;padding:8px}.course-unit-button+.course-unit-button{margin-top:0}
   .course-unit-detail{padding:22px 18px 32px}.lesson-points{grid-template-columns:1fr}.course-unit-detail h3{font-size:22px}
   .lesson-practitioner{grid-template-columns:1fr;gap:16px;padding:18px}
   .theory-grid{grid-template-columns:1fr}.theory-card{min-height:0}.lesson-section-heading{align-items:start;flex-direction:column}.situation-card{grid-template-columns:32px minmax(0,1fr);gap:10px}
@@ -282,3 +282,6 @@ dialog.business-model-dialog::backdrop{background:#18181b80;backdrop-filter:blur
   .business-model-related{grid-template-columns:1fr}.business-model-example-numbers{grid-template-columns:1fr}
   .business-model-footer button{padding:8px;font-size:.75rem}
 }
+
+/* Course map keyboard navigation */
+.course-unit-button:focus-visible{outline:2px solid #71717a;outline-offset:2px}
