@@ -185,6 +185,30 @@
 .lesson-formula h4{font-size:.9375rem;font-weight:650;margin-bottom:12px}
 .lesson-formula p{font-size:.9375rem;line-height:1.8;margin-top:13px;color:#52525b}
 .lesson-formula math{font-size:1.35rem;min-width:max-content;padding:8px 0}
+.textbook-toc .core-toc-link{background:#18181b;color:#fff;border-color:#18181b}
+.core-seminar{margin-top:30px;padding:24px;border:1px solid #18181b;border-radius:9px;background:#fff;scroll-margin-top:20px}
+.core-seminar h4{font-size:1.25rem;line-height:1.5;font-weight:650;margin:10px 0 14px;letter-spacing:-.015em}
+.core-seminar p,.core-seminar dd{font-size:1rem;line-height:1.9;color:#3f3f46;overflow-wrap:anywhere}
+.core-model-formula{background:#fafafa;border:1px solid #d4d4d8;border-radius:7px;padding:18px;margin-top:22px;overflow-x:auto}
+.core-model-formula h5{font-size:1rem;font-weight:650;margin-bottom:12px}
+.core-model-formula math{display:block;font-size:1.3rem;min-width:max-content;padding:12px 0}
+.core-model-formula>p{margin-top:12px}
+.core-model-formula dt{font-size:.875rem;font-weight:650;margin:14px 0 5px}
+.core-model-formula dd{font-size:.9375rem}
+.core-case-response{margin-top:22px}
+.core-case-response label{display:block;font-size:.9375rem;line-height:1.65;font-weight:600;margin-bottom:10px}
+.core-case-response textarea{display:block;width:100%;resize:vertical;min-height:132px;border:1px solid #a1a1aa;border-radius:6px;background:#fff;padding:13px 15px;font:400 1rem/1.8 Inter,sans-serif;color:#18181b}
+.core-case-response textarea::placeholder{color:#71717a}
+.core-case-response textarea:focus-visible{outline:2px solid #18181b;outline-offset:3px}
+.core-case-response small{display:block;color:#71717a;font-size:.8125rem;line-height:1.65;margin-top:9px}
+.core-case-solution{margin-top:20px;border-top:1px solid #d4d4d8;padding-top:18px}
+.core-case-solution summary{cursor:pointer;list-style:none;font-size:.9375rem;font-weight:650;text-decoration:underline;text-underline-offset:4px}
+.core-case-solution summary::-webkit-details-marker{display:none}
+.core-case-solution ol{display:grid;gap:0;margin-top:17px;list-style:none}
+.core-case-solution li{display:grid;grid-template-columns:70px minmax(0,1fr);gap:15px;border-top:1px solid #e4e4e7;padding:15px 0}
+.core-case-solution li>span{font-size:.8125rem;color:#71717a;font-weight:600;line-height:1.9}
+.core-case-decision{background:#f4f4f5;border-radius:6px;padding:17px;margin-top:14px}
+.core-case-decision strong{display:block;font-size:.9375rem;font-weight:650;margin-bottom:8px}
 
 @media(max-width:760px){
   .course-roadmap-intro{grid-template-columns:1fr;padding:20px}.course-roadmap-summary{border-left:0;border-top:1px solid #e4e4e7;padding:16px 0 0}
@@ -197,5 +221,6 @@
   .lesson-practitioner{grid-template-columns:1fr;gap:16px;padding:18px}
   .theory-grid{grid-template-columns:1fr}.theory-card{min-height:0}.lesson-section-heading{align-items:start;flex-direction:column}.situation-card{grid-template-columns:32px minmax(0,1fr);gap:10px}
   .course-unit-copy small{display:none}.course-unit-nav{max-height:100px}.textbook-models article,.textbook-worked,.textbook-recall{padding:18px}.textbook-section p,.textbook-models p,.textbook-worked p,.textbook-recall>p,.textbook-recall details p{font-size:1rem;line-height:1.85}
+  .core-seminar{padding:18px}.core-model-formula{padding:14px}.core-case-solution li{grid-template-columns:1fr;gap:4px}
 }
 

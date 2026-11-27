@@ -12,6 +12,7 @@ ctx.escapeText=value=>String(value).replaceAll('&','&amp;').replaceAll('<','&lt;
 ctx.translated=value=>value.split('|')[ctx.state.lang==='en'?1:0];
 vm.createContext(ctx);
 vm.runInContext(read('course-textbook.js'),ctx);
+vm.runInContext(read('core-depth.js'),ctx);
 const html=read('index.html');
 vm.runInContext(html.slice(html.indexOf('function equation(source)'),html.indexOf('const caseExtensions =')),ctx);
 const src=read('deep-course.js');
@@ -39,10 +40,26 @@ for(const course of courseList){
       assert.ok(rendered.includes(ctx.escapeText(ctx.translated(chapter.question))));
       assert.ok(rendered.includes(ctx.escapeText(ctx.translated(chapter.answer))));
       assert.ok(!rendered.includes('undefined'));
-      assert.ok(!rendered.includes('|'),'untranslated separator');
+      assert.ok(!rendered.replace(/<math\b[\s\S]*?<\/math>/g,'').includes('|'),'untranslated separator outside mathematical conditions');
       const ids=[...rendered.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
       assert.equal(new Set(ids).size,ids.length,'duplicate IDs');
       if(unit.formula){assert.ok(rendered.includes('<math '));assert.ok(!rendered.includes('frac('))}
+      if(course.group==='core'){
+        assert.ok(chapter.seminar,'missing core seminar');
+        assert.equal(chapter.seminar.sections.length,3);
+        assert.equal(chapter.seminar.steps.length,3);
+        assert.ok(rendered.includes('id="core-seminar"'));
+        assert.ok(rendered.includes('id="core-case-answer"'));
+        assert.ok(rendered.includes(ctx.escapeText(ctx.translated(chapter.seminar.decision))));
+        for(const text of [chapter.seminar.title,chapter.seminar.facts,chapter.seminar.decision,...chapter.seminar.steps])bilingual(text,'core case');
+        if(chapter.seminar.formula){
+          const f=chapter.seminar.formula;
+          for(const text of [f.symbols,f.use,f.limits])bilingual(text,'formula explanation');
+          const markup=ctx.equation(f.code);
+          assert.ok(!markup.includes('frac('));
+          assert.ok(markup.startsWith('<math '));
+        }
+      }else assert.ok(!chapter.seminar,'core additions leaked to non-core lessons');
       renders++;
     }
   }
@@ -61,6 +78,16 @@ assert.ok(ctx.state.deepCourseCompleted.includes('deep|business-foundations|busi
 ctx.openQuickAccess();
 assert.equal(ctx.state.deepCourseLast.courseId,'business-foundations');
 assert.equal(ctx.state.deepCourseLast.unitIndex,0);
+ctx.state.lang='vi';ctx.openDeepCourse('quantitative',1);
+ctx.saveDeepCoreDraft('<img src=x onerror=alert(1)>');ctx.selectDeepUnit(1);
+assert.ok(node('drawer-los-list').innerHTML.includes('&lt;img src=x onerror=alert(1)&gt;'));
+ctx.selectDeepUnit(0);
+assert.ok(!node('drawer-los-list').innerHTML.includes('&lt;img'));
+ctx.selectDeepUnit(1);ctx.state.lang='en';ctx.selectDeepUnit(1);
+assert.ok(!node('drawer-los-list').innerHTML.includes('&lt;img'));
+ctx.saveDeepCoreDraft('My core explanation');ctx.selectDeepUnit(1);
+assert.ok(node('drawer-los-list').innerHTML.includes('My core explanation'));
+assert.ok(!ctx.state.deepTextbookDrafts['quantitative|probability|en']);
 for(const formula of ['WACC=wₑrₑ+w_d r_d(1−T)','PV=frac(CF₁;1+r)+frac(CF₂;(1+r)²)','σₚ²=w₁²σ₁²+w₂²σ₂²','SE=frac(s;√n)']){
  const rendered=ctx.equation(formula);assert.ok(rendered.startsWith('<math '));assert.ok(!rendered.includes('<mi>_</mi>'));assert.ok(!rendered.includes('frac('));
 }
@@ -69,4 +96,30 @@ assert.ok(ctx.equation('x₁').includes('<msub>'));
 assert.ok(ctx.equation('frac(a;b)').includes('<mfrac>'));
 assert.ok(ctx.equation('√n').includes('<msqrt>'));
 assert.ok(html.indexOf('src="course-textbook.js')<html.indexOf('src="deep-course.js'));
-console.log(JSON.stringify({courses:courseList.length,lessons:80,explanatorySections:sections,bilingualRenders:renders,workedExamples:80,explainedSelfChecks:80,businessModels:12,drafts:'saved, isolated and escaped',progress:'preserved',math:'fractions, scripts and roots checked'}));
+assert.ok(html.indexOf('src="course-textbook.js')<html.indexOf('src="core-depth.js'));
+assert.ok(html.indexOf('src="core-depth.js')<html.indexOf('src="deep-course.js'));
+assert.equal(Object.keys(ctx.CFA_CORE_SEMINARS).length,10);
+assert.equal(Object.values(ctx.CFA_CORE_SEMINARS).reduce((n,c)=>n+Object.keys(c).length,0),50);
+const near=(actual,expected,tolerance=0.0001)=>assert.ok(Math.abs(actual-expected)<tolerance,`${actual} versus ${expected}`);
+near(55/1.1+55/1.1**2,95.454545);
+near(.8*.3/(.8*.3+.2*.7),.631578947);
+near(.05/Math.sqrt(100),.005);
+near(.8/.3,2.6666667);
+near(14-6*.5-1,10);
+near(110*920-100*1000,1200);
+near((110-70)*920-(100-60)*1000,-3200);
+near(25000*1.04/1.02,25490.196078);
+near(98*.12*20/365,.64438356);
+near(-120+70/1.1+90/1.1**2,18.016529);
+near(.75*.12+.25*.06*.75,.10125);
+near(10/1.09+218/1.09**2,192.660550);
+near(Math.sqrt(105/95.2)-1,.050210063);
+near(-5*.01+.5*40*.01**2,-.048);
+near(10/1.05,9.5238095);
+near(.09/1.87,.04812834);
+near((120-2)-.2*(120-2-100),114.4);
+near(Math.sqrt(.5**2*.2**2+.5**2*.2**2),.141421356);
+near(Math.pow(2,.2)-1,.148698355);
+near(((100*.8)-10)*1.25-10,77.5);
+near(((100*1.25)-10)*.8-10,82);
+console.log(JSON.stringify({courses:courseList.length,lessons:80,explanatorySections:sections,bilingualRenders:renders,coreCourses:10,coreDeepCases:50,newCoreSections:150,coreStepExplanations:150,independentNumericalChecks:21,businessModels:12,drafts:'foundation and core saved, isolated and escaped',progress:'preserved',math:'fractions, scripts, roots and conditional probability checked'}));
