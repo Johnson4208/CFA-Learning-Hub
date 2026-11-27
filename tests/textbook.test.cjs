@@ -13,6 +13,7 @@ ctx.translated=value=>value.split('|')[ctx.state.lang==='en'?1:0];
 vm.createContext(ctx);
 vm.runInContext(read('course-textbook.js'),ctx);
 vm.runInContext(read('core-depth.js'),ctx);
+vm.runInContext(read('course-keywords.js'),ctx);
 const html=read('index.html');
 vm.runInContext(html.slice(html.indexOf('function equation(source)'),html.indexOf('const caseExtensions =')),ctx);
 const src=read('deep-course.js');
@@ -29,6 +30,8 @@ for(const course of courseList){
     const unit=course.units[i],chapter=ctx.CFA_TEXTBOOK.chapters[course.id]?.[unit.id];
     assert.ok(chapter,course.id+'/'+unit.id);
     assert.ok(chapter.sections.length>=2);
+    assert.ok(chapter.keywords.length>=2);
+    for(const entry of chapter.keywords){bilingual(entry.definition,'keyword definition');assert.ok(entry.term);}
     sections+=chapter.sections.length;
     for(const section of chapter.sections){bilingual(section.title,'section title');bilingual(section.text,'section text')}
     for(const text of [chapter.worked.facts,chapter.worked.answer,chapter.question,chapter.answer])bilingual(text,'worked/self-check');
@@ -37,6 +40,7 @@ for(const course of courseList){
       const rendered=node('drawer-los-list').innerHTML;
       assert.ok(rendered.includes('id="textbook-recall"'));
       assert.ok(rendered.includes('id="textbook-worked"'));
+      assert.ok(rendered.includes('id="lesson-keywords"'));
       assert.ok(rendered.includes(ctx.escapeText(ctx.translated(chapter.question))));
       assert.ok(rendered.includes(ctx.escapeText(ctx.translated(chapter.answer))));
       assert.ok(!rendered.includes('undefined'));
@@ -100,6 +104,13 @@ assert.ok(html.indexOf('src="course-textbook.js')<html.indexOf('src="core-depth.
 assert.ok(html.indexOf('src="core-depth.js')<html.indexOf('src="deep-course.js'));
 assert.equal(Object.keys(ctx.CFA_CORE_SEMINARS).length,10);
 assert.equal(Object.values(ctx.CFA_CORE_SEMINARS).reduce((n,c)=>n+Object.keys(c).length,0),50);
+assert.equal(ctx.CFA_KEYWORDS.length,346);
+assert.equal(new Set(ctx.CFA_KEYWORDS.map(e=>e.id)).size,346);
+ctx.openKeywordLibrary();assert.ok(node('keyword-library-results').innerHTML.includes('346'));
+ctx.renderKeywordLibrary('Bayes');assert.ok(node('keyword-library-results').innerHTML.includes('Bayes'));
+const button={setAttribute(){},textContent:''},key=ctx.CFA_KEYWORDS[0].id;
+ctx.toggleCourseKeyword(key,button);assert.ok(ctx.state.knownCourseKeywords.includes(key));
+ctx.toggleCourseKeyword(key,button);assert.ok(!ctx.state.knownCourseKeywords.includes(key));
 const near=(actual,expected,tolerance=0.0001)=>assert.ok(Math.abs(actual-expected)<tolerance,`${actual} versus ${expected}`);
 near(55/1.1+55/1.1**2,95.454545);
 near(.8*.3/(.8*.3+.2*.7),.631578947);

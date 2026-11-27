@@ -1044,8 +1044,36 @@
       if(!items.length)continue;
       html+='<section class="course-section"><div class="course-section-head"><h3>'+esc(tr(groupLabel[group]))+'</h3><p>'+esc(tr(groupDescription[group]))+'</p></div><div class="course-grid">'+items.map(courseCard).join('')+'</div></section>';
     }
+    html='<div class="keyword-library-launch"><button onclick="openKeywordLibrary()">'+esc(tr('Sổ keywords toàn khóa|Course keyword notebook'))+' · '+(window.CFA_KEYWORDS?.length||0)+'</button></div>'+html;
     byId('modules-list-container').innerHTML=html||'<div class="course-phase-note">'+esc(tr('Không có khóa phù hợp với bộ lọc.|No courses match this filter.'))+'</div>';
   }
+
+  let keywordLibraryOpen=false;
+  function keywordCards(entries,withLesson=false){
+    const known=new Set(state.knownCourseKeywords||[]);
+    return entries.map(entry=>{
+      const course=courses.find(c=>c.id===entry.course),index=course.units.findIndex(u=>u.id===entry.unit),unit=course.units[index];
+      return '<article class="keyword-card"><div><h5>'+esc(tr(entry.term))+'</h5><button aria-pressed="'+known.has(entry.id)+'" onclick="toggleCourseKeyword(\''+entry.id+'\',this)">'+esc(tr(known.has(entry.id)?'✓ Đã nhớ|✓ Learned':'Đánh dấu đã nhớ|Mark learned'))+'</button></div><p>'+esc(tr(entry.definition))+'</p>'+(withLesson?'<button class="keyword-lesson-link" onclick="openDeepCourse(\''+course.id+'\','+index+')">'+esc(tr(course.title))+' · '+esc(tr(unit.title))+'</button>':'')+'</article>';
+    }).join('');
+  }
+  window.toggleCourseKeyword=(id,button)=>{
+    const known=new Set(state.knownCourseKeywords||[]);known.has(id)?known.delete(id):known.add(id);
+    state.knownCourseKeywords=[...known];saveState();
+    button.setAttribute('aria-pressed',String(known.has(id)));button.textContent=tr(known.has(id)?'✓ Đã nhớ|✓ Learned':'Đánh dấu đã nhớ|Mark learned');
+  };
+  window.renderKeywordLibrary=(query='')=>{
+    const normalize=value=>value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replaceAll('đ','d');
+    const q=normalize(query),entries=(window.CFA_KEYWORDS||[]).filter(e=>normalize(e.term+' '+e.definition+' '+courses.find(c=>c.id===e.course)?.title).includes(q));
+    byId('keyword-library-results').innerHTML='<p class="keyword-results-count">'+entries.length+' '+esc(tr('khái niệm · bấm tên bài để đọc lại ngữ cảnh|concepts · open the lesson to revisit the context'))+'</p>'+keywordCards(entries,true);
+  };
+  window.openKeywordLibrary=()=>{
+    current.courseId=null;keywordLibraryOpen=true;
+    byId('drawer-module-code').textContent=tr('SỔ ÔN TẬP · TOÀN KHÓA|REVISION NOTEBOOK · ALL COURSES');
+    byId('drawer-module-title').textContent=tr('Keywords và khái niệm cần nhớ|Keywords and key concepts');
+    byId('drawer-los-counter').textContent='80 '+tr('bài|lessons');
+    byId('drawer-los-list').innerHTML='<div class="keyword-library"><label for="keyword-library-search">'+esc(tr('Tìm từ khóa, nghĩa hoặc tên khóa học (Việt/Anh)|Search terms, meanings or courses (Vietnamese/English)'))+'</label><input id="keyword-library-search" type="search" oninput="renderKeywordLibrary(this.value)" placeholder="Equity, Bayes, duration…"><div id="keyword-library-results"></div></div>';
+    renderKeywordLibrary();byId('los-drawer').classList.remove('hidden');byId('los-drawer').classList.add('flex');
+  };
 
   function coreSeminarHtml(course,unit,seminar){
     if(!seminar)return '';
@@ -1073,10 +1101,11 @@
     const models=chapter.models?'<section class="textbook-models" id="textbook-models"><span class="lesson-section-kicker">'+esc(tr('SO SÁNH 12 MÔ HÌNH|COMPARE 12 BUSINESS MODELS'))+'</span><h4>'+esc(tr('Từng mô hình vận hành và kiếm tiền như thế nào?|How does each model operate and earn money?'))+'</h4>'+chapter.models.map(model=>'<article><h5>'+esc(tr(model.name))+'</h5><p>'+esc(tr(model.how))+'</p><div class="model-worked"><strong>'+esc(tr('Ví dụ cụ thể|Concrete example'))+'</strong><p>'+esc(tr(model.example))+'</p></div><p class="model-watch"><strong>'+esc(tr('Cần theo dõi: |Monitor: '))+'</strong>'+esc(tr(model.watch))+'</p></article>').join('')+'</section>':'';
     const refs=chapter.refs||(course.id==='ethics'?['ethics']:course.id==='fsa'?['analysis','accounting']:course.id==='performance'?['performance']:['curriculum']);
     const seminar=coreSeminarHtml(course,unit,chapter.seminar);
+    const keywords=chapter.keywords?'<section class="lesson-keywords" id="lesson-keywords"><span class="lesson-section-kicker">'+esc(tr('GHI NHỚ SAU BÀI HỌC|REMEMBER AFTER THIS LESSON'))+'</span><h4>'+esc(tr('Keywords và khái niệm chính|Keywords and key concepts'))+'</h4><p class="keyword-note">'+esc(tr('Đọc tên khái niệm, tự giải thích rồi đối chiếu ghi chú ngắn. Đánh dấu đã nhớ riêng với tiến độ hoàn thành bài.|Read the concept, explain it yourself, then compare the short note. Learned terms are tracked separately from lesson completion.'))+'</p>'+keywordCards(chapter.keywords)+'<button class="keyword-lesson-link" onclick="openKeywordLibrary()">'+esc(tr('Mở sổ keywords toàn khóa|Open the full keyword notebook'))+'</button></section>':'';
     return '<div class="textbook-reading"><div class="textbook-route"><span>'+esc(tr('CÁCH HỌC BÀI NÀY|HOW TO STUDY THIS LESSON'))+'</span><p>'+esc(tr('Đọc lần lượt các tiểu mục, tự làm ví dụ, rồi viết câu trả lời trước khi đối chiếu. Lưu tiến độ hoàn thành sau khi bạn giải thích lại được bằng lời của mình.|Read the sections in order, work the example, then write your answer before comparing. Mark complete once you can explain the ideas in your own words.'))+'</p></div><nav class="textbook-toc" aria-label="'+esc(tr('Mục lục bài giảng|Lesson contents'))+'">'+toc+(chapter.models?'<button onclick="scrollDeepLessonTo(\'textbook-models\')">'+esc(tr('12 mô hình chi tiết|12 models in detail'))+'</button>':'')+'<button onclick="scrollDeepLessonTo(\'textbook-worked\')">'+esc(tr('Ví dụ từng bước|Worked example'))+'</button>'+(seminar?'<button class="core-toc-link" onclick="scrollDeepLessonTo(\'core-seminar\')">'+esc(tr('Thực hành chuyên sâu|Deep practice'))+'</button>':'')+'<button onclick="scrollDeepLessonTo(\'textbook-recall\')">'+esc(tr('Tự trả lời|Your answer'))+'</button></nav>'+chapter.sections.map((part,i)=>'<section class="textbook-section" id="textbook-part-'+i+'"><h4>'+esc(tr(part.title))+'</h4><p>'+esc(tr(part.text))+'</p></section>').join('')+table+models+
       '<section class="textbook-worked" id="textbook-worked"><span class="lesson-section-kicker">'+esc(tr('VÍ DỤ CÓ LỜI GIẢI · GIẢ ĐỊNH|WORKED EXAMPLE · HYPOTHETICAL'))+'</span><h4>'+esc(tr('Theo dõi dữ kiện đến kết luận|Follow the facts to a conclusion'))+'</h4><p>'+esc(tr(chapter.worked.facts))+'</p><div><strong>'+esc(tr('Lời giải và ý nghĩa|Solution and interpretation'))+'</strong><p>'+esc(tr(chapter.worked.answer))+'</p></div></section>'+
       seminar+'<section class="textbook-recall" id="textbook-recall"><span class="lesson-section-kicker">'+esc(tr('BẠN LÀ NGƯỜI PHÂN TÍCH|YOU ARE THE ANALYST'))+'</span><h4>'+esc(tr('Tự giải thích trước khi xem đáp án|Explain before checking'))+'</h4><p>'+esc(tr(chapter.question))+'</p><label for="textbook-answer">'+esc(tr('Lập luận của bạn|Your reasoning'))+'</label><textarea id="textbook-answer" rows="4" oninput="saveDeepTextbookDraft(this.value)" placeholder="'+esc(tr('Viết bằng lời của bạn. Bản nháp lưu trên trình duyệt này.|Write in your own words. Drafts save in this browser.'))+'">'+esc(draft)+'</textarea><small>'+esc(tr('Bản nháp lưu riêng theo bài và ngôn ngữ; đây là phần tự đối chiếu, không chấm điểm tự động.|Drafts are saved per lesson and language. This is a self-check, not automated grading.'))+'</small><details><summary>'+esc(tr('Đối chiếu câu trả lời có giải thích|Compare with the explained answer'))+'</summary><p>'+esc(tr(chapter.answer))+'</p></details></section>'+
-      '<div class="textbook-references"><span>'+esc(tr('Đọc đối chiếu nguồn chính|Primary reference reading'))+'</span>'+refs.map(key=>window.CFA_TEXTBOOK.sources[key]).filter(Boolean).map(source=>'<a href="'+esc(source[1])+'" target="_blank" rel="noopener noreferrer">'+esc(source[0])+'</a>').join('')+'</div></div>';
+      keywords+'<div class="textbook-references"><span>'+esc(tr('Đọc đối chiếu nguồn chính|Primary reference reading'))+'</span>'+refs.map(key=>window.CFA_TEXTBOOK.sources[key]).filter(Boolean).map(source=>'<a href="'+esc(source[1])+'" target="_blank" rel="noopener noreferrer">'+esc(source[0])+'</a>').join('')+'</div></div>';
   }
   window.scrollDeepLessonTo=id=>{
     const container=byId('course-unit-detail'),target=byId(id);
@@ -1144,6 +1173,7 @@
   };
 
   window.openDeepCourse=(courseId,unitIndex=0)=>{
+    keywordLibraryOpen=false;
     current.courseId=courseId;current.unitIndex=unitIndex;rememberCurrentUnit();renderCourseModal();
     byId('los-drawer').classList.remove('hidden');byId('los-drawer').classList.add('flex');
   };
@@ -1182,10 +1212,10 @@
   window.renderLibraryModules=renderRoadmap;
 
   const priorRefresh=window.refreshWorkspace;
-  window.refreshWorkspace=function(){priorRefresh();if(current.courseId)renderCourseModal()};
+  window.refreshWorkspace=function(){priorRefresh();if(current.courseId)renderCourseModal();else if(keywordLibraryOpen)openKeywordLibrary()};
 
   const priorClose=window.closeLosDrawer;
-  window.closeLosDrawer=function(){current.courseId=null;priorClose()};
+  window.closeLosDrawer=function(){current.courseId=null;keywordLibraryOpen=false;priorClose()};
 })();
 
 
