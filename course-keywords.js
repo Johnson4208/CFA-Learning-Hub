@@ -1,25 +1,32 @@
+/* Inline emphasis only: no keyword list, notebook or progress changes. */
 (function(){
   'use strict';
-  const book=window.CFA_TEXTBOOK;
-  const opening=text=>{
-    const match=text.match(/^.*?[.!?](?:\s|$)/);
-    return (match?match[0]:text).trim();
-  };
-  const bilingual=value=>{const parts=value.split('|');return parts.length===2?parts:[value,value]};
-  const entries=[];
-  for(const [course,units] of Object.entries(book.chapters)){
-    for(const [unit,chapter] of Object.entries(units)){
-      chapter.keywords=chapter.sections.map((section,index)=>({
-        id:course+'/'+unit+'/section-'+index,course,unit,
-        term:section.title,
-        definition:bilingual(section.text).map(opening).join('|')
-      }));
-      for(const [index,model] of (chapter.models||[]).entries())chapter.keywords.push({
-        id:course+'/'+unit+'/model-'+index,course,unit,term:model.name,
-        definition:bilingual(model.how).map(opening).join('|')
-      });
-      entries.push(...chapter.keywords);
+  const terms=[
+    'Portfolio Management','Private Wealth','Private Markets','underwriting','due diligence','constructed-response','learning outcomes',
+    'equity','shareholder','shareholders','stakeholder','stakeholders','creditor','creditors','share','shares','vốn chủ sở hữu','vốn góp','cổ phần','cổ đông','chủ nợ','pháp nhân','trách nhiệm hữu hạn','retained earnings','lợi nhuận giữ lại','book equity','market equity','capital structure','ownership structure','cơ cấu vốn','hội đồng quản trị',
+    'subscription','thuê bao','marketplace','freemium','usage-based','franchise','franchising','nhượng quyền','licensing','cấp phép','royalty','B2B','B2C','DTC','contribution margin','biên lợi nhuận','pricing power','switching costs','network effects','moat','lợi thế cạnh tranh','value chain','chuỗi giá trị','CAC','LTV','churn','retention','gross margin','unit economics','ROIC','NOPAT',
+    'cash flow','dòng tiền','working capital','vốn lưu động','capex','depreciation','khấu hao','impairment','suy giảm giá trị','revenue','doanh thu','liabilities','nợ phải trả','assets','tài sản','inventory','hàng tồn kho','receivables','phải thu','payables','phải trả','accrual','dồn tích','FIFO','LIFO','CFO','FCFF','FCFE','EBITDA','EBIT','net income','IRR','NPV','WACC','DCF','terminal value','giá trị cuối kỳ','cost of capital','chi phí vốn',
+    'covenant','collateral','tài sản bảo đảm','dilution','pha loãng','liquidation preference','liquidation','thanh lý','recovery','thu hồi','agency','principal','agent','governance','quản trị','suitability','tính phù hợp','material','nonpublic','thông tin trọng yếu','chưa công khai','mosaic','conflict of interest','xung đột lợi ích','reasonable basis','fair dealing',
+    'present value','future value','giá trị hiện tại','discount rate','suất chiết khấu','compounding','lãi kép','Bayes','prior','posterior','conditional probability','xác suất có điều kiện','expected value','kỳ vọng','variance','phương sai','covariance','hiệp phương sai','correlation','tương quan','standard error','sai số chuẩn','confidence interval','khoảng tin cậy','hypothesis','giả thuyết','p-value','OLS','regression','hồi quy','endogeneity','heteroskedasticity','autocorrelation','overfitting','look-ahead','survivorship bias','Monte Carlo','backtest','out-of-sample',
+    'elasticity','độ co giãn','marginal cost','marginal revenue','chi phí cận biên','doanh thu cận biên','opportunity cost','chi phí cơ hội','sunk cost','chi phí chìm','inflation','lạm phát','nominal','real return','monetary','fiscal','exchange rate','tỷ giá','parity','tax base','DTA','DTL','deferred tax','thuế hoãn lại','DuPont','ROE','DSO','DIO','DPO','cash conversion cycle',
+    'coupon','maturity','đáo hạn','yield','YTM','spot rate','forward rate','discount factor','duration','convexity','DV01','key-rate','credit spread','default','vỡ nợ','PD','LGD','EAD','immunization','basis risk',
+    'derivative','phái sinh','underlying','notional','payoff','premium','strike','replication','no-arbitrage','forward','futures','swap','option','call','put','delta','gamma','vega','theta','margin call','ký quỹ','hedge','phòng hộ',
+    'commitment','capital call','NAV','management fee','incentive fee','hurdle','high-water mark','clawback','NOI','cap rate','private equity','private credit','venture capital','buyout','MOIC','DPI','RVPI','TVPI','contango','convenience yield',
+    'IPS','risk tolerance','risk capacity','diversification','đa dạng hóa','beta','alpha','CAPM','risk premium','tracking error','Sharpe','Sortino','drawdown','VaR','expected shortfall','rebalancing','tái cân bằng','sequence risk','human capital','SAA','TAA','LDI','funded status','surplus','risk budget','TWR','MWR','attribution','GIPS','benchmark','composite','implementation shortfall','constructed response'
+  ];
+  const escapeRegex=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  const pattern=new RegExp('(?<![\\p{L}\\p{N}_])(?:'+[...new Set(terms)].sort((a,b)=>b.length-a.length).map(escapeRegex).join('|')+')(?![\\p{L}\\p{N}_])','giu');
+  const escapeHtml=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#39;");
+  function highlight(text){
+    text=String(text??'');
+    let last=0,count=0,result='',seen=new Set();
+    for(const match of text.matchAll(pattern)){
+      const key=match[0].toLocaleLowerCase();
+      if(count>=3||seen.has(key))continue;
+      result+=escapeHtml(text.slice(last,match.index))+'<mark class="inline-study-keyword">'+escapeHtml(match[0])+'</mark>';
+      last=match.index+match[0].length;seen.add(key);count++;
     }
+    return result+escapeHtml(text.slice(last));
   }
-  window.CFA_KEYWORDS=entries;
+  window.CFA_HIGHLIGHT=highlight;
 })();

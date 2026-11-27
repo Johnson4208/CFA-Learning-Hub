@@ -30,17 +30,18 @@ for(const course of courseList){
     const unit=course.units[i],chapter=ctx.CFA_TEXTBOOK.chapters[course.id]?.[unit.id];
     assert.ok(chapter,course.id+'/'+unit.id);
     assert.ok(chapter.sections.length>=2);
-    assert.ok(chapter.keywords.length>=2);
-    for(const entry of chapter.keywords){bilingual(entry.definition,'keyword definition');assert.ok(entry.term);}
     sections+=chapter.sections.length;
     for(const section of chapter.sections){bilingual(section.title,'section title');bilingual(section.text,'section text')}
     for(const text of [chapter.worked.facts,chapter.worked.answer,chapter.question,chapter.answer])bilingual(text,'worked/self-check');
     for(const lang of ['vi','en']){
       ctx.state.lang=lang;ctx.openDeepCourse(course.id,i);
-      const rendered=node('drawer-los-list').innerHTML;
+      const raw=node('drawer-los-list').innerHTML;
+      assert.ok(raw.includes('<mark class="inline-study-keyword">'),'missing inline emphasis '+course.id+'/'+unit.id+'/'+lang);
+      assert.ok(!raw.includes('lesson-keywords'));
+      assert.ok(!raw.includes('keyword-library'));
+      const rendered=raw.replace(/<mark class="inline-study-keyword">(.*?)<\/mark>/g,'$1');
       assert.ok(rendered.includes('id="textbook-recall"'));
       assert.ok(rendered.includes('id="textbook-worked"'));
-      assert.ok(rendered.includes('id="lesson-keywords"'));
       assert.ok(rendered.includes(ctx.escapeText(ctx.translated(chapter.question))));
       assert.ok(rendered.includes(ctx.escapeText(ctx.translated(chapter.answer))));
       assert.ok(!rendered.includes('undefined'));
@@ -103,14 +104,12 @@ assert.ok(html.indexOf('src="course-textbook.js')<html.indexOf('src="deep-course
 assert.ok(html.indexOf('src="course-textbook.js')<html.indexOf('src="core-depth.js'));
 assert.ok(html.indexOf('src="core-depth.js')<html.indexOf('src="deep-course.js'));
 assert.equal(Object.keys(ctx.CFA_CORE_SEMINARS).length,10);
+assert.equal(ctx.CFA_HIGHLIGHT('equity equity').match(/<mark/g).length,1);
+assert.ok(!ctx.CFA_HIGHLIGHT('inequity assetship').includes('<mark'));
+assert.ok(ctx.CFA_HIGHLIGHT('Vốn chủ sở hữu và cổ đông').includes('<mark'));
+assert.ok(ctx.CFA_HIGHLIGHT('<img src=x> Equity').includes('&lt;img src=x&gt;'));
+assert.equal(ctx.CFA_HIGHLIGHT('Equity debt assets revenue cash flow').match(/<mark/g).length,3);
 assert.equal(Object.values(ctx.CFA_CORE_SEMINARS).reduce((n,c)=>n+Object.keys(c).length,0),50);
-assert.equal(ctx.CFA_KEYWORDS.length,346);
-assert.equal(new Set(ctx.CFA_KEYWORDS.map(e=>e.id)).size,346);
-ctx.openKeywordLibrary();assert.ok(node('keyword-library-results').innerHTML.includes('346'));
-ctx.renderKeywordLibrary('Bayes');assert.ok(node('keyword-library-results').innerHTML.includes('Bayes'));
-const button={setAttribute(){},textContent:''},key=ctx.CFA_KEYWORDS[0].id;
-ctx.toggleCourseKeyword(key,button);assert.ok(ctx.state.knownCourseKeywords.includes(key));
-ctx.toggleCourseKeyword(key,button);assert.ok(!ctx.state.knownCourseKeywords.includes(key));
 const near=(actual,expected,tolerance=0.0001)=>assert.ok(Math.abs(actual-expected)<tolerance,`${actual} versus ${expected}`);
 near(55/1.1+55/1.1**2,95.454545);
 near(.8*.3/(.8*.3+.2*.7),.631578947);
