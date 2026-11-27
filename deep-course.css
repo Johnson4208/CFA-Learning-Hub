@@ -285,3 +285,33 @@ dialog.business-model-dialog::backdrop{background:#18181b80;backdrop-filter:blur
 
 /* Course map keyboard navigation */
 .course-unit-button:focus-visible{outline:2px solid #71717a;outline-offset:2px}
+
+/* Course map: scan-first navigation, distinct phases and concise labels. */
+.course-unit-nav{background:#fbfbfc;padding:18px 16px}
+.course-map-head{margin-bottom:19px}
+.course-map-head>span{color:#252a35;font-size:11px;font-weight:700;letter-spacing:.075em}
+.course-map-head>strong{color:#374151;font-weight:650}
+.course-map-head i{background:#314c72}
+.course-nav-phase{--map-accent:#254f85;--map-tint:#eaf1fb;--map-border:#c9d9ee}
+.course-nav-phase[data-phase="1"]{--map-accent:#176354;--map-tint:#e7f3ef;--map-border:#bdddd3}
+.course-nav-phase[data-phase="2"]{--map-accent:#875419;--map-tint:#f8f0e3;--map-border:#e8d5b8}
+.course-nav-phase+.course-nav-phase{margin-top:17px;padding-top:15px}
+.course-nav-phase h4{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.065em;color:var(--map-accent);margin:0 5px 9px}
+.course-nav-phase h4::before{content:"";width:7px;height:7px;flex:none;border-radius:50%;background:var(--map-accent)}
+.course-unit-button{grid-template-columns:25px minmax(0,1fr) auto;align-items:center;gap:10px;min-height:52px;padding:10px 9px;color:#202631;border-color:transparent;border-radius:7px}
+.course-unit-button+.course-unit-button{margin-top:5px}
+.course-unit-button:hover{background:var(--map-tint);border-color:var(--map-border)}
+.course-unit-number{width:25px;height:25px;background:var(--map-tint);color:var(--map-accent);font-size:10px;font-weight:700}
+.course-unit-copy{padding:0;gap:0}
+.course-unit-name{font-size:12.5px;font-weight:600;line-height:1.4;letter-spacing:-.015em}
+.course-unit-button[aria-current="true"]{background:var(--map-tint);border-color:var(--map-border);color:#182130;box-shadow:inset 3px 0 0 var(--map-accent)}
+.course-unit-button[aria-current="true"] .course-unit-number{background:var(--map-accent);color:#fff}
+.course-unit-button[aria-current="true"] .course-unit-name{font-weight:700;color:#182130}
+.course-unit-button:focus-visible{outline-color:var(--map-accent)}
+@media(max-width:760px){
+  .course-unit-nav{padding:10px}
+  .course-map-head,.course-nav-phase h4{display:none}
+  .course-nav-phase+.course-nav-phase{margin:0;padding:0;border:0}
+  .course-unit-button{min-width:170px;width:170px;min-height:52px;padding:8px;gap:7px;grid-template-columns:25px minmax(0,1fr) auto}
+  .course-unit-button+.course-unit-button{margin-top:0}
+}

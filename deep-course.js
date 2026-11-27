@@ -1187,6 +1187,7 @@
       (index<course.units.length-1?'<button class="lesson-secondary" onclick="selectDeepUnit('+(index+1)+')">'+esc(tr('Bài tiếp|Next'))+' →</button>':'')+'</div></div></article>';
   }
 
+  const businessMapTitles={"business-model":"Cơ cấu & sở hữu|Business structure & ownership","unit-economics":"Mô hình & doanh thu|Business models & revenue","industry-moat":"Chuỗi giá trị & lợi thế|Value chain & competitive advantage","operating-leverage":"Đòn bẩy & hòa vốn|Operating leverage & break-even","business-memo":"Phân tích & luận điểm đầu tư|Analysis & investment thesis"};
   let renderedCourseMapId=null;
   function renderCourseModal(){
     const course=courses.find(item=>item.id===current.courseId);
@@ -1207,7 +1208,7 @@
       {label:'02 · '+tr('PHÂN TÍCH|ANALYZE'),indexes:[2,3]},
       {label:'03 · '+tr('RA QUYẾT ĐỊNH|DECIDE'),indexes:[4]}
     ];
-    const nav='<nav class="course-unit-nav" aria-label="'+esc(tr('Năm bài trong khóa học|Five course units'))+'"><div class="course-map-head"><span>'+esc(tr('BẢN ĐỒ KHÓA HỌC|COURSE MAP'))+'</span><strong>'+courseDone(course)+' / '+course.units.length+'</strong><div><i style="width:'+(courseDone(course)/course.units.length*100)+'%"></i></div></div>'+phaseDefs.map(phase=>'<section class="course-nav-phase"><h4>'+esc(phase.label)+'</h4>'+phase.indexes.map(index=>{const item=course.units[index],detail=foundationDepth[course.id]?.[item.id],finished=complete.has(completionKey(course,item));return '<button class="course-unit-button" aria-current="'+(index===current.unitIndex)+'" onclick="selectDeepUnit('+index+')"><span class="course-unit-number">'+String(index+1).padStart(2,'0')+'</span><span class="course-unit-copy"><span class="course-unit-name">'+esc(tr(item.title))+'</span>'+(detail?.objectives?.[0]?'<small>'+esc(tr(detail.objectives[0]))+'</small>':'')+'</span><span class="course-unit-check">'+(finished?'✓':'')+'</span></button>'}).join('')+'</section>').join('')+'</nav>';
+    const nav='<nav class="course-unit-nav" aria-label="'+esc(tr('Năm bài trong khóa học|Five course units'))+'"><div class="course-map-head"><span>'+esc(tr('BẢN ĐỒ KHÓA HỌC|COURSE MAP'))+'</span><strong>'+courseDone(course)+' / '+course.units.length+'</strong><div><i style="width:'+(courseDone(course)/course.units.length*100)+'%"></i></div></div>'+phaseDefs.map((phase,phaseIndex)=>'<section class="course-nav-phase" data-phase="'+phaseIndex+'"><h4>'+esc(phase.label)+'</h4>'+phase.indexes.map(index=>{const item=course.units[index],shortTitle=course.id==='business-foundations'?businessMapTitles[item.id]||item.title:item.title,finished=complete.has(completionKey(course,item));return '<button class="course-unit-button" title="'+esc(tr(item.title))+'" aria-label="'+esc(tr(item.title))+'" aria-current="'+(index===current.unitIndex)+'" onclick="selectDeepUnit('+index+')"><span class="course-unit-number">'+String(index+1).padStart(2,'0')+'</span><span class="course-unit-copy"><span class="course-unit-name">'+esc(tr(shortTitle))+'</span></span><span class="course-unit-check">'+(finished?'✓':'')+'</span></button>'}).join('')+'</section>').join('')+'</nav>';
     if(businessModelState.trigger)window.closeBusinessModel();
     drawer.innerHTML='<div class="course-modal-layout">'+nav+lessonHtml(course,unit,current.unitIndex)+'</div>';
     renderedCourseMapId=course.id;
