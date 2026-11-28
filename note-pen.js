@@ -26,9 +26,10 @@ function positionFab(){
  const content=root?document.querySelector('#los-drawer .module-modal-card'):visibleLibrary();
  if(!content)return;
  const rect=content.getBoundingClientRect(),space=window.innerWidth-rect.right;
- const rail=space>=64;
+ const wide=space>=148,rail=space>=64;
+ fab.classList.toggle('is-compact',!wide);
  fab.classList.toggle('is-bottom',!rail);
- fab.style.left=rail?(rect.right+(space-44)/2)+'px':'auto';
+ fab.style.left=rail?(rect.right+(space-(wide?128:44))/2)+'px':'auto';
  fab.style.right=rail?'auto':'12px';
 }
 function updateFab(progress=0){
@@ -39,6 +40,7 @@ function updateFab(progress=0){
  fab.setAttribute('aria-pressed',String(active));
  fab.querySelector('.cfa-note-fab-status').textContent=holding!==null?T('Đang giữ H…|Holding H…'):active?(activeScope()?T('Đang tô note|Note pen on'):T('Mở bài để tô|Open a lesson')):T('Giữ H 2 giây|Hold H for 2s');
  fab.querySelector('.cfa-note-fab-key').textContent=active&&holding===null?'✓':'H';
+ fab.querySelector('.cfa-note-fab-copy strong').textContent=active&&holding===null?T('Đang tô|Note on'):'Take note';
  fab.title=holding!==null?T('Đang giữ H…|Holding H…'):active?T('Bấm để tắt bút note|Click to turn off note pen'):T('Giữ H 2 giây hoặc bấm để bật|Hold H for 2s or click to enable');
 }
 function animateHold(now){
