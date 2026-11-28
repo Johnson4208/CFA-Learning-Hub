@@ -12,7 +12,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link href="deep-course.css?v=20261128-course-map-scan1" rel="stylesheet">
   <link href="decision-lab.css?v=20261128-controls-polish1" rel="stylesheet">
-  <link href="note-pen.css?v=20261128-note-pill1" rel="stylesheet">
+  <link href="note-pen.css?v=20261128-tool-rail1" rel="stylesheet">
+  <link href="concept-library.css?v=20261128-1" rel="stylesheet">
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -476,6 +477,7 @@
       </div>
     </section>
 
+    <section id="view-concepts" class="hidden"></section>
   </main>
 
   <!-- ==================== SLIDE-OVER PANEL: ĐỌC BÀI & CHECKLIST 8 LOS ==================== -->
@@ -1178,7 +1180,7 @@
 
     // ==================== NAVIGATION, SEARCH & I18N ====================
     function switchTab(tab) {
-      const allTabs = ['library', 'quiz', 'flashcards', 'notes', 'formulas'];
+      const allTabs = ['library', 'quiz', 'flashcards', 'notes', 'formulas', 'concepts'];
       allTabs.forEach(t => {
         document.getElementById(`view-${t}`).classList.add('hidden');
         const btn = document.getElementById(`tab-btn-${t}`);
@@ -1211,6 +1213,7 @@
       if (tab === 'flashcards') renderFlashcardView();
       if (tab === 'notes') renderNotesList();
       if (tab === 'formulas') renderFormulaList();
+      if (tab === 'concepts') window.CFA_CONCEPT_LIBRARY?.render();
     }
 
     function handleGlobalSearch(query) {
@@ -2008,6 +2011,7 @@ function refreshWorkspace(){
  document.documentElement.lang=state.lang;
  document.querySelectorAll('.lvl-pill').forEach(b=>b.setAttribute('aria-pressed',String(b.textContent.trim()==='LVL '+studyLevel)));
  renderLibraryModules();renderFormulaList();
+ if(!byId('view-concepts').classList.contains('hidden'))window.CFA_CONCEPT_LIBRARY?.render();
  for(const tab of ['quiz','flashcards'])if(!byId('view-'+tab).classList.contains('hidden'))(tab==='quiz'?renderQuizView:renderFlashcardView)();
 }
 function setLevel(value){studyLevel=value.split(' ').pop();state.level='LVL '+studyLevel;saveState();closeLosDrawer();refreshWorkspace()}
@@ -2017,7 +2021,7 @@ function setLevel(value){studyLevel=value.split(' ').pop();state.level='LVL '+st
       loadAppState();quizMode='lesson';studyLevel=state.level.split(' ').pop();if(!stages[studyLevel])studyLevel='I';
       setLanguage(state.lang);refreshWorkspace();
       const route=()=>{let key=location.hash.slice(1);if(key.startsWith('learn/')||key==='settings'){location.replace('notebook.html'+location.hash);return}
-        if(key==='saved'){switchTab('library');setLibraryFilter('bookmarked')}else switchTab(['quiz','flashcards','notes','formulas'].includes(key)?key:'library')};
+        if(key==='saved'){switchTab('library');setLibraryFilter('bookmarked')}else switchTab(['quiz','flashcards','notes','formulas','concepts'].includes(key)?key:'library')};
       route();window.addEventListener('hashchange',route);window.lucide?.createIcons()
     });
     document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();byId('global-search-input').focus()}if(e.key==='Escape')closeLosDrawer()});
@@ -2025,8 +2029,9 @@ function setLevel(value){studyLevel=value.split(' ').pop();state.level='LVL '+st
   <script src="course-textbook.js?v=20261127-textbook1"></script>
   <script src="core-depth.js?v=20261127-core2"></script>
   <script src="course-keywords.js?v=20261127-inline1"></script>
-  <script src="deep-course.js?v=20261128-note-pen1"></script>
-  <script src="note-pen.js?v=20261128-note-pill1"></script>
+  <script src="deep-course.js?v=20261128-concepts1"></script>
+  <script src="concept-library.js?v=20261128-1"></script>
+  <script src="note-pen.js?v=20261128-tool-rail1"></script>
   <script src="decision-lab-cases.js?v=20261128-expanded1"></script>
   <script src="decision-lab.js?v=20261128-controls-polish1"></script>
 </body></html>

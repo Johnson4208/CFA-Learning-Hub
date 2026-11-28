@@ -13,24 +13,32 @@ const excluded='button,a,input,textarea,select,option,script,style,iframe,svg,[c
 let active=false,holding=null,held=false,color='yellow',drafts=[],toolbar=null,menu=null,menuId=null;
 const storageKey='cfanotes_clean_v1';
 const HOLD_MS=2000;
-let fab=null,fabFrame=null,holdStart=null;
+let fab=null,railEl=null,fabFrame=null,holdStart=null;
 function visibleLibrary(){
  const library=document.getElementById('view-library'),drawer=document.getElementById('los-drawer');
  return library&&!library.classList.contains('hidden')&&(!drawer||drawer.classList.contains('hidden'))?library:null;
 }
+function visibleToolView(){return ['view-library','view-notes','view-concepts'].map(id=>document.getElementById(id)).find(el=>el&&!el.classList.contains('hidden'))||null}
 function canUsePen(){return !!(activeScope()||visibleLibrary())}
+function canUseTools(){return !!(activeScope()||visibleToolView())}
+function openStudyTool(tab){
+ clearHold();held=false;
+ const drawer=document.getElementById('los-drawer');
+ if(drawer&&!drawer.classList.contains('hidden'))window.closeLosDrawer();
+ stop();
+ switchTab(tab);
+ window.scrollTo({top:0,behavior:'instant'});
+}
 function positionFab(){
- if(!fab)return;
+ if(!railEl)return;
  const root=activeScope(),dialog=root?.closest('dialog[open]');
  if(dialog)return;
- const content=root?document.querySelector('#los-drawer .module-modal-card'):visibleLibrary();
+ const content=root?document.querySelector('#los-drawer .module-modal-card'):visibleToolView();
  if(!content)return;
- const rect=content.getBoundingClientRect(),space=window.innerWidth-rect.right;
- const wide=space>=148,rail=space>=64;
- fab.classList.toggle('is-compact',!wide);
- fab.classList.toggle('is-bottom',!rail);
- fab.style.left=rail?(rect.right+(space-(wide?128:44))/2)+'px':'auto';
- fab.style.right=rail?'auto':'12px';
+ const rect=content.getBoundingClientRect(),space=window.innerWidth-rect.right,rail=space>=102;
+ railEl.classList.toggle('is-bottom',!rail);
+ railEl.style.left=rail?(rect.right+(space-86)/2)+'px':'auto';
+ railEl.style.right=rail?'auto':'12px';
 }
 function updateFab(progress=0){
  if(!fab)return;
@@ -40,7 +48,9 @@ function updateFab(progress=0){
  fab.setAttribute('aria-pressed',String(active));
  fab.querySelector('.cfa-note-fab-status').textContent=holding!==null?T('Đang giữ H…|Holding H…'):active?(activeScope()?T('Đang tô note|Note pen on'):T('Mở bài để tô|Open a lesson')):T('Giữ H 2 giây|Hold H for 2s');
  fab.querySelector('.cfa-note-fab-key').textContent=active&&holding===null?'✓':'H';
- fab.querySelector('.cfa-note-fab-copy strong').textContent=active&&holding===null?T('Đang tô|Note on'):'Take note';
+ fab.querySelector('.cfa-note-fab-copy strong').textContent='Highlight';
+ fab.disabled=!canUsePen();
+ if(!canUsePen())fab.title=T('Mở bài học để tô văn bản|Open a lesson to highlight text');
  fab.title=holding!==null?T('Đang giữ H…|Holding H…'):active?T('Bấm để tắt bút note|Click to turn off note pen'):T('Giữ H 2 giây hoặc bấm để bật|Hold H for 2s or click to enable');
 }
 function animateHold(now){
@@ -55,16 +65,29 @@ function togglePen(){
  if(activeScope())notify(active?'Bút note đã bật. Kéo chọn chữ để tô.|Note pen on. Drag to highlight text.':'Bút note đã tắt.|Note pen off.');
 }
 function drawFab(){
- fab?.remove();fab=null;
- if(!canUsePen())return;
+ railEl?.remove();railEl=null;fab=null;
+ if(!canUseTools())return;
  const root=activeScope(),dialog=root?.closest('dialog[open]');
- const el=document.createElement('button');el.type='button';el.className='cfa-note-fab';
- el.setAttribute('aria-label',T('Take note · Giữ H 2 giây hoặc bấm để bật/tắt|Take note · Hold H for 2s or click to toggle'));
- el.innerHTML='<span class="cfa-note-fab-ring" aria-hidden="true"><svg viewBox="0 0 44 44"><circle class="cfa-note-fab-track" cx="22" cy="22" r="19"/><circle class="cfa-note-fab-fill" cx="22" cy="22" r="19" pathLength="100"/></svg><span class="cfa-note-fab-key">H</span></span><span class="cfa-note-fab-copy"><strong>Take note</strong><span class="cfa-note-fab-status"></span></span>';
- el.onclick=togglePen;fab=el;
+ const rail=document.createElement('div');rail.className='cfa-study-tools';rail.setAttribute('role','group');rail.setAttribute('aria-label',T('Công cụ học tập|Study tools'));
+ const heading=document.createElement('span');heading.className='cfa-tools-heading';heading.textContent=T('Công cụ|Tools');rail.append(heading);
+ const el=document.createElement('button');el.type='button';el.className='cfa-note-fab cfa-tool-button';
+ el.setAttribute('aria-label',T('Highlight · Giữ H 2 giây hoặc bấm để bật/tắt|Highlight · Hold H for 2s or click to toggle'));
+ el.innerHTML='<span class="cfa-note-fab-ring" aria-hidden="true"><svg class="cfa-tool-progress" viewBox="0 0 44 44"><circle class="cfa-note-fab-track" cx="22" cy="22" r="19"/><circle class="cfa-note-fab-fill" cx="22" cy="22" r="19" pathLength="100"/></svg><svg class="cfa-tool-symbol cfa-highlight-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m14 4 6 6-9 9H5v-6L14 4Z"/><path d="m11 7 6 6M3 22h14"/></svg><span class="cfa-note-fab-key">H</span></span><span class="cfa-note-fab-copy"><strong>Highlight</strong><span class="cfa-note-fab-status"></span><small>'+T('Phím (H)|Key (H)')+'</small></span>';
+ el.onclick=togglePen;fab=el;rail.append(el);
+ const tools=[
+ ['notes','Notes','N','<path d="M6 3h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z M8 8h8M8 12h8M8 16h5"/>'],
+ ['concepts',T('Tra cứu|Lookup'),'T','<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5M8 10.5h5M10.5 8v5"/>']
+ ];
+ for(const [tab,label,key,icon] of tools){
+  const btn=document.createElement('button');btn.type='button';btn.className='cfa-tool-button';btn.title=label+' ('+key+')';btn.setAttribute('aria-label',btn.title);
+  btn.setAttribute('aria-pressed',String(!root&&visibleToolView()?.id==='view-'+tab));
+  btn.innerHTML='<span class="cfa-tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+icon+'</svg></span><span class="cfa-tool-copy"><strong>'+label+'</strong><small>'+T('Phím|Key')+' ('+key+')</small></span>';
+  btn.onclick=()=>openStudyTool(tab);rail.append(btn);
+ }
+ railEl=rail;
  const header=dialog?.querySelector('.business-model-header-top');
- if(header){el.classList.add('is-inline','is-compact');header.insertBefore(el,header.querySelector('.business-model-close'))}
- else (root?hostFor(root):document.body).append(el);
+ if(header){rail.classList.add('is-inline');header.insertBefore(rail,header.querySelector('.business-model-close'))}
+ else (root?hostFor(root):document.body).append(rail);
  positionFab();updateFab(holdStart===null?0:(performance.now()-holdStart)/HOLD_MS);
 }
 function activeScope(){
@@ -262,7 +285,13 @@ document.addEventListener('keydown',e=>{
   e.preventDefault();e.stopImmediatePropagation();
   if(menu)closeMenu();else stop();return;
  }
- if(e.key.toLowerCase()!=='h'||e.ctrlKey||e.metaKey||e.altKey||e.shiftKey||editable(e.target)||!canUsePen())return;
+ const key=e.key.toLowerCase();
+ if(e.ctrlKey||e.metaKey||e.altKey||e.shiftKey||editable(e.target))return;
+ if((key==='n'||key==='t')&&canUseTools()){
+  if(e.repeat)return;
+  e.preventDefault();openStudyTool(key==='n'?'notes':'concepts');return;
+ }
+ if(key!=='h'||!canUsePen())return;
  e.preventDefault();
  if(e.repeat||held)return;
  held=true;
@@ -274,7 +303,7 @@ document.addEventListener('keydown',e=>{
 document.addEventListener('keyup',e=>{if(e.key.toLowerCase()==='h'){held=false;clearHold()}},true);
 window.addEventListener('blur',()=>{held=false;clearHold()});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){held=false;clearHold()}});
-document.addEventListener('mouseup',e=>{if(e.button===0&&active&&!e.target.closest?.('.cfa-pen-toolbar,.cfa-pen-menu,.cfa-note-fab'))newDraft()});
+document.addEventListener('mouseup',e=>{if(e.button===0&&active&&!e.target.closest?.('.cfa-pen-toolbar,.cfa-pen-menu,.cfa-study-tools'))newDraft()});
 document.addEventListener('contextmenu',e=>{
  const mark=e.target.closest?.('.cfa-personal-mark');
  if(!mark||mark.closest(scopeSelector)!==activeScope())return;
@@ -288,9 +317,9 @@ function syncAvailability(){
  drawToolbar();
 }
 document.addEventListener('DOMContentLoaded',()=>{
- const library=document.getElementById('view-library'),drawer=document.getElementById('los-drawer');
+ const views=['view-library','view-notes','view-concepts','los-drawer'].map(id=>document.getElementById(id));
  const observer=new MutationObserver(syncAvailability);
- for(const el of [library,drawer,document.documentElement])if(el)observer.observe(el,{attributes:true,attributeFilter:el===document.documentElement?['lang']:['class']});
+ for(const el of [...views,document.documentElement])if(el)observer.observe(el,{attributes:true,attributeFilter:el===document.documentElement?['lang']:['class']});
  syncAvailability();
 });
 window.CFA_NOTE_PEN={sync,stop};

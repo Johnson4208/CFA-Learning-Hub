@@ -1269,6 +1269,7 @@
     set.has(key)?set.delete(key):set.add(key);state.bookmarkedModules=[...set];saveState();renderRoadmap();
   };
   window.CFA_DECISION_LAB_CATALOG=courses.filter(c=>c.status==='ready').map(c=>({id:c.id,group:c.group,code:c.code,title:c.title,levels:c.levels,units:c.units.map(u=>({id:u.id,title:u.title,cases:foundationDepth[c.id]?.[u.id]?.situations||[]}))}));
+  window.CFA_CONCEPT_COURSES=courses.filter(c=>c.status==='ready').map(c=>({id:c.id,title:c.title,group:c.group,code:c.code,levels:c.levels,units:c.units.map((u,index)=>({id:u.id,index,title:u.title,lead:u.lead,theories:foundationDepth[c.id]?.[u.id]?.theories||[]}))}));
   window.renderLibraryModules=renderRoadmap;
 
   const priorRefresh=window.refreshWorkspace;
