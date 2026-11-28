@@ -9,7 +9,7 @@ window.CFA_FORMULA_DATA={
       "eq": "CAC=frac(AcquisitionSpend;NewCustomers)",
       "vars": "AcquisitionSpend: chi phí thu hút; NewCustomers: khách mới cùng kỳ.|AcquisitionSpend: acquisition spending; NewCustomers: new customers for the same cohort/period.",
       "example": "Chi 12.000 USD cho 100 khách mới: CAC = 120 USD.|Spend $12,000 to acquire 100 customers: CAC = $120.",
-      "trap": "Phân biệt CAC trả phí và CAC tổng hợp; đồng bộ cohort.|Distinguish paid and blended CAC; align cohorts."
+      "trap": "Nếu không có khách mới, CAC không xác định; đồng bộ cohort và phạm vi chi phí.|If no new customers are acquired, CAC is undefined; align cohorts and spending scope."
     },
     {
       "id": "cac-payback",
@@ -19,7 +19,7 @@ window.CFA_FORMULA_DATA={
       "eq": "Payback=frac(CAC;MonthlyContribution)",
       "vars": "MonthlyContribution: biên đóng góp mỗi khách mỗi tháng.|MonthlyContribution: contribution per customer per month.",
       "example": "CAC 120, đóng góp 20/tháng: 6 tháng.|CAC 120, monthly contribution 20: 6 months.",
-      "trap": "Không dùng doanh thu thay cho biên đóng góp; mô hình đơn giản bỏ qua churn.|Use contribution, not revenue; simplified model ignores churn."
+      "trap": "Dùng contribution dương, không dùng doanh thu. Nếu contribution ≤ 0 thì không có thời gian hoàn vốn hữu hạn theo mô hình tĩnh; churn có thể kéo dài hoàn vốn cohort.|Use positive contribution, not revenue. If contribution is nonpositive, there is no finite payback in the static model; churn can delay cohort payback."
     },
     {
       "id": "dol",
@@ -29,7 +29,7 @@ window.CFA_FORMULA_DATA={
       "eq": "DOL=frac(ContributionMargin;EBIT)",
       "vars": "ContributionMargin: doanh thu trừ biến phí; EBIT: lợi nhuận hoạt động.|ContributionMargin: sales less variable costs; EBIT: operating income.",
       "example": "Contribution 300, EBIT 100: DOL = 3.|Contribution 300, EBIT 100: DOL = 3.",
-      "trap": "Chỉ có ý nghĩa tại mức hoạt động và giả định giá/biến phí ổn định; EBIT gần 0 gây bất ổn.|Local measure at a stated activity level with stable unit economics; unstable near zero EBIT."
+      "trap": "Chỉ có ý nghĩa tại mức hoạt động xác định với giá, biến phí đơn vị và định phí ổn định; EBIT=0 khiến tỷ số không xác định, EBIT âm cần diễn giải riêng.|Local measure at fixed price, unit variable cost and fixed costs; undefined at zero EBIT and requires caution when EBIT is negative."
     },
     {
       "id": "margin",
@@ -139,7 +139,7 @@ window.CFA_FORMULA_DATA={
       "eq": "Posterior=frac(Likelihood×Prior;EvidenceProbability)",
       "vars": "Likelihood: xác suất bằng chứng nếu giả thuyết đúng; prior: xác suất trước; evidence: xác suất biên của bằng chứng.|Likelihood: evidence probability conditional on hypothesis; prior: initial probability; evidence: marginal probability.",
       "example": "Prior 0,1; likelihood 0,8; evidence 0,2: posterior 0,4.|Prior 0.1; likelihood 0.8; evidence 0.2: posterior 0.4.",
-      "trap": "Không đảo xác suất có điều kiện.|Do not reverse conditional probabilities."
+      "trap": "Không đảo xác suất có điều kiện. P(E)>0; nếu bằng 0 thì công thức điều kiện này không xác định.|Do not reverse conditional probabilities. P(E) must be positive; this conditional formula is undefined if P(E)=0."
     },
     {
       "id": "compound",
@@ -219,7 +219,7 @@ window.CFA_FORMULA_DATA={
       "eq": "CR=frac(CurrentAssets;CurrentLiabilities)",
       "vars": "Tài sản và nợ ngắn hạn cùng ngày.|Current assets and liabilities on same date.",
       "example": "150/100=1,5 lần.|150/100=1.5×.",
-      "trap": "Tồn kho kém thanh khoản có thể làm tỷ số lạc quan.|Illiquid inventory can inflate the ratio."
+      "trap": "Tồn kho kém thanh khoản có thể làm tỷ số cao giả tạo; nếu nợ ngắn hạn bằng 0, không báo tỷ số hữu hạn.|Illiquid inventory may inflate the ratio; if current liabilities are zero, do not report a finite ratio."
     },
     {
       "id": "quick-ratio",
@@ -229,7 +229,7 @@ window.CFA_FORMULA_DATA={
       "eq": "QR=frac(Cash+MarketableSecurities+Receivables;CurrentLiabilities)",
       "vars": "Tử số: tiền, chứng khoán thanh khoản và phải thu phù hợp.|Numerator: cash, liquid securities and qualifying receivables.",
       "example": "30+20+50, nợ ngắn hạn 100: 1 lần.|30+20+50, current liabilities 100: 1×.",
-      "trap": "Kiểm tra chất lượng phải thu.|Assess receivables quality."
+      "trap": "Kiểm tra chất lượng phải thu và chứng khoán có thể chuyển tiền; mẫu số bằng 0 thì không xác định.|Assess receivable quality and readily marketable securities; a zero denominator makes the ratio undefined."
     },
     {
       "id": "debt-equity",
@@ -239,7 +239,7 @@ window.CFA_FORMULA_DATA={
       "eq": "DE=frac(InterestBearingDebt;Equity)",
       "vars": "Nợ chịu lãi và vốn chủ cùng cơ sở giá trị.|Interest-bearing debt and equity on consistent value basis.",
       "example": "Nợ 60, equity 40: D/E 1,5 lần.|Debt 60, equity 40: D/E 1.5×.",
-      "trap": "Một số quy ước dùng tổng nợ phải trả; nêu rõ.|Some conventions use total liabilities; specify definition."
+      "trap": "Một số quy ước dùng tổng nợ phải trả; nêu rõ định nghĩa. Equity=0 không xác định; equity âm khiến tỷ số khó diễn giải.|Some conventions use total liabilities; state the definition. Zero equity is undefined; negative equity impairs interpretation."
     },
     {
       "id": "interest-cover",
@@ -249,7 +249,7 @@ window.CFA_FORMULA_DATA={
       "eq": "Coverage=frac(EBIT;InterestPayments)",
       "vars": "CFA ratio list dùng interest payments; thực hành thường dùng interest expense nếu phù hợp. Nêu rõ cơ sở, không trộn dồn tích và tiền trả.|CFA ratio list uses interest payments; practice often uses interest expense where appropriate. Specify basis, avoid mixing accrual and cash.",
       "example": "EBIT 90, lãi 30: 3 lần.|EBIT 90, interest 30: 3×.",
-      "trap": "Không thay thế phân tích lịch đáo hạn và dòng tiền.|Does not replace maturity and cash flow analysis."
+      "trap": "Không thay cho phân tích dòng tiền và kỳ hạn nợ. Khi không có khoản lãi phải trả, không tính một tỷ số hữu hạn; EBIT âm là tín hiệu rủi ro chứ không phải khả năng trả lãi âm theo nghĩa thông thường.|Does not replace cash flow or maturity analysis. With zero interest payments, do not compute a finite ratio; negative EBIT signals risk rather than ordinary negative coverage."
     },
     {
       "id": "dso",
@@ -319,7 +319,7 @@ window.CFA_FORMULA_DATA={
       "eq": "PE=frac(Price;EPS)",
       "vars": "Price: giá cổ phiếu; EPS: lợi nhuận mỗi cổ phiếu theo cùng kỳ dự báo hoặc quá khứ.|Price: share price; EPS: earnings per share on consistent trailing or forward basis.",
       "example": "Giá 50, EPS 5: P/E 10 lần.|Price 50, EPS 5: P/E 10×.",
-      "trap": "EPS âm khiến P/E thông thường không hữu ích.|Negative EPS makes conventional P/E uninformative."
+      "trap": "EPS bằng 0 khiến P/E không xác định; EPS âm làm P/E thông thường không hữu ích. Không dùng P/E âm như một tín hiệu cổ phiếu rẻ.|Zero EPS makes P/E undefined; negative EPS makes conventional P/E uninformative. Do not interpret a negative P/E as cheapness."
     },
     {
       "id": "pb",
@@ -329,7 +329,7 @@ window.CFA_FORMULA_DATA={
       "eq": "PB=frac(Price;BookValuePerShare)",
       "vars": "BookValuePerShare: giá trị sổ sách vốn cổ phần thường mỗi cổ phiếu.|BookValuePerShare: common equity book value per share.",
       "example": "Giá 30, BVPS 20: P/B 1,5 lần.|Price 30, BVPS 20: P/B 1.5×.",
-      "trap": "Kiểm tra tài sản vô hình và vốn chủ âm.|Consider intangible assets and negative equity."
+      "trap": "Kiểm tra tài sản vô hình; BVPS bằng 0 thì không xác định, BVPS âm làm P/B thông thường khó diễn giải.|Consider intangible assets; zero BVPS is undefined and negative BVPS makes conventional P/B difficult to interpret."
     },
     {
       "id": "ev-ebitda",
@@ -339,7 +339,7 @@ window.CFA_FORMULA_DATA={
       "eq": "Multiple=frac(EV;EBITDA)",
       "vars": "EV: giá trị doanh nghiệp theo cầu nối nhất quán; EBITDA: EBIT trước khấu hao.|EV: enterprise value on consistent bridge; EBITDA: earnings before interest, tax, depreciation and amortization.",
       "example": "EV 800, EBITDA 100: 8 lần.|EV 800, EBITDA 100: 8×.",
-      "trap": "EBITDA không phải dòng tiền tự do; xem CapEx và vốn lưu động.|EBITDA is not free cash flow; consider capex and working capital."
+      "trap": "EBITDA không phải dòng tiền tự do. EBITDA bằng 0 thì không xác định, EBITDA âm thường không phù hợp định giá theo bội số dương; xem capex, vốn lưu động và cầu nối EV.|EBITDA is not free cash flow. Zero EBITDA is undefined and negative EBITDA generally makes positive-multiple valuation unsuitable; assess capex, working capital and the EV bridge."
     },
     {
       "id": "terminal",
@@ -349,7 +349,7 @@ window.CFA_FORMULA_DATA={
       "eq": "TV_n=frac(FCF_n×(1+g);r−g)",
       "vars": "FCF_n: dòng tiền kỳ n; g: tăng trưởng bền vững; r>g.|FCF_n: cash flow in year n; g: sustainable growth; r>g.",
       "example": "FCF năm n=100, g3%, r8%: TV=2060 tại năm n.|Year-n FCF 100, g3%, r8%: TV=2060 at year n.",
-      "trap": "Chiết khấu TV về hiện tại; độ nhạy rất cao khi r gần g.|Discount TV to today; highly sensitive when r approaches g."
+      "trap": "Chỉ dùng mô hình tăng trưởng vĩnh viễn khi r>g, dòng tiền và tỷ lệ tăng trưởng cùng cơ sở, tăng trưởng dài hạn bền vững. Nếu r≤g, mô hình không cho giá trị hữu hạn hợp lệ. TV tại cuối kỳ n, phải chiết khấu về hiện tại.|Use perpetual growth only with r>g, consistent cash flow and growth basis, and sustainable long-run growth. If r≤g, the model has no valid finite value. TV is at the end of year n and must be discounted."
     },
     {
       "id": "mos",
@@ -417,9 +417,9 @@ window.CFA_FORMULA_DATA={
       "u": "forwards-futures",
       "name": "Giá trị hợp đồng kỳ hạn dài|Long forward value",
       "eq": "V=frac(F_{t,T}−K;(1+r)^τ)",
-      "vars": "Giá trị long forward mỗi đơn vị; forward mới cùng đáo hạn; r phi rủi ro hiệu dụng tương ứng τ năm còn lại, bỏ qua credit/collateral adjustments.|Long forward value per unit; new forward with same maturity; effective risk-free rate over remaining τ years, excluding credit/collateral adjustments.",
+      "vars": "F_{t,T}: giá forward mới cùng ngày đáo hạn T; K: giá giao hàng đã cam kết; r: lãi suất phi rủi ro hiệu dụng năm tương ứng kỳ hạn còn lại τ năm, ghép lãi năm; bỏ qua rủi ro tín dụng và điều chỉnh tài sản bảo đảm.|F_{t,T}: current forward price for the same maturity T; K: contracted delivery price; r: effective annual risk-free rate for remaining maturity τ years, annual compounding; ignore credit and collateral adjustments.",
       "example": "Forward mới 110, K100, còn 1 năm, r5%: giá trị 9,52.|New forward 110, K100, one year, r5%: value 9.52.",
-      "trap": "Giả định chiết khấu phù hợp; không nhầm giá forward và giá trị hợp đồng.|Assumes appropriate discounting; distinguish forward price from contract value."
+      "trap": "Giá trị long forward, short mang dấu ngược. Dùng discount factor tại ngày định giá đến đáo hạn; không nhầm forward price và contract value.|Long-forward value; short has the opposite sign. Use the discount factor from valuation to maturity; distinguish forward price from contract value."
     },
     {
       "id": "delta",
@@ -439,7 +439,7 @@ window.CFA_FORMULA_DATA={
       "eq": "DPI=frac(Distributions;PaidInCapital)",
       "vars": "Distributions: tiền/giá trị phân phối; PaidInCapital: vốn đã góp.|Distributions: distributed value; PaidInCapital: contributed capital.",
       "example": "Phân phối 40, vốn 100: 0,4×.|Distributions 40, paid in 100: 0.4×.",
-      "trap": "Không tính NAV chưa thực hiện.|Excludes unrealized NAV."
+      "trap": "Không gồm NAV chưa hiện thực hóa; paid-in capital phải dương, phân phối phải theo cùng cơ sở quỹ.|Excludes unrealized NAV; paid-in capital must be positive and distributions on the same fund basis."
     },
     {
       "id": "rvpi",
@@ -449,7 +449,7 @@ window.CFA_FORMULA_DATA={
       "eq": "RVPI=frac(ResidualValue;PaidInCapital)",
       "vars": "ResidualValue: NAV còn lại; PaidInCapital: vốn góp.|ResidualValue: remaining NAV; PaidInCapital: contributed capital.",
       "example": "NAV 110, vốn 100: 1,1×.|NAV 110, paid in 100: 1.1×.",
-      "trap": "NAV phụ thuộc định giá tài sản chưa thoái.|NAV depends on valuations of unexited assets."
+      "trap": "NAV phụ thuộc định giá tài sản chưa thoái; paid-in capital phải dương.|NAV depends on marks of unexited assets; paid-in capital must be positive."
     },
     {
       "id": "tvpi",
@@ -459,7 +459,7 @@ window.CFA_FORMULA_DATA={
       "eq": "TVPI=DPI+RVPI",
       "vars": "DPI: phân phối trên vốn góp; RVPI: giá trị còn lại trên vốn góp.|DPI: distributions/paid in; RVPI: residual value/paid in.",
       "example": "0,4+1,1=1,5×.|0.4+1.1=1.5×.",
-      "trap": "Không phản ánh thời gian nắm giữ như IRR.|Does not reflect timing like IRR."
+      "trap": "Không phản ánh thời điểm dòng tiền như IRR; DPI và RVPI phải cùng mẫu số paid-in capital dương.|Does not reflect cash-flow timing like IRR; DPI and RVPI must share the same positive paid-in denominator."
     },
     {
       "id": "noi",
@@ -479,7 +479,7 @@ window.CFA_FORMULA_DATA={
       "eq": "Sharpe=frac(MeanExcessReturn;Volatility)",
       "vars": "Ex ante: (E(Rp)−Rf)/σp nếu Rf cố định; ex post: mean excess return/SD excess returns cùng chuỗi. Khi Rf thay đổi, SD excess return có thể khác SD portfolio return. Đồng bộ kỳ hạn.|Ex ante: (E(Rp)−Rf)/σp with constant Rf; ex post: mean excess return/SD excess returns from same series. With varying Rf, excess-return SD may differ from portfolio-return SD. Match horizons.",
       "example": "Return 10%, Rf 2%, volatility 16%: Sharpe 0,5.|Return 10%, Rf 2%, volatility 16%: Sharpe 0.5.",
-      "trap": "Không trộn đơn vị năm/tháng; tỷ số âm cần diễn giải cẩn trọng.|Align horizons; negative ratios require care."
+      "trap": "Đồng bộ kỳ hạn và cách đo excess return; volatility=0 làm tỷ số không xác định, không thay bằng 0; tỷ số âm cần thận trọng.|Match horizons and excess-return measurement; zero volatility makes the ratio undefined, not zero; interpret negative ratios carefully."
     },
     {
       "id": "sortino",
@@ -499,7 +499,7 @@ window.CFA_FORMULA_DATA={
       "eq": "β=frac(Cov(R_i;R_m);Var(R_m))",
       "vars": "Cov: hiệp phương sai; Var: phương sai thị trường, dùng cùng mẫu/kỳ.|Cov: covariance; Var: market variance, same sample/horizon.",
       "example": "Cov 0,03, market variance 0,025: beta 1,2.|Cov 0.03, market variance 0.025: beta 1.2.",
-      "trap": "Beta lịch sử có thể thay đổi.|Historical beta may change."
+      "trap": "Beta lịch sử có thể thay đổi; phương sai thị trường phải dương và covariance phải cùng mẫu, cùng kỳ.|Historical beta may change; market variance must be positive and covariance must use matched sample and horizon."
     },
     {
       "id": "var",

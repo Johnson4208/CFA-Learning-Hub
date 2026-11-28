@@ -110,3 +110,6 @@
 .dl-photo-error{display:block;font-size:11px;line-height:1.4;color:#9b3025;margin-top:5px}.dl-photo-error:empty{display:none}
 .dl-photo-upload:focus-visible,.dl-photo-reset:focus-visible{outline:2px solid #52525b;outline-offset:2px}
 @media(max-width:380px){.dl-photo-control{flex-wrap:wrap}.dl-photo-copy{flex-basis:calc(100% - 44px)}.dl-photo-upload{margin-left:42px}}
+
+/* Monetary sign is independent of decision correctness. */
+.dl-impact-line.dl-positive{color:#86efac}.dl-impact-line.dl-negative{color:#fca5a5}.dl-impact-line.dl-neutral,.dl-results-list .dl-neutral{color:#94a3b8}
