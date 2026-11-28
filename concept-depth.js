@@ -1,4 +1,4 @@
-/* Canonical bilingual concept explanations, cases and cross-topic links. */
+/* Canonical bilingual concept explanations and cross-topic links. */
 window.CFA_CONCEPT_DEPTH=[
   {
     "course": "business-foundations",
@@ -12,7 +12,8 @@ window.CFA_CONCEPT_DEPTH=[
       "debt-for-stock",
       "share-premium",
       "retained-earnings",
-      "noncash-financing"
+      "noncash-financing",
+      "book-equity"
     ],
     "refs": []
   },
@@ -116,7 +117,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "Đơn $100, COGS $50 gồm $10 định phí, giao hàng $12, thanh toán $3: GM $50, contribution $45.|Order $100, COGS $50 including $10 fixed, delivery $12, payments $3: GM $50, contribution $45.",
     "related": [
       "break-even-range",
-      "incremental-cash-flow"
+      "incremental-cash-flow",
+      "gmv-take-rate"
     ],
     "refs": []
   },
@@ -129,7 +131,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "Nền tảng nhiều users nhưng multi-homing dễ: kiểm tra retention, pricing power và incremental ROIC thay vì coi quy mô là moat.|A large platform with easy multi-homing: test retention, pricing power and incremental ROIC rather than assuming size creates a moat.",
     "related": [
       "market-power",
-      "incremental-roic"
+      "incremental-roic",
+      "vertical-integration"
     ],
     "refs": []
   },
@@ -142,7 +145,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "F100k, contribution20: hòa vốn 5.000; vượt 6.000 cần thêm F40k, cấu hình mới hòa vốn 7.000.|F100k, contribution20: break-even 5,000; above 6,000 add F40k, new configuration break-even 7,000.",
     "related": [
       "contribution-margin",
-      "incremental-cash-flow"
+      "incremental-cash-flow",
+      "shutdown-exit"
     ],
     "refs": []
   },
@@ -168,7 +172,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "Founder góp20k, bảo lãnh vay50k: exposure cá nhân không nhất thiết dừng ở20k.|Founder contributes20k, guarantees loan50k: personal exposure may exceed20k.",
     "related": [
       "agency-authority",
-      "capital-stack"
+      "capital-stack",
+      "holding-subsidiary"
     ],
     "refs": []
   },
@@ -181,7 +186,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "Nhân viên ký vượt hạn mức: kiểm tra delegation, thông tin công ty truyền cho vendor và luật trước kết luận hợp đồng vô hiệu.|Employee signs beyond limit: check delegation, company representations to vendor and law before declaring contract void.",
     "related": [
       "entity-separateness",
-      "board-independence"
+      "board-independence",
+      "ratification"
     ],
     "refs": []
   },
@@ -194,7 +200,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "CEO thuê kho gia đình: so báo giá thị trường, tránh người xung đột biểu quyết; xem ảnh hưởng margin.|CEO rents family warehouse: compare market quotes, exclude conflicted votes and assess margin impact.",
     "related": [
       "agency-cost",
-      "agency-authority"
+      "agency-authority",
+      "segregation-duties"
     ],
     "refs": []
   },
@@ -208,7 +215,10 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "contributed-capital",
       "debt-for-stock",
-      "liquidation-preference"
+      "liquidation-preference",
+      "diluted-shares",
+      "pre-post-money",
+      "anti-dilution"
     ],
     "refs": []
   },
@@ -222,7 +232,8 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "debt-for-stock",
       "expected-loss",
-      "liquidation-preference"
+      "liquidation-preference",
+      "going-concern"
     ],
     "refs": []
   },
@@ -236,7 +247,8 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "asset-for-stock",
       "debt-for-stock",
-      "capitalization"
+      "capitalization",
+      "contra-account"
     ],
     "refs": []
   },
@@ -281,7 +293,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "Khách trả120 cho 12 tháng SaaS: Dr Cash120 Cr Contract liability120; ghi revenue10 mỗi tháng nếu phân bổ đều.|Customer prepays120 for 12 months SaaS: Dr Cash120 Cr Contract liability120; recognize10 monthly if evenly allocated.",
     "related": [
       "performance-obligations",
-      "cash-conversion"
+      "cash-conversion",
+      "revenue-cutoff"
     ],
     "refs": []
   },
@@ -295,7 +308,10 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "asset-for-stock",
       "inventory-cost",
-      "earnings-normalization"
+      "earnings-normalization",
+      "ppe-rollforward",
+      "estimate-vs-error",
+      "rou-lease"
     ],
     "refs": []
   },
@@ -321,7 +337,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "Sếp yêu cầu bỏ downside: lưu căn cứ, đề nghị sửa, escalate compliance; từ chối báo cáo sai nếu không xử lý.|Boss requests removal of downside: document basis, seek correction, escalate; refuse misleading report if unresolved.",
     "related": [
       "research-records",
-      "mosaic-theory"
+      "mosaic-theory",
+      "dissociation"
     ],
     "refs": []
   },
@@ -334,7 +351,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "Dùng traffic công khai và quan sát inventory; CFO bí mật xác nhận miss trọng yếu: dừng giao dịch, báo compliance.|Use public traffic and inventory observations; CFO privately confirms material miss: restrict trading and contact compliance.",
     "related": [
       "ethical-escalation",
-      "research-records"
+      "research-records",
+      "public-dissemination"
     ],
     "refs": []
   },
@@ -412,7 +430,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "SD20%, n100: SE2pp; chỉ lấy quỹ sống sót vẫn survivorship bias dù SE nhỏ.|SD20%, n100: SE2pp; sampling only surviving funds remains biased despite small SE.",
     "related": [
       "regression-diagnostics",
-      "model-validation"
+      "model-validation",
+      "bootstrap-resampling"
     ],
     "refs": []
   },
@@ -425,7 +444,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "Residual clustered: dùng SE phù hợp, test omitted factors và out-of-sample; R² cao không đảm bảo beta ổn định.|Clustered residuals: use appropriate SE, check omitted factors and out-of-sample; high R² does not ensure stable beta.",
     "related": [
       "sampling-distribution",
-      "model-validation"
+      "model-validation",
+      "type-errors"
     ],
     "refs": []
   },
@@ -438,7 +458,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "Dùng báo cáo công bố tháng3 để trade tháng1 là look-ahead; lag publication date, giữ delisted stocks.|Using March-published reports for January trading is look-ahead; lag publication date, include delisted stocks.",
     "related": [
       "research-records",
-      "regression-diagnostics"
+      "regression-diagnostics",
+      "monte-carlo"
     ],
     "refs": []
   },
@@ -451,7 +472,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "P10,Q100,VC6; P11,Q90: revenue990 giảm, contribution450 tăng từ400.|P10,Q100,VC6; P11,Q90: revenue990 falls, contribution450 rises from400.",
     "related": [
       "contribution-margin",
-      "market-power"
+      "market-power",
+      "cross-income-elasticity"
     ],
     "refs": []
   },
@@ -477,7 +499,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "New orders và lending standards yếu dù GDP cao: stress cyclical cash flows thay vì khẳng định suy thoái.|New orders/lending standards weaken despite high GDP: stress cyclical cash flows rather than assert recession.",
     "related": [
       "regime-risk",
-      "credit-spread"
+      "credit-spread",
+      "output-gap"
     ],
     "refs": []
   },
@@ -503,7 +526,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "7,20 nội tệ/USD, i nội tệ5%, USD3%: forward7,3398, không dự báo chắc spot tương lai.|7.20 domestic/USD, domestic5%, USD3%: forward7.3398, not guaranteed future spot.",
     "related": [
       "discount-rate",
-      "forward-value-basis"
+      "forward-value-basis",
+      "fx-exposures"
     ],
     "refs": []
   },
@@ -516,7 +540,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "NI20, equity đầu80 cuối120: ROE20/100=20%, không16,67% từ cuối kỳ.|NI20, opening80 closing120: ROE20/100=20%, not16.67% using closing only.",
     "related": [
       "incremental-roic",
-      "earnings-normalization"
+      "earnings-normalization",
+      "common-size"
     ],
     "refs": []
   },
@@ -568,7 +593,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "Hold-to-collect bond pass SPPI có thể amortized cost; giảm market price không tự là toàn bộ loss P&L nhưng vẫn xét ECL.|Hold-to-collect SPPI bond may use amortized cost; market decline not automatically full P&L loss but assess ECL.",
     "related": [
       "oci",
-      "expected-loss"
+      "expected-loss",
+      "sppi"
     ],
     "refs": []
   },
@@ -582,7 +608,9 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "contract-assets",
       "noncash-financing",
-      "working-capital-cycle"
+      "working-capital-cycle",
+      "factoring-recourse",
+      "supplier-finance"
     ],
     "refs": []
   },
@@ -623,7 +651,8 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "cash-conversion",
       "forecast-drivers",
-      "incremental-cash-flow"
+      "incremental-cash-flow",
+      "trade-credit-discount"
     ],
     "refs": []
   },
@@ -636,7 +665,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "R&D20k đã mất; máy100k và đất có thể bán30k: relevant investment130k, không150k, bỏ qua thuế.|Sunk R&D20k; machine100k and land sellable30k: relevant investment130k, not150k, ignoring tax.",
     "related": [
       "project-hurdle",
-      "working-capital-cycle"
+      "working-capital-cycle",
+      "real-options"
     ],
     "refs": []
   },
@@ -650,7 +680,8 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "discount-rate",
       "incremental-cash-flow",
-      "capital-allocation"
+      "capital-allocation",
+      "apv"
     ],
     "refs": []
   },
@@ -664,7 +695,9 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "debt-for-stock",
       "dilution-rights",
-      "ev-bridge"
+      "ev-bridge",
+      "change-of-control",
+      "eps-accretion"
     ],
     "refs": []
   },
@@ -678,7 +711,8 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "contributed-capital",
       "share-premium",
-      "trade-execution"
+      "trade-execution",
+      "free-float"
     ],
     "refs": []
   },
@@ -720,7 +754,8 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "forecast-drivers",
       "incremental-roic",
-      "ev-bridge"
+      "ev-bridge",
+      "reverse-dcf"
     ],
     "refs": []
   },
@@ -774,7 +809,9 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "discount-rate",
       "fx-parity",
-      "key-rate-duration"
+      "key-rate-duration",
+      "clean-dirty",
+      "bootstrapping"
     ],
     "refs": []
   },
@@ -788,7 +825,8 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "curve-forward",
       "immunization",
-      "ldi-surplus"
+      "ldi-surplus",
+      "macaulay-duration"
     ],
     "refs": []
   },
@@ -829,7 +867,9 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "key-rate-duration",
       "ldi-surplus",
-      "hedge-basis"
+      "hedge-basis",
+      "ctd",
+      "cash-flow-matching"
     ],
     "refs": []
   },
@@ -856,7 +896,8 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "fx-parity",
       "replication",
-      "hedge-basis"
+      "hedge-basis",
+      "cost-of-carry"
     ],
     "refs": []
   },
@@ -870,7 +911,8 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "replication",
       "hedge-basis",
-      "convertible-bond"
+      "convertible-bond",
+      "option-moneyness"
     ],
     "refs": []
   },
@@ -884,7 +926,8 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "curve-forward",
       "forward-value-basis",
-      "hedge-basis"
+      "hedge-basis",
+      "notional-exposure"
     ],
     "refs": []
   },
@@ -911,7 +954,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "NAV100→80→95: HWM100 không reset thì chưa performance fee dù period return18,75%.|NAV100→80→95: unchanged HWM100 means no performance fee despite period return18.75%.",
     "related": [
       "private-fund-metrics",
-      "liquidation-preference"
+      "liquidation-preference",
+      "catch-up-clawback"
     ],
     "refs": []
   },
@@ -938,7 +982,8 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "fee-waterfall",
       "return-cashflows",
-      "lbo-bridge"
+      "lbo-bridge",
+      "committed-called-capital"
     ],
     "refs": []
   },
@@ -978,7 +1023,8 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "fair-dealing",
       "liquidity-waterfall",
-      "goal-buckets"
+      "goal-buckets",
+      "human-capital"
     ],
     "refs": []
   },
@@ -1005,7 +1051,8 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "position-risk",
       "regression-diagnostics",
-      "factor-attribution"
+      "factor-attribution",
+      "security-market-line"
     ],
     "refs": []
   },
@@ -1058,7 +1105,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "Thay expected return .5pp có thể đổi optimal weight20pp; kiểm tra sensitivity và turnover.|Changing expected return .5pp may shift optimal weight20pp; check sensitivity and turnover.",
     "related": [
       "regime-risk",
-      "risk-budget"
+      "risk-budget",
+      "shrinkage"
     ],
     "refs": []
   },
@@ -1072,7 +1120,8 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "position-risk",
       "mean-variance",
-      "information-appraisal"
+      "information-appraisal",
+      "active-weight"
     ],
     "refs": []
   },
@@ -1100,7 +1149,8 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "hedge-basis",
       "stale-pricing",
-      "tail-risk"
+      "tail-risk",
+      "haircut"
     ],
     "refs": []
   },
@@ -1113,7 +1163,9 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "100 tăng10%, góp100, giảm5%: ending199,5, TWR4,5%. MWR cần dates.|100 grows10%, add100, lose5%: ending199.5, TWR4.5%. MWR needs dates.",
     "related": [
       "private-fund-metrics",
-      "composite-gips"
+      "composite-gips",
+      "geometric-return",
+      "modified-dietz"
     ],
     "refs": []
   },
@@ -1126,7 +1178,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "Overweight10pp, benchmark sector8%, overall5%: BF allocation+0,3pp; tính selection/interaction riêng.|Overweight10pp, benchmark sector8%, overall5%: BF allocation+0.3pp; calculate selection/interaction separately.",
     "related": [
       "systematic-specific-risk",
-      "information-appraisal"
+      "information-appraisal",
+      "interaction-effect"
     ],
     "refs": []
   },
@@ -1140,7 +1193,8 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "risk-budget",
       "regression-diagnostics",
-      "factor-attribution"
+      "factor-attribution",
+      "downside-deviation"
     ],
     "refs": []
   },
@@ -1153,7 +1207,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "Không xóa underperforming account vì khách rút; theo inclusion/removal policy và giữ lịch sử.|Do not remove underperforming account because client leaves; follow inclusion/removal policy and retain history.",
     "related": [
       "return-cashflows",
-      "manager-due-diligence"
+      "manager-due-diligence",
+      "verification"
     ],
     "refs": []
   },
@@ -1194,7 +1249,8 @@ window.CFA_CONCEPT_DEPTH=[
     "related": [
       "manager-due-diligence",
       "rebalance-bands",
-      "primary-secondary"
+      "primary-secondary",
+      "vwap-twap"
     ],
     "refs": []
   },
@@ -1235,7 +1291,8 @@ window.CFA_CONCEPT_DEPTH=[
     "example": "Bán100k basis90k thuế giả định20%: tax2k; lot basis98k tax400 nếu được chọn.|Sell100k basis90k assumed20%: tax2k; basis98k lot tax400 if selectable.",
     "related": [
       "rebalance-bands",
-      "goal-buckets"
+      "goal-buckets",
+      "tax-residence"
     ],
     "refs": []
   },
@@ -1267,5 +1324,752 @@ window.CFA_CONCEPT_DEPTH=[
       "liquidity-waterfall"
     ],
     "refs": []
+  },
+  {
+    "course": "business-foundations",
+    "lesson": "business-model",
+    "id": "book-equity",
+    "title": "Book equity vs market capitalization · Giá trị sổ sách và vốn hóa|Book equity vs market capitalization",
+    "text": "Book equity là tài sản trừ nợ theo kế toán; market cap là giá nhân cổ phần thường lưu hành. So cùng quyền lợi nếu có NCI/preferred.|Book equity is accounting assets less liabilities; market cap is price times outstanding common shares. Align claims if NCI/preferred exists.",
+    "example": "Common book equity $40m; 10m shares × $6 = $60m market cap; P/B=1.5×.|Common book equity $40m; 10m shares × $6 = $60m market cap; P/B=1.5×.",
+    "related": [
+      "contributed-capital",
+      "valuation-multiples"
+    ]
+  },
+  {
+    "course": "business-foundations",
+    "lesson": "unit-economics",
+    "id": "gmv-take-rate",
+    "title": "GMV and take rate · Giá trị giao dịch và tỷ lệ thu phí|GMV and take rate",
+    "text": "GMV là tổng giá trị giao dịch theo định nghĩa nền tảng, take rate là phí liên quan/GMV. Không coi GMV là revenue.|GMV is total transaction value under the platform definition; take rate is relevant fees/GMV. GMV is not necessarily revenue.",
+    "example": "GMV $1m × 8% = $80k commission.|GMV $1m × 8% = $80k commission.",
+    "related": [
+      "contribution-margin",
+      "performance-obligations",
+      "franchise-royalty",
+      "principal-agent"
+    ]
+  },
+  {
+    "course": "business-foundations",
+    "lesson": "unit-economics",
+    "id": "franchise-royalty",
+    "title": "Franchise, licensing and royalty · Nhượng quyền, cấp phép và tiền bản quyền|Franchise, licensing and royalty",
+    "text": "Franchise thường cấp hệ thống kinh doanh/brand; licensing cấp quyền IP theo hợp đồng; royalty là phí theo terms.|Franchising usually grants a business system/brand; licensing grants IP rights under contract; royalties follow terms.",
+    "example": "Sales $200k × 5% royalty = $10k.|Sales $200k × 5% royalty = $10k.",
+    "related": [
+      "gmv-take-rate",
+      "agency-authority"
+    ]
+  },
+  {
+    "course": "business-foundations",
+    "lesson": "industry-moat",
+    "id": "vertical-integration",
+    "title": "Vertical integration vs outsourcing · Tích hợp dọc và thuê ngoài|Vertical integration vs outsourcing",
+    "text": "Tích hợp dọc sở hữu thêm khâu trong value chain; thuê ngoài mua dịch vụ ngoài. So control, capital và dependency.|Vertical integration owns more value-chain stages; outsourcing buys external services. Compare control, capital and dependency.",
+    "example": "Mua nhà máy giảm phụ thuộc supplier nhưng tăng capex.|Buying a factory reduces supplier reliance but increases capex.",
+    "related": [
+      "moat-evidence",
+      "incremental-roic"
+    ]
+  },
+  {
+    "course": "corporate-law",
+    "lesson": "legal-forms",
+    "id": "holding-subsidiary",
+    "title": "Holding company, subsidiary and control · Công ty mẹ và công ty con|Holding company, subsidiary and control",
+    "text": "Holding nắm vốn doanh nghiệp khác; subsidiary là entity được kiểm soát. Control không chỉ tỷ lệ sở hữu; nghĩa vụ pháp lý từng entity khác consolidation.|A holding company owns interests; a subsidiary is controlled. Control is more than ownership percentage; separate legal liabilities differ from consolidation.",
+    "example": "45% ownership may confer control if applicable criteria are met.|45% ownership may confer control if applicable criteria are met.",
+    "related": [
+      "entity-separateness",
+      "capital-stack"
+    ]
+  },
+  {
+    "course": "corporate-law",
+    "lesson": "authority-contracts",
+    "id": "ratification",
+    "title": "Ratification · Phê chuẩn giao dịch|Ratification",
+    "text": "Principal có thể phê chuẩn hành vi ban đầu vượt thẩm quyền nếu đủ điều kiện theo luật. Không tự động chữa mọi lỗi ký.|A principal may ratify initially unauthorized acts if legal conditions are met. Not all defects are curable.",
+    "example": "Nhân viên ký vượt hạn mức: xem xét phê chuẩn hợp lệ.|Employee exceeds signing limit: evaluate valid ratification.",
+    "related": [
+      "agency-authority",
+      "entity-separateness"
+    ]
+  },
+  {
+    "course": "corporate-law",
+    "lesson": "authority-contracts",
+    "id": "change-of-control",
+    "title": "Change-of-control clause · Điều khoản thay đổi kiểm soát|Change-of-control clause",
+    "text": "Có thể yêu cầu consent, acceleration hoặc termination khi control đổi; đọc trigger cụ thể.|May require consent, acceleration or termination when control changes; read the specific triggers.",
+    "example": "Loan has change-of-control put: budget refinancing before closing.|Loan has change-of-control put: budget refinancing before closing.",
+    "related": [
+      "debt-restructuring",
+      "agency-authority"
+    ]
+  },
+  {
+    "course": "corporate-law",
+    "lesson": "board-duties",
+    "id": "segregation-duties",
+    "title": "Segregation of duties · Phân tách nhiệm vụ|Segregation of duties",
+    "text": "Tách authorization, custody, recording, reconciliation để giảm sai sót/lạm dụng.|Separate authorization, custody, recording and reconciliation to reduce errors/abuse.",
+    "example": "Người đặt hàng không tự duyệt thanh toán.|Purchaser does not approve own payment.",
+    "related": [
+      "board-independence",
+      "agency-cost"
+    ]
+  },
+  {
+    "course": "corporate-law",
+    "lesson": "distress-priority",
+    "id": "going-concern",
+    "title": "Going concern vs liquidation value · Giá trị hoạt động liên tục và thanh lý|Going concern vs liquidation value",
+    "text": "Going concern giả định tiếp tục hoạt động; liquidation dựa proceeds bán tài sản sau chi phí. Negative equity không tự là legal insolvency.|Going concern assumes continued operation; liquidation reflects sale proceeds net of costs. Negative equity is not automatically legal insolvency.",
+    "example": "Operating value $10m, liquidation $6m: viable restructuring may improve recovery.|Operating value $10m, liquidation $6m: viable restructuring may improve recovery.",
+    "related": [
+      "capital-stack",
+      "debt-for-stock"
+    ]
+  },
+  {
+    "course": "accounting-foundations",
+    "lesson": "accounting-equation",
+    "id": "contra-account",
+    "title": "Contra asset and accumulated depreciation · Tài khoản điều chỉnh giảm tài sản|Contra asset and accumulated depreciation",
+    "text": "Contra asset có số dư ngược tài sản; accumulated depreciation không phải tiền dành riêng.|A contra asset has the opposite normal balance to assets; accumulated depreciation is not cash reserved.",
+    "example": "PPE cost100−accumulated depreciation30−impairment5=65.|PPE cost100−accumulated depreciation30−impairment5=65.",
+    "related": [
+      "double-entry",
+      "capitalization"
+    ]
+  },
+  {
+    "course": "accounting-foundations",
+    "lesson": "three-statements",
+    "id": "ppe-rollforward",
+    "title": "PP&E roll-forward · Bảng biến động tài sản cố định|PP&E roll-forward",
+    "text": "Nối opening balance với additions, depreciation, disposal, impairment và adjustments. Cash capex có thể khác additions vì noncash transactions.|Bridge opening balance through additions, depreciation, disposal, impairment and adjustments. Cash capex can differ due to noncash transactions.",
+    "example": "Opening100+additions50−depreciation20−disposed carrying10=120.|Opening100+additions50−depreciation20−disposed carrying10=120.",
+    "related": [
+      "capitalization",
+      "noncash-financing"
+    ]
+  },
+  {
+    "course": "accounting-foundations",
+    "lesson": "accrual-working-capital",
+    "id": "revenue-cutoff",
+    "title": "Revenue cutoff · Ghi nhận đúng kỳ|Revenue cutoff",
+    "text": "Ghi giao dịch đúng kỳ theo transfer/performance, không chỉ invoice; xét returns cuối kỳ.|Recognize in correct period based on transfer/performance, not merely invoice; review year-end returns.",
+    "example": "Invoice tháng12, control chuyển tháng1: chưa ghi revenue tháng12 nếu chưa đủ điều kiện.|December invoice, January control transfer: no December revenue if criteria unmet.",
+    "related": [
+      "contract-assets",
+      "performance-obligations"
+    ]
+  },
+  {
+    "course": "accounting-foundations",
+    "lesson": "cost-allocation",
+    "id": "estimate-vs-error",
+    "title": "Change in estimate vs prior-period error · Thay đổi ước tính và sai sót|Change in estimate vs prior-period error",
+    "text": "Ước tính cập nhật vì thông tin mới thường prospective; sai sót trọng yếu kỳ trước thường hồi tố nếu khả thi theo IAS 8.|New-information estimates generally prospective; material prior-period errors generally retrospective when practicable under IAS 8.",
+    "example": "Đổi useful life vì usage mới: chỉnh khấu hao còn lại; nhập sai cost kỳ trước là khác.|Revised useful life changes remaining depreciation; prior cost-entry error is different.",
+    "related": [
+      "capitalization",
+      "earnings-normalization"
+    ]
+  },
+  {
+    "course": "ethics",
+    "lesson": "ethical-framework",
+    "id": "dissociation",
+    "title": "Dissociation from violations · Tách khỏi vi phạm|Dissociation from violations",
+    "text": "Nếu không thể ngăn vi phạm, ngừng tham gia và tách khỏi hành vi phù hợp; escalation tùy trường hợp.|If violations cannot be prevented, cease participation and appropriately dissociate; escalate as circumstances require.",
+    "example": "Không ký báo cáo biết sai; báo compliance và tách khỏi vi phạm.|Do not sign a knowingly false report; escalate and dissociate.",
+    "related": [
+      "ethical-escalation",
+      "research-records"
+    ]
+  },
+  {
+    "course": "ethics",
+    "lesson": "mnpi",
+    "id": "public-dissemination",
+    "title": "Public dissemination · Công bố rộng rãi|Public dissemination",
+    "text": "Thông tin không thành public chỉ vì vài analyst biết. Xét mức tiếp cận rộng và hỏi compliance khi không chắc.|Information is not public merely because several analysts know it. Assess broad availability; consult compliance if uncertain.",
+    "example": "CEO reveals earnings to a closed group: do not trade on material private information.|CEO reveals earnings to a closed group: do not trade on material private information.",
+    "related": [
+      "mosaic-theory",
+      "ethical-escalation"
+    ]
+  },
+  {
+    "course": "quantitative",
+    "lesson": "sampling",
+    "id": "bootstrap-resampling",
+    "title": "Bootstrap resampling · Lấy mẫu lặp có hoàn lại|Bootstrap resampling",
+    "text": "Bootstrap ước lượng sampling distribution bằng resampling; IID cần giả định phù hợp, block bootstrap xử lý một số dependence. Không sửa selection bias.|Bootstrap estimates sampling distributions by resampling; IID needs suitable assumptions, block bootstrap handles some dependence. Does not cure selection bias.",
+    "example": "1,000 resamples from 100 observations; estimate uncertainty from resampled means.|1,000 resamples from 100 observations; estimate uncertainty from resampled means.",
+    "related": [
+      "sampling-distribution",
+      "model-validation"
+    ]
+  },
+  {
+    "course": "quantitative",
+    "lesson": "regression",
+    "id": "type-errors",
+    "title": "Type I error, Type II error and power · Sai lầm loại I, II và lực kiểm định|Type I error, Type II error and power",
+    "text": "Type I bác bỏ H0 đúng (α); Type II không bác bỏ H0 sai tại alternative cụ thể (β); power=1−β.|Type I rejects true H0 (α); Type II fails to reject false H0 at a specified alternative (β); power=1−β.",
+    "example": "α5%, β20% at specified effect: power80%.|α5%, β20% at specified effect: power80%.",
+    "related": [
+      "regression-diagnostics",
+      "sampling-distribution"
+    ]
+  },
+  {
+    "course": "quantitative",
+    "lesson": "model-governance",
+    "id": "monte-carlo",
+    "title": "Monte Carlo simulation · Mô phỏng Monte Carlo|Monte Carlo simulation",
+    "text": "Lấy mẫu từ phân phối/dependence giả định để ước lượng output. Nhiều paths giảm simulation error, không sửa model sai.|Sample modeled distributions/dependence to estimate output. More paths reduce simulation error, not misspecification.",
+    "example": "10,000 NPV paths, 1,800 negative: model-estimated probability18%.|10,000 NPV paths, 1,800 negative: model-estimated probability18%.",
+    "related": [
+      "model-validation",
+      "tail-risk"
+    ]
+  },
+  {
+    "course": "economics",
+    "lesson": "supply-demand",
+    "id": "cross-income-elasticity",
+    "title": "Cross-price and income elasticity · Co giãn chéo và thu nhập|Cross-price and income elasticity",
+    "text": "Cross-price=%Δquantity A/%Δprice B; dương thường substitutes, âm complements. Income elasticity=%Δquantity/%Δincome.|Cross-price=%Δquantity A/%Δprice B; positive often substitutes, negative complements. Income elasticity=%Δquantity/%Δincome.",
+    "example": "Rival price +10%, demand A +5%: cross elasticity0.5, ceteris paribus.|Rival price +10%, demand A +5%: cross elasticity0.5, ceteris paribus.",
+    "related": [
+      "elasticity-margin",
+      "market-power"
+    ]
+  },
+  {
+    "course": "economics",
+    "lesson": "market-structure",
+    "id": "shutdown-exit",
+    "title": "Shutdown point vs long-run exit · Ngừng sản xuất và rút khỏi thị trường|Shutdown point vs long-run exit",
+    "text": "Ngắn hạn mô hình cạnh tranh: sản xuất nếu price cover AVC tại output tối ưu; dài hạn cần cover economic cost. Xét shutdown costs.|Short-run competitive model: operate if price covers AVC at optimal output; long run requires economic costs covered. Consider shutdown costs.",
+    "example": "P8, AVC6, ATC10: may operate short term to cover fixed costs.|P8, AVC6, ATC10: may operate short term to cover fixed costs.",
+    "related": [
+      "break-even-range",
+      "elasticity-margin"
+    ]
+  },
+  {
+    "course": "economics",
+    "lesson": "business-cycle",
+    "id": "output-gap",
+    "title": "Output gap · Khoảng cách sản lượng|Output gap",
+    "text": "Actual GDP trừ potential GDP, thường chia potential. Potential là ước lượng; gap âm gợi ý slack, không quyết định inflation một mình.|Actual minus potential GDP, usually scaled by potential. Potential is estimated; negative gap suggests slack, not sufficient for inflation forecast.",
+    "example": "Actual980, potential1000: gap−2%.|Actual980, potential1000: gap−2%.",
+    "related": [
+      "credit-cycle",
+      "fisher-effect"
+    ]
+  },
+  {
+    "course": "economics",
+    "lesson": "fx",
+    "id": "fx-exposures",
+    "title": "Transaction, translation and economic exposure · Ba loại rủi ro tỷ giá|Transaction, translation and economic exposure",
+    "text": "Transaction là contractual foreign flows; translation là quy đổi báo cáo; economic exposure tác động cạnh tranh/cash flows dài hạn.|Transaction is contracted foreign flows; translation is reporting conversion; economic exposure affects long-run competitiveness/cash flows.",
+    "example": "USD payable in90 days is transaction; subsidiary reporting conversion is translation.|USD payable in90 days is transaction; subsidiary reporting conversion is translation.",
+    "related": [
+      "fx-parity",
+      "hedge-basis"
+    ]
+  },
+  {
+    "course": "fsa",
+    "lesson": "framework",
+    "id": "common-size",
+    "title": "Common-size statements · Báo cáo tỷ trọng|Common-size statements",
+    "text": "Income statement chia revenue; balance sheet thường chia assets. So khác quy mô nhưng cần nhất quán classification.|Income statement scales by revenue; balance sheet generally by assets. Compare sizes with consistent classifications.",
+    "example": "COGS60/sales100 and COGS600/sales1000 both60%.|COGS60/sales100 and COGS600/sales1000 both60%.",
+    "related": [
+      "ratio-denominator",
+      "contribution-margin"
+    ]
+  },
+  {
+    "course": "fsa",
+    "lesson": "revenue-tax",
+    "id": "principal-agent",
+    "title": "Principal versus agent · Bên chính và đại lý|Principal versus agent",
+    "text": "Principal kiểm soát hàng/dịch vụ trước transfer và ghi gross revenue; agent sắp xếp cung cấp và ghi fee. Xét control, không chỉ người thu tiền.|Principal controls specified goods/services before transfer and records gross revenue; agent arranges provision and records fees. Assess control, not merely cash collection.",
+    "example": "Platform collects100, pays seller90: agent revenue10; principal revenue100 and applicable cost.|Platform collects100, pays seller90: agent revenue10; principal revenue100 and applicable cost.",
+    "related": [
+      "gmv-take-rate",
+      "performance-obligations"
+    ]
+  },
+  {
+    "course": "fsa",
+    "lesson": "assets-debt",
+    "id": "sppi",
+    "title": "SPPI (solely payments of principal and interest) · Điều kiện chỉ trả gốc và lãi|SPPI (solely payments of principal and interest)",
+    "text": "IFRS 9 đánh giá contractual flows phù hợp basic lending; kết hợp business model để phân loại debt assets. SPPI pass chưa đủ cho amortized cost.|IFRS 9 assesses cash flows against basic lending; combine with business model for debt classification. Passing SPPI alone does not ensure amortized cost.",
+    "example": "Fixed-coupon bond may pass; equity-index-linked return generally fails.|Fixed-coupon bond may pass; equity-index-linked return generally fails.",
+    "related": [
+      "financial-instrument-classification",
+      "expected-loss"
+    ],
+    "refs": [
+      [
+        "IFRS 9",
+        "https://www.ifrs.org/issued-standards/list-of-standards/ifrs-9-financial-instruments/"
+      ]
+    ]
+  },
+  {
+    "course": "fsa",
+    "lesson": "assets-debt",
+    "id": "rou-lease",
+    "title": "Right-of-use asset and lease liability · Tài sản quyền sử dụng và nợ thuê|Right-of-use asset and lease liability",
+    "text": "IFRS 16 lessee thường ghi ROU và lease liability, trừ ngoại lệ đủ điều kiện. EBITDA/leverage có thể đổi do presentation.|IFRS 16 lessee generally recognizes ROU and lease liability, subject to qualifying exemptions. EBITDA/leverage may change through presentation.",
+    "example": "Lease PV100: initial asset/liability100 ignoring adjustments.|Lease PV100: initial asset/liability100 ignoring adjustments.",
+    "related": [
+      "capitalization",
+      "ratio-denominator"
+    ],
+    "refs": [
+      [
+        "IFRS 16",
+        "https://www.ifrs.org/issued-standards/list-of-standards/ifrs-16-leases/"
+      ]
+    ]
+  },
+  {
+    "course": "fsa",
+    "lesson": "cash-quality",
+    "id": "factoring-recourse",
+    "title": "Factoring with and without recourse · Bao thanh toán có và không truy đòi|Factoring with and without recourse",
+    "text": "Chuyển receivables lấy cash sớm; recourse có thể giữ credit risk ở seller. Derecognition và cash-flow classification phụ thuộc terms/chuẩn mực.|Transfer receivables for early cash; recourse may leave credit risk with seller. Derecognition and cash-flow classification depend on terms/standards.",
+    "example": "AR100, factor pays97; significant retained default risk requires financing analysis rather than assumed sale.|AR100, factor pays97; significant retained default risk requires financing analysis rather than assumed sale.",
+    "related": [
+      "cash-conversion",
+      "financial-instrument-classification"
+    ]
+  },
+  {
+    "course": "fsa",
+    "lesson": "cash-quality",
+    "id": "supplier-finance",
+    "title": "Supplier finance (reverse factoring) · Tài trợ nhà cung cấp|Supplier finance (reverse factoring)",
+    "text": "Funder trả supplier, buyer trả funder sau; có thể kéo dài DPO. Xét liability, cash-flow classification và disclosures.|Funder pays supplier, buyer repays funder later; may extend DPO. Assess liability, cash-flow classification and disclosures.",
+    "example": "Supplier paid day10, buyer pays bank day90: stress facility withdrawal.|Supplier paid day10, buyer pays bank day90: stress facility withdrawal.",
+    "related": [
+      "cash-conversion",
+      "working-capital-cycle"
+    ],
+    "refs": [
+      [
+        "IAS 7",
+        "https://www.ifrs.org/issued-standards/list-of-standards/ias-7-statement-of-cash-flows/"
+      ]
+    ]
+  },
+  {
+    "course": "corporate-finance",
+    "lesson": "working-capital",
+    "id": "trade-credit-discount",
+    "title": "Trade credit (2/10 net 30) · Tín dụng thương mại và chiết khấu|Trade credit (2/10 net 30)",
+    "text": "Giảm2% nếu trả ngày10, nếu không trả đủ ngày30. Forgone discount cost 20 ngày=2/98; annualize nhất quán.|2% discount by day10, full payment day30 otherwise. Forgone discount cost over20 days=2/98; annualize consistently.",
+    "example": "Invoice100: pay98 day10 or100 day30; simple annualized cost≈37.24% using365 days.|Invoice100: pay98 day10 or100 day30; simple annualized cost≈37.24% using365 days.",
+    "related": [
+      "working-capital-cycle",
+      "discount-rate"
+    ]
+  },
+  {
+    "course": "corporate-finance",
+    "lesson": "npv",
+    "id": "real-options",
+    "title": "Real options · Quyền chọn thực|Real options",
+    "text": "Linh hoạt delay, expand, abandon có giá trị khi có thông tin mới. Không cộng lại flexibility đã có trong scenarios.|Flexibility to delay, expand or abandon can add value under new information. Avoid double counting flexibility already in scenarios.",
+    "example": "Pilot trước mở rộng cho quyền dừng nếu demand yếu.|A pilot allows abandonment if demand weakens.",
+    "related": [
+      "incremental-cash-flow",
+      "replication"
+    ]
+  },
+  {
+    "course": "corporate-finance",
+    "lesson": "wacc",
+    "id": "apv",
+    "title": "Adjusted present value (APV) · Giá trị hiện tại điều chỉnh|Adjusted present value (APV)",
+    "text": "APV cộng PV financing effects vào unlevered value: usable tax shields trừ financing costs phù hợp. Hữu ích khi debt schedule thay đổi.|APV adds PV financing effects to unlevered value: usable shields less relevant financing costs. Useful with changing debt schedules.",
+    "example": "Unlevered NPV5m + shield PV2m − cost.5m = APV6.5m.|Unlevered NPV5m + shield PV2m − cost.5m = APV6.5m.",
+    "related": [
+      "project-hurdle",
+      "incremental-cash-flow"
+    ]
+  },
+  {
+    "course": "corporate-finance",
+    "lesson": "restructuring",
+    "id": "eps-accretion",
+    "title": "EPS accretion/dilution · Tăng giảm EPS sau M&A|EPS accretion/dilution",
+    "text": "Pro forma EPS cao hơn standalone buyer là accretion; financing/multiple có thể tạo accretion dù NPV âm. Xét synergy và premium.|Pro forma EPS above standalone buyer is accretion; financing/multiples can produce accretion despite negative NPV. Assess synergy and premium.",
+    "example": "EPS2→2.1: accretion5%, not proof of value creation.|EPS2→2.1: accretion5%, not proof of value creation.",
+    "related": [
+      "debt-restructuring",
+      "dilution-rights"
+    ]
+  },
+  {
+    "course": "equity",
+    "lesson": "markets-indexes",
+    "id": "free-float",
+    "title": "Free-float market capitalization · Vốn hóa điều chỉnh free float|Free-float market capitalization",
+    "text": "Free float là cổ phần sẵn cho public trading theo index methodology; float cap=price×eligible shares, khác full cap.|Free float is shares available for public trading under index methodology; float cap=price×eligible shares, not full cap.",
+    "example": "100m shares, price10, float60%: full cap1bn; float cap600m.|100m shares, price10, float60%: full cap1bn; float cap600m.",
+    "related": [
+      "primary-secondary",
+      "trade-execution"
+    ]
+  },
+  {
+    "course": "equity",
+    "lesson": "valuation",
+    "id": "diluted-shares",
+    "title": "Basic vs diluted EPS · EPS cơ bản và pha loãng|Basic vs diluted EPS",
+    "text": "Basic dùng weighted-average common shares; diluted xét dilutive potential shares theo chuẩn mực, không cộng mọi option/convertible máy móc.|Basic uses weighted-average common shares; diluted includes dilutive potential shares under standards, not every option/convertible mechanically.",
+    "example": "Common NI100/shares50=2; add10 dilutive shares with unchanged numerator: EPS1.67.|Common NI100/shares50=2; add10 dilutive shares with unchanged numerator: EPS1.67.",
+    "related": [
+      "dilution-rights",
+      "convertible-bond"
+    ]
+  },
+  {
+    "course": "equity",
+    "lesson": "memo-risk",
+    "id": "reverse-dcf",
+    "title": "Reverse DCF · Chiết khấu dòng tiền ngược|Reverse DCF",
+    "text": "Giải ngược growth/margin từ market price. Nhiều bộ assumptions phù hợp cùng giá; không là forecast thị trường duy nhất.|Solve implied growth/margin from market price. Multiple assumptions fit one price; not a unique market forecast.",
+    "example": "EV1000, next-year perpetual FCFF50, WACC8%: implied g3%.|EV1000, next-year perpetual FCFF50, WACC8%: implied g3%.",
+    "related": [
+      "terminal-value",
+      "thesis-falsification"
+    ]
+  },
+  {
+    "course": "fixed-income",
+    "lesson": "structures-yields",
+    "id": "clean-dirty",
+    "title": "Clean price, dirty price and accrued interest · Giá sạch, giá đầy đủ và lãi dồn tích|Clean price, dirty price and accrued interest",
+    "text": "Full/dirty=clean+accrued interest theo day count, trừ ngoại lệ thị trường. Yield pricing nhất quán settlement price.|Full/dirty=clean+accrued interest under day count, subject to market exceptions. Align yield pricing with settlement price.",
+    "example": "Clean980 + accrued12 = settlement992 before fees.|Clean980 + accrued12 = settlement992 before fees.",
+    "related": [
+      "curve-forward",
+      "credit-spread"
+    ]
+  },
+  {
+    "course": "fixed-income",
+    "lesson": "spot-curve",
+    "id": "bootstrapping",
+    "title": "Yield curve bootstrapping · Suy đường cong spot|Yield curve bootstrapping",
+    "text": "Giải lần lượt discount factors từ giá/cash flows liquid instruments dùng các kỳ đã biết. Interpolation và curve choice ảnh hưởng kết quả.|Sequentially solve discount factors from liquid instrument prices/cash flows using known maturities. Interpolation and curve choice matter.",
+    "example": "1y DF=.96; 2y bond price100, coupon5: DF2=(100−5×.96)/105≈.9067.|1y DF=.96; 2y bond price100, coupon5: DF2=(100−5×.96)/105≈.9067.",
+    "related": [
+      "curve-forward",
+      "discount-rate"
+    ],
+    "refs": [
+      [
+        "CFA Institute · Term Structure",
+        "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/term-structure-and-interest-rate-dynamics"
+      ]
+    ]
+  },
+  {
+    "course": "fixed-income",
+    "lesson": "duration-convexity",
+    "id": "macaulay-duration",
+    "title": "Macaulay duration · Kỳ hạn bình quân Macaulay|Macaulay duration",
+    "text": "Bình quân thời điểm cash flows theo PV weights; modified=Macaulay/(1+y/m) nếu y nominal annual, m kỳ coupon/năm và fixed flows.|PV-weighted average cash-flow time; modified=Macaulay/(1+y/m) for annual nominal y, m coupon periods/year and fixed flows.",
+    "example": "Zero-coupon3y, annual yield5%, m1: Macaulay3y; modified≈2.857y.|Zero-coupon3y, annual yield5%, m1: Macaulay3y; modified≈2.857y.",
+    "related": [
+      "key-rate-duration",
+      "immunization"
+    ]
+  },
+  {
+    "course": "fixed-income",
+    "lesson": "portfolio-hedge",
+    "id": "ctd",
+    "title": "Cheapest-to-deliver (CTD) and conversion factor · Trái phiếu giao rẻ nhất và hệ số chuyển đổi|Cheapest-to-deliver (CTD) and conversion factor",
+    "text": "Một số bond futures cho giao nhiều bonds; short chọn delivery tối ưu. DV01 hedge dùng CTD exposure điều chỉnh conversion factor khi phù hợp.|Some bond futures allow several deliverables; short chooses optimal delivery. DV01 hedge uses CTD exposure adjusted by conversion factor where appropriate.",
+    "example": "CTD DV01 $80, factor .8: futures DV01≈$100, assuming stable CTD.|CTD DV01 $80, factor .8: futures DV01≈$100, assuming stable CTD.",
+    "related": [
+      "immunization",
+      "hedge-basis"
+    ]
+  },
+  {
+    "course": "fixed-income",
+    "lesson": "portfolio-hedge",
+    "id": "cash-flow-matching",
+    "title": "Cash-flow matching · Khớp dòng tiền nghĩa vụ|Cash-flow matching",
+    "text": "Chọn cash flows khớp amount/timing liabilities; khác duration matching xấp xỉ price sensitivity. Xét default và mismatch.|Select flows matching liability amounts/timing; unlike duration matching's price sensitivity approximation. Consider default and mismatch.",
+    "example": "Liabilities100 year1,200 year2: suitable zeros pay100/200 on dates.|Liabilities100 year1,200 year2: suitable zeros pay100/200 on dates.",
+    "related": [
+      "immunization",
+      "ldi-surplus"
+    ]
+  },
+  {
+    "course": "derivatives",
+    "lesson": "payoff-arbitrage",
+    "id": "notional-exposure",
+    "title": "Notional amount vs market value · Giá trị danh nghĩa và thị trường|Notional amount vs market value",
+    "text": "Notional scale payment, không là vốn bỏ ra, fair value hay max loss. Exposure phụ thuộc delta/duration/terms.|Notional scales payments, not invested capital, fair value or max loss. Exposure depends on delta/duration/terms.",
+    "example": "Swap notional10m, accrual.25, net rate1%: payment25k, not entire fair value.|Swap notional10m, accrual.25, net rate1%: payment25k, not entire fair value.",
+    "related": [
+      "swap-curves",
+      "position-risk"
+    ]
+  },
+  {
+    "course": "derivatives",
+    "lesson": "forwards-futures",
+    "id": "cost-of-carry",
+    "title": "Cost of carry and convenience yield · Chi phí nắm giữ và lợi ích sở hữu|Cost of carry and convenience yield",
+    "text": "Carry gồm financing/storage trừ income/benefits; convenience yield là lợi ích giữ vật chất, không nhất thiết cash. Model cần tradability.|Carry includes financing/storage less income/benefits; convenience yield is physical holding benefit, not necessarily cash. Model needs tradability.",
+    "example": "Spot100, continuous r5%, storage2%, convenience3%, T1: F≈104.08.|Spot100, continuous r5%, storage2%, convenience3%, T1: F≈104.08.",
+    "related": [
+      "forward-value-basis",
+      "futures-roll"
+    ]
+  },
+  {
+    "course": "derivatives",
+    "lesson": "options-greeks",
+    "id": "option-moneyness",
+    "title": "Moneyness, intrinsic value and time value · Trạng thái và giá trị quyền chọn|Moneyness, intrinsic value and time value",
+    "text": "Call ITM nếu S>K, put nếu S<K. Intrinsic là exercise amount không premium; time value thường premium−intrinsic, có European caveats.|Call ITM if S>K, put if S<K. Intrinsic is exercise amount excluding premium; time value often premium−intrinsic, with European caveats.",
+    "example": "Call S110,K100,premium14: intrinsic10, time component4; expiry break-even114 before costs.|Call S110,K100,premium14: intrinsic10, time component4; expiry break-even114 before costs.",
+    "related": [
+      "option-greeks",
+      "replication",
+      "american-european"
+    ]
+  },
+  {
+    "course": "derivatives",
+    "lesson": "options-greeks",
+    "id": "american-european",
+    "title": "American vs European options · Quyền chọn kiểu Mỹ và châu Âu|American vs European options",
+    "text": "American exercise trong contract life; European chỉ expiry. Không phải địa lý; early exercise phụ thuộc dividends, rates, payoff/time value.|American exercisable during contract life; European only at expiry. Not geography; early exercise depends on dividends, rates and payoff/time value.",
+    "example": "American non-dividend call at nonnegative rates generally not optimally exercised early in standard model.|American non-dividend call at nonnegative rates generally not optimally exercised early in standard model.",
+    "related": [
+      "option-moneyness",
+      "replication"
+    ]
+  },
+  {
+    "course": "alternatives",
+    "lesson": "features-fees",
+    "id": "committed-called-capital",
+    "title": "Committed, called and unfunded capital · Vốn cam kết, đã gọi và chưa gọi|Committed, called and unfunded capital",
+    "text": "Commitment nghĩa vụ hợp đồng; called vốn được yêu cầu, paid-in thực góp; unfunded xét recallable distributions và terms.|Commitment is contractual obligation; called requested, paid-in actually contributed; unfunded depends on recallable distributions and terms.",
+    "example": "Commit100, called/paid40, no recall: unfunded60.|Commit100, called/paid40, no recall: unfunded60.",
+    "related": [
+      "private-fund-metrics",
+      "liquidity-waterfall"
+    ]
+  },
+  {
+    "course": "alternatives",
+    "lesson": "features-fees",
+    "id": "catch-up-clawback",
+    "title": "GP catch-up and clawback · Bù lợi nhuận và hoàn carried interest|GP catch-up and clawback",
+    "text": "Catch-up phân phối để GP đạt agreed profit share sau preferred return; clawback hoàn carry vượt entitlement theo agreement.|Catch-up distributes to GP toward agreed profit share after preferred return; clawback returns excess carry under agreement.",
+    "example": "GP receives early carry, later deals lose: inspect final waterfall, tax and escrow.|GP receives early carry, later deals lose: inspect final waterfall, tax and escrow.",
+    "related": [
+      "fee-waterfall",
+      "private-fund-metrics"
+    ]
+  },
+  {
+    "course": "alternatives",
+    "lesson": "private-capital",
+    "id": "pre-post-money",
+    "title": "Pre-money and post-money valuation · Định giá trước và sau gọi vốn|Pre-money and post-money valuation",
+    "text": "Post-money=pre-money+primary cash trong round đơn giản; secondary proceeds không tăng cash công ty. Ownership phụ thuộc fully diluted cap table.|Post-money=pre-money+primary cash in simple round; secondary proceeds do not fund company. Ownership depends on fully diluted cap table.",
+    "example": "Pre-money8m + cash2m = post10m; investor20% before option-pool changes.|Pre-money8m + cash2m = post10m; investor20% before option-pool changes.",
+    "related": [
+      "dilution-rights",
+      "liquidation-preference"
+    ]
+  },
+  {
+    "course": "alternatives",
+    "lesson": "private-capital",
+    "id": "anti-dilution",
+    "title": "Anti-dilution protection · Điều khoản chống pha loãng|Anti-dilution protection",
+    "text": "Điều chỉnh conversion terms preferred khi down round theo contract. Full ratchet khác weighted average; không đảm bảo không mất value.|Adjust preferred conversion terms in down rounds under contract. Full ratchet differs from weighted average; no guarantee against value loss.",
+    "example": "Conversion price10, down round6: full ratchet may reset6; weighted average depends on terms and issue size.|Conversion price10, down round6: full ratchet may reset6; weighted average depends on terms and issue size.",
+    "related": [
+      "dilution-rights",
+      "liquidation-preference"
+    ]
+  },
+  {
+    "course": "portfolio",
+    "lesson": "risk-return",
+    "id": "geometric-return",
+    "title": "Arithmetic vs geometric return · Trung bình số học và hình học|Arithmetic vs geometric return",
+    "text": "Arithmetic mô tả mean một kỳ; geometric đo compound growth. Geometric thường thấp hơn khi biến động.|Arithmetic describes one-period mean; geometric measures compound growth. Geometric usually lower with volatility.",
+    "example": "+50%,−50%: arithmetic0%, compound−25%, geometric per period≈−13.4%.|+50%,−50%: arithmetic0%, compound−25%, geometric per period≈−13.4%.",
+    "related": [
+      "return-cashflows",
+      "position-risk"
+    ]
+  },
+  {
+    "course": "portfolio",
+    "lesson": "capm",
+    "id": "security-market-line",
+    "title": "Security market line (SML) vs capital market line (CML) · Đường thị trường chứng khoán và vốn|Security market line (SML) vs capital market line (CML)",
+    "text": "SML nối expected return với beta; CML nối expected return với total volatility của efficient portfolios gồm risk-free và market.|SML relates expected return to beta; CML relates expected return to total volatility of efficient risk-free/market portfolios.",
+    "example": "Rf3%, market8%, beta1.2: SML required9%; arbitrary stock not on CML.|Rf3%, market8%, beta1.2: SML required9%; arbitrary stock not on CML.",
+    "related": [
+      "systematic-specific-risk",
+      "mean-variance"
+    ]
+  },
+  {
+    "course": "portfolio",
+    "lesson": "wealth-risk",
+    "id": "human-capital",
+    "title": "Human capital and total wealth · Vốn con người và tổng tài sản|Human capital and total wealth",
+    "text": "PV future labor income theo risk/horizon; xét correlation với investments, liabilities, không coi là cash liquid.|PV of future labor income under risk/horizon assumptions; consider correlations with investments/liabilities, not liquid cash.",
+    "example": "Tech employee holding tech stocks faces common salary/portfolio sector shock.|Tech employee holding tech stocks faces common salary/portfolio sector shock.",
+    "related": [
+      "ips-constraints",
+      "position-risk"
+    ]
+  },
+  {
+    "course": "asset-allocation",
+    "lesson": "saa",
+    "id": "shrinkage",
+    "title": "Covariance shrinkage · Co rút ước lượng hiệp phương sai|Covariance shrinkage",
+    "text": "Blend sample covariance với structured target để giảm estimation error; justify strength. Không xóa regime risk.|Blend sample covariance with structured target to reduce estimation error; justify strength. Does not eliminate regime risk.",
+    "example": "Sample correlation .9, target .3, blend50%: .6 with equal unchanged variances.|Sample correlation .9, target .3, blend50%: .6 with equal unchanged variances.",
+    "related": [
+      "mean-variance",
+      "position-risk"
+    ]
+  },
+  {
+    "course": "asset-allocation",
+    "lesson": "taa",
+    "id": "active-weight",
+    "title": "Active weight and active share · Tỷ trọng chủ động và mức khác biệt|Active weight and active share",
+    "text": "Active weight=wp−wb; active share=.5 tổng trị tuyệt đối chênh lệch với long-only fully invested cùng universe. Khác tracking error.|Active weight=wp−wb; active share=.5 sum absolute differences for comparable fully invested long-only portfolios. Unlike tracking error.",
+    "example": "Portfolio60/40, benchmark50/50: active weights+10/−10pp; active share10%.|Portfolio60/40, benchmark50/50: active weights+10/−10pp; active share10%.",
+    "related": [
+      "risk-budget",
+      "position-risk"
+    ]
+  },
+  {
+    "course": "asset-allocation",
+    "lesson": "liquidity-stress",
+    "id": "haircut",
+    "title": "Collateral haircut · Khấu trừ tài sản bảo đảm|Collateral haircut",
+    "text": "Haircut giảm collateral value được công nhận. Tăng haircut có thể gây margin call dù giá không đổi.|Haircut reduces recognized collateral value. Rising haircut may trigger margin calls at unchanged price.",
+    "example": "Collateral100, haircut10%: eligible90; haircut20%:80; requirement90 implies shortfall10.|Collateral100, haircut10%: eligible90; haircut20%:80; requirement90 implies shortfall10.",
+    "related": [
+      "liquidity-waterfall",
+      "hedge-basis"
+    ]
+  },
+  {
+    "course": "performance",
+    "lesson": "return-measures",
+    "id": "modified-dietz",
+    "title": "Modified Dietz return · Lợi suất Modified Dietz|Modified Dietz return",
+    "text": "R=(end−begin−Σflows)/(begin+Σweighted flows), contributions dương, weight phần kỳ còn lại. Xấp xỉ khi không valuation từng flow; khác exact TWR/IRR.|R=(end−begin−sum flows)/(begin+sum weighted flows), contributions positive, weight fraction of period remaining. Approximation without flow-date valuations, not exact TWR/IRR.",
+    "example": "Begin100, midpoint contribution50, end160: gain10 / weighted capital125 =8%.|Begin100, midpoint contribution50, end160: gain10 / weighted capital125 =8%.",
+    "related": [
+      "return-cashflows",
+      "composite-gips"
+    ]
+  },
+  {
+    "course": "performance",
+    "lesson": "attribution",
+    "id": "interaction-effect",
+    "title": "Allocation, selection and interaction effects · Hiệu ứng phân bổ, lựa chọn và tương tác|Allocation, selection and interaction effects",
+    "text": "Brinson-Fachler allocation=(wp−wb)(rb−Rb), selection=wb(rp−rb), interaction=(wp−wb)(rp−rb). Convention có thể gộp interaction; reconcile active return.|Brinson-Fachler allocation=(wp−wb)(rb−Rb), selection=wb(rp−rb), interaction=(wp−wb)(rp−rb). Other conventions combine interaction; reconcile active return.",
+    "example": "wp30%, wb20%, rp12%, rb8%, Rb5%: allocation .3pp, selection .8pp, interaction .4pp.|wp30%, wb20%, rp12%, rb8%, Rb5%: allocation .3pp, selection .8pp, interaction .4pp.",
+    "related": [
+      "factor-attribution",
+      "risk-budget"
+    ]
+  },
+  {
+    "course": "performance",
+    "lesson": "appraisal",
+    "id": "downside-deviation",
+    "title": "Downside deviation and minimum acceptable return (MAR) · Độ lệch giảm giá và lợi suất tối thiểu|Downside deviation and minimum acceptable return (MAR)",
+    "text": "Đo shortfall dưới MAR; denominator toàn bộ observations hoặc downside-only tùy convention. Sortino dùng return−MAR cùng kỳ.|Measure shortfall below MAR; denominator all observations or downside-only depending on convention. Sortino uses return minus MAR on matched horizon.",
+    "example": "Returns −4%,2%,6%, MAR0: all-observation DD=√(.04²/3)=2.31%.|Returns −4%,2%,6%, MAR0: all-observation DD=√(.04²/3)=2.31%.",
+    "related": [
+      "information-appraisal",
+      "tail-risk"
+    ]
+  },
+  {
+    "course": "performance",
+    "lesson": "gips",
+    "id": "verification",
+    "title": "GIPS verification vs performance examination · Xác minh và kiểm tra hiệu suất|GIPS verification vs performance examination",
+    "text": "Verification xét firm-wide policies/processes theo scope GIPS; không bảo đảm accuracy từng composite. Performance examination có scope cụ thể hơn.|Verification examines firm-wide policies/processes within GIPS scope; not assurance of each composite's accuracy. Performance examination has more specific scope.",
+    "example": "Firm verified does not mean every fund return independently examined.|Firm verified does not mean every fund return independently examined.",
+    "related": [
+      "composite-gips",
+      "manager-due-diligence"
+    ]
+  },
+  {
+    "course": "pathways",
+    "lesson": "pm-path",
+    "id": "vwap-twap",
+    "title": "VWAP and TWAP execution benchmarks · Giá bình quân theo khối lượng và thời gian|VWAP and TWAP execution benchmarks",
+    "text": "VWAP=Σprice×volume/Σvolume; TWAP average giá theo time convention. Không đo missed trades như implementation shortfall.|VWAP=sum price×volume/sum volume; TWAP averages prices by time convention. Neither measures missed trades like implementation shortfall.",
+    "example": "100 shares at10, 300 at12: VWAP11.5; equal-time TWAP11 for equally spaced observations.|100 shares at10, 300 at12: VWAP11.5; equal-time TWAP11 for equally spaced observations.",
+    "related": [
+      "trade-execution",
+      "manager-due-diligence"
+    ]
+  },
+  {
+    "course": "pathways",
+    "lesson": "private-wealth-path",
+    "id": "tax-residence",
+    "title": "Tax residence vs asset location · Cư trú thuế và vị trí tài sản|Tax residence vs asset location",
+    "text": "Tax residence khác citizenship/asset situs; treaties và cross-border rules ảnh hưởng withholding, estate, gains. Cần tư vấn theo jurisdiction.|Tax residence differs from citizenship/asset situs; treaties and cross-border rules affect withholding, estate and gains. Seek jurisdiction-specific advice.",
+    "example": "Client resident A holds asset B: determine source withholding and residence tax before net yield.|Client resident A holds asset B: determine source withholding and residence tax before net yield.",
+    "related": [
+      "tax-basis",
+      "goal-buckets"
+    ]
   }
 ];
