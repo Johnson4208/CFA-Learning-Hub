@@ -157,7 +157,22 @@
 #drawer-los-list .academy-unit[open]{border-color:#a1a1aa!important;box-shadow:0 3px 12px rgba(24,24,27,.06)}
 @keyframes module-modal-in{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(max-width:640px){#los-drawer{padding:12px!important}.module-modal-card{max-height:92vh!important}.module-modal-card #drawer-los-list{padding:16px!important}}
-</style></head>
+</style><style>
+.cfa-desktop-nav{min-width:0;flex-shrink:1}
+.cfa-desktop-nav .top-nav-btn{white-space:nowrap;flex-shrink:0}
+@media (min-width:1200px) and (max-width:1439px){
+ .cfa-header-row{gap:8px;padding-inline:16px}
+ .cfa-desktop-nav{gap:0}
+ .cfa-desktop-nav .top-nav-btn{padding-inline:9px}
+ .cfa-header-search{width:135px}
+ .cfa-header-search:focus-within{width:150px}
+}
+@media (min-width:768px) and (max-width:1199px){
+ .cfa-desktop-nav{display:none!important}
+ .cfa-mobile-nav{display:flex!important}
+}
+</style>
+</head>
 <body class="bg-base-white text-ink-primary font-sans min-h-screen flex flex-col">
 
   <!-- Thông báo Toast gọn nhẹ -->
@@ -165,7 +180,7 @@
 
   <!-- ==================== TOP STICKY NAVIGATION BAR (56px) ==================== -->
   <header class="sticky top-0 z-30 h-14 bg-base-white/95 backdrop-blur-xs border-b border-base-border">
-    <div class="max-w-[1160px] h-full mx-auto px-4 sm:px-6 flex items-center justify-between gap-3">
+    <div class="cfa-header-row max-w-[1320px] h-full mx-auto px-4 sm:px-6 flex items-center justify-between gap-3">
       
       <!-- Trái: Wordmark CFAnotes + Bộ chọn cấp độ -->
       <div class="flex items-center gap-3 shrink-0">
@@ -182,7 +197,7 @@
       </div>
 
       <!-- Giữa: Điều hướng Tab ngang tập trung (Desktop) -->
-      <nav class="hidden md:flex items-center gap-1 h-full">
+      <nav class="cfa-desktop-nav hidden md:flex items-center gap-1 h-full">
         <button onclick="switchTab('library')" id="tab-btn-library" class="top-nav-btn relative h-full px-3 flex items-center gap-1.5 text-[13px] font-medium text-ink-primary transition">
           <span data-i18n="navLibrary">Thư viện</span>
           <span class="nav-underline absolute bottom-0 left-3 right-3 h-[2px] bg-ink-primary"></span>
@@ -203,12 +218,16 @@
           <span data-i18n="navFormulas">Công thức</span>
           <span class="nav-underline hidden absolute bottom-0 left-3 right-3 h-[2px] bg-ink-primary"></span>
         </button>
+        <button onclick="switchTab('concepts')" id="tab-btn-concepts" class="top-nav-btn relative h-full px-3 flex items-center gap-1.5 text-[13px] font-normal text-ink-secondary hover:text-ink-primary transition">
+          <span data-i18n="navConcepts">Kho Concepts</span>
+          <span class="nav-underline hidden absolute bottom-0 left-3 right-3 h-[2px] bg-ink-primary"></span>
+        </button>
       </nav>
 
       <!-- Phải: Tìm kiếm Ctrl+K + VI/EN + Quick Access -->
       <div class="flex items-center gap-2 shrink-0">
         <!-- Tìm kiếm nhanh -->
-        <div class="hidden lg:flex items-center w-44 focus-within:w-56 bg-base-subtle border border-base-border focus-within:border-ink-primary rounded-md px-2.5 py-1 transition-all duration-150">
+        <div class="cfa-header-search hidden lg:flex items-center w-44 focus-within:w-56 bg-base-subtle border border-base-border focus-within:border-ink-primary rounded-md px-2.5 py-1 transition-all duration-150">
           <i data-lucide="search" class="w-3.5 h-3.5 text-ink-muted mr-2 shrink-0"></i>
           <input
             id="global-search-input"
@@ -235,12 +254,13 @@
     </div>
 
     <!-- Thanh điều hướng cuộn ngang trên thiết bị di động -->
-    <div class="md:hidden bg-base-white border-b border-base-border px-4 py-1.5 flex items-center gap-1 overflow-x-auto">
+    <div class="cfa-mobile-nav md:hidden bg-base-white border-b border-base-border px-4 py-1.5 flex items-center gap-1 overflow-x-auto">
       <button onclick="switchTab('library')" id="m-tab-library" class="m-nav-btn px-2.5 py-1 rounded text-xs font-medium bg-ink-primary text-base-white shrink-0" data-i18n="navLibrary">Thư viện</button>
       <button onclick="switchTab('quiz')" id="m-tab-quiz" class="m-nav-btn px-2.5 py-1 rounded text-xs font-medium text-ink-secondary shrink-0" data-i18n="navQuiz">Luyện tập</button>
       <button onclick="switchTab('flashcards')" id="m-tab-flashcards" class="m-nav-btn px-2.5 py-1 rounded text-xs font-medium text-ink-secondary shrink-0" data-i18n="navFlashcards">Thẻ ghi nhớ</button>
       <button onclick="switchTab('notes')" id="m-tab-notes" class="m-nav-btn px-2.5 py-1 rounded text-xs font-medium text-ink-secondary shrink-0" data-i18n="navNotes">Ghi chú</button>
       <button onclick="switchTab('formulas')" id="m-tab-formulas" class="m-nav-btn px-2.5 py-1 rounded text-xs font-medium text-ink-secondary shrink-0" data-i18n="navFormulas">Công thức</button>
+      <button onclick="switchTab('concepts')" id="m-tab-concepts" class="m-nav-btn px-2.5 py-1 rounded text-xs font-medium text-ink-secondary shrink-0" data-i18n="navConcepts">Kho Concepts</button>
     </div>
   </header>
 
@@ -798,6 +818,7 @@
         navFlashcards: 'Thẻ ghi nhớ',
         navNotes: 'Ghi chú',
         navFormulas: 'Công thức',
+        navConcepts: 'Kho Concepts',
         btnQuickAccess: 'Truy cập nhanh',
         libraryHeading: 'Sổ tay ôn tập CFA Level I',
         btnSourceMaterial: 'Tài liệu nguồn (IFT 2027)',
@@ -818,6 +839,7 @@
         navFlashcards: 'Flashcards',
         navNotes: 'Notes',
         navFormulas: 'Formulas',
+        navConcepts: 'Concept Library',
         btnQuickAccess: 'Quick Access',
         libraryHeading: 'CFA Level I Study Notebook',
         btnSourceMaterial: 'Source Notes (IFT 2027)',
