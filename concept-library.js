@@ -18,6 +18,10 @@ function buildIndex(courses,book){
   for(const theory of u.theories||[])add(c,u,'model',theory[0],theory[1],(theory[2]||[]).map(p=>p));
   for(const [cid,uid,title,text,example] of quick)if(cid===c.id&&uid===u.id)add(c,u,'quick',title,text,example);
  }
+ for(const x of window.CFA_CONCEPT_DEPTH||[]){
+  const c=courses.find(c=>c.id===x.course),u=c?.units.find(u=>u.id===x.lesson);
+  if(c&&u){add(c,u,'depth',x.title,x.text,x.example);const e=out[out.length-1];e.id='depth-'+x.id;e.key=x.id;e.related=x.related;e.refs=x.refs;}
+ }
  return out;
 }
 const courses=()=>window.CFA_CONCEPT_COURSES||[];
@@ -25,12 +29,12 @@ let index=null;
 const entries=()=>index??=buildIndex(courses(),window.CFA_TEXTBOOK);
 function filtered(){
  const words=norm(query).trim().split(/\s+/).filter(Boolean);
- return entries().filter(e=>(level==='all'||e.levels.includes(level))&&(course==='all'||e.course===course)&&(mode==='all'||e.kind==='quick')&&words.every(w=>norm([e.title,e.text,e.extra,e.courseTitle,e.unitTitle].flat(Infinity).join(' ')).includes(w))).sort((a,b)=>{
-  const rank=e=>{const title=norm(e.title),q=norm(query).trim();return (e.kind==='quick'?4:0)+(q&&title.includes(q)?12:0)+(q&&title.startsWith(q)?4:0)};
+ return entries().filter(e=>(level==='all'||e.levels.includes(level))&&(course==='all'||e.course===course)&&(mode==='all'||e.kind==='quick'||e.kind==='depth')&&words.every(w=>norm([e.title,e.text,e.extra,e.courseTitle,e.unitTitle].flat(Infinity).join(' ')).includes(w))).sort((a,b)=>{
+  const rank=e=>{const title=norm(e.title),q=norm(query).trim();return (e.kind==='depth'?6:e.kind==='quick'?4:0)+(q&&title.includes(q)?12:0)+(q&&title.startsWith(q)?4:0)};
   return rank(b)-rank(a);
  });
 }
-const kindLabel=k=>T(({quick:'Khái niệm|Concept',section:'Giải thích|Explanation',model:'Mô hình|Framework',lesson:'Tổng quan bài|Lesson overview'})[k]);
+const kindLabel=k=>T(({quick:'Khái niệm|Concept',depth:'Chuyên sâu|Deep concept',section:'Giải thích|Explanation',model:'Mô hình|Framework',lesson:'Tổng quan bài|Lesson overview'})[k]);
 function drawResults(){
  const host=document.getElementById('concept-results');if(!host)return;
  const results=filtered(),pages=Math.max(1,Math.ceil(results.length/size));page=Math.min(page,pages);
@@ -39,11 +43,16 @@ function drawResults(){
  host.querySelectorAll('[data-concept]').forEach(b=>b.onclick=()=>openDetail(b.dataset.concept,b));
  for(const [id,delta] of [['cl-prev',-1],['cl-next',1]]){const b=host.querySelector('#'+id);if(b)b.onclick=()=>{page+=delta;drawResults();document.getElementById('concept-count').scrollIntoView({block:'start',behavior:'instant'})}}
 }
+function relatedMarkup(e){
+ const links=(e.related||[]).map(id=>entries().find(x=>x.key===id)).filter(Boolean);
+ return (links.length?'<section class="cd-library-related"><h3>'+L('Khái niệm liên quan · học tiếp|Related concepts · study next')+'</h3>'+links.map(x=>'<button type="button" class="cd-link" data-related="'+E(x.id)+'"><span>'+L(x.title)+'</span><small>'+L(x.unitTitle)+' ↗</small></button>').join('')+'</section>':'')+(e.refs?.length?'<section class="cd-refs"><h3>'+L('Đọc nguồn chính|Primary references')+'</h3>'+e.refs.map(([name,url])=>'<a href="'+E(url)+'" target="_blank" rel="noopener noreferrer">'+E(name)+' ↗</a>').join(' · ')+'</section>':'');
+}
 function openDetail(id,trigger){
  const e=entries().find(x=>x.id===id),dialog=document.getElementById('concept-dialog');if(!e||!dialog)return;
  chosen=id;
- dialog.innerHTML='<div class="cl-detail"><header><div><small>'+L(e.courseTitle)+' · LEVEL '+E(e.levels.join('/'))+'</small><h2 id="cl-detail-title">'+L(e.title)+'</h2></div><button type="button" class="cl-close" aria-label="'+L('Đóng|Close')+'">×</button></header><div class="cl-detail-body"><section><h3>'+L('Giải thích|Explanation')+'</h3><p>'+L(e.text)+'</p></section>'+ (Array.isArray(e.extra)?e.extra.map(p=>'<section><h3>'+L(p[0])+'</h3><p>'+L(p[1])+'</p></section>').join(''):e.extra?'<section class="cl-example"><h3>'+L('Ví dụ & ứng dụng|Example & application')+'</h3><p>'+L(e.extra)+'</p></section>':'')+'<section class="cl-source"><small>'+L(e.kind==='quick'?'Ghi chú bổ sung · liên kết bài học|Supplementary note · linked lesson':'Trích từ nội dung khóa học|From course material')+'</small><strong>'+L(e.unitTitle)+'</strong></section></div><footer><button type="button" class="cl-open-lesson">'+L('Mở bài học đầy đủ|Open full lesson')+' →</button></footer></div>';
+ dialog.innerHTML='<div class="cl-detail"><header><div><small>'+L(e.courseTitle)+' · LEVEL '+E(e.levels.join('/'))+'</small><h2 id="cl-detail-title">'+L(e.title)+'</h2></div><button type="button" class="cl-close" aria-label="'+L('Đóng|Close')+'">×</button></header><div class="cl-detail-body"><section><h3>'+L('Giải thích|Explanation')+'</h3><p>'+L(e.text)+'</p></section>'+ (Array.isArray(e.extra)?e.extra.map(p=>'<section><h3>'+L(p[0])+'</h3><p>'+L(p[1])+'</p></section>').join(''):e.extra?'<section class="cl-example"><h3>'+L('Ví dụ & ứng dụng|Example & application')+'</h3><p>'+L(e.extra)+'</p></section>':'')+relatedMarkup(e)+'<section class="cl-source"><small>'+L(e.kind==='depth'||e.kind==='quick'?'Ghi chú bổ sung · liên kết bài học|Supplementary note · linked lesson':'Trích từ nội dung khóa học|From course material')+'</small><strong>'+L(e.unitTitle)+'</strong></section></div><footer><button type="button" class="cl-open-lesson">'+L('Mở bài học đầy đủ|Open full lesson')+' →</button></footer></div>';
  dialog.querySelector('.cl-close').onclick=()=>dialog.close();
+ dialog.querySelectorAll('[data-related]').forEach(b=>b.onclick=()=>openDetail(b.dataset.related,trigger));
  dialog.onclick=ev=>{if(ev.target===dialog)dialog.close()};
  dialog.onclose=()=>{chosen=null;if(trigger?.isConnected)trigger.focus({preventScroll:true})};
  dialog.querySelector('.cl-open-lesson').onclick=()=>{dialog.close();if(!e.levels.includes(studyLevel))setLevel('LVL '+(level!=='all'&&e.levels.includes(level)?level:e.levels[0]));switchTab('library');window.openDeepCourse(e.course,e.unitIndex)};
@@ -60,5 +69,10 @@ function render(){
  root.querySelectorAll('[data-cl-mode]').forEach(b=>b.onclick=()=>{mode=b.dataset.clMode;page=1;root.querySelectorAll('[data-cl-mode]').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.clMode===mode)));drawResults()});
  drawResults();
 }
-window.CFA_CONCEPT_LIBRARY={render};
+function openKey(key){
+ const e=entries().find(x=>x.key===key);if(!e)return;
+ const drawer=document.getElementById('los-drawer');if(drawer&&!drawer.classList.contains('hidden'))window.closeLosDrawer();
+ level='all';course='all';mode='all';query='';page=1;switchTab('concepts');openDetail(e.id,null);
+}
+window.CFA_CONCEPT_LIBRARY={render,openKey};
 })();
