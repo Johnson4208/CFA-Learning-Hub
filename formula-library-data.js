@@ -1,4 +1,4 @@
-/* Reviewed supplemental formula conventions. */
+/* Reviewed supplementary formulas. */
 window.CFA_FORMULA_DATA={
   "rows": [
     {
@@ -258,7 +258,7 @@ window.CFA_FORMULA_DATA={
       "name": "DSO · Số ngày phải thu|DSO · Days sales outstanding",
       "eq": "DSO=frac(AverageReceivables;TotalRevenue)×DaysInPeriod",
       "vars": "Theo CFA ratio list dùng tổng doanh thu, phải thu bình quân và số ngày trong kỳ. Trong quản trị thu nợ, net credit sales là biến thể nếu có dữ liệu.|CFA ratio-list convention uses total revenue, average receivables and days in period. Net credit sales is an operational variant if available.",
-      "example": "Phải thu 100, bán chịu 730: DSO 50 ngày.|Receivables 100, credit sales 730: DSO 50 days.",
+      "example": "Phải thu bình quân 100, tổng doanh thu 730 (toàn bộ bán chịu), 365 ngày: DSO 50 ngày.|Average receivables 100, total revenue 730 (all credit), 365 days: DSO 50 days.",
       "trap": "Nếu đề CFA không nêu quy ước khác, dùng total revenue; không trộn số liệu quý và ngày năm.|For CFA questions without an alternative definition, use total revenue; do not mix quarterly data and annual days."
     },
     {
@@ -278,7 +278,7 @@ window.CFA_FORMULA_DATA={
       "name": "DPO · Số ngày phải trả|DPO · Days payable outstanding",
       "eq": "DPO=frac(AverageTradePayables;Purchases)×DaysInPeriod",
       "vars": "Phải trả thương mại bình quân, purchases và số ngày cùng kỳ theo CFA; credit purchases dùng trong quản trị, COGS chỉ là proxy khi thiếu purchases.|Average trade payables, purchases and days in matched period per CFA; credit purchases for operational use; COGS only a proxy if purchases unavailable.",
-      "example": "Phải trả 50, mua chịu 730: 25 ngày.|Payables 50, purchases 730: 25 days.",
+      "example": "Phải trả thương mại bình quân 50, tổng purchases 730, kỳ 365 ngày: DPO 25 ngày.|Average trade payables 50, total purchases 730, 365 days: DPO 25 days.",
       "trap": "Không đánh đồng tăng DPO với lợi ích vô điều kiện.|Longer DPO is not unconditionally beneficial."
     },
     {
@@ -369,7 +369,7 @@ window.CFA_FORMULA_DATA={
       "eq": "CY=frac(AnnualCoupon;BondPrice)",
       "vars": "AnnualCoupon: coupon tiền mặt năm; BondPrice: giá hiện tại.|AnnualCoupon: annual cash coupon; BondPrice: current price.",
       "example": "Coupon 50, giá 950: 5,26%.|Coupon 50, price 950: 5.26%.",
-      "trap": "Không tính lãi/lỗ vốn hoặc tái đầu tư như YTM.|Excludes capital gain/loss and reinvestment effects of YTM."
+      "trap": "Không tính lãi/lỗ vốn hay dòng tiền tái đầu tư. YTM là IRR của dòng tiền cam kết; lợi suất thực hiện còn phụ thuộc default, giá bán và lãi tái đầu tư.|Excludes capital gains/losses and reinvestment income. YTM is IRR of promised cash flows; realized return also depends on default, sale price and reinvestment rates."
     },
     {
       "id": "forward-rate",
@@ -486,8 +486,8 @@ window.CFA_FORMULA_DATA={
       "c": "portfolio",
       "u": "risk-return",
       "name": "Sortino ratio · Rủi ro giảm giá|Sortino ratio",
-      "eq": "Sortino=frac(R_p−MAR;DownsideDeviation)",
-      "vars": "MAR: lợi suất mục tiêu tối thiểu; DownsideDeviation: độ lệch dưới MAR theo quy ước.|MAR: minimum acceptable return; DownsideDeviation: deviation below MAR under stated convention.",
+      "eq": "Sortino=frac(MeanReturn−MAR;DownsideDeviation)",
+      "vars": "MeanReturn trung bình lợi suất cùng kỳ; MAR mục tiêu tối thiểu; downside deviation thường là căn tổng bình phương shortfall dưới MAR chia n (tất cả kỳ). Sample target semideviation có thể dùng n−1; theo quy ước đề, denominator phải dương.|Mean return and MAR on the same horizon; downside deviation commonly is root summed squared below-MAR shortfalls divided by all n periods. Sample target semideviation may use n−1; follow specified convention, denominator must be positive.",
       "example": "Return 10%, MAR 2%, downside deviation 8%: Sortino 1.|Return 10%, MAR 2%, downside deviation 8%: Sortino 1.",
       "trap": "Phải thống nhất cách tính downside deviation và kỳ hạn.|Specify downside deviation convention and horizon."
     },
@@ -547,7 +547,7 @@ window.CFA_FORMULA_DATA={
       "u": "appraisal",
       "name": "Tracking error · Rủi ro lệch benchmark|Tracking error",
       "eq": "TE=SD(R_p−R_b)",
-      "vars": "R_p,R_b: lợi suất danh mục và benchmark cùng kỳ.|R_p,R_b: portfolio and benchmark returns for matched periods.",
+      "vars": "SD của chuỗi active returns cùng kỳ; khi ước lượng từ mẫu lịch sử thường dùng sample SD n−1. Annualize chỉ khi phù hợp giả định dependence và horizon.|SD of matched-period active returns; historical sample estimates commonly use n−1. Annualize only under appropriate dependence and horizon assumptions.",
       "example": "Active return qua các kỳ có SD 4%: TE 4% trên cùng cơ sở.|Active returns with SD 4%: TE 4% on that basis.",
       "trap": "Không phải độ lệch chuẩn tuyệt đối của danh mục.|Not absolute portfolio volatility."
     },

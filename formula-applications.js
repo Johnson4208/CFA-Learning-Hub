@@ -1,4 +1,4 @@
-/* Reviewed formula-specific illustrative cases. */
+/* Reviewed illustrative formula applications. */
 window.CFA_FORMULA_APPLICATIONS={
   "business-foundations/business-model": {
     "scenario": "Nhà bán lẻ có tài sản $500k và nợ phải trả $320k; chủ sở hữu muốn biết vốn kế toán còn lại.|A retailer has $500k assets and $320k liabilities; owners want their residual book interest.",
@@ -8,7 +8,7 @@ window.CFA_FORMULA_APPLICATIONS={
   "business-foundations/unit-economics": {
     "scenario": "CFO SaaS muốn tăng ngân sách marketing: ARPU $50/tháng, GM 80%, churn 4%/tháng, CAC $600.|A SaaS CFO considers increasing marketing: monthly ARPU $50, GM 80%, monthly churn 4%, CAC $600.",
     "work": "LTV = $50 × 0.8 / 0.04 = $1,000; LTV/CAC = 1.67×; payback = $600/$40 = 15 months",
-    "decision": "Kiểm tra runway, chi phí phục vụ và retention theo cohort trước khi tăng chi; giả định churn ổn định và không chiết khấu.|Check runway, service cost and cohort retention before scaling; assumes stable churn and no discounting."
+    "decision": "LTV ở đây là lifetime gross profit chưa trừ CAC và chưa chiết khấu; payback 15 tháng là chỉ số đơn giản của khách còn hoạt động, giả định gross profit bằng contribution sau các biến phí liên quan. Churn có thể kéo dài payback cohort; kiểm tra retention và runway.|LTV here is undiscounted lifetime gross profit before CAC; 15-month payback is a simple retained-customer metric assuming gross profit equals contribution after relevant variable costs. Churn can delay cohort payback; assess retention and runway."
   },
   "business-foundations/operating-leverage": {
     "scenario": "Nhà máy có định phí năm $1.2m, giá bán $100, biến phí $40; dự kiến bán 24.000 sản phẩm.|A factory has annual fixed costs $1.2m, unit price $100, variable cost $40; forecasts 24,000 units.",
@@ -46,7 +46,7 @@ window.CFA_FORMULA_APPLICATIONS={
     "decision": "So với required return; giới hạn vị thế theo downside và độ nhạy xác suất, không hứa lợi suất 8%.|Compare with required return; size positions for downside and probability sensitivity, not a promised 8%."
   },
   "quantitative/sampling": {
-    "scenario": "Nhóm nghiên cứu có 100 quan sát độc lập, SD 20%, mean 8%.|Researchers have 100 independent observations, SD 20%, mean 8%.",
+    "scenario": "Nhóm nghiên cứu có 100 quan sát độc lập, SD mẫu 20%, mean 8%; dùng critical 1,96 như xấp xỉ mẫu lớn 95%.|Researchers have 100 independent observations, sample SD 20%, mean 8%; use critical 1.96 as a large-sample 95% approximation.",
     "work": "SE=20%/√100=2 pp; approximate 95% CI = 8% ± 3.92 pp",
     "decision": "Khoảng 4,08–11,92% chỉ có ý nghĩa dưới giả định phù hợp; kiểm tra phụ thuộc chuỗi và bias.|The 4.08–11.92% interval requires suitable assumptions; check dependence and bias."
   },
@@ -161,8 +161,8 @@ window.CFA_FORMULA_APPLICATIONS={
     "decision": "Ước tính giá trị đóng vị thế; đối chiếu đường cong, collateral, credit adjustment và giá thực thi.|Estimate unwind value; reconcile curves, collateral, credit adjustments and executable quotes."
   },
   "derivatives/hedge-design": {
-    "scenario": "Nhà nhập khẩu dùng futures có correlation 0,8 với spot, volatility spot 20%, futures 25%.|Importer uses futures with correlation 0.8 to spot, spot volatility 20%, futures volatility 25%.",
-    "work": "h*=0.8×20/25=0.64; 100,000×0.64=64,000",
+    "scenario": "Nhà nhập khẩu cần mua 100.000 đơn vị; correlation của thay đổi giá spot và futures 0,8, SD thay đổi giá lần lượt 20 và 25 cùng đơn vị tiền/đơn vị tài sản, đo cùng kỳ.|Importer needs to buy 100,000 units; spot/futures price-change correlation 0.8, price-change SDs 20 and 25 in matching currency per underlying unit, same horizon.",
+    "work": "h*=0.8×20/25=0.64; hedge quantity=100,000×0.64=64,000 units",
     "decision": "Hedge 64.000 đơn vị tương đương trước quy đổi hợp đồng, đúng chiều nghĩa vụ mua; cập nhật basis và margin.|Hedge 64,000 equivalent units before contract conversion, in the correct purchase direction; update basis and margin."
   },
   "alternatives/features-fees": {
@@ -366,7 +366,7 @@ window.CFA_FORMULA_APPLICATIONS={
     "decision": "So với lead time và mục tiêu stock; giảm tồn chậm mà tránh stockout.|Compare lead times and inventory targets; reduce slow stock without causing stockouts."
   },
   "dpo": {
-    "scenario": "Nhà máy phải trả bình quân $50k, mua chịu năm $730k.|Factory average payables $50k, annual credit purchases $730k.",
+    "scenario": "Nhà máy phải trả thương mại bình quân $50k, tổng mua hàng năm $730k (toàn bộ mua chịu), kỳ 365 ngày.|Factory average trade payables $50k, annual total purchases $730k (all on credit), 365-day period.",
     "work": "DPO=50/730×365=25 days",
     "decision": "Nếu hợp đồng cho 45 ngày, xem kéo dài hợp lý hoặc hưởng chiết khấu sớm; giữ quan hệ nhà cung cấp.|If terms allow 45 days, consider extending or taking early-pay discounts; preserve supplier relationships."
   },
@@ -501,7 +501,7 @@ window.CFA_FORMULA_APPLICATIONS={
     "decision": "Tài sản 1 đóng khoảng 80% rủi ro dù chỉ 50% vốn; điều chỉnh weights nếu mục tiêu risk parity, tính chi phí.|Asset 1 contributes about 80% of risk despite 50% capital; consider weight changes for risk parity, accounting for costs."
   },
   "tracking-error": {
-    "scenario": "Quỹ benchmark có active return năm qua 1%, −1%, 3%, −3%; dùng sample SD.|Benchmark-relative fund has annual active returns 1%, −1%, 3%, −3%; use sample SD.",
+    "scenario": "Quỹ có bốn lợi suất chủ động hàng năm liên tiếp là 1%, −1%, 3%, −3%; dùng sample SD.|A fund has four successive annual active returns of 1%, −1%, 3%, −3%; use sample SD.",
     "work": "Mean=0%; TE=√((1²+1²+3²+3²)/3)≈2.58%",
     "decision": "So với active-risk mandate; mẫu 4 năm quá nhỏ để kết luận ổn định.|Compare with active-risk mandate; four years is too small to infer stability."
   },

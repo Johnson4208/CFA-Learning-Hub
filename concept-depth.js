@@ -1,11 +1,11 @@
-/* Canonical bilingual concept explanations and cross-topic links. */
+/* Reviewed supplementary concept explanations and examples. */
 window.CFA_CONCEPT_DEPTH=[
   {
     "course": "business-foundations",
     "lesson": "business-model",
     "id": "contributed-capital",
     "title": "Contributed capital · Vốn góp|Contributed capital · Paid-in capital",
-    "text": "Vốn góp là phần equity phát sinh từ giao dịch với chủ sở hữu với tư cách chủ sở hữu, chẳng hạn phát hành cổ phần đổi lấy tiền hoặc tài sản. Không phải revenue hay retained earnings. Với cổ phần có mệnh giá, share capital và share premium thường là các cấu phần vốn góp; tên tài khoản phụ thuộc pháp luật và chuẩn mực.|Contributed capital is equity arising from transactions with owners in their capacity as owners, such as shares issued for cash or assets. It is not revenue or retained earnings. In a par-value system, share capital and share premium are common components; account names depend on law and reporting rules.",
+    "text": "Vốn góp (paid-in capital) là phần vốn do chủ sở hữu đóng góp, ví dụ tiền, tài sản hoặc đối giá đủ điều kiện khi phát hành cổ phần. Không phải mọi giao dịch với chủ sở hữu đều là vốn góp mới: cổ tức là phân phối, mua lại cổ phần giảm equity. Vốn góp không phải revenue hay retained earnings; share capital và share premium thường là hai cấu phần trong hệ thống có mệnh giá.|Contributed (paid-in) capital represents capital contributed by owners, for example cash, assets or qualifying consideration on share issuance. Not every owner transaction creates paid-in capital: dividends are distributions and repurchases reduce equity. Contributed capital is not revenue or retained earnings; share capital and share premium are common components in par-value systems.",
     "example": "Phát hành 1.000 cổ phần mệnh giá $1, giá $10: Dr Cash $10.000; Cr Share capital $1.000; Cr Share premium $9.000. Assets và equity tăng $10.000, lợi nhuận không đổi.|Issue 1,000 $1-par shares at $10: Dr Cash $10,000; Cr Share capital $1,000; Cr Share premium $9,000. Assets and equity rise $10,000; profit unchanged.",
     "related": [
       "asset-for-stock",
@@ -45,7 +45,7 @@ window.CFA_CONCEPT_DEPTH=[
     "lesson": "business-model",
     "id": "debt-for-stock",
     "title": "Reduction of liability in exchange for stock · Chuyển nợ thành cổ phần|Reduction of liability in exchange for stock · Debt-to-equity swap",
-    "text": "Chủ nợ nhận cổ phần để xóa nợ tài chính. Nếu thuộc IFRIC 19, equity phát hành đo fair value (hoặc fair value nợ xóa nếu equity không đo đáng tin cậy), chênh với carrying amount nợ vào profit or loss. Ngoại lệ gồm chủ nợ là cổ đông hành động với tư cách chủ sở hữu hoặc chuyển đổi theo điều khoản gốc. Cash có thể không đổi.|Creditor accepts shares to extinguish a financial liability. Within IFRIC 19, measure issued equity at fair value (or fair value of liability if equity cannot be reliably measured); difference from liability carrying amount goes to profit or loss. Exceptions include a creditor acting as shareholder or conversion under original terms. Cash may be unchanged.",
+    "text": "Chủ nợ nhận equity instruments để xóa một phần/toàn bộ nợ tài chính. IFRIC 19, khi áp dụng, yêu cầu đo equity phát hành theo fair value; nếu không đo đáng tin cậy thì dùng fair value của phần nợ được xóa. Chênh lệch với carrying amount vào P&L. Không áp dụng nếu chủ nợ hành động với tư cách cổ đông hiện hữu; nếu hai bên cùng kiểm soát trước/sau và bản chất là phân phối hoặc góp vốn; hoặc chuyển đổi theo điều khoản gốc của nợ. Kiểm tra xem công cụ thực sự được phân loại là equity theo IAS 32.|A creditor accepts equity instruments to extinguish financial debt in whole or part. Where IFRIC 19 applies, use fair value of issued equity, or fair value of extinguished liability if equity cannot be reliably measured; the difference from carrying amount is in P&L. Exclusions include a creditor acting as existing shareholder, common control before and after with a substantive equity distribution/contribution, and conversion under original liability terms. Confirm the instruments qualify as equity under IAS 32.",
     "example": "Nợ ghi sổ $60.000, equity fair value $55.000, giả định IFRIC 19 áp dụng: Dr Liability $60.000; Cr Equity $55.000; Cr Gain $5.000. Bỏ qua thuế: A không đổi, L −60.000, E +60.000. Nếu hai giá trị bằng nhau thì không có gain/loss.|Liability carrying $60,000, equity fair value $55,000, assuming IFRIC 19 applies: Dr Liability $60,000; Cr Equity $55,000; Cr Gain $5,000. Ignore tax: A unchanged, L −60,000, E +60,000. Equal amounts produce no gain/loss.",
     "related": [
       "contributed-capital",
@@ -113,8 +113,8 @@ window.CFA_CONCEPT_DEPTH=[
     "lesson": "unit-economics",
     "id": "contribution-margin",
     "title": "Contribution margin vs gross margin · Biên đóng góp|Contribution margin vs gross margin · Biên đóng góp",
-    "text": "GM trừ COGS; contribution trừ toàn bộ biến phí liên quan quyết định. COGS có thể gồm fixed overhead, còn phí giao hàng có thể ở ngoài COGS.|GM deducts COGS; contribution deducts all decision-relevant variable costs. COGS may include fixed overhead, delivery fees may sit outside it.",
-    "example": "Đơn $100, COGS $50 gồm $10 định phí, giao hàng $12, thanh toán $3: GM $50, contribution $45.|Order $100, COGS $50 including $10 fixed, delivery $12, payments $3: GM $50, contribution $45.",
+    "text": "Gross profit = revenue−COGS; gross margin % = gross profit/revenue. Contribution margin (amount) = revenue−variable costs liên quan quyết định; contribution margin ratio chia amount cho revenue. COGS có thể gồm fixed overhead, còn delivery/payment fee có thể nằm ngoài COGS.|Gross profit equals revenue less COGS; gross margin percentage divides gross profit by revenue. Contribution margin amount is revenue less decision-relevant variable costs; its ratio divides by revenue. COGS may include fixed overhead while delivery/payment fees may sit outside COGS.",
+    "example": "Đơn $100, COGS $50 gồm $10 định phí, delivery $12, payment $3: gross profit $50, GM50%, contribution $45, contribution margin45%.|Order $100, COGS $50 including $10 fixed, delivery $12, payment $3: gross profit $50, GM50%, contribution $45, contribution margin45%.",
     "related": [
       "break-even-range",
       "incremental-cash-flow",
@@ -936,7 +936,7 @@ window.CFA_CONCEPT_DEPTH=[
     "lesson": "hedge-design",
     "id": "hedge-basis",
     "title": "Basis risk, hedge ratio & margin liquidity|Basis risk, hedge ratio & margin liquidity",
-    "text": "Hedge khác benchmark còn basis risk. Ratio cần matched price changes và unit/multiplier conversion; giảm price risk có thể tăng margin liquidity risk.|Cross-hedge leaves basis risk. Ratio needs matched price changes and unit/multiplier conversion; price-risk reduction may raise margin liquidity risk.",
+    "text": "Cross-hedge để lại basis risk. Nếu ratio ρσΔS/σΔF dùng thay đổi giá theo đơn vị tương thích thì số hợp đồng=ratio×quantity exposed/contract quantity. Nếu dùng phần trăm return volatility, phải quy đổi theo giá trị exposure và notional hợp đồng thay vì tự áp quantity ratio. Hedge có thể tăng margin liquidity risk.|Cross-hedging leaves basis risk. If ratio ρσΔS/σΔF uses compatible per-unit price changes, contract count equals ratio×quantity exposed/contract quantity. If using return volatilities, scale by exposure market value and futures contract notional instead of automatically using quantity ratios. Hedging may increase margin liquidity risk.",
     "example": "Exposure100k units, ratio.64, contract1k:64 contracts; stress margin cash nếu hedge lỗ dù underlying bù.|Exposure100k units, ratio.64, contract1k:64 contracts; stress margin cash even if underlying offsets losses.",
     "related": [
       "forward-value-basis",
@@ -1033,7 +1033,7 @@ window.CFA_CONCEPT_DEPTH=[
     "lesson": "risk-return",
     "id": "position-risk",
     "title": "Covariance, marginal risk & concentration|Covariance, marginal risk & concentration",
-    "text": "Portfolio volatility phụ thuộc weights/covariance. Marginal risk là đạo hàm volatility theo weight, component=weight×marginal; capital weight khác risk weight.|Portfolio volatility depends on weights/covariance. Marginal risk is volatility derivative to weight, component=weight×marginal; capital weight differs from risk weight.",
+    "text": "Portfolio volatility phụ thuộc weights và covariance. Marginal risk là đạo hàm volatility theo weight; component risk=weight×marginal risk, có đơn vị volatility. Tỷ lệ % đóng góp = component/portfolio volatility khi volatility>0; có thể âm với vị thế hedge, nên không mặc định tất cả đóng góp dương.|Portfolio volatility depends on weights and covariance. Marginal risk is the derivative of volatility with respect to weight; component risk=weight×marginal risk, in volatility units. Percentage contribution equals component/portfolio volatility for positive volatility; hedges may contribute negatively.",
     "example": "50/50 assets σ20%/10%, corr0: σp11,18%, asset20% góp khoảng80% risk share.|50/50 assets σ20%/10%, corr0: σp11.18%, higher-vol asset contributes about80% risk share.",
     "related": [
       "risk-budget",
@@ -1330,7 +1330,7 @@ window.CFA_CONCEPT_DEPTH=[
     "lesson": "business-model",
     "id": "book-equity",
     "title": "Book equity vs market capitalization · Giá trị sổ sách và vốn hóa|Book equity vs market capitalization",
-    "text": "Book equity là tài sản trừ nợ theo kế toán; market cap là giá nhân cổ phần thường lưu hành. So cùng quyền lợi nếu có NCI/preferred.|Book equity is accounting assets less liabilities; market cap is price times outstanding common shares. Align claims if NCI/preferred exists.",
+    "text": "Total book equity = assets trừ liabilities; trên báo cáo hợp nhất có thể gồm NCI và các quyền lợi ưu đãi. Market capitalization thông thường là giá cổ phần thường nhân cổ phần thường đang lưu hành (cộng các lớp cổ phần nếu có). Khi tính P/B common, dùng common equity thuộc cổ đông công ty mẹ, không dùng total equity gồm NCI/preferred.|Total book equity equals assets less liabilities; consolidated equity may include NCI and preferred claims. Market capitalization normally values outstanding common shares (aggregate share classes where applicable). For common P/B, match common equity attributable to parent shareholders, excluding NCI and preferred claims.",
     "example": "Common book equity $40m; 10m shares × $6 = $60m market cap; P/B=1.5×.|Common book equity $40m; 10m shares × $6 = $60m market cap; P/B=1.5×.",
     "related": [
       "contributed-capital",
@@ -1380,7 +1380,7 @@ window.CFA_CONCEPT_DEPTH=[
     "lesson": "legal-forms",
     "id": "holding-subsidiary",
     "title": "Holding company, subsidiary and control · Công ty mẹ và công ty con|Holding company, subsidiary and control",
-    "text": "Holding nắm vốn doanh nghiệp khác; subsidiary là entity được kiểm soát. Control không chỉ tỷ lệ sở hữu; nghĩa vụ pháp lý từng entity khác consolidation.|A holding company owns interests; a subsidiary is controlled. Control is more than ownership percentage; separate legal liabilities differ from consolidation.",
+    "text": "Holding company nắm quyền lợi ở doanh nghiệp khác; theo IFRS 10, control cần đồng thời power, exposure/quyền đối với variable returns và khả năng dùng power để ảnh hưởng returns. Không chỉ dựa tỷ lệ sở hữu; nghĩa vụ pháp lý từng entity khác consolidation.|A holding company owns interests in other companies. IFRS 10 control requires power, exposure or rights to variable returns, and ability to use power to affect returns. Ownership percentage alone is insufficient; separate legal liabilities differ from consolidation.",
     "example": "45% ownership may confer control if applicable criteria are met.|45% ownership may confer control if applicable criteria are met.",
     "related": [
       "entity-separateness",
@@ -2029,7 +2029,7 @@ window.CFA_CONCEPT_DEPTH=[
     "lesson": "appraisal",
     "id": "downside-deviation",
     "title": "Downside deviation and minimum acceptable return (MAR) · Độ lệch giảm giá và lợi suất tối thiểu|Downside deviation and minimum acceptable return (MAR)",
-    "text": "Đo shortfall dưới MAR; denominator toàn bộ observations hoặc downside-only tùy convention. Sortino dùng return−MAR cùng kỳ.|Measure shortfall below MAR; denominator all observations or downside-only depending on convention. Sortino uses return minus MAR on matched horizon.",
+    "text": "Downside deviation đo độ lớn shortfall dưới MAR: căn trung bình bình phương min(return−MAR,0). Với Sortino theo quy ước phổ biến, chia tổng bình phương shortfall cho toàn bộ n kỳ, không chỉ các kỳ dưới MAR. Một số phương pháp sample target semideviation dùng n−1; nếu đề quy định khác thì theo đề và ghi rõ. Tử số Sortino là lợi suất trung bình trừ MAR cùng kỳ.|Downside deviation measures shortfalls below MAR: root mean squared min(return−MAR,0). A common Sortino convention divides summed squared shortfalls by all n observations, not only below-target periods. Some sample target semideviation methods use n−1; follow the specified convention and disclose it. Sortino numerator is mean return minus MAR on the same horizon.",
     "example": "Returns −4%,2%,6%, MAR0: all-observation DD=√(.04²/3)=2.31%.|Returns −4%,2%,6%, MAR0: all-observation DD=√(.04²/3)=2.31%.",
     "related": [
       "information-appraisal",
