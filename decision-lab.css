@@ -87,3 +87,26 @@
 @media(max-width:480px){.dl-course-library{padding:10px}.dl-library-grid{gap:7px}.dl-library-card{padding:10px;min-height:125px}.dl-library-card-copy strong{font-size:12px}.dl-library-tabs button{padding:6px;font-size:10px}.dl-library-icon{width:31px;height:31px}}
 @media(max-width:340px){.dl-library-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.dl-course-library{animation:none}.dl-course-chevron,.dl-library-card,.dl-library-tabs button{transition:none}}
+
+/* Small setup controls: aligned vector icons and a native-picker-backed upload button. */
+.dl-course-trigger{display:grid;grid-template-columns:36px minmax(0,1fr) 20px;align-items:center;gap:10px;padding:9px 12px;min-height:54px;line-height:1.4}
+.dl-course-trigger-icon{display:grid;place-items:center;width:36px;height:36px;border-radius:7px;background:#efeff1;color:#38383d;line-height:1}
+.dl-course-trigger-icon svg{display:block;width:20px;height:20px}
+.dl-course-trigger-title{min-width:0;overflow-wrap:anywhere;font-size:13px;font-weight:650}
+.dl-course-chevron{display:grid;place-items:center;width:20px;height:20px;line-height:1;color:#52525b;justify-self:end}
+.dl-course-chevron svg{display:block;width:17px;height:17px}
+.dl-photo-field{margin:16px 0 10px;min-width:0}
+.dl-photo-field>.dl-label{margin:0 0 8px;line-height:1.4}
+.dl-photo-control{display:flex;align-items:center;gap:8px;min-width:0;padding:9px;border:1px solid #d4d4d8;border-radius:8px;background:#fff}
+.dl-photo-preview{display:grid;place-items:center;width:34px;height:34px;border-radius:6px;flex:none;background:#f0f0f2;color:#52525b}
+.dl-photo-preview svg{width:18px;height:18px;display:block}
+.dl-photo-copy{display:grid;gap:3px;flex:1;min-width:0}
+.dl-photo-copy strong{font-size:11px;font-weight:600;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#27272a}
+.dl-photo-copy small{font-size:10px;line-height:1.35;color:#68686e}
+.dl-photo-upload{display:flex;align-items:center;justify-content:center;gap:5px;flex:none;background:#18181b;color:#fff;border:1px solid #18181b;border-radius:6px;padding:8px 9px;font:600 11px/1.4 Inter,system-ui,sans-serif;cursor:pointer}
+.dl-photo-upload:hover{background:#39393e;border-color:#39393e}.dl-photo-upload svg{width:14px;height:14px;display:block}
+.dl-photo-reset{display:grid;place-items:center;flex:none;width:25px;height:30px;border:0;border-radius:5px;color:#52525b;background:transparent;cursor:pointer}.dl-photo-reset:hover{background:#f0f0f2}.dl-photo-reset svg{width:15px;height:15px}
+.dl-photo-reset[hidden],.dl-photo-control input[hidden]{display:none}
+.dl-photo-error{display:block;font-size:11px;line-height:1.4;color:#9b3025;margin-top:5px}.dl-photo-error:empty{display:none}
+.dl-photo-upload:focus-visible,.dl-photo-reset:focus-visible{outline:2px solid #52525b;outline-offset:2px}
+@media(max-width:380px){.dl-photo-control{flex-wrap:wrap}.dl-photo-copy{flex-basis:calc(100% - 44px)}.dl-photo-upload{margin-left:42px}}
