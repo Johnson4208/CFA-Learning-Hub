@@ -1029,7 +1029,7 @@
     }else{
       content=section(4)+'<section class="business-model-detail-section"><h3>'+esc(tr('Khám phá các mô hình khác|Explore other models'))+'</h3><div class="business-model-related">'+businessModels().map((m,i)=>i===index?'':'<button type="button" onclick="selectBusinessModel('+i+',3)">'+esc(tr(m[0]))+' <span aria-hidden="true">↗</span></button>').join('')+'</div></section>';
     }
-    return '<div class="business-model-shell"><header class="business-model-header"><div class="business-model-header-top"><span>'+esc(tr('MÔ HÌNH|MODEL'))+' '+modelNumber(index)+' / '+String(businessModels().length).padStart(2,'0')+'</span><button type="button" class="business-model-close" aria-label="'+esc(tr('Đóng|Close'))+'" onclick="closeBusinessModel()" autofocus>×</button></div><div class="business-model-heading"><span class="business-model-icon" aria-hidden="true">'+meta.icon+'</span><div><span class="business-model-type">'+esc(tr(meta.type))+'</span><h2 id="business-model-dialog-title">'+esc(tr(item[0]))+'</h2></div></div><p>'+esc(tr(item[1]))+'</p><nav class="business-model-tabs" aria-label="'+esc(tr('Phần nội dung|Model sections'))+'">'+businessModelTabs.map((label,i)=>'<button type="button" data-model-tab="'+i+'" aria-pressed="'+(tab===i)+'" onclick="selectBusinessModel('+index+','+i+')">'+esc(tr(label))+'</button>').join('')+'</nav></header><div class="business-model-body" tabindex="0">'+content+'</div><footer class="business-model-footer"><button type="button" data-model-prev '+(index===0?'disabled':'')+' onclick="selectBusinessModel('+(index-1)+',0)">← '+esc(tr('Mô hình trước|Previous model'))+'</button><span>'+modelNumber(index)+' / '+String(businessModels().length).padStart(2,'0')+'</span><button type="button" data-model-next '+(index===businessModels().length-1?'disabled':'')+' onclick="selectBusinessModel('+(index+1)+',0)">'+esc(tr('Mô hình tiếp|Next model'))+' →</button></footer></div>';
+    return '<div class="business-model-shell"><header class="business-model-header"><div class="business-model-header-top"><span>'+esc(tr('MÔ HÌNH|MODEL'))+' '+modelNumber(index)+' / '+String(businessModels().length).padStart(2,'0')+'</span><button type="button" class="business-model-close" aria-label="'+esc(tr('Đóng|Close'))+'" onclick="closeBusinessModel()" autofocus>×</button></div><div class="business-model-heading"><span class="business-model-icon" aria-hidden="true">'+meta.icon+'</span><div><span class="business-model-type">'+esc(tr(meta.type))+'</span><h2 id="business-model-dialog-title">'+esc(tr(item[0]))+'</h2></div></div><p>'+esc(tr(item[1]))+'</p><nav class="business-model-tabs" aria-label="'+esc(tr('Phần nội dung|Model sections'))+'">'+businessModelTabs.map((label,i)=>'<button type="button" data-model-tab="'+i+'" aria-pressed="'+(tab===i)+'" onclick="selectBusinessModel('+index+','+i+')">'+esc(tr(label))+'</button>').join('')+'</nav></header><div class="business-model-body" tabindex="0" data-note-scope="'+esc(['business-foundations','business-model','model',index,tab,state.lang].join('/'))+'" data-note-title="'+esc(tr(item[0])+' · '+tr(businessModelTabs[tab]))+'">'+content+'</div><footer class="business-model-footer"><button type="button" data-model-prev '+(index===0?'disabled':'')+' onclick="selectBusinessModel('+(index-1)+',0)">← '+esc(tr('Mô hình trước|Previous model'))+'</button><span>'+modelNumber(index)+' / '+String(businessModels().length).padStart(2,'0')+'</span><button type="button" data-model-next '+(index===businessModels().length-1?'disabled':'')+' onclick="selectBusinessModel('+(index+1)+',0)">'+esc(tr('Mô hình tiếp|Next model'))+' →</button></footer></div>';
   }
   window.openBusinessModel=(index,trigger)=>{
     const dialog=byId('business-model-dialog');
@@ -1037,6 +1037,7 @@
     businessModelState.index=index;businessModelState.tab=0;businessModelState.trigger=trigger;
     dialog.innerHTML=businessModelDetail(index,0);
     if(!dialog.open)dialog.showModal();
+    window.CFA_NOTE_PEN?.sync();
   };
   window.selectBusinessModel=(index,tab)=>{
     const dialog=byId('business-model-dialog');
@@ -1044,6 +1045,7 @@
     businessModelState.index=index;businessModelState.tab=tab;
     dialog.innerHTML=businessModelDetail(index,tab);
     dialog.querySelector('[data-model-tab="'+tab+'"]')?.focus({preventScroll:true});
+    window.CFA_NOTE_PEN?.sync();
   };
   window.closeBusinessModel=()=>{
     const dialog=byId('business-model-dialog');
@@ -1052,6 +1054,7 @@
   window.restoreBusinessModelFocus=()=>{
     const trigger=businessModelState.trigger;businessModelState.trigger=null;
     if(trigger?.isConnected)trigger.focus({preventScroll:true});
+    window.CFA_NOTE_PEN?.sync();
   };
 
   const current={courseId:null,unitIndex:0};
@@ -1179,7 +1182,7 @@
     const situations=decisionCaseCount?'<section class="lesson-block decision-lab-link"><div><span class="lesson-section-kicker">DECISION LAB</span><h4>'+esc(tr('Thử quyết định trong phòng điều hành|Make decisions in the executive office'))+'</h4><p>'+esc(tr('Tình huống của bài này đã được chuyển vào chế độ game trong Quiz.|This lesson’s scenarios are now available in the Quiz game.'))+'</p></div><button type="button" onclick="openDecisionLabFromLesson(\''+esc(course.id)+'\',\''+esc(unit.id)+'\')">'+esc(tr('Chơi '+decisionCaseCount+' tình huống|Play '+decisionCaseCount+' scenarios'))+' →</button></section>':'';
     const textbook=textbookHtml(course,unit);
     const recall=depth&&!textbook?'<section class="lesson-recall"><h4>'+esc(tr('Tự kiểm tra|Self-check'))+'</h4><p>'+rich(depth.recall)+'</p></section>':'';
-    return '<article class="course-unit-detail" id="course-unit-detail"><span class="lesson-kicker">'+esc(course.code)+' · '+String(index+1).padStart(2,'0')+'/05</span><h3>'+esc(tr(unit.title))+'</h3><p class="lesson-lead">'+rich(unit.lead)+'</p>'+disclaimer+
+    return '<article class="course-unit-detail" id="course-unit-detail" data-note-scope="'+esc([course.id,unit.id,state.lang].join('/'))+'" data-note-title="'+esc(tr(course.title)+' · '+tr(unit.title))+'"><span class="lesson-kicker">'+esc(course.code)+' · '+String(index+1).padStart(2,'0')+'/05</span><h3>'+esc(tr(unit.title))+'</h3><p class="lesson-lead">'+rich(unit.lead)+'</p>'+disclaimer+
       lens+objectives+formula+textbook+deepDive+theory+'<section class="lesson-block"><h4>'+esc(tr('Khung phân tích cần nhớ|Decision framework'))+'</h4><div class="lesson-points">'+unit.points.map(point=>'<div class="lesson-point">'+rich(point)+'</div>').join('')+'</div></section>'+checklist+situations+
       '<section class="lesson-case"><small>'+esc(tr('CASE STUDY · TÌNH HUỐNG GIẢ ĐỊNH|CASE STUDY · SIMULATION'))+'</small><h4>'+esc(tr(unit.caseTitle))+'</h4><p class="case-question">'+rich(unit.caseFacts)+'</p><p class="case-question"><strong>'+esc(tr('Câu hỏi quyết định: |Decision question: '))+'</strong>'+rich(unit.caseQuestion)+'</p><div class="case-solution"><strong>'+esc(tr('Lập luận và kết luận|Reasoning and conclusion'))+'</strong><br>'+rich(unit.solution)+'</div></section>'+recall+video+
       '<div class="lesson-actions"><a class="lesson-source" href="'+esc(unit.source||course.source||officialCurriculum)+'" target="_blank" rel="noopener noreferrer">'+esc(tr('Nguồn nghiên cứu ↗|Research source ↗'))+'</a><div class="lesson-actions-group">'+
@@ -1213,6 +1216,7 @@
     if(businessModelState.trigger)window.closeBusinessModel();
     drawer.innerHTML='<div class="course-modal-layout">'+nav+lessonHtml(course,unit,current.unitIndex)+'</div>';
     renderedCourseMapId=course.id;
+    window.CFA_NOTE_PEN?.sync();
     const newNav=drawer.querySelector?.('.course-unit-nav');
     if(newNav&&navScroll){
       if(restoreNavFocus)newNav.querySelector('[aria-current="true"]')?.focus({preventScroll:true});
@@ -1230,6 +1234,7 @@
   window.openDeepCourse=(courseId,unitIndex=0)=>{
     current.courseId=courseId;current.unitIndex=unitIndex;rememberCurrentUnit();renderCourseModal();
     byId('los-drawer').classList.remove('hidden');byId('los-drawer').classList.add('flex');
+    window.CFA_NOTE_PEN?.sync();
   };
   window.selectDeepUnit=index=>{
     current.unitIndex=index;rememberCurrentUnit();renderCourseModal();
@@ -1270,7 +1275,7 @@
   window.refreshWorkspace=function(){priorRefresh();if(current.courseId)renderCourseModal()};
 
   const priorClose=window.closeLosDrawer;
-  window.closeLosDrawer=function(){if(businessModelState.trigger)window.closeBusinessModel();current.courseId=null;renderedCourseMapId=null;priorClose()};
+  window.closeLosDrawer=function(){if(businessModelState.trigger)window.closeBusinessModel();current.courseId=null;renderedCourseMapId=null;priorClose();window.CFA_NOTE_PEN?.stop()};
 })();
 
 
