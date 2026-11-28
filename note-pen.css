@@ -62,3 +62,7 @@
 .cfa-study-tools.is-inline .cfa-tool-icon,.cfa-study-tools.is-inline .cfa-note-fab-ring{width:27px;height:27px}
 .cfa-tool-button:focus-visible{outline:2px solid #247047;outline-offset:3px}
 @media(prefers-reduced-motion:reduce){.cfa-tool-button{transition:none}}
+
+/* Dismiss keeps the highlight; discard is a separate, explicit destructive action. */
+.cfa-pen-dismiss{border:0;border-radius:5px;display:grid;place-items:center;width:27px;height:27px;cursor:pointer;font-size:19px;line-height:1;padding:0;background:#f1f1f2;color:#52525b}.cfa-pen-dismiss:hover{background:#e4e4e7;color:#18181b}
+.cfa-pen-discard{background:#fff;color:#9b3025;border:1px solid #e4d4d4;border-radius:6px;padding:8px 10px;font-size:12px;font-weight:650;cursor:pointer;width:100%;margin-top:-6px}.cfa-pen-discard:hover{background:#fdf2f2;border-color:#c99a95}

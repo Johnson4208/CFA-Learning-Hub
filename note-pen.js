@@ -269,10 +269,11 @@ function showMenu(id,x,y){
  menu=document.createElement('div');menu.className='cfa-pen-menu';menu.setAttribute('role','group');menu.setAttribute('aria-label',T('Tùy chọn note|Note options'));
  const header=document.createElement('div');header.className='cfa-pen-menu-head';
  const label=document.createElement('strong');label.textContent=T(n.saved?'Note đã lưu|Saved note':'Note nháp|Draft note');header.append(label);
- const cancel=button('×',()=>{if(removeNote(id)){closeMenu();redraw(root)}},'cfa-pen-remove');cancel.title=T(n.saved?'Xóa note đã lưu|Delete saved note':'Hủy note|Discard note');cancel.setAttribute('aria-label',cancel.title);header.append(cancel);menu.append(header);
+ const close=button('×',()=>closeMenu(),'cfa-pen-dismiss');close.title=T('Đóng|Close');close.setAttribute('aria-label',close.title);header.append(close);menu.append(header);
  const swatches=document.createElement('div');swatches.className='cfa-pen-colors';
  colors(swatches,n.color,next=>{if(changeColor(id,next)){redraw(root);showMenu(id,x,y)}});menu.append(swatches);
  const save=button(T(n.saved?'Đã lưu ✓|Saved ✓':'Lưu note|Save note'),()=>{if(saveNote(id)){closeMenu();redraw(root)}},'cfa-pen-save');if(n.saved)save.disabled=true;menu.append(save);
+ const discard=button(T(n.saved?'Xóa note|Delete note':'Hủy bỏ|Discard'),()=>{if(removeNote(id)){closeMenu();redraw(root)}},'cfa-pen-discard');menu.append(discard);
  const host=hostFor(root);host.append(menu);
  const box=host.matches('dialog')?host.getBoundingClientRect():{left:0,top:0,right:innerWidth,bottom:innerHeight};
  const rect=menu.getBoundingClientRect();
