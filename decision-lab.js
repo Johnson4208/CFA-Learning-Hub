@@ -68,13 +68,46 @@ const selectedCourse=()=>catalog().find(c=>c.id===courseId);
 const readyUnits=()=>selectedCourse()?.units||[];
 const courseGroups=[
  ['FOUNDATION','Nền tảng|Foundations',c=>c.group==='foundation'],
- ['ANALYSIS','Dữ liệu, doanh nghiệp & kinh tế|Data, business & economics',c=>['ethics','quantitative','economics','fsa','corporate-finance'].includes(c.id)],
- ['INVESTMENTS','Tài sản & danh mục|Securities & portfolios',c=>['equity','fixed-income','derivatives','alternatives','portfolio'].includes(c.id)],
- ['ADVANCED','Chuyên sâu Level III|Level III advanced',c=>c.group==='advanced']
+ ['ANALYSIS','Phân tích cốt lõi|Core Analysis',c=>['ethics','quantitative','economics','fsa','corporate-finance'].includes(c.id)],
+ ['INVESTMENTS','Đầu tư|Investments',c=>['equity','fixed-income','derivatives','alternatives','portfolio'].includes(c.id)],
+ ['ADVANCED','Chuyên sâu III|Level III',c=>c.group==='advanced']
 ];
+const courseCardMeta={
+ 'business-foundations':['Hiểu về doanh nghiệp|Understanding a Business','<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 21v-4h6v4M8 7h1m6 0h1M8 11h1m6 0h1"/>'],
+ 'corporate-law':['Pháp lý doanh nghiệp|Corporate Law','<path d="M12 3v18M5 21h14M3 7h18M6 7l-4 8h8L6 7Zm12 0-4 8h8l-4-8Z"/>'],
+ 'accounting-foundations':['Nền tảng kế toán|Accounting Foundations','<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h2m4 0h2M8 15h2m4 0h2M8 18h2m4 0h2"/>'],
+ 'ethics':['Đạo đức nghề nghiệp|Ethics','<path d="m12 22 6-4a7 7 0 0 0 3-6V5l-9-3-9 3v7a7 7 0 0 0 3 6zM8 12l3 3 5-6"/>'],
+ 'quantitative':['Phân tích định lượng|Quantitative Methods','<path d="M4 19V5m0 14h16M7 15l4-5 4 2 5-7"/><circle cx="11" cy="10" r="1"/><circle cx="15" cy="12" r="1"/>'],
+ 'economics':['Kinh tế học|Economics','<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-5 5-5 13 0 18m0-18c5 5 5 13 0 18"/>'],
+ 'fsa':['Phân tích báo cáo tài chính|Financial Statement Analysis','<path d="M14 3H5v18h14V8l-5-5v5h5M8 17v-3m4 3v-5m4 5v-7"/>'],
+ 'corporate-finance':['Tài chính doanh nghiệp|Corporate Finance','<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V4h8v3M3 12h18M10 12v3h4v-3"/>'],
+ 'equity':['Đầu tư cổ phiếu|Equity Investments','<path d="M6 3v18M12 3v18M18 3v18"/><rect x="4" y="7" width="4" height="8" fill="currentColor" stroke="none"/><rect x="10" y="11" width="4" height="6" fill="currentColor" stroke="none"/><rect x="16" y="5" width="4" height="9" fill="currentColor" stroke="none"/>'],
+ 'fixed-income':['Đầu tư trái phiếu|Fixed Income','<path d="m3 9 9-6 9 6H3Zm2 3v6m5-6v6m4-6v6m5-6v6M3 21h18"/>'],
+ 'derivatives':['Công cụ phái sinh|Derivatives','<path d="M3 19h18M5 16l5-6 4 4 6-10m-5 0h5v5M5 5l5 5"/>'],
+ 'alternatives':['Đầu tư thay thế|Alternative Investments','<path d="M3 21V10l6-4v15m0 0V3h8v18m0 0v-9h4v9H3M12 7h2m-2 4h2m-2 4h2"/>'],
+ 'portfolio':['Quản lý danh mục|Portfolio Management','<path d="M10 3a9 9 0 1 0 11 11H10V3Z"/><path d="M14 3v7h7a7 7 0 0 0-7-7Z"/>'],
+ 'asset-allocation':['Phân bổ tài sản|Asset Allocation','<rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/>'],
+ 'performance':['Đánh giá hiệu quả|Performance Measurement','<path d="M3 19h18M6 16v-4m6 4V8m6 8V4M3 8l4-4"/>'],
+ 'pathways':['Hướng chuyên sâu Level III|Level III Pathways','<path d="M12 21V9m0 0-6-6m6 6 6-6M3 3h3v3m12-3h3v3"/><circle cx="12" cy="21" r="1"/>']
+};
+const courseIcon=path=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+path+'</svg>';
 function courseMenu(){
  const list=catalog(),selected=selectedCourse();
- return '<div class="dl-course-picker"><span class="dl-label">'+L('Khóa học|Course')+'</span><details id="dl-course"><summary class="dl-course-trigger"><span class="dl-course-trigger-icon" aria-hidden="true">▤</span><span>'+ (selected?L(selected.title):L('Chọn khóa học|Choose a course'))+'</span><span class="dl-course-chevron" aria-hidden="true">⌄</span></summary><div class="dl-course-menu">'+courseGroups.map(([,label,match])=>{const items=list.filter(match);if(!items.length)return '';return '<section class="dl-course-group"><h4>'+L(label)+'</h4>'+items.map(c=>'<button type="button" data-course="'+E(c.id)+'" aria-pressed="'+(c.id===courseId)+'"><span class="dl-course-code">'+E(c.code)+'</span><span class="dl-course-title">'+L(c.title)+'<small>'+c.units.length+' '+L('bài|lessons')+' · '+c.units.reduce((sum,u)=>sum+u.rounds.length,0)+' '+L('tình huống|cases')+'</small></span><span aria-hidden="true">'+(c.id===courseId?'✓':'›')+'</span></button>').join('')+'</section>'}).join('')+'</div></details></div>';
+ const groups=courseGroups.map(([id,label,match])=>({id,label,items:list.filter(match)})).filter(g=>g.items.length);
+ const active=groups.find(g=>g.items.some(c=>c.id===courseId))?.id||groups[0]?.id;
+ return '<div class="dl-course-picker"><span class="dl-label">'+L('Khóa học|Course')+'</span><details id="dl-course"><summary class="dl-course-trigger"><span class="dl-course-trigger-icon" aria-hidden="true">▤</span><span>'+(selected?L(selected.title):L('Chọn khóa học|Choose a course'))+'</span><span class="dl-course-chevron" aria-hidden="true">⌄</span></summary><div class="dl-course-library"><div class="dl-library-header"><strong>'+L('Thư viện khóa học|Course library')+'</strong><span>'+list.length+' '+L('khóa|courses')+'</span></div><div class="dl-library-tabs" role="group" aria-label="'+L('Nhóm kiến thức|Course categories')+'">'+groups.map(g=>'<button type="button" data-course-group="'+g.id+'" aria-pressed="'+(g.id===active)+'">'+L(g.label)+'</button>').join('')+'</div>'+groups.map(g=>'<section class="dl-library-grid" data-course-panel="'+g.id+'" aria-label="'+L(g.label)+'" '+(g.id===active?'':'hidden')+'>'+g.items.map(c=>{
+ const [title,icon]=courseCardMeta[c.id]||[c.title,'<path d="M4 4h16v16H4zM8 8h8M8 12h8"/>'];
+ const n=c.units.reduce((sum,u)=>sum+u.rounds.length,0),chosen=c.id===courseId;
+ return '<button type="button" class="dl-library-card" data-course="'+E(c.id)+'" aria-pressed="'+chosen+'" aria-label="'+L(c.title)+', '+n+' '+L('tình huống|scenarios')+'" title="'+L(c.title)+'"><span class="dl-library-card-top"><span class="dl-library-icon">'+courseIcon(icon)+'</span><span class="dl-library-mark">'+courseIcon(chosen?'<path d="m5 12 4 4L19 6"/>':'<path d="M7 17 17 7M7 7h10v10"/>')+'</span></span><span class="dl-library-card-copy"><strong>'+L(title)+'</strong><small>'+n+' '+L('tình huống|scenarios')+'</small></span></button>';
+ }).join('')+'</section>').join('')+'</div></details></div>';
+}
+function bindCourseLibrary(host){
+ const tabs=[...host.querySelectorAll('[data-course-group]')],panels=[...host.querySelectorAll('[data-course-panel]')];
+ tabs.forEach(tab=>tab.onclick=()=>{
+  const id=tab.dataset.courseGroup;
+  tabs.forEach(t=>t.setAttribute('aria-pressed',String(t.dataset.courseGroup===id)));
+  panels.forEach(p=>p.hidden=p.dataset.coursePanel!==id);
+ });
 }
 const money=(v)=>new Intl.NumberFormat(state.lang==='en'?'en-US':'vi-VN',{style:'currency',currency,maximumFractionDigits:0}).format(Math.abs(v)*(currency==='VND'?25000:1));
 const signed=v=>(v<0?'−':v>0?'+':'')+money(v);
@@ -115,6 +148,7 @@ function setup(){
   setup();root.querySelector('#dl-course summary')?.focus({preventScroll:true});
  });
  const coursePicker=root.querySelector('#dl-course');
+ bindCourseLibrary(coursePicker);
  coursePicker.addEventListener('keydown',e=>{if(e.key==='Escape'&&coursePicker.open){e.preventDefault();e.stopPropagation();coursePicker.open=false;coursePicker.querySelector('summary')?.focus({preventScroll:true})}});
  root.querySelector('#dl-currency').onchange=e=>{currency=e.target.value};
  root.querySelector('#dl-image').onchange=e=>{const file=e.target.files[0];if(!file||!['image/png','image/jpeg','image/webp'].includes(file.type))return;if(localBackground)URL.revokeObjectURL(localBackground);localBackground=URL.createObjectURL(file);};
