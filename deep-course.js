@@ -1270,6 +1270,7 @@
   };
   window.CFA_DECISION_LAB_CATALOG=courses.filter(c=>c.status==='ready').map(c=>({id:c.id,group:c.group,code:c.code,title:c.title,levels:c.levels,units:c.units.map(u=>({id:u.id,title:u.title,cases:foundationDepth[c.id]?.[u.id]?.situations||[]}))}));
   window.CFA_CONCEPT_COURSES=courses.filter(c=>c.status==='ready').map(c=>({id:c.id,title:c.title,group:c.group,code:c.code,levels:c.levels,units:c.units.map((u,index)=>({id:u.id,index,title:u.title,lead:u.lead,theories:foundationDepth[c.id]?.[u.id]?.theories||[]}))}));
+  window.CFA_FORMULA_COURSES=courses.filter(c=>c.status==='ready').map(c=>({id:c.id,title:c.title,levels:c.levels,units:c.units.map((u,index)=>({id:u.id,index,title:u.title,lead:u.lead,formula:u.formula,symbols:u.symbols,caseTitle:u.caseTitle,caseFacts:u.caseFacts,caseQuestion:u.caseQuestion,solution:u.solution,examTrap:u.examTrap}))}));
   window.renderLibraryModules=renderRoadmap;
 
   const priorRefresh=window.refreshWorkspace;

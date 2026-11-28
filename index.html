@@ -14,6 +14,7 @@
   <link href="decision-lab.css?v=20261128-controls-polish1" rel="stylesheet">
   <link href="note-pen.css?v=20261128-tool-rail1" rel="stylesheet">
   <link href="concept-library.css?v=20261128-1" rel="stylesheet">
+  <link href="formula-library.css?v=20261128-1" rel="stylesheet">
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -1695,7 +1696,7 @@ function openStage(i){
  byId('los-drawer-backdrop').classList.remove('hidden');byId('los-drawer').classList.remove('hidden');byId('los-drawer').classList.add('flex');
 }
 function renderFormulaList(){
- byId('view-formulas').innerHTML='<h2 class="text-xl font-semibold">'+translated('Sổ tay công thức|Formula notebook')+'</h2>'+levelRows().filter(r=>r[5]).map(r=>lessonBody(r,true)).join('');
+ window.CFA_FORMULA_LIBRARY?.render();
 }
 const lessonOptions={
   "Professional ethics": [
@@ -2051,8 +2052,10 @@ function setLevel(value){studyLevel=value.split(' ').pop();state.level='LVL '+st
   <script src="course-textbook.js?v=20261127-textbook1"></script>
   <script src="core-depth.js?v=20261127-core2"></script>
   <script src="course-keywords.js?v=20261127-inline1"></script>
-  <script src="deep-course.js?v=20261128-concepts1"></script>
+  <script src="deep-course.js?v=20261128-formulas1"></script>
   <script src="concept-library.js?v=20261128-1"></script>
+  <script src="formula-library-data.js?v=20261128-1"></script>
+  <script src="formula-library.js?v=20261128-1"></script>
   <script src="note-pen.js?v=20261128-tool-rail1"></script>
   <script src="decision-lab-cases.js?v=20261128-expanded1"></script>
   <script src="decision-lab.js?v=20261128-controls-polish1"></script>
