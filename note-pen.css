@@ -25,3 +25,31 @@
 .cfa-pen-save:disabled{background:#f0f0f2;color:#52525b;cursor:default}
 .cfa-pen-toast{position:fixed;left:50%;bottom:85px;transform:translateX(-50%);max-width:calc(100vw - 32px);width:max-content;background:#18181b;color:#fff;border-radius:7px;padding:10px 14px;font-size:12px;box-shadow:0 4px 15px #0003;text-align:center;pointer-events:none}
 @media(max-width:500px){.cfa-pen-toolbar{bottom:12px;right:10px;gap:7px}.cfa-pen-colors{gap:6px}.cfa-pen-color{width:23px;height:23px}}
+
+/* Floating note shortcut: a clockwise two-second progress ring, outside the reading area when possible. */
+.cfa-note-fab{position:fixed;top:50%;left:auto;right:12px;transform:translateY(-50%);z-index:10001;display:flex;align-items:center;gap:11px;width:176px;min-height:66px;padding:9px 11px;border:1px solid #d7d7db;border-radius:12px;background:#fff;color:#18181b;box-shadow:0 5px 20px #18181b12;box-sizing:border-box;cursor:pointer;text-align:left;font-family:Inter,system-ui,sans-serif;transition:background .16s,border-color .16s,box-shadow .16s}
+.cfa-note-fab:hover{border-color:#88888e;box-shadow:0 6px 22px #18181b20}
+.cfa-note-fab[aria-pressed=true]{border-color:#18181b;background:#18181b;color:#fff}
+.cfa-note-fab-ring{position:relative;display:grid;place-items:center;width:44px;height:44px;flex:none}
+.cfa-note-fab-ring svg{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke-width:3;transform:rotate(-90deg)}
+.cfa-note-fab-track{stroke:#e2e2e5}
+.cfa-note-fab-fill{stroke:#18181b;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:calc(100 - var(--fab-progress,0)*100)}
+.cfa-note-fab[aria-pressed=true] .cfa-note-fab-track{stroke:#535358}
+.cfa-note-fab[aria-pressed=true] .cfa-note-fab-fill{stroke:#fff}
+.cfa-note-fab-key{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#f1f1f3;color:#18181b;font-size:13px;font-weight:750;line-height:1}
+.cfa-note-fab[aria-pressed=true] .cfa-note-fab-key{background:#fff;color:#18181b}
+.cfa-note-fab.is-holding .cfa-note-fab-key{background:#18181b;color:#fff}
+.cfa-note-fab[aria-pressed=true].is-holding .cfa-note-fab-key{background:#fff;color:#18181b}
+.cfa-note-fab-copy{display:grid;gap:4px;min-width:0}
+.cfa-note-fab-copy strong{font-size:13px;font-weight:700;line-height:1.3;white-space:nowrap}
+.cfa-note-fab-status{font-size:10.5px;line-height:1.35;color:#64646c}
+.cfa-note-fab[aria-pressed=true] .cfa-note-fab-status{color:#d4d4d8}
+.cfa-note-fab.is-compact{width:48px;min-height:48px;padding:3px;justify-content:center;border-radius:10px}
+.cfa-note-fab.is-compact .cfa-note-fab-ring{width:40px;height:40px}
+.cfa-note-fab.is-compact .cfa-note-fab-copy{display:none}
+.cfa-note-fab.is-bottom{top:auto;bottom:78px;transform:none}
+.cfa-note-fab.is-inline{position:static;transform:none;flex:none;margin-left:auto;margin-right:8px;min-height:36px;width:36px;padding:2px;box-shadow:none;border-radius:7px}
+.cfa-note-fab.is-inline .cfa-note-fab-ring{width:30px;height:30px}
+.cfa-note-fab.is-inline .cfa-note-fab-key{width:21px;height:21px;font-size:11px}
+.cfa-note-fab:focus-visible{outline:2px solid #777;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.cfa-note-fab{transition:none}}

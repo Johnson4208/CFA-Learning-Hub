@@ -12,6 +12,60 @@ const scopeSelector='[data-note-scope]';
 const excluded='button,a,input,textarea,select,option,script,style,iframe,svg,[contenteditable="true"],.lesson-actions,.decision-lab-link';
 let active=false,holding=null,held=false,color='yellow',drafts=[],toolbar=null,menu=null,menuId=null;
 const storageKey='cfanotes_clean_v1';
+const HOLD_MS=2000;
+let fab=null,fabFrame=null,holdStart=null;
+function visibleLibrary(){
+ const library=document.getElementById('view-library'),drawer=document.getElementById('los-drawer');
+ return library&&!library.classList.contains('hidden')&&(!drawer||drawer.classList.contains('hidden'))?library:null;
+}
+function canUsePen(){return !!(activeScope()||visibleLibrary())}
+function positionFab(){
+ if(!fab)return;
+ const root=activeScope(),dialog=root?.closest('dialog[open]');
+ if(dialog)return;
+ const content=root?document.querySelector('#los-drawer .module-modal-card'):visibleLibrary();
+ if(!content)return;
+ const rect=content.getBoundingClientRect(),space=window.innerWidth-rect.right;
+ const wide=space>=192,rail=space>=64;
+ fab.classList.toggle('is-compact',!wide);
+ fab.classList.toggle('is-bottom',!rail);
+ fab.style.left=rail?(rect.right+(space-(wide?176:48))/2)+'px':'auto';
+ fab.style.right=rail?'auto':'12px';
+}
+function updateFab(progress=0){
+ if(!fab)return;
+ const p=Math.max(0,Math.min(1,progress));
+ fab.style.setProperty('--fab-progress',String(p));
+ fab.classList.toggle('is-holding',holding!==null);
+ fab.setAttribute('aria-pressed',String(active));
+ fab.querySelector('.cfa-note-fab-status').textContent=holding!==null?T('Đang giữ H…|Holding H…'):active?(activeScope()?T('Đang tô note|Note pen on'):T('Mở bài để tô|Open a lesson')):T('Giữ H 2 giây|Hold H for 2s');
+ fab.querySelector('.cfa-note-fab-key').textContent=active&&holding===null?'✓':'H';
+ fab.title=holding!==null?T('Đang giữ H…|Holding H…'):active?T('Bấm để tắt bút note|Click to turn off note pen'):T('Giữ H 2 giây hoặc bấm để bật|Hold H for 2s or click to enable');
+}
+function animateHold(now){
+ fabFrame=null;
+ if(holding===null||holdStart===null)return;
+ updateFab((now-holdStart)/HOLD_MS);
+ if(now-holdStart<HOLD_MS)fabFrame=requestAnimationFrame(animateHold);
+}
+function togglePen(){
+ if(!canUsePen())return;
+ clearHold();active=!active;closeMenu();drawToolbar();
+ if(activeScope())notify(active?'Bút note đã bật. Kéo chọn chữ để tô.|Note pen on. Drag to highlight text.':'Bút note đã tắt.|Note pen off.');
+}
+function drawFab(){
+ fab?.remove();fab=null;
+ if(!canUsePen())return;
+ const root=activeScope(),dialog=root?.closest('dialog[open]');
+ const el=document.createElement('button');el.type='button';el.className='cfa-note-fab';
+ el.setAttribute('aria-label',T('Take note · Giữ H 2 giây hoặc bấm để bật/tắt|Take note · Hold H for 2s or click to toggle'));
+ el.innerHTML='<span class="cfa-note-fab-ring" aria-hidden="true"><svg viewBox="0 0 44 44"><circle class="cfa-note-fab-track" cx="22" cy="22" r="19"/><circle class="cfa-note-fab-fill" cx="22" cy="22" r="19" pathLength="100"/></svg><span class="cfa-note-fab-key">H</span></span><span class="cfa-note-fab-copy"><strong>Take note</strong><span class="cfa-note-fab-status"></span></span>';
+ el.onclick=togglePen;fab=el;
+ const header=dialog?.querySelector('.business-model-header-top');
+ if(header){el.classList.add('is-inline','is-compact');header.insertBefore(el,header.querySelector('.business-model-close'))}
+ else (root?hostFor(root):document.body).append(el);
+ positionFab();updateFab(holdStart===null?0:(performance.now()-holdStart)/HOLD_MS);
+}
 function activeScope(){
  const drawer=document.getElementById('los-drawer');
  if(!drawer||drawer.classList.contains('hidden'))return null;
@@ -126,6 +180,7 @@ function drawToolbar(){
  toolbar?.remove();toolbar=null;
  const root=activeScope();
  document.body.classList.toggle('cfa-pen-active',!!(active&&root));
+ drawFab();
  if(!active||!root)return;
  toolbar=document.createElement('div');toolbar.className='cfa-pen-toolbar';toolbar.setAttribute('role','group');toolbar.setAttribute('aria-label',T('Bút ghi chú|Note pen'));
  const title=document.createElement('span');title.className='cfa-pen-label';title.textContent=T('Bút note|Note pen');toolbar.append(title);
@@ -141,7 +196,11 @@ function sync(){
  drawToolbar();
 }
 function stop(){active=false;clearHold();closeMenu();drawToolbar()}
-function clearHold(){if(holding!==null){clearTimeout(holding);holding=null}}
+function clearHold(){
+ if(holding!==null){clearTimeout(holding);holding=null}
+ if(fabFrame!==null){cancelAnimationFrame(fabFrame);fabFrame=null}
+ holdStart=null;updateFab(0);
+}
 function newDraft(){
  if(!active)return;
  const root=activeScope(),sel=window.getSelection();
@@ -198,20 +257,23 @@ function showMenu(id,x,y){
 }
 function editable(el){return !!el?.closest?.('input,textarea,select,[contenteditable=""],[contenteditable="true"],[role="textbox"]')||el?.isContentEditable}
 document.addEventListener('keydown',e=>{
- if(e.key==='Escape'&&(menu||active)){
+ if(e.key==='Escape'&&(menu||active||holding!==null)){
   e.preventDefault();e.stopImmediatePropagation();
   if(menu)closeMenu();else stop();return;
  }
- if(e.key.toLowerCase()!=='h'||e.ctrlKey||e.metaKey||e.altKey||e.shiftKey||editable(e.target)||!activeScope())return;
+ if(e.key.toLowerCase()!=='h'||e.ctrlKey||e.metaKey||e.altKey||e.shiftKey||editable(e.target)||!canUsePen())return;
  e.preventDefault();
  if(e.repeat||held)return;
  held=true;
- holding=setTimeout(()=>{holding=null;if(!activeScope())return;active=!active;closeMenu();drawToolbar();notify(active?'Bút note đã bật. Kéo chọn chữ để tô.|Note pen on. Drag to highlight text.':'Bút note đã tắt.|Note pen off.')},3000);
+ holdStart=performance.now();
+ holding=setTimeout(()=>{if(canUsePen())togglePen();else clearHold()},HOLD_MS);
+ updateFab(0);
+ fabFrame=requestAnimationFrame(animateHold);
 },true);
 document.addEventListener('keyup',e=>{if(e.key.toLowerCase()==='h'){held=false;clearHold()}},true);
 window.addEventListener('blur',()=>{held=false;clearHold()});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){held=false;clearHold()}});
-document.addEventListener('mouseup',e=>{if(e.button===0&&active&&!e.target.closest?.('.cfa-pen-toolbar,.cfa-pen-menu'))newDraft()});
+document.addEventListener('mouseup',e=>{if(e.button===0&&active&&!e.target.closest?.('.cfa-pen-toolbar,.cfa-pen-menu,.cfa-note-fab'))newDraft()});
 document.addEventListener('contextmenu',e=>{
  const mark=e.target.closest?.('.cfa-personal-mark');
  if(!mark||mark.closest(scopeSelector)!==activeScope())return;
@@ -219,6 +281,16 @@ document.addEventListener('contextmenu',e=>{
 });
 document.addEventListener('pointerdown',e=>{if(menu&&!menu.contains(e.target))closeMenu()});
 document.addEventListener('scroll',()=>{if(menu)closeMenu()},true);
-window.addEventListener('resize',closeMenu);
+window.addEventListener('resize',()=>{closeMenu();positionFab()});
+function syncAvailability(){
+ if(!canUsePen()){stop();return}
+ drawToolbar();
+}
+document.addEventListener('DOMContentLoaded',()=>{
+ const library=document.getElementById('view-library'),drawer=document.getElementById('los-drawer');
+ const observer=new MutationObserver(syncAvailability);
+ for(const el of [library,drawer,document.documentElement])if(el)observer.observe(el,{attributes:true,attributeFilter:el===document.documentElement?['lang']:['class']});
+ syncAvailability();
+});
 window.CFA_NOTE_PEN={sync,stop};
 })();
