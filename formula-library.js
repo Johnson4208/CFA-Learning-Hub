@@ -44,27 +44,27 @@ const calc={
  'corporate-finance/wacc':calculator([p('we','Tỷ trọng vốn chủ|Equity weight',60,0,100),p('re','Chi phí vốn chủ|Cost of equity',10),p('rd','Chi phí nợ|Cost of debt',5),p('t','Thuế suất|Tax rate',25,0,100)],v=>({value:percent(v.we/100*v.re/100+(1-v.we/100)*v.rd/100*(1-v.t/100)),steps:fmt(v.we)+'% × '+fmt(v.re)+'% + '+fmt(100-v.we)+'% × '+fmt(v.rd)+'% × (1 − '+fmt(v.t)+'%)',weights:[v.we,100-v.we]}),'Giả định chỉ có nợ và cổ phần thường; trọng số giá trị thị trường.|Assumes debt and common equity only; market-value weights.'),
  'equity/forecast-roic':calculator([money('n','NOPAT',150000),money('ic','Vốn đầu tư bình quân|Average invested capital',1000000,0.000001)],v=>({value:percent(v.n/v.ic),steps:fmt(v.n)+' / '+fmt(v.ic)})),
  'corporate-finance/npv':calculator([money('i','Vốn ban đầu|Initial investment',100000,0),money('a','Dòng tiền năm 1|Year 1 cash flow',60000),money('b','Dòng tiền năm 2|Year 2 cash flow',60000),p('r','Suất chiết khấu|Discount rate',10,-99.99)],v=>({value:'$'+fmt(-v.i+v.a/(1+v.r/100)+v.b/(1+v.r/100)**2),steps:'−'+fmt(v.i)+' + '+fmt(v.a)+'/(1+r) + '+fmt(v.b)+'/(1+r)²'}),'Ví dụ hai kỳ, không có dòng tiền khác.|Two-period illustration; no other cash flows.'),
- 'equity/valuation':calculator([money('d','Cổ tức kỳ tới|Next dividend',3,0),p('r','Chi phí vốn chủ|Cost of equity',10),p('g','Tăng trưởng dài hạn|Growth',4)],v=>{if(v.r<=v.g)return {error:'Yêu cầu r > g.|Requires r > g.'};return{value:'$'+fmt(v.d/((v.r-v.g)/100)),steps:fmt(v.d)+' / ('+fmt(v.r)+'% − '+fmt(v.g)+'%)'}}),
+ 'equity/valuation':calculator([money('d','Cổ tức kỳ tới|Next dividend',3,.000001),p('r','Chi phí vốn chủ|Cost of equity',10,-99.99),p('g','Tăng trưởng dài hạn|Growth',4,-99.99)],v=>{if(v.r<=v.g||v.r<=-100||v.g<=-100||v.d<=0)return {error:'Cần D₁ > 0, r > g, r,g > −100%.|Requires D₁ > 0, r > g, r,g > −100%.'};return{value:'$'+fmt(v.d/((v.r-v.g)/100)),steps:fmt(v.d)+' / ('+fmt(v.r)+'% − '+fmt(v.g)+'%)'}}),
  'fixed-income/duration-convexity':calculator([num('d','Modified duration',5),num('c','Convexity',30),p('y','Thay đổi yield (điểm %)|Yield change (percentage points)',1)],v=>({value:percent(-v.d*v.y/100+.5*v.c*(v.y/100)**2),steps:'−D × Δy + ½ × C × Δy²'})),
  'portfolio/capm':calculator([p('rf','Lãi suất phi rủi ro|Risk-free rate',3),num('beta','Beta',1.2),p('rm','Lợi suất thị trường|Market return',8)],v=>({value:percent((v.rf+v.beta*(v.rm-v.rf))/100),steps:fmt(v.rf)+'% + '+fmt(v.beta)+' × ('+fmt(v.rm)+'% − '+fmt(v.rf)+'%)'})),
  'asset-allocation/ldi':calculator([money('a','Tài sản|Assets',10000000,0),money('l','Nghĩa vụ|Liabilities',10000000,0),num('da','Duration tài sản|Asset duration',4),num('dl','Duration nghĩa vụ|Liability duration',10),p('y','Thay đổi yield (điểm %)|Yield change (percentage points)',-.5)],v=>({value:'$'+fmt((-v.da*v.a+v.dl*v.l)*v.y/100),steps:'(−DA × A + DL × L) × Δy'})),
  'performance/return-measures':calculator([p('a','Lợi suất kỳ 1|Period 1 return',10,-100),p('b','Lợi suất kỳ 2|Period 2 return',-5,-100)],v=>({value:percent((1+v.a/100)*(1+v.b/100)-1),steps:'(1 + r₁)(1 + r₂) − 1'})),
- 'business-foundations/operating-leverage':calculator([money('f','Chi phí cố định|Fixed cost',10000,0),money('p','Giá đơn vị|Unit price',50,0),money('v','Biến phí đơn vị|Unit variable cost',30,0)],v=>v.p<=v.v?{error:'Giá phải lớn hơn biến phí đơn vị.|Price must exceed unit variable cost.'}:{value:fmt(v.f/(v.p-v.v))+' '+T('đơn vị|units'),steps:fmt(v.f)+' / ('+fmt(v.p)+' − '+fmt(v.v)+')'}),
- 'accounting-foundations/cost-allocation':calculator([money('c','Nguyên giá|Cost',100000,0),money('s','Giá trị còn lại|Residual value',0,0),num('n','Tuổi thọ (năm)|Useful life (years)',5,.000001)],v=>v.s>v.c?{error:'Giá trị còn lại không vượt nguyên giá.|Residual cannot exceed cost.'}:{value:'$'+fmt((v.c-v.s)/v.n),steps:'(Cost − Residual) / Life'}),
+ 'business-foundations/operating-leverage':calculator([money('f','Chi phí cố định|Fixed cost',1200000,0),money('p','Giá đơn vị|Unit price',100,0),money('v','Biến phí đơn vị|Unit variable cost',40,0)],v=>v.p<=v.v?{error:'Giá phải lớn hơn biến phí đơn vị.|Price must exceed unit variable cost.'}:{value:fmt(Math.ceil(v.f/(v.p-v.v)))+' '+T('đơn vị nguyên tối thiểu|minimum whole units'),steps:fmt(v.f)+' / ('+fmt(v.p)+' − '+fmt(v.v)+')'}),
+ 'accounting-foundations/cost-allocation':calculator([money('c','Nguyên giá|Cost',100000,0),money('s','Giá trị còn lại|Residual value',10000,0),num('n','Tuổi thọ (năm)|Useful life (years)',5,.000001)],v=>v.s>v.c?{error:'Giá trị còn lại không vượt nguyên giá.|Residual cannot exceed cost.'}:{value:'$'+fmt((v.c-v.s)/v.n),steps:'(Cost − Residual) / Life'}),
  'fixed-income/credit':calculator([p('pd','Xác suất vỡ nợ|Default probability',4,0,100),p('lgd','LGD',60,0,100),money('ead','EAD',1000000,0)],v=>({value:'$'+fmt(v.pd/100*v.lgd/100*v.ead),steps:fmt(v.pd)+'% × '+fmt(v.lgd)+'% × '+fmt(v.ead)})),
  'alternatives/real-assets':calculator([money('noi','NOI',120000,0),p('cap','Cap rate',6,.000001)],v=>({value:'$'+fmt(v.noi/(v.cap/100)),steps:fmt(v.noi)+' / '+fmt(v.cap)+'%'})),
- 'economics/policy':calculator([p('i','Lãi suất danh nghĩa|Nominal rate',8,-99.99),p('pi','Lạm phát|Inflation',3,-99.99)],v=>({value:percent((1+v.i/100)/(1+v.pi/100)-1),steps:'(1 + i)/(1 + π) − 1'})),
+ 'economics/policy':calculator([p('i','Lãi suất danh nghĩa|Nominal rate',5,-99.99),p('pi','Lạm phát|Inflation',6,-99.99)],v=>({value:percent((1+v.i/100)/(1+v.pi/100)-1),steps:'(1 + i)/(1 + π) − 1'})),
  'corporate-finance/working-capital':calculator([num('dio','DIO (days)',40,0),num('dso','DSO (days)',30,0),num('dpo','DPO (days)',25,0)],v=>({value:fmt(v.dio+v.dso-v.dpo)+' '+T('ngày|days'),steps:'DIO + DSO − DPO'})),
- 'fv':calculator([money('pv','Hiện giá|Present value',100),p('r','Lãi mỗi kỳ|Periodic rate',10,-99.99),num('n','Số kỳ|Periods',2,0)],v=>({value:'$'+fmt(v.pv*(1+v.r/100)**v.n),steps:'PV × (1+r)^n'})),
- 'pv':calculator([money('fv','Giá trị tương lai|Future value',121),p('r','Suất chiết khấu|Discount rate',10,-99.99),num('n','Số kỳ|Periods',2,0)],v=>({value:'$'+fmt(v.fv/(1+v.r/100)**v.n),steps:'FV / (1+r)^n'})),
+ 'fv':calculator([money('pv','Hiện giá|Present value',100000),p('r','Lãi mỗi kỳ|Periodic rate',10,-99.99),field('n','Số kỳ|Periods',2,'',0,null,1)],v=>({value:'$'+fmt(v.pv*(1+v.r/100)**v.n),steps:'PV × (1+r)^n'})),
+ 'pv':calculator([money('fv','Giá trị tương lai|Future value',121000),p('r','Suất chiết khấu|Discount rate',10,-99.99),field('n','Số kỳ|Periods',2,'',0,null,1)],v=>({value:'$'+fmt(v.fv/(1+v.r/100)**v.n),steps:'FV / (1+r)^n'})),
  'ear':calculator([p('r','APR',12,-99.99),field('m','Kỳ ghép lãi mỗi năm|Compounds per year',12,'',1,365,1)],v=>({value:percent((1+v.r/100/v.m)**v.m-1),steps:'(1 + APR/m)^m − 1'})),
- 'dv01':calculator([num('d','Modified duration',5,0),money('v','Giá trị vị thế|Position value',1000000,0)],v=>({value:'$'+fmt(v.d*v.v*.0001)+'/bp',steps:'D × V × 0.0001'})),
- 'sharpe':calculator([p('r','Lợi suất|Return',10),p('rf','Phi rủi ro|Risk-free rate',2),p('s','Volatility',16,.000001)],v=>({value:fmt((v.r-v.rf)/v.s,4),steps:'(R − Rf) / σ'})),
+ 'dv01':calculator([num('d','Modified duration',5),money('v','Giá trị vị thế|Position value',1000000,0)],v=>({value:'$'+fmt(Math.abs(v.d*v.v*.0001))+'/bp',steps:'D × V × 0.0001'})),
+ 'sharpe':calculator([p('r','Lợi suất|Return',10),p('rf','Phi rủi ro|Risk-free rate',2),p('s','Volatility of excess returns',16,.000001)],v=>({value:fmt((v.r-v.rf)/v.s,4),steps:'(R − Rf) / σ'})),
  'var':calculator([money('v','Giá trị danh mục|Portfolio value',1000000,0),p('s','Volatility kỳ hạn|Horizon volatility',1,0),num('z','Normal quantile',1.645,0)],v=>({value:'$'+fmt(v.v*v.s/100*v.z),steps:'V × σ × z'})),
  'pe':calculator([money('p','Giá cổ phiếu|Share price',50,0),money('e','EPS',5,.000001)],v=>({value:fmt(v.p/v.e)+'×',steps:'Price / EPS'})),
- 'fcff':calculator([money('e','EBIT',100),p('t','Tax rate',25,0,100),money('da','D&A',20,0),money('cap','CapEx',30,0),money('wc','ΔNWC',10)],v=>({value:'$'+fmt(v.e*(1-v.t/100)+v.da-v.cap-v.wc),steps:'EBIT(1−T) + DA − CapEx − ΔNWC'})),
- 'fcfe':calculator([money('ni','Net income',60),money('da','D&A',20,0),money('cap','CapEx',30,0),money('wc','ΔNWC',10),money('nb','Net borrowing',5)],v=>({value:'$'+fmt(v.ni+v.da-v.cap-v.wc+v.nb),steps:'NI + DA − CapEx − ΔNWC + Net borrowing'})),
- 'current-ratio':calculator([money('a','Current assets',150,0),money('l','Current liabilities',100,.000001)],v=>({value:fmt(v.a/v.l)+'×',steps:'Current assets / Current liabilities'}))
+ 'fcff':calculator([money('e','EBIT',100000000),p('t','Tax rate',25,0,100),money('da','D&A',20000000,0),money('cap','CapEx',30000000,0),money('wc','ΔNWC',10000000)],v=>({value:'$'+fmt(v.e*(1-v.t/100)+v.da-v.cap-v.wc),steps:'EBIT(1−T) + DA − CapEx − ΔNWC'})),
+ 'fcfe':calculator([money('ni','Net income',60000000),money('da','D&A',20000000,0),money('cap','CapEx',30000000,0),money('wc','ΔNWC',10000000),money('nb','Net borrowing',5000000)],v=>({value:'$'+fmt(v.ni+v.da-v.cap-v.wc+v.nb),steps:'NI + DA − CapEx − ΔNWC + Net borrowing'})),
+ 'current-ratio':calculator([money('a','Current assets',150000,0),money('l','Current liabilities',100000,.000001)],v=>({value:fmt(v.a/v.l)+'×',steps:'Current assets / Current liabilities'}))
 };
 function calcMarkup(f){
  const c=calc[f.id];if(!c)return '';
@@ -76,7 +76,8 @@ function bindCalc(f,host){
  const update=()=>{
   const v={};let bad=false;
   inputs.forEach(i=>{v[i.dataset.calc]=Number(i.value);if(i.value.trim()===''||!Number.isFinite(v[i.dataset.calc])||!i.validity.valid)bad=true});
-  const out=bad?{error:'Nhập giá trị hợp lệ.|Enter valid values.'}:c.solve(v);
+  let out=bad?{error:'Nhập giá trị hợp lệ.|Enter valid values.'}:c.solve(v);
+  if(!out.error&&(!out.value||out.value.includes('—')||out.value.includes('NaN')||out.value.includes('∞')))out={error:'Kết quả vượt phạm vi tính toán.|Result outside numeric range.'};
   answer.textContent=out.error?'—':out.value;steps.textContent=out.error?T(out.error):out.steps;
   if(out.weights){host.querySelector('#fl-capital-equity').style.width=out.weights[0]+'%';host.querySelector('#fl-capital-debt').style.width=out.weights[1]+'%';host.querySelector('#fl-capital-label').textContent='Equity '+fmt(out.weights[0])+'% · Debt '+fmt(out.weights[1])+'%'}
  };
@@ -85,6 +86,9 @@ function bindCalc(f,host){
 function applicationMarkup(f){
  const a=window.CFA_FORMULA_APPLICATIONS?.[f.id];if(!a)return '';
  return '<section class="fl-application"><div class="fl-app-head"><div><small>'+L('ỨNG DỤNG THỰC TẾ|PRACTICAL APPLICATION')+'</small><h3>'+L('Từ công thức đến quyết định|From formula to decision')+'</h3></div><span>'+L('Mô phỏng|Illustrative case')+'</span></div><div class="fl-app-step"><span class="fl-app-number">01</span><div><h4>'+L('Bối cảnh & dữ liệu|Business context & inputs')+'</h4><p>'+L(a.scenario)+'</p></div></div><div class="fl-app-step"><span class="fl-app-number">02</span><div><h4>'+L('Thay số & tính kết quả|Substitute & calculate')+'</h4><div class="fl-app-work">'+E(a.work)+'</div></div></div><div class="fl-app-step fl-app-decision"><span class="fl-app-number">03</span><div><h4>'+L('Diễn giải & hành động|Interpret & decide')+'</h4><p>'+L(a.decision)+'</p></div></div></section>';
+}
+function plainFormula(source){
+ let i=0;function part(stops=''){let s='';while(i<source.length&&!stops.includes(source[i])){if(source.startsWith('frac(',i)){i+=5;const n=part(';');if(source[i]!==';')throw Error('Invalid fraction');i++;const d=part(')');if(source[i]!==')')throw Error('Invalid fraction');i++;s+='('+n+')/('+d+')';}else if(source[i]==='('){i++;s+='('+part(')');if(source[i]===')'){s+=')';i++;}}else{s+=source[i++];}}return s;}return part();
 }
 function detail(id,trigger){
  const f=entries().find(e=>e.id===id),dialog=document.getElementById('fl-dialog');if(!f||!dialog)return;
@@ -95,7 +99,7 @@ function detail(id,trigger){
  dialog.onclick=e=>{if(e.target===dialog)dialog.close()};
  dialog.onclose=()=>{drawResults();document.querySelector('[data-open-formula="'+CSS.escape(id)+'"]')?.focus({preventScroll:true})};
  dialog.querySelector('#fl-detail-save').onclick=()=>{if(toggleSave(id)){const b=dialog.querySelector('#fl-detail-save');b.innerHTML=bookmark(saved().includes(id));b.setAttribute('aria-pressed',String(saved().includes(id)));updateCount()}};
- dialog.querySelector('#fl-copy').onclick=async()=>{const b=dialog.querySelector('#fl-copy');try{await navigator.clipboard.writeText(f.eq.replace(/frac\(([^;]+);([^()]+)\)/g,'($1)/($2)'));b.textContent=T('Đã sao chép|Copied')}catch(e){b.textContent=T('Không thể sao chép|Copy unavailable')}};
+ dialog.querySelector('#fl-copy').onclick=async()=>{const b=dialog.querySelector('#fl-copy');try{await navigator.clipboard.writeText(plainFormula(f.eq));b.textContent=T('Đã sao chép|Copied')}catch(e){b.textContent=T('Không thể sao chép|Copy unavailable')}};
  dialog.querySelector('#fl-lesson').onclick=()=>{dialog.close();if(!f.levels.includes(studyLevel))setLevel('LVL '+(level!=='all'&&f.levels.includes(level)?level:f.levels[0]));switchTab('library');window.openDeepCourse(f.course,f.unitIndex)};
  bindCalc(f,dialog);
  if(!dialog.open)dialog.showModal();

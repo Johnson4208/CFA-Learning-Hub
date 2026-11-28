@@ -1,4 +1,4 @@
-/* Supplemental study formulas; examples are illustrative. */
+/* Reviewed supplemental formula conventions. */
 window.CFA_FORMULA_DATA={
   "rows": [
     {
@@ -116,8 +116,8 @@ window.CFA_FORMULA_DATA={
       "c": "quantitative",
       "u": "tvm",
       "name": "Hiện giá niên kim thường|Present value of ordinary annuity",
-      "eq": "PV=PMT×frac(1−(1+r)^−n;r)",
-      "vars": "PMT: tiền cuối mỗi kỳ; r: lãi mỗi kỳ khác 0; n: số kỳ.|PMT: end-of-period payment; r: nonzero periodic rate; n: periods.",
+      "eq": "PV=PMT×frac(1−(1+r)^{−n};r)",
+      "vars": "PMT dòng tiền cuối kỳ đều; r hiệu dụng mỗi kỳ, r>−1 và r≠0. Nếu r=0, PV=PMT×n.|PMT equal end-period payment; effective periodic r>−1 and r≠0. If r=0, PV=PMT×n.",
       "example": "100 mỗi năm trong 2 năm, 10%: PV≈173,55.|100 each year for 2 years at 10%: PV≈173.55.",
       "trap": "Nếu trả đầu kỳ, nhân thêm (1+r).|For annuity due multiply by (1+r)."
     },
@@ -127,7 +127,7 @@ window.CFA_FORMULA_DATA={
       "u": "probability",
       "name": "Phương sai xác suất|Probability-weighted variance",
       "eq": "σ²=Σpᵢ(Rᵢ−E(R))²",
-      "vars": "pᵢ: xác suất; Rᵢ: lợi suất; E(R): kỳ vọng.|pᵢ: probability; Rᵢ: return; E(R): expected return.",
+      "vars": "pᵢ≥0, tổng bằng 1, E(R)=ΣpᵢRᵢ, return dạng thập phân. Phương sai phân phối xác suất, không phải sample variance chia n−1.|pᵢ≥0, sum to one, E(R)=ΣpᵢRᵢ, decimal returns. Probability-distribution variance, not sample variance with n−1 denominator.",
       "example": "Hai kết quả 0% và 20% đồng xác suất: kỳ vọng 10%, σ=10%.|Equally likely 0% and 20%: expected return 10%, σ=10%.",
       "trap": "Không nhầm phương sai với độ lệch chuẩn.|Variance is not standard deviation."
     },
@@ -157,7 +157,7 @@ window.CFA_FORMULA_DATA={
       "u": "regression",
       "name": "Kiểm định t một mẫu|One-sample t statistic",
       "eq": "t=frac(x̄−μ₀;frac(s;√n))",
-      "vars": "x̄: trung bình mẫu; μ₀: giả thuyết; s: độ lệch chuẩn mẫu; n: cỡ mẫu.|x̄: sample mean; μ₀: hypothesized mean; s: sample SD; n: sample size.",
+      "vars": "Mean mẫu x̄, mean giả thuyết μ₀, s SD mẫu dương, n>1, df=n−1; quan sát độc lập, phân phối phù hợp, critical đúng one/two-tailed.|Sample mean x̄, hypothesized mean μ₀, positive sample SD s, n>1, df=n−1; independent observations, suitable distribution, correct one-/two-tailed critical.",
       "example": "x̄=12, μ₀=10, s=4, n=16: t=2, df=15.|x̄=12, μ₀=10, s=4, n=16: t=2, df=15.",
       "trap": "Cần giả định lấy mẫu thích hợp; không suy ra nhân quả.|Requires suitable sampling assumptions; does not imply causation."
     },
@@ -207,7 +207,7 @@ window.CFA_FORMULA_DATA={
       "u": "framework",
       "name": "ROE · Tỷ suất sinh lời vốn chủ|ROE · Return on equity",
       "eq": "ROE=frac(NetIncome;AverageEquity)",
-      "vars": "NetIncome: lợi nhuận tương ứng quyền lợi equity; AverageEquity: vốn chủ bình quân tương ứng.|NetIncome: earnings attributable to the relevant equity; AverageEquity: corresponding average equity.",
+      "vars": "ROE thông thường dùng NI/average total shareholders’ equity; return on common equity=(NI−preferred dividends)/average common equity. Đồng bộ quyền lợi tử/mẫu.|Ordinary ROE uses NI/average total shareholders’ equity; return on common equity=(NI−preferred dividends)/average common equity. Match claims.",
       "example": "NI 20, equity 100: ROE 20%.|NI 20, equity 100: ROE 20%.",
       "trap": "Equity âm hoặc rất nhỏ làm chỉ số khó diễn giải.|Negative or very small equity impairs interpretation."
     },
@@ -246,8 +246,8 @@ window.CFA_FORMULA_DATA={
       "c": "fsa",
       "u": "assets-debt",
       "name": "Khả năng trả lãi|Interest coverage",
-      "eq": "Coverage=frac(EBIT;InterestExpense)",
-      "vars": "EBIT: lợi nhuận hoạt động; InterestExpense: chi phí lãi vay.|EBIT: operating income; InterestExpense: interest expense.",
+      "eq": "Coverage=frac(EBIT;InterestPayments)",
+      "vars": "CFA ratio list dùng interest payments; thực hành thường dùng interest expense nếu phù hợp. Nêu rõ cơ sở, không trộn dồn tích và tiền trả.|CFA ratio list uses interest payments; practice often uses interest expense where appropriate. Specify basis, avoid mixing accrual and cash.",
       "example": "EBIT 90, lãi 30: 3 lần.|EBIT 90, interest 30: 3×.",
       "trap": "Không thay thế phân tích lịch đáo hạn và dòng tiền.|Does not replace maturity and cash flow analysis."
     },
@@ -256,18 +256,18 @@ window.CFA_FORMULA_DATA={
       "c": "corporate-finance",
       "u": "working-capital",
       "name": "DSO · Số ngày phải thu|DSO · Days sales outstanding",
-      "eq": "DSO=frac(AverageReceivables;CreditSales)×365",
-      "vars": "CreditSales: doanh thu bán chịu năm; AverageReceivables: phải thu bình quân.|CreditSales: annual credit sales; AverageReceivables: average receivables.",
+      "eq": "DSO=frac(AverageReceivables;TotalRevenue)×DaysInPeriod",
+      "vars": "Theo CFA ratio list dùng tổng doanh thu, phải thu bình quân và số ngày trong kỳ. Trong quản trị thu nợ, net credit sales là biến thể nếu có dữ liệu.|CFA ratio-list convention uses total revenue, average receivables and days in period. Net credit sales is an operational variant if available.",
       "example": "Phải thu 100, bán chịu 730: DSO 50 ngày.|Receivables 100, credit sales 730: DSO 50 days.",
-      "trap": "Nếu dùng doanh thu tổng thay bán chịu, ghi rõ.|Disclose use of total sales as proxy."
+      "trap": "Nếu đề CFA không nêu quy ước khác, dùng total revenue; không trộn số liệu quý và ngày năm.|For CFA questions without an alternative definition, use total revenue; do not mix quarterly data and annual days."
     },
     {
       "id": "dio",
       "c": "corporate-finance",
       "u": "working-capital",
       "name": "DIO · Số ngày tồn kho|DIO · Days inventory outstanding",
-      "eq": "DIO=frac(AverageInventory;COGS)×365",
-      "vars": "AverageInventory: tồn kho bình quân; COGS: giá vốn năm.|AverageInventory: average inventory; COGS: annual cost of goods sold.",
+      "eq": "DIO=frac(AverageInventory;COGS)×DaysInPeriod",
+      "vars": "Tồn kho bình quân, COGS và số ngày thực tế cùng kỳ.|Average inventory, COGS and actual days in matched period.",
       "example": "Tồn 100, COGS 730: 50 ngày.|Inventory 100, COGS 730: 50 days.",
       "trap": "Xem yếu tố mùa vụ.|Consider seasonality."
     },
@@ -276,8 +276,8 @@ window.CFA_FORMULA_DATA={
       "c": "corporate-finance",
       "u": "working-capital",
       "name": "DPO · Số ngày phải trả|DPO · Days payable outstanding",
-      "eq": "DPO=frac(AveragePayables;Purchases)×365",
-      "vars": "Purchases: mua chịu năm phù hợp; COGS thường dùng làm proxy.|Purchases: relevant annual credit purchases; COGS often used as proxy.",
+      "eq": "DPO=frac(AverageTradePayables;Purchases)×DaysInPeriod",
+      "vars": "Phải trả thương mại bình quân, purchases và số ngày cùng kỳ theo CFA; credit purchases dùng trong quản trị, COGS chỉ là proxy khi thiếu purchases.|Average trade payables, purchases and days in matched period per CFA; credit purchases for operational use; COGS only a proxy if purchases unavailable.",
       "example": "Phải trả 50, mua chịu 730: 25 ngày.|Payables 50, purchases 730: 25 days.",
       "trap": "Không đánh đồng tăng DPO với lợi ích vô điều kiện.|Longer DPO is not unconditionally beneficial."
     },
@@ -297,9 +297,9 @@ window.CFA_FORMULA_DATA={
       "u": "valuation",
       "name": "FCFF · Dòng tiền tự do doanh nghiệp|FCFF · Free cash flow to firm",
       "eq": "FCFF=EBIT(1−T)+DA−CapEx−ΔNWC",
-      "vars": "DA: khấu hao; CapEx: đầu tư tài sản; ΔNWC: tăng vốn lưu động hoạt động phi tiền mặt.|DA: depreciation and amortization; CapEx: capital expenditure; ΔNWC: increase in noncash operating working capital.",
+      "vars": "EBIT trước lãi và thuế, T thuế hoạt động phù hợp, DA khấu hao, CapEx đầu tư cố định, ΔNWC tăng vốn lưu động hoạt động phi tiền mặt. Giả định không điều chỉnh phi tiền mặt trọng yếu khác.|EBIT before interest and tax, appropriate operating tax rate T, DA depreciation/amortization, fixed capital investment, noncash operating ΔNWC. Assumes no other material noncash adjustments.",
       "example": "EBIT 100, T25%, DA20, CapEx30, ΔNWC10: FCFF55.|EBIT 100, T25%, DA20, CapEx30, ΔNWC10: FCFF55.",
-      "trap": "Chiết khấu FCFF bằng WACC phù hợp, không cost of equity.|Discount FCFF at appropriate WACC, not cost of equity."
+      "trap": "Chiết khấu WACC phù hợp. Từ CFO chỉ cộng lãi sau thuế nếu lãi đã bị trừ trong CFO; không cộng hai lần.|Discount at appropriate WACC. From CFO add after-tax interest only if interest was deducted in CFO; avoid double counting."
     },
     {
       "id": "fcfe",
@@ -307,7 +307,7 @@ window.CFA_FORMULA_DATA={
       "u": "valuation",
       "name": "FCFE · Dòng tiền tự do vốn chủ|FCFE · Free cash flow to equity",
       "eq": "FCFE=NI+DA−CapEx−ΔNWC+NetBorrowing",
-      "vars": "NI: lợi nhuận ròng; NetBorrowing: vay mới trừ trả gốc; các biến khác như FCFF.|NI: net income; NetBorrowing: new debt less principal repayment; other terms as in FCFF.",
+      "vars": "NI thuộc cổ đông thường (điều chỉnh preferred dividends nếu có), DA, CapEx, ΔNWC hoạt động phi tiền mặt, NetBorrowing=vay mới−trả gốc. Giả định không điều chỉnh phi tiền mặt trọng yếu khác.|NI attributable to common equity (adjust preferred dividends if relevant), DA, CapEx, noncash operating ΔNWC, net borrowing=debt issued−principal repaid. No other material noncash adjustments assumed.",
       "example": "NI 60, DA20, CapEx30, ΔNWC10, vay ròng5: FCFE45.|NI 60, DA20, CapEx30, ΔNWC10, net borrowing5: FCFE45.",
       "trap": "Dùng chi phí vốn cổ phần phù hợp.|Use appropriate cost of equity."
     },
@@ -376,7 +376,7 @@ window.CFA_FORMULA_DATA={
       "c": "fixed-income",
       "u": "spot-curve",
       "name": "Lãi suất kỳ hạn ngụ ý 1 năm|Implied one-year forward rate",
-      "eq": "f₁,₂=frac((1+s₂)²;1+s₁)−1",
+      "eq": "f_{1,2}=frac((1+s₂)²;1+s₁)−1",
       "vars": "s₁,s₂: spot rate ghép năm cho kỳ hạn 1,2 năm.|s₁,s₂: annually compounded 1- and 2-year spot rates.",
       "example": "s₁=4%, s₂=5%: f≈6,01%.|s₁=4%, s₂=5%: f≈6.01%.",
       "trap": "Forward ngụ ý không phải dự báo chắc chắn.|Implied forward is not a guaranteed forecast."
@@ -386,8 +386,8 @@ window.CFA_FORMULA_DATA={
       "c": "fixed-income",
       "u": "duration-convexity",
       "name": "DV01 · Độ nhạy một điểm cơ bản|DV01 · Dollar value of one basis point",
-      "eq": "DV01≈D_mod×Price×0.0001",
-      "vars": "D_mod: modified duration; Price: giá trị thị trường vị thế.|D_mod: modified duration; Price: position market value.",
+      "eq": "DV01≈abs(D_mod×Price)×0.0001",
+      "vars": "Độ lớn thay đổi giá trị khi yield đổi 1 bp; duration và giá trị vị thế nhất quán. Duration dương thì yield tăng làm giá giảm. Một số desk dùng signed DV01, nêu quy ước.|Magnitude of value change for 1 bp; consistent duration and position value. Positive duration implies price falls as yield rises. Some desks use signed DV01; specify convention.",
       "example": "Duration 5, giá trị 1 triệu: DV01≈500 USD/bp.|Duration 5, value $1m: DV01≈$500/bp.",
       "trap": "Đây là độ lớn; khi yield tăng, giá trái phiếu duration dương giảm.|Magnitude; price falls for a positive-duration bond when yield rises."
     },
@@ -416,8 +416,8 @@ window.CFA_FORMULA_DATA={
       "c": "derivatives",
       "u": "forwards-futures",
       "name": "Giá trị hợp đồng kỳ hạn dài|Long forward value",
-      "eq": "V=frac(F_t,T−K;(1+r)^τ)",
-      "vars": "F_t,T: giá forward mới cùng đáo hạn; K: giá giao cũ; τ: thời gian còn lại; r: lãi phi rủi ro tương ứng.|F_t,T: new forward price for same maturity; K: original delivery price; τ: remaining time; r: matching risk-free rate.",
+      "eq": "V=frac(F_{t,T}−K;(1+r)^τ)",
+      "vars": "Giá trị long forward mỗi đơn vị; forward mới cùng đáo hạn; r phi rủi ro hiệu dụng tương ứng τ năm còn lại, bỏ qua credit/collateral adjustments.|Long forward value per unit; new forward with same maturity; effective risk-free rate over remaining τ years, excluding credit/collateral adjustments.",
       "example": "Forward mới 110, K100, còn 1 năm, r5%: giá trị 9,52.|New forward 110, K100, one year, r5%: value 9.52.",
       "trap": "Giả định chiết khấu phù hợp; không nhầm giá forward và giá trị hợp đồng.|Assumes appropriate discounting; distinguish forward price from contract value."
     },
@@ -426,8 +426,8 @@ window.CFA_FORMULA_DATA={
       "c": "derivatives",
       "u": "options-greeks",
       "name": "Delta · Độ nhạy giá option|Delta · Option price sensitivity",
-      "eq": "Δ≈frac(ChangeOptionValue;ChangeUnderlyingPrice)",
-      "vars": "Thay đổi nhỏ, các yếu tố khác không đổi.|Small changes, other inputs held constant.",
+      "eq": "Δ=frac(∂OptionValue;∂UnderlyingPrice)",
+      "vars": "Đạo hàm riêng giữ biến khác cố định; thay đổi hữu hạn ΔOption≈delta×ΔUnderlying cho biến động nhỏ.|Partial derivative holding others fixed; finite change ΔOption≈delta×ΔUnderlying for small moves.",
       "example": "Delta 0,6, underlying tăng 2: option tăng khoảng 1,2.|Delta 0.6, underlying rises 2: option rises about 1.2.",
       "trap": "Delta biến đổi theo giá và thời gian; gamma quan trọng.|Delta changes with price and time; gamma matters."
     },
@@ -476,8 +476,8 @@ window.CFA_FORMULA_DATA={
       "c": "portfolio",
       "u": "risk-return",
       "name": "Sharpe ratio · Lợi suất vượt trội trên rủi ro tổng|Sharpe ratio",
-      "eq": "Sharpe=frac(E(R_p)−R_f;σ_p)",
-      "vars": "E(R_p): lợi suất kỳ vọng; R_f: phi rủi ro; σ_p: volatility cùng kỳ.|E(R_p): expected return; R_f: risk-free rate; σ_p: same-horizon volatility.",
+      "eq": "Sharpe=frac(MeanExcessReturn;Volatility)",
+      "vars": "Ex ante: (E(Rp)−Rf)/σp nếu Rf cố định; ex post: mean excess return/SD excess returns cùng chuỗi. Khi Rf thay đổi, SD excess return có thể khác SD portfolio return. Đồng bộ kỳ hạn.|Ex ante: (E(Rp)−Rf)/σp with constant Rf; ex post: mean excess return/SD excess returns from same series. With varying Rf, excess-return SD may differ from portfolio-return SD. Match horizons.",
       "example": "Return 10%, Rf 2%, volatility 16%: Sharpe 0,5.|Return 10%, Rf 2%, volatility 16%: Sharpe 0.5.",
       "trap": "Không trộn đơn vị năm/tháng; tỷ số âm cần diễn giải cẩn trọng.|Align horizons; negative ratios require care."
     },
@@ -507,7 +507,7 @@ window.CFA_FORMULA_DATA={
       "u": "wealth-risk",
       "name": "VaR · Value at Risk (normal, zero mean)|VaR · Value at Risk (normal, zero mean)",
       "eq": "VaR=z×σ×V",
-      "vars": "z: phân vị chuẩn một phía; σ: volatility kỳ hạn; V: giá trị danh mục; giả định mean=0, phân phối chuẩn.|z: one-sided normal quantile; σ: horizon volatility; V: portfolio value; normal zero-mean assumption.",
+      "vars": "Normal parametric zero-mean, exposure tuyến tính, z phân vị một phía dương, σ volatility thập phân cùng horizon, V giá trị danh mục. Mean khác 0: VaR loss=V×(zσ−μ) theo quy ước không floor.|Zero-mean normal parametric model, linear exposure, positive one-sided z, decimal horizon volatility σ, portfolio value V. Nonzero mean: loss VaR=V×(zσ−μ) under unfloored convention.",
       "example": "V 1 triệu, σ ngày 1%, z1,645: VaR 95% ngày ≈16.450.|V $1m, daily σ 1%, z1.645: daily 95% VaR ≈$16,450.",
       "trap": "Không phải mức lỗ tối đa; có thể đánh giá thấp đuôi dày.|Not maximum loss; may understate fat tails."
     },
@@ -536,8 +536,8 @@ window.CFA_FORMULA_DATA={
       "c": "asset-allocation",
       "u": "taa",
       "name": "Đóng góp rủi ro danh mục|Portfolio volatility risk contribution",
-      "eq": "RC_i=frac(w_i×(Σw)_i;σ_p)",
-      "vars": "Σ: ma trận hiệp phương sai; w: vector tỷ trọng; σ_p: volatility danh mục dương.|Σ: covariance matrix; w: weights vector; σ_p: positive portfolio volatility.",
+      "eq": "RCᵢ=frac(wᵢ×(Σw)ᵢ;σₚ)",
+      "vars": "Σ ma trận covariance, w trọng số, σₚ volatility dương. RC có đơn vị volatility; tỷ lệ đóng góp rủi ro=RCᵢ/σₚ.|Σ covariance matrix, w weights, σₚ positive volatility. RC has volatility units; percentage risk contribution=RCᵢ/σₚ.",
       "example": "Nếu danh mục chỉ có một tài sản, RC của nó bằng volatility danh mục.|For a one-asset portfolio its RC equals portfolio volatility.",
       "trap": "Đóng góp có thể âm với tài sản hedge; tổng RC bằng σ_p.|Hedging contributions may be negative; RCs sum to σ_p."
     },
@@ -586,8 +586,8 @@ window.CFA_FORMULA_DATA={
       "c": "performance",
       "u": "appraisal",
       "name": "Jensen alpha · Lợi suất vượt CAPM|Jensen alpha",
-      "eq": "α=R_p−(R_f+β_p(R_m−R_f))",
-      "vars": "R_p,R_m,R_f: lợi suất cùng kỳ; β_p: beta danh mục.|R_p,R_m,R_f: same-period returns; β_p: portfolio beta.",
+      "eq": "α=Mean(R_p−R_f)−β_p×Mean(R_m−R_f)",
+      "vars": "Jensen alpha là intercept hồi quy excess return danh mục theo thị trường; biểu thức trung bình cùng mẫu và beta. Một kỳ chỉ là CAPM-adjusted abnormal return minh họa, không phải alpha hồi quy đáng tin cậy.|Jensen alpha is regression intercept of portfolio excess return on market excess return; mean expression uses same sample and beta. One period is illustrative CAPM-adjusted abnormal return, not reliable regression alpha.",
       "example": "Rp10%, Rf2%, Rm8%, beta1: alpha2%.|Rp10%, Rf2%, Rm8%, beta1: alpha2%.",
       "trap": "Một kỳ không chứng minh skill bền vững.|One period does not establish persistent skill."
     },
@@ -606,8 +606,8 @@ window.CFA_FORMULA_DATA={
       "c": "pathways",
       "u": "private-wealth-path",
       "name": "Thuế lãi vốn đơn giản|Illustrative capital gains tax",
-      "eq": "Tax=(SaleProceeds−TaxBasis)×TaxRate",
-      "vars": "Giả định lãi dương chịu cùng thuế suất, bỏ qua miễn giảm và phí.|Assume positive taxable gain at a flat rate, excluding exemptions and costs.",
+      "eq": "Tax=max(SaleProceeds−TaxBasis;0)×TaxRate",
+      "vars": "Mô hình minh họa đánh thuế lãi dương ở một thuế suất, bỏ qua bù trừ lỗ, miễn giảm và phí.|Illustrative model taxing positive gains at one rate, ignoring loss offsets, reliefs and fees.",
       "example": "Bán 100k, basis 90k, thuế 20%: 2k.|Sell $100k, basis $90k, tax 20%: $2k.",
       "trap": "Luật thực tế phụ thuộc khu vực và hoàn cảnh.|Actual tax rules depend on jurisdiction and circumstances."
     },
@@ -667,7 +667,7 @@ window.CFA_FORMULA_DATA={
     "asset-allocation/ldi": "LDI · Độ nhạy thặng dư|LDI · Surplus sensitivity",
     "performance/return-measures": "TWR · Lợi suất theo thời gian|TWR · Time-weighted return",
     "performance/attribution": "Brinson–Fachler · Hiệu ứng phân bổ|Brinson–Fachler · Allocation effect",
-    "performance/appraisal": "Information ratio · Đánh giá hiệu quả|Information ratio · Appraisal",
+    "performance/appraisal": "Information ratio · Hiệu quả active risk|Information ratio · Active-risk efficiency",
     "pathways/private-markets-path": "Equity exit · Giá trị vốn chủ thoái vốn|Equity exit value"
   }
 };

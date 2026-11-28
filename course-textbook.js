@@ -519,7 +519,7 @@
     const supers={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','ᵗ':'t','ᵀ':'T','ᵈ':'d','ᶠ':'f'};
     const subs={'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9','ᵢ':'i','ₜ':'t','ₚ':'p','ₑ':'e','ₘ':'m','ᵦ':'b','ₐ':'a','ₗ':'l','ᵣ':'r','ₛ':'s'};
     let cursor=0;
-    const atom=value=>/^\d+$/.test(value)?'<mn>'+safe(value)+'</mn>':'<mi>'+safe(value)+'</mi>';
+    const atom=value=>/^\d+(?:\.\d+)?$/.test(value)?'<mn>'+safe(value)+'</mn>':'<mi>'+safe(value)+'</mi>';
     function parse(stops=''){
       const nodes=[];
       while(cursor<source.length&&!stops.includes(source[cursor])){
@@ -529,12 +529,12 @@
         if(c==='('){cursor++;const inside=parse(')');if(source[cursor]===')')cursor++;nodes.push('<mrow><mo>(</mo>'+inside+'<mo>)</mo></mrow>');continue;}
         if((supers[c]||subs[c]||c==='_'||c==='^')&&nodes.length){
           const isSuper=Boolean(supers[c])||c==='^',map=isSuper?supers:subs;let value='';
-          if(c==='_'||c==='^'){cursor++;const m=source.slice(cursor).match(/^[A-Za-z0-9]+/);value=m?m[0]:source[cursor++]||'';if(m)cursor+=value.length;}
+          if(c==='_'||c==='^'){cursor++;if(source[cursor]==='{'){cursor++;const end=source.indexOf('}',cursor);if(end<0)throw Error('Unclosed script group');value=source.slice(cursor,end);cursor=end+1;}else{const m=source.slice(cursor).match(/^[−-]?[A-Za-z0-9]+/);value=m?m[0]:source[cursor++]||'';if(m)cursor+=value.length;}}
           else {while(map[source[cursor]])value+=map[source[cursor++]];}
           const base=nodes.pop();nodes.push('<m'+(isSuper?'sup':'sub')+'>'+base+atom(value)+'</m'+(isSuper?'sup':'sub')+'>');continue;
         }
         if(c==='√'){cursor++;const m=source.slice(cursor).match(/^[A-Za-z0-9]+/);const value=m?m[0]:source[cursor]||'';cursor+=value.length;nodes.push('<msqrt>'+atom(value)+'</msqrt>');continue;}
-        const match=source.slice(cursor).match(/^[A-Za-zΑ-ω]+|^\d+/u);
+        const match=source.slice(cursor).match(/^[A-Za-z]+|^[Α-ω]|^\d+(?:\.\d+)?/u);
         if(match){cursor+=match[0].length;nodes.push(atom(match[0]));}
         else {cursor++;nodes.push('<mo>'+safe(c)+'</mo>');}
       }
@@ -542,5 +542,91 @@
     }
     return '<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">'+parse()+'</math>';
   }
+  Object.assign(formulas,{
+  "business-foundations/unit-economics": [
+    "LTV≈frac(ARPU×GM;churn)",
+    "ARPU tháng, GM dạng thập phân, churn khách hàng tháng >0. Ước tính lợi nhuận gộp vòng đời với ARPU, GM và churn ổn định, không chiết khấu; chưa trừ CAC.|Monthly ARPU, decimal GM, monthly customer churn >0. Approximate lifetime gross profit with constant ARPU, GM and churn, no discounting; excludes CAC."
+  ],
+  "business-foundations/operating-leverage": [
+    "Q*=frac(F;P−V)",
+    "F định phí cùng kỳ; P giá bán đơn vị; V biến phí đơn vị. P>V; giả định giá, biến phí đơn vị và định phí ổn định trong phạm vi hoạt động. Làm tròn lên nếu chỉ bán nguyên đơn vị.|F period fixed cost; P unit price; V unit variable cost. P>V; constant prices, unit variable costs and fixed costs in relevant range. Round up for whole units."
+  ],
+  "quantitative/tvm": [
+    "PV=frac(CF₁;(1+r)¹)+frac(CF₂;(1+r)²)",
+    "Hiện giá hai dòng tiền cuối kỳ, r>−100% là suất chiết khấu mỗi kỳ phù hợp. Với n kỳ, cộng toàn bộ CF_t/(1+r)^t.|Present value of two end-period cash flows; r>−100% is the appropriate periodic rate. For n periods sum all CF_t/(1+r)^t."
+  ],
+  "economics/fx": [
+    "F_{0,1}=S₀×frac(1+i_d;1+i_f)",
+    "Tỷ giá nội tệ trên một ngoại tệ; lãi suất hiệu dụng một năm cùng kỳ hạn; giả định không arbitrage, bỏ qua phí và cross-currency basis. Đảo tỷ giá phải đảo tỷ lệ lãi suất.|Domestic currency per foreign currency; one-year effective rates; no-arbitrage ignoring fees and cross-currency basis. Inverting the quote also inverts the interest-rate ratio."
+  ],
+  "fsa/framework": [
+    "ROE=frac(NI;Sales)×frac(Sales;AverageAssets)×frac(AverageAssets;AverageEquity)",
+    "Biên ròng × vòng quay tài sản × đòn bẩy; dùng tài sản và equity bình quân cùng kỳ, lợi nhuận tương ứng quyền lợi equity.|Net margin × asset turnover × leverage; use average assets and equity from the same period, earnings corresponding to equity."
+  ],
+  "fsa/cash-quality": [
+    "CFO=NI+NetNoncashAdjustments−ΔOperatingNWC",
+    "NI lợi nhuận ròng; điều chỉnh phi tiền mặt ròng (cộng chi phí, trừ thu nhập phi tiền mặt và loại lãi/lỗ đầu tư/tài trợ); ΔOperatingNWC tăng vốn lưu động hoạt động phi tiền mặt. Điều chỉnh theo phân loại dòng tiền áp dụng.|NI net income; net noncash adjustments (add noncash expenses, subtract noncash income and remove investing/financing gains or losses); ΔOperatingNWC increase in noncash operating working capital. Adjust for cash-flow classification."
+  ],
+  "corporate-finance/wacc": [
+    "WACC=wₑ×rₑ+w_d×r_d×(1−T)",
+    "Trọng số mục tiêu theo giá thị trường, tổng bằng 1 trong mô hình nợ/cổ phần thường. r_d chi phí nợ cận biên, T thuế suất cận biên khi sử dụng được lá chắn thuế; thêm preferred stock nếu có.|Target market-value weights sum to one for debt/common equity. r_d marginal pretax debt cost, T marginal tax rate when shield usable; add preferred stock separately if present."
+  ],
+  "corporate-finance/restructuring": [
+    "NPV_acquirer=V_T+PV(Synergy)−PV(IntegrationCost)−Price",
+    "Giá trị độc lập của target; synergy và chi phí tích hợp đều là hiện giá sau thuế; tất cả trên cùng cơ sở equity hoặc EV, không trừ chi phí hai lần.|Standalone target value; synergies and integration costs are after-tax PVs; consistent equity or EV basis, avoid double counting."
+  ],
+  "equity/forecast-roic": [
+    "ROIC=frac(NOPAT;AverageInvestedCapital)",
+    "NOPAT=EBIT×(1−thuế suất hiệu dụng phù hợp). Theo danh sách tỷ số CFA, invested capital bình quân=nợ chịu lãi bình quân+equity bình quân. Thực tế có thể dùng tài sản hoạt động ròng hoặc loại tiền dư nhưng đồng bộ tử và mẫu.|NOPAT=EBIT×(1−appropriate effective tax rate). CFA ratio-list convention: average invested capital=average interest-bearing debt+average equity. Practical analysis may use net operating assets or exclude excess cash, aligning numerator and denominator."
+  ],
+  "equity/valuation": [
+    "V₀=frac(D₁;r−g)",
+    "D₁ cổ tức kỳ tới dương, r required equity return, g tăng trưởng dài hạn bền vững. r>g, cả hai >−100%, cùng kỳ, mô hình perpetuity ổn định.|Positive next-period dividend, required equity return r, sustainable long-run growth g. r>g, both >−100%, same period, stable perpetuity."
+  ],
+  "fixed-income/structures-yields": [
+    "P=Σfrac(CFₜ;(1+y)ᵗ)",
+    "P full/dirty price; CF coupon và gốc; y yield hiệu dụng mỗi kỳ. t nguyên nếu định giá ngày coupon; giữa kỳ dùng kỳ lẻ thích hợp, clean price=dirty price−accrued interest.|P full/dirty price; CF coupon and principal; y effective periodic yield. Integer t assumes coupon date; between coupons use fractional periods; clean price=dirty price−accrued interest."
+  ],
+  "fixed-income/duration-convexity": [
+    "frac(ΔP;P)≈−D_mod×Δy+frac(1;2)×Convexity×(Δy)²",
+    "Modified duration và convexity cùng quy ước yield; Δy dạng thập phân (100 bp=0,01). Xấp xỉ thay đổi nhỏ; optionality và curve shift không song song cần thước đo phù hợp.|Modified duration and convexity use consistent yield conventions; decimal Δy (100 bp=0.01). Local approximation; optionality and nonparallel shifts require suitable measures."
+  ],
+  "fixed-income/credit": [
+    "EL=PD×LGD×EAD",
+    "Mô hình đơn giản cùng kỳ hạn, PD xác suất default, LGD tổn thất có điều kiện, EAD dư nợ lúc default. Nếu LGD/EAD bất định cần kỳ vọng có điều kiện và chiết khấu thích hợp; không phải toàn bộ mô hình IFRS 9.|Simplified same-horizon model: PD probability, LGD conditional loss fraction, EAD exposure at default. Uncertain LGD/EAD require conditional expectation and discounting; not a complete IFRS 9 model."
+  ],
+  "fixed-income/portfolio-hedge": [
+    "N=frac((D_P−D_target)×V_P;D_F×V_F)",
+    "N số hợp đồng bán có dấu; D_target duration mục tiêu (0 nếu trung hòa), V_F và D_F là exposure và duration hiệu dụng mỗi futures, xét CTD/conversion factor nếu cần.|N signed short contract count; target duration zero for neutral hedge; V_F and D_F effective exposure and duration per futures contract, including CTD/conversion factor if applicable."
+  ],
+  "derivatives/payoff-arbitrage": [
+    "Profit_call=max(S_T−K;0)−C₀",
+    "Lãi/lỗ long call tại đáo hạn mỗi đơn vị, bỏ qua tài trợ premium, phí và thuế. Nhân multiplier; payoff chưa trừ premium.|Long-call expiry profit per unit, ignoring premium financing, fees and taxes. Apply multiplier; payoff excludes premium."
+  ],
+  "derivatives/forwards-futures": [
+    "F_{0,T}=S₀×(1+r)^T",
+    "Giá giao forward không arbitrage, không thu nhập/lưu kho/lợi ích nắm giữ; r phi rủi ro hiệu dụng năm, T năm. Thu nhập tiền xác định: (S₀−PV(income))×(1+r)^T; thêm carry thích hợp.|No-arbitrage delivery price without income, storage costs or holding benefits; r annual effective risk-free, T years. Known cash income: (S₀−PV(income))×(1+r)^T; adjust for other carry."
+  ],
+  "derivatives/hedge-design": [
+    "h*=ρ×frac(σ_S;σ_F)",
+    "ρ và volatility của thay đổi giá spot/futures cùng kỳ và cơ sở nhất quán, σ_F>0. Đây là tỷ lệ exposure, không phải trực tiếp số hợp đồng; quy đổi multiplier, đơn vị và chiều hedge.|Correlation and volatility of spot/futures price changes on matching horizon and basis; σ_F>0. Exposure hedge ratio, not directly contract count; convert multiplier, units and direction."
+  ],
+  "portfolio/capm": [
+    "E(Rᵢ)=R_f+βᵢ×(E(Rₘ)−R_f)",
+    "Lợi suất kỳ vọng cân bằng/required return; risk-free và market premium cùng kỳ và đồng tiền; beta đo rủi ro hệ thống. Không phải dự báo chắc chắn hay realized return.|Equilibrium expected/required return; risk-free and market premium on matched horizon and currency; beta measures systematic risk. Not a guaranteed forecast or realized return."
+  ],
+  "asset-allocation/ldi": [
+    "ΔS≈−Dₐ×A×Δy+Dₗ×L×Δy",
+    "S=A−L, A/L theo hiện giá; dùng duration nhạy giá nhất quán, Δy dạng thập phân. Giả định dịch chuyển yield song song cùng mức, bỏ qua convexity và spread changes.|S=A−L, A/L at present value; consistent price-sensitivity durations and decimal Δy. Assumes common parallel yield shift, ignores convexity and spread changes."
+  ],
+  "performance/return-measures": [
+    "TWR=Π(1+rₜ)−1",
+    "Return kỳ con giữa external flows, định giá tại ngày dòng tiền. TWR này là lũy kế, annualize khi cần; MWR dùng IRR của dòng tiền nhà đầu tư.|Subperiod returns between external flows, value at flow dates. This TWR is cumulative; annualize as needed; MWR uses investor cash-flow IRR."
+  ],
+  "performance/appraisal": [
+    "IR=frac(MeanActiveReturn;TrackingError)",
+    "MeanActiveReturn là trung bình số học portfolio return−benchmark; TE là SD active return cùng chuỗi/kỳ hạn. IR khác appraisal ratio=alpha/residual risk.|MeanActiveReturn is arithmetic mean portfolio-minus-benchmark return; TE is SD of matched active returns. IR differs from appraisal ratio=alpha/residual risk."
+  ]
+});
   window.CFA_TEXTBOOK={chapters,sources,formulas,formatEquation};
 })();

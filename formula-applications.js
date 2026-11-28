@@ -1,4 +1,4 @@
-/* Formula-specific fictional practice cases; bilingual scenarios and decisions. */
+/* Reviewed formula-specific illustrative cases. */
 window.CFA_FORMULA_APPLICATIONS={
   "business-foundations/business-model": {
     "scenario": "Nhà bán lẻ có tài sản $500k và nợ phải trả $320k; chủ sở hữu muốn biết vốn kế toán còn lại.|A retailer has $500k assets and $320k liabilities; owners want their residual book interest.",
@@ -137,7 +137,7 @@ window.CFA_FORMULA_APPLICATIONS={
   },
   "fixed-income/portfolio-hedge": {
     "scenario": "Quỹ muốn trung hòa duration danh mục $10m, D=6; mỗi futures exposure $100k, duration hiệu dụng 5.|Fund wants duration neutrality on $10m portfolio, D=6; futures exposure $100k per contract, effective duration 5.",
-    "work": "N=10,000,000×6/(100,000×5)=120",
+    "work": "N=(6−0)×10,000,000/(5×100,000)=120 short contracts",
     "decision": "Bán 120 hợp đồng theo giả định; kiểm tra CTD, conversion factor, basis, ký quỹ và tái cân bằng.|Short 120 contracts under assumptions; check CTD, conversion factors, basis, margin and rebalancing."
   },
   "derivatives/payoff-arbitrage": {
@@ -221,7 +221,7 @@ window.CFA_FORMULA_APPLICATIONS={
     "decision": "Overweight giúp allocation; tính selection và interaction theo cùng quy ước trước khi đánh giá active return.|Overweight helped allocation; calculate selection and interaction consistently before evaluating active return."
   },
   "performance/appraisal": {
-    "scenario": "Hai manager cùng annualized active return 2%; tracking error A 4%, B 8%, cùng benchmark và kỳ đo.|Two managers have annualized active return 2%; tracking error A 4%, B 8%, same benchmark and horizon.",
+    "scenario": "Hai manager có annualized arithmetic mean active return 2%; annual tracking error A 4%, B 8%, cùng benchmark/kỳ đo.|Two managers have annualized arithmetic mean active return 2%; annual tracking error A 4%, B 8%, same benchmark/horizon.",
     "work": "IR A=2/4=0.50; IR B=2/8=0.25",
     "decision": "A hiệu quả hơn trên mỗi đơn vị active risk trong kỳ đo; kiểm tra phí, drawdown và track record.|A was more efficient per unit of active risk over the measurement period; review fees, drawdowns and track record."
   },
@@ -351,12 +351,12 @@ window.CFA_FORMULA_APPLICATIONS={
     "decision": "Kiểm tra covenant, coverage và dòng tiền trước khi tăng nợ; nêu rõ cơ sở book/market.|Review covenants, coverage and cash flow before adding debt; specify book/market basis."
   },
   "interest-cover": {
-    "scenario": "Công ty EBIT $90k, lãi vay $30k; stress EBIT giảm 40%.|Firm EBIT $90k, interest $30k; stress EBIT down 40%.",
+    "scenario": "Công ty EBIT $90k, tiền lãi trả $30k bằng chi phí lãi vay; stress EBIT giảm 40%.|Firm EBIT $90k, interest payments $30k equal interest expense; stress EBIT down 40%.",
     "work": "Coverage=90/30=3×; stress=54/30=1.8×",
     "decision": "Nếu covenant yêu cầu 2×, stress có thể vi phạm; xem tái cấp vốn và liquidity.|If covenant requires 2×, stress may breach it; assess refinancing and liquidity."
   },
   "dso": {
-    "scenario": "Nhà phân phối phải thu bình quân $100k, bán chịu năm $730k.|Distributor average receivables $100k, annual credit sales $730k.",
+    "scenario": "Nhà phân phối phải thu bình quân $100k, tổng doanh thu năm $730k, toàn bộ bán chịu; 365 ngày.|Distributor average receivables $100k, annual total revenue $730k, all on credit; 365 days.",
     "work": "DSO=100/730×365=50 days",
     "decision": "So điều khoản 30 ngày; điều tra hóa đơn quá hạn và ưu tiên thu nợ.|Compare with 30-day terms; investigate overdue invoices and prioritize collections."
   },
@@ -521,8 +521,8 @@ window.CFA_FORMULA_APPLICATIONS={
     "decision": "Giải thích lợi ích kết hợp overweight và chọn tốt; tránh cộng hai lần nếu selection đã gộp interaction.|Explain combined overweight and selection benefit; avoid double counting if selection includes interaction."
   },
   "jensen": {
-    "scenario": "Manager return 10%, risk-free 2%, market 8%, beta 1 cùng kỳ.|Manager return 10%, risk-free 2%, market 8%, beta 1 on same horizon.",
-    "work": "α=10%−[2%+1×(8%−2%)]=2%",
+    "scenario": "Manager có mean return 10%, mean risk-free 2%, mean market return 8%, beta 1 cùng mẫu/kỳ.|Manager mean return 10%, mean risk-free 2%, mean market return 8%, beta 1 estimated on same sample/horizon.",
+    "work": "α=(10%−2%)−1×(8%−2%)=2%",
     "decision": "Kiểm tra alpha sau phí và nhiều kỳ, factor exposure và sai số thống kê trước đánh giá skill.|Check net alpha across periods, factor exposures and statistical uncertainty before inferring skill."
   },
   "lbo-moic": {
