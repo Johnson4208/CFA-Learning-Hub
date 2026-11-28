@@ -26,10 +26,9 @@ function positionFab(){
  const content=root?document.querySelector('#los-drawer .module-modal-card'):visibleLibrary();
  if(!content)return;
  const rect=content.getBoundingClientRect(),space=window.innerWidth-rect.right;
- const wide=space>=192,rail=space>=64;
- fab.classList.toggle('is-compact',!wide);
+ const rail=space>=64;
  fab.classList.toggle('is-bottom',!rail);
- fab.style.left=rail?(rect.right+(space-(wide?176:48))/2)+'px':'auto';
+ fab.style.left=rail?(rect.right+(space-44)/2)+'px':'auto';
  fab.style.right=rail?'auto':'12px';
 }
 function updateFab(progress=0){
