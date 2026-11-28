@@ -236,24 +236,24 @@ window.CFA_DECISION_EXTRA={
           "options": [
             {
               "title": "Nhận 100.000 hôm nay|Take $100,000 today",
-              "delta": -2023,
+              "delta": 0,
               "reason": "Bỏ qua phương án PV cao hơn.|Misses a higher-PV alternative.",
-              "assumption": "Thấp hơn PV tốt nhất khoảng 2.023 USD.|About $2,023 below the best PV.",
-              "metric": "Chênh lệch PV so với lựa chọn tốt nhất hoặc tiền ngay|PV advantage or shortfall"
+              "assumption": "Mốc so sánh: hiện giá 100.000 USD, chênh lệch bằng 0.|Baseline PV is $100,000; difference is zero.",
+              "metric": "Chênh lệch hiện giá so với nhận ngay 100.000 USD|PV difference versus $100,000 today"
             },
             {
               "title": "Nhận 110.000 sau một năm|Take $110,000 in one year",
-              "delta": -171,
+              "delta": 1852,
               "reason": "PV 101.852 USD, thấp hơn phương án hai năm.|PV $101,852 is below the two-year option.",
-              "assumption": "Thấp hơn khoảng 171 USD.|About $171 below the best PV.",
-              "metric": "Chênh lệch PV so với lựa chọn tốt nhất hoặc tiền ngay|PV advantage or shortfall"
+              "assumption": "110.000/1,08 = 101.851,85 USD; hơn mốc 1.851,85 USD nhưng thấp hơn lựa chọn tốt nhất.|110,000/1.08 = $101,851.85; $1,851.85 above baseline but below the best choice.",
+              "metric": "Chênh lệch hiện giá so với nhận ngay 100.000 USD|PV difference versus $100,000 today"
             },
             {
               "title": "Nhận 119.000 sau hai năm|Take $119,000 in two years",
               "delta": 2023,
               "reason": "119.000 / 1,08² có PV cao nhất.|119,000 / 1.08² gives highest PV.",
-              "assumption": "Cao hơn nhận ngay khoảng 2.023 USD.|About $2,023 above immediate cash.",
-              "metric": "Chênh lệch PV so với lựa chọn tốt nhất hoặc tiền ngay|PV advantage or shortfall"
+              "assumption": "119.000/1,08² = 102.023,32 USD; hơn mốc 2.023,32 USD.|119,000/1.08² = $102,023.32; $2,023.32 above baseline.",
+              "metric": "Chênh lệch hiện giá so với nhận ngay 100.000 USD|PV difference versus $100,000 today"
             }
           ]
         }
@@ -274,22 +274,22 @@ window.CFA_DECISION_EXTRA={
               "title": "Dự án A|Project A",
               "delta": 4000,
               "reason": "Kỳ vọng 24.000 USD cao nhất.|Highest expected value at $24,000.",
-              "assumption": "Cao hơn B 4.000 USD theo kỳ vọng.|$4,000 above B in expectation.",
-              "metric": "Chênh lệch lợi nhuận kỳ vọng|Expected profit difference"
+              "assumption": "Kỳ vọng 24.000 USD, hơn B 4.000 USD.|Expected profit $24,000, $4,000 above B.",
+              "metric": "Chênh lệch lợi nhuận kỳ vọng so với dự án B|Expected profit difference versus project B"
             },
             {
               "title": "Dự án B|Project B",
-              "delta": -4000,
+              "delta": 0,
               "reason": "An toàn hơn nhưng không tối đa kỳ vọng theo giả định.|Safer but not highest expected value under the assumption.",
-              "assumption": "Kỳ vọng thấp hơn A 4.000 USD.|Expected value $4,000 below A.",
-              "metric": "Chênh lệch lợi nhuận kỳ vọng|Expected profit difference"
+              "assumption": "B là mốc 20.000 USD; không có chênh lệch.|B is the $20,000 baseline; difference is zero.",
+              "metric": "Chênh lệch lợi nhuận kỳ vọng so với dự án B|Expected profit difference versus project B"
             },
             {
               "title": "Dự án C|Project C",
-              "delta": -14000,
+              "delta": -10000,
               "reason": "Kỳ vọng thấp nhất.|Lowest expected value.",
-              "assumption": "Kỳ vọng thấp hơn A 14.000 USD.|Expected value $14,000 below A.",
-              "metric": "Chênh lệch lợi nhuận kỳ vọng|Expected profit difference"
+              "assumption": "C có kỳ vọng 10.000 USD, thấp hơn B 10.000 USD.|C expects $10,000, $10,000 below B.",
+              "metric": "Chênh lệch lợi nhuận kỳ vọng so với dự án B|Expected profit difference versus project B"
             }
           ]
         }
@@ -312,22 +312,22 @@ window.CFA_DECISION_EXTRA={
               "title": "Tăng giá 10%|Raise price 10%",
               "delta": -24000,
               "reason": "Cầu giảm mạnh hơn giá tăng.|Quantity falls more than price rises.",
-              "assumption": "22 × 8.000 = 176.000 USD.|$22 × 8,000 = $176,000.",
-              "metric": "Thay đổi doanh thu tháng so với mức ban đầu|Monthly revenue change versus baseline"
+              "assumption": "22 × 8.000 = 176.000 USD; giảm 24.000 USD.|$22 × 8,000 = $176,000; down $24,000.",
+              "metric": "Thay đổi doanh thu tháng so với giá ban đầu|Monthly revenue change versus original price"
             },
             {
               "title": "Giữ giá|Keep price",
-              "delta": -16000,
+              "delta": 0,
               "reason": "Không đạt doanh thu tối đa.|Does not maximize revenue.",
-              "assumption": "Bỏ lỡ 16.000 USD so với giảm giá; doanh thu thực không đổi.|Foregoes $16,000 versus cutting; actual revenue unchanged.",
-              "metric": "Thay đổi doanh thu tháng so với mức ban đầu|Monthly revenue change versus baseline"
+              "assumption": "Doanh thu vẫn 200.000 USD; bỏ lỡ 16.000 USD doanh thu tăng thêm, không phải khoản lỗ thực tế.|Revenue remains $200,000; forgoes $16,000 potential additional revenue, not an actual loss.",
+              "metric": "Thay đổi doanh thu tháng so với giá ban đầu|Monthly revenue change versus original price"
             },
             {
               "title": "Giảm giá 10%|Cut price 10%",
               "delta": 16000,
               "reason": "Lượng tăng đủ bù giá giảm.|Volume gains outweigh price cut.",
-              "assumption": "18 × 12.000 = 216.000 USD.|$18 × 12,000 = $216,000.",
-              "metric": "Thay đổi doanh thu tháng so với mức ban đầu|Monthly revenue change versus baseline"
+              "assumption": "18 × 12.000 = 216.000 USD; tăng 16.000 USD, chưa xét chi phí.|$18 × 12,000 = $216,000; up $16,000 before considering costs.",
+              "metric": "Thay đổi doanh thu tháng so với giá ban đầu|Monthly revenue change versus original price"
             }
           ]
         }
@@ -346,24 +346,24 @@ window.CFA_DECISION_EXTRA={
           "options": [
             {
               "title": "Không hedge|Remain unhedged",
-              "delta": -25000,
+              "delta": 0,
               "reason": "Chịu rủi ro EUR tăng giá.|Exposed to EUR appreciation.",
-              "assumption": "580.000 − 555.000 = 25.000 USD.|$580,000 − $555,000 = $25,000.",
-              "metric": "Tiết kiệm hoặc chi phí tăng so với hedge đủ|Savings or extra cost versus hedge"
+              "assumption": "Chi phí 580.000 USD là mốc so sánh.|$580,000 purchase cost is the baseline.",
+              "metric": "Tiết kiệm chi phí so với không phòng hộ trong kịch bản|Cost savings versus unhedged in scenario"
             },
             {
               "title": "Mua kỳ hạn 500.000 EUR|Buy EUR 500,000 forward",
               "delta": 25000,
               "reason": "Khóa nghĩa vụ thanh toán.|Locks the payment obligation.",
-              "assumption": "Tiết kiệm 25.000 USD so với không hedge trong kịch bản này.|Saves $25,000 versus unhedged in this scenario.",
-              "metric": "Tiết kiệm hoặc chi phí tăng so với hedge đủ|Savings or extra cost versus hedge"
+              "assumption": "Chi phí khóa 555.000 USD, tiết kiệm 25.000 USD so với mốc.|Locked cost $555,000, saving $25,000 versus baseline.",
+              "metric": "Tiết kiệm chi phí so với không phòng hộ trong kịch bản|Cost savings versus unhedged in scenario"
             },
             {
               "title": "Hedge một nửa|Hedge half",
-              "delta": -12500,
+              "delta": 12500,
               "reason": "Một nửa vẫn biến động.|Half remains exposed.",
-              "assumption": "Chi 567.500 USD, cao hơn hedge đủ 12.500.|Pays $567,500, $12,500 above full hedge.",
-              "metric": "Tiết kiệm hoặc chi phí tăng so với hedge đủ|Savings or extra cost versus hedge"
+              "assumption": "250.000×1,11 + 250.000×1,16 = 567.500 USD; tiết kiệm 12.500 USD nhưng vẫn còn rủi ro tỷ giá.|250,000×1.11 + 250,000×1.16 = $567,500; saves $12,500 but leaves FX risk.",
+              "metric": "Tiết kiệm chi phí so với không phòng hộ trong kịch bản|Cost savings versus unhedged in scenario"
             }
           ]
         }
@@ -496,22 +496,22 @@ window.CFA_DECISION_EXTRA={
               "title": "Giảm DSO còn 45 ngày|Reduce DSO to 45 days",
               "delta": 140000,
               "reason": "Thu tiền sớm giảm vốn bị giam.|Faster collections free capital.",
-              "assumption": "15 × 10.000 − 10.000 = 140.000 USD.|15 × $10,000 − $10,000 = $140,000.",
-              "metric": "Tiền mặt ròng giải phóng hoặc bỏ lỡ|Net cash released or forgone"
+              "assumption": "15 × 10.000 − 10.000 = 140.000 USD tiền mặt ròng.|15 × $10,000 − $10,000 = $140,000 net cash.",
+              "metric": "Thay đổi tiền mặt so với giữ DSO 60 ngày|Cash change versus keeping DSO at 60 days"
             },
             {
               "title": "Giữ nguyên DSO|Keep DSO unchanged",
-              "delta": -140000,
+              "delta": 0,
               "reason": "Không giải phóng vốn có thể thu.|Misses cash release.",
-              "assumption": "Bỏ lỡ 140.000 USD tiền ròng theo giả định.|Foregoes $140,000 net cash.",
-              "metric": "Tiền mặt ròng giải phóng hoặc bỏ lỡ|Net cash released or forgone"
+              "assumption": "Giữ DSO 60 ngày là mốc; không giải phóng thêm tiền.|Keeping DSO at 60 days is the baseline; no incremental cash released.",
+              "metric": "Thay đổi tiền mặt so với giữ DSO 60 ngày|Cash change versus keeping DSO at 60 days"
             },
             {
               "title": "Nới DSO thêm 15 ngày|Extend DSO by 15 days",
               "delta": -150000,
               "reason": "Tăng khoản phải thu.|Increases receivables.",
-              "assumption": "15 × 10.000 = 150.000 USD bị giam thêm.|15 × $10,000 = $150,000 more tied up.",
-              "metric": "Tiền mặt ròng giải phóng hoặc bỏ lỡ|Net cash released or forgone"
+              "assumption": "15 × 10.000 = 150.000 USD bị giam thêm, giả định không có chi phí hệ thống.|15 × $10,000 = $150,000 more tied up, assuming no system cost.",
+              "metric": "Thay đổi tiền mặt so với giữ DSO 60 ngày|Cash change versus keeping DSO at 60 days"
             }
           ]
         }
@@ -606,24 +606,24 @@ window.CFA_DECISION_EXTRA={
           "options": [
             {
               "title": "Giữ duration 6|Keep duration 6",
-              "delta": -60000,
+              "delta": 0,
               "reason": "Không giảm độ nhạy.|Does not reduce sensitivity.",
-              "assumption": "Bỏ lỡ giảm lỗ 60.000 USD so với duration 3.|Foregoes $60,000 loss reduction versus duration 3.",
-              "metric": "Mức lỗ stress giảm hoặc tăng so với ban đầu|Stress loss reduction or increase"
+              "assumption": "Lỗ stress 120.000 USD là mốc; không giảm tổn thất.|$120,000 stress loss is baseline; no loss reduction.",
+              "metric": "Giảm tổn thất stress so với duration 6|Stress loss reduction versus duration 6"
             },
             {
               "title": "Giảm duration còn 3|Reduce duration to 3",
               "delta": 60000,
               "reason": "Giảm độ nhạy với lợi suất.|Reduces yield sensitivity.",
-              "assumption": "Lỗ stress giảm 120.000 xuống 60.000 USD.|Stress loss falls from $120,000 to $60,000.",
-              "metric": "Mức lỗ stress giảm hoặc tăng so với ban đầu|Stress loss reduction or increase"
+              "assumption": "Lỗ stress 60.000 USD; giảm 60.000 USD so với mốc.|$60,000 stress loss; $60,000 lower than baseline.",
+              "metric": "Giảm tổn thất stress so với duration 6|Stress loss reduction versus duration 6"
             },
             {
               "title": "Tăng duration lên 9|Raise duration to 9",
               "delta": -60000,
               "reason": "Tăng độ nhạy lãi suất.|Increases rate sensitivity.",
-              "assumption": "Lỗ stress 180.000, cao hơn ban đầu 60.000.|Stress loss $180,000, $60,000 above baseline.",
-              "metric": "Mức lỗ stress giảm hoặc tăng so với ban đầu|Stress loss reduction or increase"
+              "assumption": "Lỗ stress 180.000 USD; tăng 60.000 USD so với mốc.|$180,000 stress loss; $60,000 higher than baseline.",
+              "metric": "Giảm tổn thất stress so với duration 6|Stress loss reduction versus duration 6"
             }
           ]
         }
@@ -673,7 +673,7 @@ window.CFA_DECISION_EXTRA={
           "title": "Khóa giá nguyên liệu|Hedge input price",
           "context": "Nhà máy cần 10.000 đơn vị nguyên liệu sau 3 tháng; futures mua giá 50 USD/đơn vị, giả định spot và futures tại đáo hạn 58 USD. Không phí và không basis risk.|A factory needs 10,000 units in three months. Long futures price $50/unit; maturity spot and futures assumed $58. No fees or basis risk.",
           "task": "Vị thế nào bảo vệ chi phí mua?|Which position hedges purchase cost?",
-          "guidance": "Long futures lãi 8 USD/đơn vị bù giá mua tăng; short futures làm tăng rủi ro.|Long futures gain $8/unit offsets the higher purchase price; short futures increase exposure."
+          "guidance": "Long futures lãi 8 USD/đơn vị, chi phí mua ròng 500.000 USD; không phòng hộ tốn 580.000 USD và không có P/L futures; short futures làm chi phí ròng tăng lên 660.000 USD. Bỏ qua chi phí tài trợ margin.|Long futures gains $8/unit, giving a $500,000 net purchase cost; unhedged costs $580,000 with zero futures P/L; short futures raises net cost to $660,000. Ignore margin financing costs."
         },
         "decision": {
           "correct": 2,
@@ -682,22 +682,22 @@ window.CFA_DECISION_EXTRA={
               "title": "Short 10.000 đơn vị|Short 10,000 units",
               "delta": -80000,
               "reason": "Sai hướng hedge với nghĩa vụ mua.|Wrong hedge direction for a buyer.",
-              "assumption": "10.000 × (50−58) = −80.000 USD.|10,000 × ($50−$58) = −$80,000.",
-              "metric": "Lãi/lỗ futures trong kịch bản|Futures P/L in scenario"
+              "assumption": "Lỗ futures 80.000 USD cộng tiền mua spot 580.000 USD: tổng 660.000 USD, cao hơn mốc 80.000 USD.|Futures loss $80,000 plus $580,000 spot purchase: $660,000 total, $80,000 above baseline.",
+              "metric": "Tiết kiệm chi phí mua ròng so với không phòng hộ|Net purchase cost savings versus unhedged"
             },
             {
               "title": "Không hedge|No hedge",
-              "delta": -80000,
+              "delta": 0,
               "reason": "Chịu tăng chi phí nguyên liệu.|Exposed to higher input costs.",
-              "assumption": "Chi phí mua cao hơn mức khóa 80.000 USD; không có futures P/L.|Purchase cost $80,000 above locked cost; no futures P/L.",
-              "metric": "Lãi/lỗ futures trong kịch bản|Futures P/L in scenario"
+              "assumption": "Không có vị thế futures nên P/L futures bằng 0; tiền mua spot 580.000 USD là mốc.|No futures position, hence zero futures P/L; $580,000 spot purchase is baseline.",
+              "metric": "Tiết kiệm chi phí mua ròng so với không phòng hộ|Net purchase cost savings versus unhedged"
             },
             {
               "title": "Long 10.000 đơn vị|Long 10,000 units",
               "delta": 80000,
               "reason": "Lãi futures bù tăng giá mua.|Futures gain offsets higher input prices.",
-              "assumption": "10.000 × (58−50) = 80.000 USD, bù chi phí mua.|10,000 × ($58−$50) = $80,000, offsetting purchase cost.",
-              "metric": "Lãi/lỗ futures trong kịch bản|Futures P/L in scenario"
+              "assumption": "Lãi futures 80.000 USD bù chi phí mua spot 580.000 USD: chi phí ròng 500.000 USD, tiết kiệm 80.000 USD.|Futures gain $80,000 offsets $580,000 spot purchase: $500,000 net cost, saving $80,000.",
+              "metric": "Tiết kiệm chi phí mua ròng so với không phòng hộ|Net purchase cost savings versus unhedged"
             }
           ]
         }
@@ -716,24 +716,24 @@ window.CFA_DECISION_EXTRA={
           "options": [
             {
               "title": "Giữ không hedge|Hold unhedged",
-              "delta": -12000,
+              "delta": 0,
               "reason": "Chịu toàn bộ downside.|Bears full downside.",
-              "assumption": "Lỗ 20.000, nhiều hơn protective put 12.000 USD.|$20,000 loss, $12,000 worse than protective put.",
-              "metric": "Mức lỗ giảm hoặc tăng trong kịch bản|Scenario loss reduction or increase"
+              "assumption": "Lỗ cổ phiếu 20.000 USD là mốc so sánh.|$20,000 stock loss is baseline.",
+              "metric": "Giảm tổn thất so với giữ cổ phiếu không phòng hộ|Loss reduction versus unhedged stock"
             },
             {
               "title": "Mua 1.000 put tương ứng|Buy protective puts for 1,000 shares",
               "delta": 12000,
               "reason": "Put tạo sàn giá trị sau premium.|Put creates a floor net of premium.",
-              "assumption": "Giảm lỗ từ 20.000 xuống 8.000 USD.|Reduces loss from $20,000 to $8,000.",
-              "metric": "Mức lỗ giảm hoặc tăng trong kịch bản|Scenario loss reduction or increase"
+              "assumption": "Tổng lỗ 8.000 USD, đã tính phí put; giảm lỗ 12.000 USD.|Total loss $8,000 including put premium; $12,000 reduction.",
+              "metric": "Giảm tổn thất so với giữ cổ phiếu không phòng hộ|Loss reduction versus unhedged stock"
             },
             {
               "title": "Bán put thay vì mua|Sell puts instead",
               "delta": -12000,
               "reason": "Short put làm tăng downside.|Short puts add downside.",
-              "assumption": "Put lỗ ròng 12 USD/cp, thêm 12.000 USD so với không hedge.|Short put loses $12/share net, adding $12,000 versus unhedged.",
-              "metric": "Mức lỗ giảm hoặc tăng trong kịch bản|Scenario loss reduction or increase"
+              "assumption": "Short put lỗ ròng 12 USD/cổ phần; tổng lỗ 32.000 USD, nhiều hơn mốc 12.000 USD.|Short put loses $12/share net; total loss $32,000, $12,000 worse than baseline.",
+              "metric": "Giảm tổn thất so với giữ cổ phiếu không phòng hộ|Loss reduction versus unhedged stock"
             }
           ]
         }
@@ -866,22 +866,22 @@ window.CFA_DECISION_EXTRA={
               "title": "Chuyển 100.000 từ cổ phiếu sang trái phiếu|Move $100,000 from equities to bonds",
               "delta": 100000,
               "reason": "Đưa tỷ trọng về 60/40.|Restores 60/40 target.",
-              "assumption": "100.000 USD lệch cổ phiếu được điều chỉnh, không phải lợi nhuận.|$100,000 equity overweight corrected, not profit.",
-              "metric": "Mức lệch phân bổ được sửa hoặc tăng|Allocation deviation corrected or added"
+              "assumption": "Tỷ trọng về 60%; giảm độ lệch từ 100.000 xuống 0 USD.|Weight returns to 60%; deviation falls from $100,000 to zero.",
+              "metric": "Giảm độ lệch tuyệt đối của cổ phiếu so với target (USD)|Reduction in absolute equity target deviation (USD)"
             },
             {
               "title": "Mua thêm 100.000 cổ phiếu bằng trái phiếu|Buy $100,000 more equities using bonds",
               "delta": -100000,
               "reason": "Tăng sai lệch lên 80/20.|Increases drift to 80/20.",
-              "assumption": "Tăng lệch cổ phiếu 100.000 USD.|Adds $100,000 equity overweight.",
-              "metric": "Mức lệch phân bổ được sửa hoặc tăng|Allocation deviation corrected or added"
+              "assumption": "Tỷ trọng tăng lên 80%; độ lệch tăng từ 100.000 lên 200.000 USD.|Weight rises to 80%; deviation increases from $100,000 to $200,000.",
+              "metric": "Giảm độ lệch tuyệt đối của cổ phiếu so với target (USD)|Reduction in absolute equity target deviation (USD)"
             },
             {
               "title": "Không giao dịch vì cổ phiếu đang thắng|Do nothing because stocks are winning",
-              "delta": -100000,
+              "delta": 0,
               "reason": "Vượt ngưỡng IPS.|Breaches IPS band.",
-              "assumption": "100.000 USD lệch mục tiêu chưa sửa.|$100,000 target deviation remains.",
-              "metric": "Mức lệch phân bổ được sửa hoặc tăng|Allocation deviation corrected or added"
+              "assumption": "Độ lệch giữ nguyên 100.000 USD; vẫn vi phạm band nhưng chênh lệch so với trước bằng 0.|Deviation stays $100,000; still breaches band, but change is zero.",
+              "metric": "Giảm độ lệch tuyệt đối của cổ phiếu so với target (USD)|Reduction in absolute equity target deviation (USD)"
             }
           ]
         }
@@ -904,22 +904,22 @@ window.CFA_DECISION_EXTRA={
               "title": "Giảm duration tài sản còn 2|Reduce asset duration to 2",
               "delta": -100000,
               "reason": "Tăng mismatch.|Worsens mismatch.",
-              "assumption": "Thiếu hụt stress 400.000, thêm 100.000 so với cũ.|Stress deficit $400,000, $100,000 worse.",
-              "metric": "Thay đổi thiếu hụt tránh được hoặc tăng thêm|Deficit increase avoided or added"
+              "assumption": "Thâm hụt stress 400.000 USD, tăng 100.000 so với mốc.|Stress deficit $400,000, $100,000 worse than baseline.",
+              "metric": "Giảm thâm hụt stress so với asset duration 4|Stress deficit reduction versus asset duration 4"
             },
             {
-              "title": "Điều chỉnh duration tài sản lên gần 10|Adjust asset duration toward 10",
+              "title": "Điều chỉnh duration tài sản lên 10|Adjust asset duration to 10",
               "delta": 300000,
               "reason": "Khớp độ nhạy nghĩa vụ.|Matches liability sensitivity.",
-              "assumption": "Tránh thiếu hụt 300.000 USD theo stress bậc nhất.|Avoids $300,000 first-order stress deficit.",
-              "metric": "Thay đổi thiếu hụt tránh được hoặc tăng thêm|Deficit increase avoided or added"
+              "assumption": "Nếu đạt duration 10, thâm hụt do cú sốc bằng 0 theo xấp xỉ bậc một; giảm 300.000 USD.|If duration reaches 10, first-order shock deficit is zero; $300,000 reduction.",
+              "metric": "Giảm thâm hụt stress so với asset duration 4|Stress deficit reduction versus asset duration 4"
             },
             {
               "title": "Giữ duration 4|Keep duration 4",
-              "delta": -300000,
+              "delta": 0,
               "reason": "Không giảm mismatch.|Leaves mismatch unhedged.",
-              "assumption": "Thiếu hụt stress tăng 300.000 USD.|Stress deficit grows $300,000.",
-              "metric": "Thay đổi thiếu hụt tránh được hoặc tăng thêm|Deficit increase avoided or added"
+              "assumption": "Thâm hụt stress 300.000 USD là mốc; không có cải thiện.|$300,000 stress deficit is baseline; no improvement.",
+              "metric": "Giảm thâm hụt stress so với asset duration 4|Stress deficit reduction versus asset duration 4"
             }
           ]
         }
@@ -967,15 +967,15 @@ window.CFA_DECISION_EXTRA={
       {
         "item": {
           "title": "Hiệu quả phân bổ ngành|Sector allocation attribution",
-          "context": "Danh mục 2 triệu USD; tỷ trọng ngành A 60% so benchmark 50%. A return 12%, benchmark tổng 8%. Dùng Brinson–Fachler allocation effect cho riêng ngành A.|Portfolio $2m; sector A weight 60% versus benchmark 50%. Sector A return 12%, total benchmark return 8%. Use Brinson–Fachler allocation for sector A only.",
+          "context": "Danh mục 2 triệu USD; tỷ trọng ngành A 60% so benchmark 50%. Lợi suất ngành A trong chỉ số chuẩn 12%, lợi suất toàn chỉ số chuẩn 8%. Dùng Brinson–Fachler allocation effect cho riêng ngành A.|Portfolio $2m; sector A weight 60% versus benchmark 50%. Benchmark sector A return 12%, total benchmark return 8%. Use Brinson–Fachler allocation for sector A only.",
           "task": "Allocation effect của A là bao nhiêu?|What is A's allocation effect?",
-          "guidance": "(60%−50%)×(12%−8%) = 0,4% hay 8.000 USD trên vốn đầu kỳ; không phải tổng attribution.|(60%−50%)×(12%−8%) = 0.4% or $8,000 on beginning capital; not total attribution."
+          "guidance": "(60%−50%)×(12%−8%) = +0,4 điểm phần trăm, tương đương 8.000 USD trên vốn đầu kỳ 2 triệu. Dùng lợi suất ngành của benchmark, không dùng lợi suất danh mục ngành; đây chỉ là allocation effect.|(60%−50%)×(12%−8%) = +0.4 percentage points, or $8,000 on $2m beginning capital. Use the benchmark sector return, not the portfolio sector return; this is allocation effect only."
         },
         "decision": {
           "correct": 0,
           "options": [
             {
-              "title": "0,4% hay 8.000 USD|0.4% or $8,000",
+              "title": "+0,4 điểm phần trăm hoặc 8.000 USD|+0.4 percentage points or $8,000",
               "delta": 8000,
               "reason": "Dùng đúng benchmark tổng.|Uses the total benchmark correctly.",
               "assumption": "2m × 0,4% = 8.000 USD attribution.|$2m × 0.4% = $8,000 attribution.",
